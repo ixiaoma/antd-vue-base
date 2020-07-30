@@ -11,43 +11,30 @@
     :i18nRender="i18nRender"
     v-bind="settings"
   >
-    <!-- Ads begin
-      广告代码 真实项目中请移除
-      production remove this Ads
-    -->
-    <ads v-if="isProPreviewSite && !collapsed"/>
-    <!-- Ads end -->
-
     <setting-drawer :settings="settings" @change="handleSettingChange" />
     <template v-slot:rightContentRender>
       <right-content :top-menu="settings.layout === 'topmenu'" :is-mobile="isMobile" :theme="settings.theme" />
-    </template>
-    <template v-slot:footerRender>
-      <global-footer />
     </template>
     <router-view />
   </pro-layout>
 </template>
 
 <script>
+import { asyncRouterMap } from '@/router/routers'
 import { SettingDrawer, updateTheme } from '@ant-design-vue/pro-layout'
 import { i18nRender } from '@/locales'
 import { mapState } from 'vuex'
 import { SIDEBAR_TYPE, TOGGLE_MOBILE_TYPE } from '@/store/mutation-types'
 
 import defaultSettings from '@/config/defaultSettings'
-import RightContent from '@/components/GlobalHeader/RightContent'
-import GlobalFooter from '@/components/GlobalFooter'
-import Ads from '@/components/Other/CarbonAds'
+import RightContent from './GlobalHeader/RightContent'
 import LogoSvg from '../assets/logo.svg?inline'
 
 export default {
   name: 'BasicLayout',
   components: {
     SettingDrawer,
-    RightContent,
-    GlobalFooter,
-    Ads
+    RightContent
   },
   data () {
     return {
@@ -56,7 +43,7 @@ export default {
       // end
 
       // base
-      menus: [],
+      menus: asyncRouterMap.children,
       // 侧栏收起状态
       collapsed: false,
       title: defaultSettings.title,
@@ -89,9 +76,47 @@ export default {
       mainMenu: state => state.permission.addRouters
     })
   },
+  methods: {
+    i18nRender,
+    handleMediaQuery (val) {
+      this.query = val
+      if (this.isMobile && !val['screen-xs']) {
+        this.isMobile = false
+        return
+      }
+      if (!this.isMobile && val['screen-xs']) {
+        this.isMobile = true
+        this.collapsed = false
+        this.settings.contentWidth = false
+        // this.settings.fixSiderbar = false
+      }
+    },
+    handleCollapse (val) {
+      this.collapsed = val
+    },
+    handleSettingChange ({ type, value }) {
+      type && (this.settings[type] = value)
+      switch (type) {
+        case 'contentWidth':
+          this.settings[type] = value === 'Fixed'
+          break
+        case 'layout':
+          if (value === 'sidemenu') {
+            this.settings.contentWidth = false
+          } else {
+            this.settings.fixSiderbar = false
+            this.settings.contentWidth = true
+          }
+          break
+      }
+    },
+    logoRender () {
+      return <LogoSvg />
+    }
+  },
   created () {
-    const routes = this.mainMenu.find(item => item.path === '/')
-    this.menus = (routes && routes.children) || []
+    // const routes = this.mainMenu.find(item => item.path === '/')
+    // this.menus = (routes && routes.children) || []
     // 处理侧栏收起状态
     this.$watch('collapsed', () => {
       this.$store.commit(SIDEBAR_TYPE, this.collapsed)
@@ -115,45 +140,6 @@ export default {
     // TIPS: THEME COLOR HANDLER!! PLEASE CHECK THAT!!
     if (process.env.NODE_ENV !== 'production' || process.env.VUE_APP_PREVIEW === 'true') {
       updateTheme(this.settings.primaryColor)
-    }
-  },
-  methods: {
-    i18nRender,
-    handleMediaQuery (val) {
-      this.query = val
-      if (this.isMobile && !val['screen-xs']) {
-        this.isMobile = false
-        return
-      }
-      if (!this.isMobile && val['screen-xs']) {
-        this.isMobile = true
-        this.collapsed = false
-        this.settings.contentWidth = false
-        // this.settings.fixSiderbar = false
-      }
-    },
-    handleCollapse (val) {
-      this.collapsed = val
-    },
-    handleSettingChange ({ type, value }) {
-      console.log('type', type, value)
-      type && (this.settings[type] = value)
-      switch (type) {
-        case 'contentWidth':
-          this.settings[type] = value === 'Fixed'
-          break
-        case 'layout':
-          if (value === 'sidemenu') {
-            this.settings.contentWidth = false
-          } else {
-            this.settings.fixSiderbar = false
-            this.settings.contentWidth = true
-          }
-          break
-      }
-    },
-    logoRender () {
-      return <LogoSvg />
     }
   }
 }

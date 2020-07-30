@@ -1,26 +1,71 @@
 @import "~ant-design-vue/es/style/themes/default.less";
-
-.ant-pro-global-header-index-right {
-  margin-right: 8px;
-
-  &.ant-pro-global-header-index-dark {
-    .ant-pro-global-header-index-action {
-      color: hsla(0, 0%, 100%, .85);
-
-      &:hover {
-        background: #1890ff;
+.ant-pro-global-header{
+  display: flex;
+  vertical-align: center;
+  .ant-pro-global-header-trigger{
+    padding: 0 22px;
+  }
+  .ant-pro-global-header-index-right{
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    float: initial;
+    margin-left: initial;
+    .left-con{
+      display: flex;
+      align-items: center;
+      .role-title{
+        font-size: 18px;
+        font-weight: bold;
+      }
+      .tag-style{
+        margin: 0 0 0 6px;
+      }
+      .icon-style{
+        font-size: 20px;
+        cursor: pointer;
       }
     }
-  }
-
-  .ant-pro-account-avatar {
-    .antd-pro-global-header-index-avatar {
-      margin: ~'calc((@{layout-header-height} - 24px) / 2)' 0;
+    .right-con{
       margin-right: 8px;
-      color: @primary-color;
-      vertical-align: top;
-      background: rgba(255, 255, 255, 0.85);
+      .icon-style{
+        font-size: 20px;
+        margin-left: 16px;
+        cursor: pointer;
+      }
     }
+    .feedback-style{
+      cursor: pointer;
+      margin-left: 20px;
+    }
+  }
+}
+
+// .ant-pro-global-header-index-right {
+//   margin-right: 8px;
+//   flex: 1;
+
+//   &.ant-pro-global-header-index-dark {
+//     .ant-pro-global-header-index-action {
+//       color: hsla(0, 0%, 100%, .85);
+
+//       &:hover {
+//         background: #1890ff;
+//       }
+//     }
+//   }
+//   .ant-pro-account-avatar {
+//     .antd-pro-global-header-index-avatar {
+//       margin: ~'calc((@{layout-header-height} - 24px) / 2)' 0;
+//       margin-right: 8px;
+//       color: @primary-color;
+//       vertical-align: top;
+//       background: rgba(255, 255, 255, 0.85);
+//     }
+//   }
+
+  .ant-layout-footer{
+    display: none;
   }
 
   .menu {
@@ -32,5 +77,5 @@
       min-width: 100px;
     }
   }
-}
+// }
 

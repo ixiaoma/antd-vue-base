@@ -70,7 +70,7 @@
       </a-tabs>
 
       <a-form-item>
-        <a-checkbox v-decorator="['rememberMe', { valuePropName: 'checked' }]">自动登录</a-checkbox>
+        <router-link class="register" :to="{ name: 'register' }">注册账户</router-link>
         <router-link
           :to="{ name: 'recover', params: { user: 'aaa'} }"
           class="forge-password"
@@ -86,22 +86,8 @@
           class="login-button"
           :loading="state.loginBtn"
           :disabled="state.loginBtn"
-        >确定</a-button>
+        >登录</a-button>
       </a-form-item>
-
-      <div class="user-login-other">
-        <span>其他登录方式</span>
-        <a>
-          <a-icon class="item-icon" type="alipay-circle"></a-icon>
-        </a>
-        <a>
-          <a-icon class="item-icon" type="taobao-circle"></a-icon>
-        </a>
-        <a>
-          <a-icon class="item-icon" type="weibo-circle"></a-icon>
-        </a>
-        <router-link class="register" :to="{ name: 'register' }">注册账户</router-link>
-      </div>
     </a-form>
 
     <two-step-captcha
@@ -117,8 +103,7 @@
 import md5 from 'md5'
 import TwoStepCaptcha from '@/components/tools/TwoStepCaptcha'
 import { mapActions } from 'vuex'
-import { timeFix } from '@/utils/util'
-import { getSmsCaptcha, get2step } from '@/api/login'
+import { login, getSmsCaptcha, get2step } from '@/api/user'
 
 export default {
   components: {
@@ -143,18 +128,8 @@ export default {
       }
     }
   },
-  created () {
-    get2step({ })
-      .then(res => {
-        this.requiredTwoStepCaptcha = res.result.stepCode
-      })
-      .catch(() => {
-        this.requiredTwoStepCaptcha = false
-      })
-    // this.requiredTwoStepCaptcha = true
-  },
   methods: {
-    ...mapActions(['Login', 'Logout']),
+    ...mapActions(['Logout']),
     // handler
     handleUsernameOrEmail (rule, value, callback) {
       const { state } = this
@@ -175,8 +150,7 @@ export default {
       const {
         form: { validateFields },
         state,
-        customActiveKey,
-        Login
+        customActiveKey
       } = this
 
       state.loginBtn = true
@@ -185,17 +159,17 @@ export default {
 
       validateFields(validateFieldsKey, { force: true }, (err, values) => {
         if (!err) {
-          console.log('login form', values)
           const loginParams = { ...values }
           delete loginParams.username
           loginParams[!state.loginType ? 'email' : 'username'] = values.username
           loginParams.password = md5(values.password)
-          Login(loginParams)
-            .then((res) => this.loginSuccess(res))
-            .catch(err => this.requestFailed(err))
-            .finally(() => {
-              state.loginBtn = false
-            })
+          login(loginParams).then(res => {
+            sessionStorage.setItem('ACCESS_TOKEN', res.result.token)
+            this.$router.push({ path: '/' })
+          // eslint-disable-next-line handle-callback-err
+          }).catch(err => {
+            state.loginBtn = false
+          })
         } else {
           setTimeout(() => {
             state.loginBtn = false
@@ -238,36 +212,13 @@ export default {
       })
     },
     stepCaptchaSuccess () {
-      this.loginSuccess()
+      // this.loginSuccess()
     },
     stepCaptchaCancel () {
       this.Logout().then(() => {
         this.loginBtn = false
         this.stepCaptchaVisible = false
       })
-    },
-    loginSuccess (res) {
-      console.log(res)
-      // check res.homePage define, set $router.push name res.homePage
-      // Why not enter onComplete
-      /*
-      this.$router.push({ name: 'analysis' }, () => {
-        console.log('onComplete')
-        this.$notification.success({
-          message: '欢迎',
-          description: `${timeFix()}，欢迎回来`
-        })
-      })
-      */
-      this.$router.push({ path: '/' })
-      // 延迟 1 秒显示欢迎信息
-      setTimeout(() => {
-        this.$notification.success({
-          message: '欢迎',
-          description: `${timeFix()}，欢迎回来`
-        })
-      }, 1000)
-      this.isLoginError = false
     },
     requestFailed (err) {
       this.isLoginError = true
@@ -277,6 +228,16 @@ export default {
         duration: 4
       })
     }
+  },
+  created () {
+    get2step({ })
+      .then(res => {
+        this.requiredTwoStepCaptcha = res.result.stepCode
+      })
+      .catch(() => {
+        this.requiredTwoStepCaptcha = false
+      })
+    // this.requiredTwoStepCaptcha = true
   }
 }
 </script>

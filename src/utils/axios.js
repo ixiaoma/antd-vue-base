@@ -1,35 +1,53 @@
-const VueAxios = {
-  vm: {},
-  // eslint-disable-next-line no-unused-vars
-  install (Vue, instance) {
-    if (this.installed) {
-      return
-    }
-    this.installed = true
+import axios from 'axios'
+// import config from '@/config'
+import { Message } from 'ant-design-vue'
 
-    if (!instance) {
-      // eslint-disable-next-line no-console
-      console.error('You have to install axios')
-      return
-    }
+// 创建 axios 实例
+const service = axios.create({
+  baseURL: process.env.VUE_APP_API_BASE_URL,
+  timeout: 60000 // 请求超时时间
+})
 
-    Vue.axios = instance
-
-    Object.defineProperties(Vue.prototype, {
-      axios: {
-        get: function get () {
-          return instance
-        }
-      },
-      $http: {
-        get: function get () {
-          return instance
-        }
-      }
-    })
+// 请求拦截
+service.interceptors.request.use(config => {
+  config.headers = {
+    ...config.headers
   }
-}
-
-export {
-  VueAxios
-}
+  // const access_token = sessionStorage.getItem('access_token')
+  // if (access_token) {
+  //   config.headers.Authorization = `Bearer ${access_token}`
+  // }
+  return config
+}, error => {
+  return Promise.reject(error)
+})
+// 响应拦截
+service.interceptors.response.use(res => {
+  // const { data, code, message } = res.data
+  // if (code === 200) {
+  //   return data
+  // } else {
+  //   message && Message.error(message)
+  //   return Promise.reject(data)
+  // }
+  return res.data
+}, error => {
+  if (error.response) {
+    const { status } = error.response
+    if (status === 401) {
+      sessionStorage.removeItem('access_token')
+      // if (token) {
+      //   store.dispatch('Logout').then(() => {
+      //     setTimeout(() => {
+      //       window.location.reload()
+      //     }, 1500)
+      //   })
+      // }
+    }
+    Message.error('接口请求失败')
+  } else {
+    Message.error('接口请求失败')
+  }
+  return Promise.reject(error.response)
+})
+export { service as axios }

@@ -1,5 +1,5 @@
 <template>
-  <page-header-wrapper>
+  <div>
     <a-card :bordered="false">
       <div class="table-page-search-wrapper">
         <a-form layout="inline">
@@ -61,13 +61,11 @@
           </a-row>
         </a-form>
       </div>
-
       <div class="table-operator">
         <a-button type="primary" icon="plus" @click="handleAdd">新建</a-button>
         <a-dropdown v-action:edit v-if="selectedRowKeys.length > 0">
           <a-menu slot="overlay">
             <a-menu-item key="1"><a-icon type="delete" />删除</a-menu-item>
-            <!-- lock | unlock -->
             <a-menu-item key="2"><a-icon type="lock" />锁定</a-menu-item>
           </a-menu>
           <a-button style="margin-left: 8px">
@@ -78,9 +76,9 @@
 
       <s-table
         ref="table"
-        size="default"
         rowKey="key"
         :columns="columns"
+        :filterList="filterList"
         :data="loadData"
         :alert="true"
         :rowSelection="rowSelection"
@@ -115,7 +113,7 @@
       />
       <step-by-step-modal ref="modal" @ok="handleOk"/>
     </a-card>
-  </page-header-wrapper>
+  </div>
 </template>
 
 <script>
@@ -183,7 +181,22 @@ const statusMap = {
     text: '异常'
   }
 }
-
+const filterList = [
+  {
+    searchLabel: '规则编号',
+    searchKey: 'id'
+  }, {
+    searchLabel: '使用状态',
+    searchKey: 'status',
+    searchType: 'Select',
+    selectList: [
+      {
+        key: 'close',
+        value: '关闭'
+      }
+    ]
+  }
+]
 export default {
   name: 'TableList',
   components: {
@@ -194,6 +207,7 @@ export default {
   },
   data () {
     this.columns = columns
+    this.filterList = filterList
     return {
       // create model
       visible: false,

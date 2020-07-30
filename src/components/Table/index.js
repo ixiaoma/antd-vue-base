@@ -1,5 +1,6 @@
 import T from 'ant-design-vue/es/table/Table'
 import get from 'lodash.get'
+import searchFilter from '../searchFilter/index.vue'
 
 export default {
   data () {
@@ -14,6 +15,7 @@ export default {
       localPagination: Object.assign({}, this.pagination)
     }
   },
+  components: { searchFilter },
   props: Object.assign({}, T.props, {
     rowKey: {
       type: [String, Function],
@@ -37,7 +39,7 @@ export default {
     },
     size: {
       type: String,
-      default: 'default'
+      default: 'middle'
     },
     /**
      * alert: {
@@ -52,11 +54,6 @@ export default {
     rowSelection: {
       type: Object,
       default: null
-    },
-    /** @Deprecated */
-    showAlertInfo: {
-      type: Boolean,
-      default: false
     },
     showPagination: {
       type: String | Boolean,
@@ -238,32 +235,6 @@ export default {
           this.clearSelected()
         }}>清空</a>
       )
-    },
-    renderAlert () {
-      // 绘制统计列数据
-      const needTotalItems = this.needTotalList.map((item) => {
-        return (<span style="margin-right: 12px">
-          {item.title}总计 <a style="font-weight: 600">{!item.customRender ? item.total : item.customRender(item.total)}</a>
-        </span>)
-      })
-
-      // 绘制 清空 按钮
-      const clearItem = (typeof this.alert.clear === 'boolean' && this.alert.clear) ? (
-        this.renderClear(this.clearSelected)
-      ) : (this.alert !== null && typeof this.alert.clear === 'function') ? (
-        this.renderClear(this.alert.clear)
-      ) : null
-
-      // 绘制 alert 组件
-      return (
-        <a-alert showIcon={true} style="margin-bottom: 16px">
-          <template slot="message">
-            <span style="margin-right: 12px">已选择: <a style="font-weight: 600">{this.selectedRows.length}</a></span>
-            {needTotalItems}
-            {clearItem}
-          </template>
-        </a-alert>
-      )
     }
   },
 
@@ -271,7 +242,6 @@ export default {
     const props = {}
     const localKeys = Object.keys(this.$data)
     const showAlert = (typeof this.alert === 'object' && this.alert !== null && this.alert.show) && typeof this.rowSelection.selectedRowKeys !== 'undefined' || this.alert
-
     Object.keys(T.props).forEach(k => {
       const localKey = `local${k.substring(0, 1).toUpperCase()}${k.substring(1)}`
       if (localKeys.includes(localKey)) {
@@ -301,14 +271,12 @@ export default {
       return props[k]
     })
     const table = (
-      <a-table {...{ props, scopedSlots: { ...this.$scopedSlots } }} onChange={this.loadData} onExpand={ (expanded, record) => { this.$emit('expand', expanded, record) } }>
+      <a-table bordered {...{ props, scopedSlots: { ...this.$scopedSlots } }} onChange={this.loadData} onExpand={ (expanded, record) => { this.$emit('expand', expanded, record) } }>
         { Object.keys(this.$slots).map(name => (<template slot={name}>{this.$slots[name]}</template>)) }
       </a-table>
     )
-
     return (
       <div class="table-wrapper">
-        { showAlert ? this.renderAlert() : null }
         { table }
       </div>
     )

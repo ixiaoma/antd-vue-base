@@ -1,32 +1,31 @@
 <template>
-  <page-header-wrapper>
-    <template v-slot:content>
-      <div class="page-header-content">
-        <div class="avatar">
-          <a-avatar size="large" :src="currentUser.avatar"/>
-        </div>
-        <div class="content">
-          <div class="content-title">
-            {{ timeFix }}，{{ user.name }}<span class="welcome-text">，{{ welcome }}</span>
-          </div>
-          <div>前端工程师 | 蚂蚁金服 - 某某某事业群 - VUE平台</div>
-        </div>
-      </div>
-    </template>
-    <template v-slot:extraContent>
+  <a-card>
+    <div class="top-tab">
       <div class="extra-content">
         <div class="stat-item">
-          <a-statistic title="项目数" :value="56" />
-        </div>
-        <div class="stat-item">
-          <a-statistic title="团队内排名" :value="8" suffix="/ 24" />
-        </div>
-        <div class="stat-item">
-          <a-statistic title="项目访问" :value="2223" />
+          <h1 style="margin-top: 16px;font-weight:bold">全部</h1>
         </div>
       </div>
-    </template>
-
+      <div class="extra-content">
+        <div class="stat-item">
+          <a-statistic title="审批中" :value="56" />
+        </div>
+        <div class="stat-item">
+          <a-statistic title="员工" :value="8" />
+        </div>
+        <div class="stat-item">
+          <a-statistic title="考勤" :value="2223" />
+        </div>
+      </div>
+      <div class="extra-content">
+        <div class="stat-item">
+          <a-statistic title="本月通过" :value="56" />
+        </div>
+        <div class="stat-item">
+          <a-statistic title="本月驳回" :value="8" />
+        </div>
+      </div>
+    </div>
     <div>
       <a-row :gutter="24">
         <a-col :xl="16" :lg="24" :md="24" :sm="24" :xs="24">
@@ -120,11 +119,10 @@
         </a-col>
       </a-row>
     </div>
-  </page-header-wrapper>
+  </a-card>
 </template>
 
 <script>
-import { timeFix } from '@/utils/util'
 import { mapState } from 'vuex'
 import { PageHeaderWrapper } from '@ant-design-vue/pro-layout'
 import { Radar } from '@/components'
@@ -141,7 +139,6 @@ export default {
   },
   data () {
     return {
-      timeFix: timeFix(),
       avatar: '',
       user: {},
 
@@ -218,10 +215,10 @@ export default {
     })
   },
   mounted () {
-    this.getProjects()
-    this.getActivity()
-    this.getTeams()
-    this.initRadar()
+    // this.getProjects()
+    // this.getActivity()
+    // this.getTeams()
+    // this.initRadar()
   },
   methods: {
     getProjects () {

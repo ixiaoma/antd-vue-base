@@ -1,7 +1,21 @@
 <template>
   <div :class="wrpCls">
-    <avatar-dropdown :menu="showMenu" :current-user="currentUser" :class="prefixCls" />
-    <select-lang :class="prefixCls" />
+    <div class="left-con">
+      <span class="role-title">Admin</span>
+      <p class="tag-style"><a-tag color="red">(未审核)</a-tag></p>
+      <a-icon type="setting" class="icon-style"/>
+    </div>
+    <div class="right-con">
+      <a-input-search style="width: 200px;" placeholder="姓名/手机号"/>
+      <a-icon type="user-add" class="icon-style"/>
+      <a-icon type="question-circle" class="icon-style"/>
+      <a-icon type="mobile" class="icon-style"/>
+      <a-icon type="bell" class="icon-style"/>
+      <span class="feedback-style"><a-icon type="form" class="icon-style"/>反馈</span>
+      <avatar-dropdown :menu="showMenu" :current-user="currentUser" :class="prefixCls" />
+      <select-lang :class="prefixCls" />
+    </div>
+
   </div>
 </template>
 
