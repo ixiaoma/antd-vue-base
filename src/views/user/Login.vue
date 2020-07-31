@@ -103,6 +103,7 @@
 import md5 from 'md5'
 import TwoStepCaptcha from '@/components/tools/TwoStepCaptcha'
 import { mapActions } from 'vuex'
+// eslint-disable-next-line no-unused-vars
 import { login, getSmsCaptcha, get2step } from '@/api/user'
 
 export default {
@@ -113,11 +114,12 @@ export default {
     return {
       customActiveKey: 'tab1',
       loginBtn: false,
-      // login type: 0 email, 1 username, 2 telephone
       loginType: 0,
       isLoginError: false,
+      // 控制忘记密码弹窗
       requiredTwoStepCaptcha: false,
       stepCaptchaVisible: false,
+
       form: this.$form.createForm(this),
       state: {
         time: 60,
@@ -131,7 +133,7 @@ export default {
   methods: {
     ...mapActions(['Logout']),
     // handler
-    handleUsernameOrEmail (rule, value, callback) {
+    handleUsernameOrEmail (rule, value, callback) { // 用户名或邮箱正则
       const { state } = this
       const regex = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/
       if (regex.test(value)) {
@@ -141,11 +143,7 @@ export default {
       }
       callback()
     },
-    handleTabClick (key) {
-      this.customActiveKey = key
-      // this.form.resetFields()
-    },
-    handleSubmit (e) {
+    handleSubmit (e) { // 登录
       e.preventDefault()
       const {
         form: { validateFields },
@@ -177,7 +175,12 @@ export default {
         }
       })
     },
-    getCaptcha (e) {
+
+    handleTabClick (key) { // 切换登录方式
+      this.customActiveKey = key
+      // this.form.resetFields()
+    },
+    getCaptcha (e) { // 获取手机验证码
       e.preventDefault()
       const { form: { validateFields }, state } = this
 
@@ -201,17 +204,18 @@ export default {
               description: '验证码获取成功，您的验证码为：' + res.result.captcha,
               duration: 8
             })
+          // eslint-disable-next-line handle-callback-err
           }).catch(err => {
             setTimeout(hide, 1)
             clearInterval(interval)
             state.time = 60
             state.smsSendBtn = false
-            this.requestFailed(err)
           })
         }
       })
     },
-    stepCaptchaSuccess () {
+
+    stepCaptchaSuccess () { // 找回密码
       // this.loginSuccess()
     },
     stepCaptchaCancel () {
@@ -219,24 +223,16 @@ export default {
         this.loginBtn = false
         this.stepCaptchaVisible = false
       })
-    },
-    requestFailed (err) {
-      this.isLoginError = true
-      this.$notification['error']({
-        message: '错误',
-        description: ((err.response || {}).data || {}).message || '请求出现错误，请稍后再试',
-        duration: 4
-      })
     }
   },
   created () {
-    get2step({ })
-      .then(res => {
-        this.requiredTwoStepCaptcha = res.result.stepCode
-      })
-      .catch(() => {
-        this.requiredTwoStepCaptcha = false
-      })
+    // get2step({ })
+    //   .then(res => {
+    //     this.requiredTwoStepCaptcha = res.result.stepCode
+    //   })
+    //   .catch(() => {
+    //     this.requiredTwoStepCaptcha = false
+    //   })
     // this.requiredTwoStepCaptcha = true
   }
 }

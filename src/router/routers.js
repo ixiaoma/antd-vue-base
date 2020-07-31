@@ -252,14 +252,13 @@ export const asyncRouterMap = {
             ]
           }
         ]
-      }
+      },
 
       // other
-      /*
       {
         path: '/other',
         name: 'otherPage',
-        component: PageView,
+        component: RouteView,
         meta: { title: '其他组件', icon: 'slack', permission: [ 'dashboard' ] },
         redirect: '/other/icon-selector',
         children: [
@@ -315,7 +314,6 @@ export const asyncRouterMap = {
           }
         ]
       }
-      */
     ]
 }
 

@@ -18,7 +18,7 @@
         </a-tab-pane>
       </a-tabs>
       <div>
-        123
+        <basic-list/>
       </div>
     </a-card>
   </div>
@@ -27,6 +27,7 @@
 <script>
 import { PageView, RouteView } from '@/layouts'
 import { AppPage, ArticlePage, ProjectPage } from './page'
+import BasicList from '@/views/list/BasicList.vue'
 
 import { Icon } from 'ant-design-vue'
 
@@ -40,7 +41,8 @@ export default {
     AppPage,
     ArticlePage,
     ProjectPage,
-    IconFont
+    IconFont,
+    BasicList
   },
   data () {
     return {

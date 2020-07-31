@@ -47,15 +47,9 @@ export function getInfo () {
 //   })
 // }
 
-// export function logout () {
-//   return request({
-//     url: userApi.Logout,
-//     method: 'post',
-//     headers: {
-//       'Content-Type': 'application/json;charset=UTF-8'
-//     }
-//   })
-// }
+export function logout () {
+  return axios.post(userApi.Logout)
+}
 
 // /**
 //  * get user 2step code open?
