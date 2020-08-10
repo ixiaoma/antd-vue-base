@@ -122,6 +122,7 @@ import { STable, Ellipsis } from '@/components'
 
 import StepByStepModal from './modules/StepByStepModal'
 import CreateForm from './modules/CreateForm'
+import { getServiceList } from '@/api/user'
 
 const columns = [
   {
@@ -236,9 +237,6 @@ export default {
     statusTypeFilter (type) {
       return statusMap[type].status
     }
-  },
-  created () {
-    getRoleList({ t: new Date() })
   },
   computed: {
     rowSelection () {

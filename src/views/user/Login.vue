@@ -104,7 +104,7 @@ import md5 from 'md5'
 import TwoStepCaptcha from '@/components/tools/TwoStepCaptcha'
 import { mapActions } from 'vuex'
 // eslint-disable-next-line no-unused-vars
-import { login, getSmsCaptcha, get2step } from '@/api/user'
+import { login, get2step } from '@/api/user'
 
 export default {
   components: {

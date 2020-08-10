@@ -54,6 +54,8 @@ import STree from '@/components/Tree/Tree'
 import { STable } from '@/components'
 import OrgModal from './modules/OrgModal'
 
+import { getServiceList } from '@/api/user'
+
 export default {
   name: 'TreeList',
   components: {

@@ -3,7 +3,7 @@
     <div style="float: left">
       <slot name="extra">{{ extra }}</slot>
     </div>
-    <div style="float: right">
+    <div style="text-align: center;">
       <slot></slot>
     </div>
   </div>
@@ -41,7 +41,3 @@ export default {
   }
 }
 </script>
-
-<style lang="less" scoped>
-
-</style>

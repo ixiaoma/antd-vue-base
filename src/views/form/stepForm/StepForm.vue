@@ -1,35 +1,34 @@
 <template>
-  <page-header-wrapper>
-    <!-- PageHeader 第二种使用方式 (v-slot) -->
-    <template v-slot:content>
-      将一个冗长或用户不熟悉的表单任务分成多个步骤，指导用户完成。
-    </template>
-    <a-card :bordered="false">
-      <a-steps class="steps" :current="currentTab">
-        <a-step title="填写转账信息" />
-        <a-step title="确认转账信息" />
-        <a-step title="完成" />
-      </a-steps>
-      <div class="content">
-        <step1 v-if="currentTab === 0" @nextStep="nextStep"/>
-        <step2 v-if="currentTab === 1" @nextStep="nextStep" @prevStep="prevStep"/>
-        <step3 v-if="currentTab === 2" @prevStep="prevStep" @finish="finish"/>
-      </div>
-    </a-card>
-  </page-header-wrapper>
+  <a-card :bordered="false">
+    <a-steps class="steps" :current="currentTab">
+      <a-step title="填写转账信息" />
+      <a-step title="确认转账信息" />
+      <a-step title="完成" />
+    </a-steps>
+    <div class="content">
+      <step1 v-if="currentTab === 0" @nextStep="nextStep"/>
+      <step2 v-if="currentTab === 1" @nextStep="nextStep" @prevStep="prevStep"/>
+      <step3 v-if="currentTab === 2" @prevStep="prevStep" @finish="finish"/>
+    </div>
+    <footer-tool-bar>
+      <a-button type="primary" @click="nextStep">下一步</a-button>
+    </footer-tool-bar>
+  </a-card>
 </template>
 
 <script>
 import Step1 from './Step1'
 import Step2 from './Step2'
 import Step3 from './Step3'
+import FooterToolBar from '@/layouts/FooterToolbar'
 
 export default {
   name: 'StepForm',
   components: {
     Step1,
     Step2,
-    Step3
+    Step3,
+    FooterToolBar
   },
   data () {
     return {

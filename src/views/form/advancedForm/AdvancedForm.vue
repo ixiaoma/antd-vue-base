@@ -77,7 +77,7 @@
 <script>
 import RepositoryForm from './RepositoryForm'
 import TaskForm from './TaskForm'
-import FooterToolBar from '@/components/FooterToolbar'
+import FooterToolBar from '@/layouts/FooterToolbar'
 import { baseMixin } from '@/store/app-mixin'
 
 const fieldLabels = {

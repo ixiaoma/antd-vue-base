@@ -10,7 +10,8 @@ const userApi = {
   SendSmsErr: '/account/sms_err',
   // get my info
   UserInfo: '/user/info',
-  UserMenu: '/user/nav'
+  UserMenu: '/user/nav',
+  Service: '/service'
 }
 
 /**
@@ -37,7 +38,7 @@ export function login (parameter) {
 // }
 
 export function getInfo () {
-  return axios.get(userApi.UserInfo, { headers: { 'Content-Type': 'application/json;charset=UTF-8' } })
+  return axios.get(userApi.UserInfo)
 }
 
 // export function getCurrentUserNav () {
@@ -57,4 +58,8 @@ export function logout () {
 //  */
 export function get2step (parameter) {
   return axios.post(userApi.twoStepCode, parameter)
+}
+
+export function getServiceList (parameter) {
+  return axios.get(userApi.Service, { params: parameter })
 }
