@@ -1,5 +1,6 @@
 import moment from 'moment'
 export default {
+    name:'TableFilter',
     data () {
       return {
         expand: false,
@@ -7,7 +8,7 @@ export default {
       }
     },
     props: {
-        fields: {
+        filterList: {
             type: Array,
             default: null
         },
@@ -17,7 +18,7 @@ export default {
     },
     computed: {
       count () {
-        return this.expand ? this.fields.length : 2
+        return this.expand ? this.filterList.length : 2
       }
     },
     methods: {
@@ -27,7 +28,7 @@ export default {
         } = this
         validateFields((_err, values) => {
           const searchArr = []
-          this.fields.forEach(ele => {
+          this.filterList.forEach(ele => {
             if (values[ele.dataIndex] || values[ele.dataIndex] === 0) {
               let operator = ele.type === 'Select' || ele.type === 'Number' ? 'eq' : 'contain'
               let value = values[ele.dataIndex]

@@ -1,6 +1,5 @@
 import T from 'ant-design-vue/es/table/Table'
 import get from 'lodash.get'
-import searchFilter from '../searchFilter/index.vue'
 
 export default {
   data () {
@@ -15,7 +14,6 @@ export default {
       localPagination: Object.assign({}, this.pagination)
     }
   },
-  components: { searchFilter },
   props: Object.assign({}, T.props, {
     rowKey: {
       type: [String, Function],

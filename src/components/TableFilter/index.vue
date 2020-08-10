@@ -3,7 +3,7 @@
     <a-form :form="form" @submit="handleSearch">
       <a-row :gutter="24">
         <a-col
-          v-for="(k,i) in fields"
+          v-for="(k,i) in filterList"
           :key="i"
           :span="8"
           :style="{ display: i < count ? 'block' : 'none' }"
@@ -30,7 +30,7 @@
         <a-col :span="8" :style="{ textAlign: 'right' }" class="search-reset-btn">
           <a-button type="primary" icon="search" @click="handleSearch">查询</a-button>
           <a-button style="margin-left: 8px" icon="sync" @click="handleReset">重置</a-button>
-          <a v-if="fields.length > 2" :style="{ marginLeft: '8px', fontSize: '14px' }" @click="toggle">
+          <a v-if="filterList.length > 2" :style="{ marginLeft: '8px', fontSize: '14px' }" @click="toggle">
             {{ expand ? '收起' : '展开全部' }} <a-icon :type="expand ? 'up' : 'down'" />
           </a>
         </a-col>
@@ -40,6 +40,9 @@
 </template>
 <script src='./index.js'></script>
 <style>
+.search-reset-btn{
+  float: right;
+}
 .ant-advanced-search-form {
   padding: 24px;
 }
