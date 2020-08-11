@@ -313,7 +313,31 @@ export const asyncRouterMap = {
             ]
           }
         ]
-      }
+      },
+      //员工管理
+      {
+        path: '/staffManage',
+        name: 'staffManage',
+        component: RouteView,
+        redirect: '/staffManage/staffList',
+        meta: { title: '员工管理', icon: 'table', permission: [ 'table' ] },
+        children: [
+          {
+            path: '/staffManage/staffList/:pageNo([1-9]\\d*)?',
+            name: 'staffList',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/staffList/staffList.vue'),
+            meta: { title: '员工列表', keepAlive: true, permission: [ 'table' ] }
+          },
+          {
+            path: '/staffManage/staffApprovalList/:pageNo([1-9]\\d*)?',
+            name: 'staffApprovalList',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/staffApprovalList/staffApprovalList.vue'),
+            meta: { title: '员工审批列表', keepAlive: true, permission: [ 'table' ] }
+          }
+        ]
+      },
     ]
 }
 

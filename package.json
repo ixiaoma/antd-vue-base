@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "vue-cli-service serve --open",
     "build": "vue-cli-service build",
+    "new:page": "node ./script/generateCode.js",
     "build:test": "vue-cli-service build --mode test",
     "lint": "vue-cli-service lint",
     "lint:fix": "eslint --fix --ext .js --ext .jsx --ext .vue src/ test/unit test/e2e/specs"
