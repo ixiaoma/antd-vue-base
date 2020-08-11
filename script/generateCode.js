@@ -10,6 +10,7 @@ const component = require('./path');
 //引入js模板
 const jsTemp = require('./template/jsTemplate');
 const vueTemp = require('./template/vueTemplate');
+const codeTemp = require('./template/codeTemplate');
 
 //代码生成工具函数
 const vueTemplate = ( compoenntName, tempName = 'Init' ) => {
@@ -35,6 +36,15 @@ const lessTemplate = compoenntName => {
   
 }
 `
+};
+
+const codeTemplate = compoenntName => {
+  if (codeTemp[ 'Code' ](compoenntName)) {
+    return codeTemp[ 'Code' ](compoenntName)
+  } else {
+    errorLog("未找到Code对应的Js模板");
+    return false;
+  }
 };
 
 const generateFile = ( path, data ) => {
@@ -85,6 +95,8 @@ process.stdin.on('data', async chunk => {
   const entryComponentName = resolve(componentDirectory, `${ inputName }.js`);
   //生成less
   const componentStyleName = resolve(componentDirectory, `${ inputName }.less`);
+ //生成codeList.js
+ const componentCodeName = resolve(componentDirectory, `codeList.js`);
 
   const hasComponentDirectory = fs.existsSync(componentDirectory);
   if (hasComponentDirectory) {
@@ -107,6 +119,8 @@ process.stdin.on('data', async chunk => {
     await generateFile(entryComponentName, jsTemplate(componentName, tempName));
     log(`正在生成 less 文件 ${ componentStyleName }`);
     await generateFile(componentStyleName, lessTemplate(componentName));
+    log(`正在生成 code 文件 ${ componentCodeName }`);
+    await generateFile(componentCodeName, codeTemplate(componentName));
     successLog('模板创建完成！请前往对应目录进行开发...');
   } catch (e) {
     errorLog(e.message)

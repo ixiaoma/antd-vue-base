@@ -3,45 +3,7 @@ import moment from 'moment'
 import TableFilter from '@/components/TableFilter/index.vue'
 import { STable, Ellipsis } from '@/components'
 import { getServiceList } from '@/api/user'
-
-const columns = [
-  {
-    title: '#',
-    scopedSlots: { customRender: 'serial' }
-  },
-  {
-    title: '规则编号',
-    dataIndex: 'no'
-  },
-  {
-    title: '描述',
-    dataIndex: 'description',
-    scopedSlots: { customRender: 'description' }
-  },
-  {
-    title: '服务调用次数',
-    dataIndex: 'callNo',
-    sorter: true,
-    needTotal: true,
-    customRender: (text) => text + ' 次'
-  },
-  {
-    title: '状态',
-    dataIndex: 'status',
-    scopedSlots: { customRender: 'status' }
-  },
-  {
-    title: '更新时间',
-    dataIndex: 'updatedAt',
-    sorter: true
-  },
-  {
-    title: '操作',
-    dataIndex: 'action',
-    width: '150px',
-    scopedSlots: { customRender: 'action' }
-  }
-]
+import {columns,filterList} from './codeList.js'
 
 const statusMap = {
   0: {
@@ -61,26 +23,6 @@ const statusMap = {
     text: '异常'
   }
 }
-const filterList = [
-  {
-    searchLabel: '规则编号',
-    searchKey: 'id'
-  }, {
-    searchLabel: '使用状态',
-    searchKey: 'status',
-    searchType: 'Select',
-    selectList: [
-      {
-        key: 'close',
-        value: '关闭'
-      }
-    ]
-  }, {
-    searchLabel: '使用时间',
-    searchKey: 'timer',
-    searchType: 'Time'
-  }
-]
 export default {
   name: 'staffListList',
   title: 'staffList',
