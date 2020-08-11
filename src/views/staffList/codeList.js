@@ -79,36 +79,60 @@ export const filterList = [
   ]
 
   export const columns = [
+    // {
+    //   title: '#',
+    //   scopedSlots: { customRender: 'serial' }
+    // },
     {
-      title: '#',
-      scopedSlots: { customRender: 'serial' }
+      title: '工号',
+      dataIndex: 'staffCode'
     },
     {
-      title: '规则编号',
-      dataIndex: 'no'
+      title: '姓名',
+      dataIndex: 'staffName'
     },
     {
-      title: '描述',
-      dataIndex: 'description',
-      scopedSlots: { customRender: 'description' }
+      title: '部门',
+      dataIndex: 'staffDept'
     },
     {
-      title: '服务调用次数',
-      dataIndex: 'callNo',
-      sorter: true,
-      needTotal: true,
-      customRender: (text) => text + ' 次'
+      title: '岗位',
+      dataIndex: 'staffJob'
     },
+    {
+      title: '人员类型',
+      dataIndex: 'staffType'
+    },
+    {
+      title: 'ITcode',
+      dataIndex: 'itcode'
+    },
+    // {
+    //   title: '描述',
+    //   dataIndex: 'description',
+    //   scopedSlots: { customRender: 'description' }
+    // },
+    // {
+    //   title: '服务调用次数',
+    //   dataIndex: 'callNo',
+    //   sorter: true,
+    //   needTotal: true,
+    //   customRender: (text) => text + ' 次'
+    // },
     {
       title: '状态',
       dataIndex: 'status',
       scopedSlots: { customRender: 'status' }
     },
     {
-      title: '更新时间',
-      dataIndex: 'updatedAt',
-      sorter: true
+      title: '档案状态',
+      dataIndex: 'dastatus'
     },
+    // {
+    //   title: '更新时间',
+    //   dataIndex: 'updatedAt',
+    //   sorter: true
+    // },
     {
       title: '操作',
       dataIndex: 'action',

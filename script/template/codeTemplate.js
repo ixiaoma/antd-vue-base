@@ -6,29 +6,6 @@ const Code = compoenntName => {
           searchKey: 'staffCode'
         },
         {
-          searchLabel: '员工姓名',
-          searchKey: 'staffName'
-        },
-        {
-          searchLabel: '员工部门',
-          searchKey: 'staffDept'
-        }, 
-        {
-          searchLabel: '员工岗位',
-          searchKey: 'staffJob',
-          searchType: 'Select',
-          selectList: [
-            {
-              key: '前端开发',
-              value: '前端开发'
-            }
-          ]
-        },
-        {
-          searchLabel: 'ITCode',
-          searchKey: 'itcode'
-        }, 
-        {
           searchLabel: '状态',
           searchKey: 'status',
           searchType: 'Select',
@@ -44,34 +21,9 @@ const Code = compoenntName => {
           ]
         },
         {
-          searchLabel: '档案状态',
-          searchKey: 'dastatus',
-          searchType: 'Select',
-          selectList: [
-            {
-              key: '1',
-              value: '驳回'
-            },
-            {
-              key: '2',
-              value: '通过'
-            }
-          ]
-        },
-        {
-          searchLabel: '人员类型',
-          searchKey: 'staffType',
-          searchType: 'Select',
-          selectList: [
-            {
-              key: '实习生',
-              value: '实习生'
-            },
-            {
-              key: '正式员工',
-              value: '正式员工'
-            }
-          ]
+            searchLabel: '使用时间',
+            searchKey: 'timer',
+            searchType: 'Time'
         }
       ]
     
