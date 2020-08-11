@@ -119,8 +119,10 @@ process.stdin.on('data', async chunk => {
     await generateFile(entryComponentName, jsTemplate(componentName, tempName));
     log(`正在生成 less 文件 ${ componentStyleName }`);
     await generateFile(componentStyleName, lessTemplate(componentName));
-    log(`正在生成 code 文件 ${ componentCodeName }`);
-    await generateFile(componentCodeName, codeTemplate(componentName));
+    if(tempName=='Table'){
+      log(`正在生成 code 文件 ${ componentCodeName }`);
+      await generateFile(componentCodeName, codeTemplate(componentName));
+    }   
     successLog('模板创建完成！请前往对应目录进行开发...');
   } catch (e) {
     errorLog(e.message)
