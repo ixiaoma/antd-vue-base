@@ -1,14 +1,14 @@
 <template>
-  <div id="components-form-demo-advanced-search">
-    <a-form :form="form" @submit="handleSearch">
-      <a-row :gutter="24">
+  <div class="table-page-search-wrapper">
+    <a-form :form="form" @submit="handleSearch" layout="inline">
+      <a-row :gutter="48">
         <a-col
           v-for="(k,i) in filterList"
           :key="i"
-          :span="8"
+          :md="8" :sm="24"
           :style="{ display: i < count ? 'block' : 'none' }"
         >
-          <a-form-item :label="k.searchLabel" :label-col="{ span: 8 }" :wrapper-col="{ span: 16 }">
+          <a-form-item :label="k.searchLabel">
             <a-input-number v-if="k.searchType==&quot;Number&quot;" v-decorator="[k.searchKey]" style="width:100%" :placeholder="k.searchLabel"/>
             <a-select
               v-else-if="k.searchType==&quot;Select&quot;"
@@ -54,8 +54,8 @@
 .ant-advanced-search-form .ant-form-item-control-wrapper {
   flex: 1;
 }
-
+/* 
 #components-form-demo-advanced-search .ant-form {
   max-width: none;
-}
+} */
 </style>
