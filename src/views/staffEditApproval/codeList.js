@@ -66,10 +66,6 @@ export const filterList = [
 
 export const columns = [
   {
-    title: '序号',
-    scopedSlots: { customRender: 'serial' }
-  },
-  {
     title: '员工姓名',
     dataIndex: 'staffName'
   },
@@ -82,12 +78,12 @@ export const columns = [
     dataIndex: 'staffDept'
   },
   {
-    title: '调动时间',
-    dataIndex: 'staffJob'
+    title: '调动部门',
+    dataIndex: 'staffType'
   },
   {
-    title: '现人员类型',
-    dataIndex: 'staffType'
+    title: '调动时间',
+    dataIndex: 'staffJob'
   },
   {
     title: '调动状态',
@@ -97,7 +93,7 @@ export const columns = [
   {
     title: '操作',
     dataIndex: 'action',
-    width: '150px',
+    width: '80px',
     scopedSlots: { customRender: 'action' }
   }
 ]

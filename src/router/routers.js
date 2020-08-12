@@ -341,8 +341,43 @@ export const asyncRouterMap = {
             name: 'staffEditList',
             hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
             component: () => import('@/views/staffEditList/staffEditList.vue'),
-            meta: { title: '员工档案变更', keepAlive: true, permission: [ 'table' ] }
-          }
+            meta: { title: '员工调动列表', keepAlive: true, permission: [ 'table' ] }
+          },
+          {
+            path: '/staffManage/staffEditApproval/:pageNo([1-9]\\d*)?',
+            name: 'staffEditApproval',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/staffEditApproval/staffEditApproval.vue'),
+            meta: { title: '员工调动审批', keepAlive: true, permission: [ 'table' ] }
+          },
+          {
+            path: '/staffManage/staffQuitList/:pageNo([1-9]\\d*)?',
+            name: 'staffQuitList',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/staffQuitList/staffQuitList.vue'),
+            meta: { title: '员工离职列表', keepAlive: true, permission: [ 'table' ] }
+          },
+          {
+            path: '/staffManage/staffQuitApproval/:pageNo([1-9]\\d*)?',
+            name: 'staffQuitApproval',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/staffQuitApproval/staffQuitApproval.vue'),
+            meta: { title: '员工离职审批', keepAlive: true, permission: [ 'table' ] }
+          },
+          {
+            path: '/staffManage/staffEntryList/:pageNo([1-9]\\d*)?',
+            name: 'staffEntryList',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/staffEntryList/staffEntryList.vue'),
+            meta: { title: '员工入职列表', keepAlive: true, permission: [ 'table' ] }
+          },
+          {
+            path: '/staffManage/staffEntryApproval/:pageNo([1-9]\\d*)?',
+            name: 'staffEntryApproval',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/staffEntryApproval/staffEntryApproval.vue'),
+            meta: { title: '员工入职审批', keepAlive: true, permission: [ 'table' ] }
+          },
         ]
       },
     ]
