@@ -8,7 +8,7 @@ export const filterList = [
     searchKey: 'staffName'
   },
   {
-    searchLabel: '工作城市',
+    searchLabel: '员工部门',
     searchKey: 'staffDept'
   }, 
   {
@@ -23,11 +23,34 @@ export const filterList = [
     ]
   },
   {
-    searchLabel: 'ITCode',
-    searchKey: 'itcode'
+    searchLabel: '员工职务',
+    searchKey: 'staffzw'
   }, 
   {
-    searchLabel: '状态',
+    searchLabel: '员工职称',
+    searchKey: 'staffzc'
+  }, 
+  {
+    searchLabel: '员工职级',
+    searchKey: 'staffzj'
+  }, 
+  {
+    searchLabel: '人员类型',
+    searchKey: 'staffType',
+    searchType: 'Select',
+    selectList: [
+      {
+        key: '实习生',
+        value: '实习生'
+      },
+      {
+        key: '正式员工',
+        value: '正式员工'
+      }
+    ]
+  }, 
+  {
+    searchLabel: '员工状态',
     searchKey: 'status',
     searchType: 'Select',
     selectList: [
@@ -41,24 +64,10 @@ export const filterList = [
       }
     ]
   },
+  
   {
-    searchLabel: '审批状态',
-    searchKey: 'dastatus',
-    searchType: 'Select',
-    selectList: [
-      {
-        key: '1',
-        value: '驳回'
-      },
-      {
-        key: '2',
-        value: '通过'
-      }
-    ]
-  },
-  {
-    searchLabel: '人员类型',
-    searchKey: 'staffType',
+    searchLabel: '选择机构',
+    searchKey: 'selectType',
     searchType: 'Select',
     selectList: [
       {
@@ -100,47 +109,37 @@ export const columns = [
     dataIndex: 'staffJob'
   },
   {
+    title: '职务',
+    dataIndex: 'staffzw'
+  },
+  {
+    title: '职位',
+    dataIndex: 'staffzww'
+  },
+  {
     title: '人员类型',
     dataIndex: 'staffType'
   },
   {
-    title: '工作城市',
+    title: '工种',
     dataIndex: 'jobCity'
   },
   {
-    title: 'ITcode',
+    title: '关联用户编号',
     dataIndex: 'itcode'
   },
-  // {
-  //   title: '描述',
-  //   dataIndex: 'description',
-  //   scopedSlots: { customRender: 'description' }
-  // },
-  // {
-  //   title: '服务调用次数',
-  //   dataIndex: 'callNo',
-  //   sorter: true,
-  //   needTotal: true,
-  //   customRender: (text) => text + ' 次'
-  // },
   {
     title: '状态',
     dataIndex: 'status',
     scopedSlots: { customRender: 'status' }
   },
   {
-    title: '审批状态',
-    dataIndex: 'dastatus'
+    title: '创建人',
+    dataIndex: 'creater'
   },
   // {
   //   title: '更新时间',
   //   dataIndex: 'updatedAt',
   //   sorter: true
   // },
-  {
-    title: '操作',
-    dataIndex: 'action',
-    width: '80px',
-    scopedSlots: { customRender: 'action' }
-  }
 ]

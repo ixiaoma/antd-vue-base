@@ -327,14 +327,21 @@ export const asyncRouterMap = {
             name: 'staffList',
             hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
             component: () => import('@/views/staffList/staffList.vue'),
-            meta: { title: '员工列表', keepAlive: true, permission: [ 'table' ] }
+            meta: { title: '员工档案列表', keepAlive: true, permission: [ 'table' ] }
           },
           {
             path: '/staffManage/staffApprovalList/:pageNo([1-9]\\d*)?',
             name: 'staffApprovalList',
             hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
             component: () => import('@/views/staffApprovalList/staffApprovalList.vue'),
-            meta: { title: '员工审批列表', keepAlive: true, permission: [ 'table' ] }
+            meta: { title: '员工档案审批', keepAlive: true, permission: [ 'table' ] }
+          },
+          {
+            path: '/staffManage/staffEditList/:pageNo([1-9]\\d*)?',
+            name: 'staffEditList',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/staffEditList/staffEditList.vue'),
+            meta: { title: '员工档案变更', keepAlive: true, permission: [ 'table' ] }
           }
         ]
       },

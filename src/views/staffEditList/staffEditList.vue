@@ -1,9 +1,9 @@
 <style lang="less" scoped>
-  @import "./staffApprovalList.less";
+  @import "./staffEditList.less";
 </style>
 <template>
-<div class="staffApprovalList">
-    <!--这是staffApprovalList列表页面-->
+<div class="staffEditList">
+    <!--这是staffEditList列表页面-->
     <a-card :bordered="false">
       <table-filter :filterList='filterList'/>
       <s-table
@@ -24,18 +24,10 @@
         <span slot="description" slot-scope="text">
           <ellipsis :length="4" tooltip>{{ text }}</ellipsis>
         </span>
-
-        <span slot="action" slot-scope="text, record">
-          <template>
-            <a @click="handleEdit(record)">查看</a>
-            <!-- <a-divider type="vertical" />
-            <a @click="handleSub(record)">订阅报警</a> -->
-          </template>
-        </span>
       </s-table>
     </a-card>
   </div>
 </template>
 
 
-<script src="./staffApprovalList.js"></script>
+<script src="./staffEditList.js"></script>

@@ -17,6 +17,7 @@
             批量操作 <a-icon type="down" />
           </a-button>
         </a-dropdown>
+        <a-button type="default" icon="export">导出</a-button>
       </div>
 
       <s-table
@@ -40,9 +41,9 @@
 
         <span slot="action" slot-scope="text, record">
           <template>
-            <a @click="handleEdit(record)">配置</a>
-            <a-divider type="vertical" />
-            <a @click="handleSub(record)">订阅报警</a>
+            <a @click="handleEdit(record)">修改</a>
+            <!-- <a-divider type="vertical" />
+            <a @click="handleSub(record)">订阅报警</a> -->
           </template>
         </span>
       </s-table>
