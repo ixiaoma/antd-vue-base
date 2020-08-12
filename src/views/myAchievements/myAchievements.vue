@@ -11,7 +11,7 @@
         <a-dropdown v-action:edit v-if="selectedRowKeys.length > 0">
           <a-menu slot="overlay">
             <a-menu-item key="1"><a-icon type="delete" />删除</a-menu-item>
-            <a-menu-item key="2"><a-icon type="lock" />锁定</a-menu-item>
+            <!--<a-menu-item key="2"><a-icon type="lock" />锁定</a-menu-item>-->
           </a-menu>
           <a-button style="margin-left: 8px">
             批量操作 <a-icon type="down" />
@@ -40,9 +40,7 @@
 
         <span slot="action" slot-scope="text, record">
           <template>
-            <a @click="handleEdit(record)">配置</a>
-            <a-divider type="vertical" />
-            <a @click="handleSub(record)">订阅报警</a>
+            <a @click="handleSub(record)">查看详情</a>
           </template>
         </span>
       </s-table>
