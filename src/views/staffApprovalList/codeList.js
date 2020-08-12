@@ -79,10 +79,6 @@ export const filterList = [
 ]
 
 export const columns = [
-  // {
-  //   title: '#',
-  //   scopedSlots: { customRender: 'serial' }
-  // },
   {
     title: '工号',
     dataIndex: 'staffCode'
@@ -111,18 +107,6 @@ export const columns = [
     title: 'ITcode',
     dataIndex: 'itcode'
   },
-  // {
-  //   title: '描述',
-  //   dataIndex: 'description',
-  //   scopedSlots: { customRender: 'description' }
-  // },
-  // {
-  //   title: '服务调用次数',
-  //   dataIndex: 'callNo',
-  //   sorter: true,
-  //   needTotal: true,
-  //   customRender: (text) => text + ' 次'
-  // },
   {
     title: '状态',
     dataIndex: 'status',
@@ -130,13 +114,8 @@ export const columns = [
   },
   {
     title: '审批状态',
-    dataIndex: 'dastatus'
+    dataIndex: 'approvalStatus'
   },
-  // {
-  //   title: '更新时间',
-  //   dataIndex: 'updatedAt',
-  //   sorter: true
-  // },
   {
     title: '操作',
     dataIndex: 'action',
@@ -144,3 +123,34 @@ export const columns = [
     scopedSlots: { customRender: 'action' }
   }
 ]
+
+export const result={
+        pageNo: 1,
+        pageSize: 10,
+        totalCount: 2,
+        totalPage: 1,
+        data:[
+          {
+            staffCode:'jiangyx',
+            staffName:'叶落森',
+            staffDept:'研发中心',
+            staffJob:'前端开发',
+            staffType:'前端开发',
+            jobCity:'北京',
+            itcode:'jiangyx',
+            status:2,
+            approvalStatus:'通过'        
+          },
+          {
+            staffCode:'jiangyx2',
+            staffName:'叶落森2',
+            staffDept:'研发中心',
+            staffJob:'前端开发',
+            staffType:'前端开发',
+            jobCity:'北京',
+            itcode:'jiangyx2',
+            status:2,
+            approvalStatus:'通过'
+          }
+        ]
+      }

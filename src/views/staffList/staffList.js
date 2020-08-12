@@ -3,12 +3,12 @@ import moment from 'moment'
 import TableFilter from '@/components/TableFilter/index.vue'
 import { STable, Ellipsis } from '@/components'
 import { getServiceList } from '@/api/user'
-import {columns,filterList} from './codeList.js'
+import {columns,filterList,result} from './codeList.js'
 
 const statusMap = {
   0: {
     status: 'default',
-    text: '关闭'
+    text: '在职'
   },
   1: {
     status: 'processing',
@@ -16,7 +16,7 @@ const statusMap = {
   },
   2: {
     status: 'success',
-    text: '已上线'
+    text: '在职'
   },
   3: {
     status: 'error',
@@ -49,7 +49,8 @@ export default {
         console.log('loadData request parameters:', requestParameters)
         return getServiceList(requestParameters)
           .then(res => {
-            return res.result
+            // return res.result
+            return result
           })
       },
       selectedRowKeys: [],

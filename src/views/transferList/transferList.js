@@ -1,26 +1,4 @@
-const Init = compoenntName => {
-  return `
-export default {
-  name: '${ compoenntName }Page',
-  title: '${ compoenntName }',
-  components: {},
-  data(){
-    return {
-      
-    }
-  },
-  computed: {},
-  methods:{
-    
-  },
-  created(){
 
-  }
-}
-`
-};
-const Table = compoenntName => {
-  return `
 import moment from 'moment'
 import TableFilter from '@/components/TableFilter/index.vue'
 import { STable, Ellipsis } from '@/components'
@@ -47,8 +25,8 @@ const statusMap = {
 }
 
 export default {
-  name: '${ compoenntName }List',
-  title: '${ compoenntName }',
+  name: 'transferListList',
+  title: '我的调动',
   components: {
     STable,
     Ellipsis,
@@ -72,6 +50,7 @@ export default {
         console.log('loadData request parameters:', requestParameters)
         return getServiceList(requestParameters)
           .then(res => {
+            console.log(res.result)
             // return res.result
             return result
           })
@@ -119,10 +98,3 @@ export default {
 
 
 
-`
-};
-
-module.exports = {
-  Init,
-  Table
-};

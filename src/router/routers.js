@@ -380,6 +380,72 @@ export const asyncRouterMap = {
           },
         ]
       },
+      {
+        path: '/personnelMatters',
+        name: 'personnelMatters',
+        component: RouteView,
+        redirect: '/personnelMatters/licenceList',
+        meta: { title: '我的人事', icon: 'table', permission: [ 'table' ] },
+        children: [
+          {
+            path: '/personnelMatters/licenceList/:pageNo([1-9]\\d*)?',
+            name: 'licenceList',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/licenceList/licenceList.vue'),
+            meta: { title: '我的证照', keepAlive: true, permission: [ 'table' ] }
+          },
+          {
+            path: '/personnelMatters/agreeList/:pageNo([1-9]\\d*)?',
+            name: 'agreeList',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/agreeList/agreeList.vue'),
+            meta: { title: '我的合同', keepAlive: true, permission: [ 'table' ] }
+          },
+          {
+            path: '/personnelMatters/transferList/:pageNo([1-9]\\d*)?',
+            name: 'transferList',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/transferList/transferList.vue'),
+            meta: { title: '我的调动', keepAlive: true, permission: [ 'table' ] }
+          },
+          {
+            path: '/personnelMatters/workTimeList/:pageNo([1-9]\\d*)?',
+            name: 'workTimeList',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/workTimeList/workTimeList.vue'),
+            meta: { title: '我的考勤', keepAlive: true, permission: [ 'table' ] }
+          },
+          {
+            path: '/personnelMatters/vacationManage/:pageNo([1-9]\\d*)?',
+            name: 'vacationManage',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/vacationManage/vacationManage.vue'),
+            meta: { title: '休假管理', keepAlive: true, permission: [ 'table' ] }
+          },
+          {
+            path: '/personnelMatters/abnormalWorkManage/:pageNo([1-9]\\d*)?',
+            name: 'abnormalWorkManage',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/abnormalWorkManage/abnormalWorkManage.vue'),
+            meta: { title: '考勤异常管理', keepAlive: true, permission: [ 'table' ] }
+          },
+          {
+            path: '/personnelMatters/myAchievements/:pageNo([1-9]\\d*)?',
+            name: 'myAchievements',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/myAchievements/myAchievements.vue'),
+            meta: { title: '我的绩效', keepAlive: true, permission: [ 'table' ] }
+          },
+          // {
+          //   path: '/personnelMatters/staffEntryApproval/:pageNo([1-9]\\d*)?',
+          //   name: 'staffEntryApproval',
+          //   hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+          //   component: () => import('@/views/staffEntryApproval/staffEntryApproval.vue'),
+          //   meta: { title: '员工入职审批', keepAlive: true, permission: [ 'table' ] }
+          // },
+        ]
+      },
+
     ]
 }
 

@@ -1,26 +1,4 @@
-const Init = compoenntName => {
-  return `
-export default {
-  name: '${ compoenntName }Page',
-  title: '${ compoenntName }',
-  components: {},
-  data(){
-    return {
-      
-    }
-  },
-  computed: {},
-  methods:{
-    
-  },
-  created(){
 
-  }
-}
-`
-};
-const Table = compoenntName => {
-  return `
 import moment from 'moment'
 import TableFilter from '@/components/TableFilter/index.vue'
 import { STable, Ellipsis } from '@/components'
@@ -47,8 +25,8 @@ const statusMap = {
 }
 
 export default {
-  name: '${ compoenntName }List',
-  title: '${ compoenntName }',
+  name: 'abnormalWorkManageList',
+  title: '考勤异常管理',//abnormalWorkManage
   components: {
     STable,
     Ellipsis,
@@ -119,10 +97,3 @@ export default {
 
 
 
-`
-};
-
-module.exports = {
-  Init,
-  Table
-};

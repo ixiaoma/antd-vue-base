@@ -65,6 +65,33 @@ const Code = compoenntName => {
           scopedSlots: { customRender: 'action' }
         }
       ]
+
+      export const result={
+        pageNo: 1,
+        pageSize: 10,
+        totalCount: 2,
+        totalPage: 1,
+        data:[
+          {
+            no:'HT20170823',
+            name:'员工劳动合同',
+            staffName:'叶落森',
+            staffDept:'研发中心',
+            agreestatus:'生效中',
+            isTrue:'已转正',
+            status:0
+          },
+          {
+            no:'BM20170823',
+            name:'公司保密合同',
+            staffName:'叶落森',
+            staffDept:'研发中心',
+            agreestatus:'生效中',
+            isTrue:'已转正',
+            status:0
+          }
+        ]
+      }
     `
   };
 

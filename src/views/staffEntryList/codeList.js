@@ -57,7 +57,7 @@ export const columns = [
   },
   {
     title: '入职时间',
-    dataIndex: 'updatedAt',
+    dataIndex: 'staffEditDate',
     sorter: true
   },
   {
@@ -67,3 +67,34 @@ export const columns = [
     scopedSlots: { customRender: 'action' }
   }
 ]
+
+export const result={
+        pageNo: 1,
+        pageSize: 10,
+        totalCount: 2,
+        totalPage: 1,
+        data:[
+          {
+            staffCode:'jiangyx',
+            staffName:'叶落森',
+            staffDept:'研发中心',
+            staffEditDate:'2020-08-08',
+            staffType:'前端开发',
+            jobCity:'北京',
+            itcode:'jiangyx',
+            status:0,
+            approvalStatus:'通过'        
+          },
+          {
+            staffCode:'jiangyx2',
+            staffName:'叶落森2',
+            staffDept:'研发中心',
+            staffEditDate:'2020-08-08',
+            staffType:'前端开发',
+            jobCity:'北京',
+            itcode:'jiangyx2',
+            status:0,
+            approvalStatus:'通过'
+          }
+        ]
+      }

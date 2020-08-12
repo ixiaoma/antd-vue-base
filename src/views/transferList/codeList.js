@@ -24,7 +24,7 @@ export const filterList = [
   },
   {
     searchLabel: '调动状态',
-    searchKey: 'status',
+    searchKey: 'transferStatus',
     searchType: 'Select',
     selectList: [
       {
@@ -39,7 +39,7 @@ export const filterList = [
   },
   {
     searchLabel: '调动类型',
-    searchKey: 'staffType',
+    searchKey: 'transferType',
     searchType: 'Select',
     selectList: [
       {
@@ -54,12 +54,12 @@ export const filterList = [
   }, 
   {
     searchLabel: '调动开始时间',
-    searchKey: 'timeStart',
+    searchKey: 'transferTimeStart',
     searchType: 'Time'
   },
   {
     searchLabel: '调动结束时间',
-    searchKey: 'timeEnd',
+    searchKey: 'transferTimeEnd',
     searchType: 'Time'
   }
 ]
@@ -75,24 +75,23 @@ export const columns = [
   },
   {
     title: '调动编号',
-    dataIndex: 'staffCode'
+    dataIndex: 'transferCode'
   },
   {
     title: '调动类型',
-    dataIndex: 'staffDept'
+    dataIndex: 'transferType'
   },
   {
     title: '调动时间',
-    dataIndex: 'staffEditDate'
+    dataIndex: 'transferTime'
   },
   {
     title: '现人员类型',
-    dataIndex: 'staffType'
+    dataIndex: 'transferType'
   },
   {
     title: '调动状态',
-    dataIndex: 'status',
-    scopedSlots: { customRender: 'status' }
+    dataIndex: 'transferStatus'
   },
   {
     title: '操作',
@@ -101,7 +100,6 @@ export const columns = [
     scopedSlots: { customRender: 'action' }
   }
 ]
-
 export const result={
         pageNo: 1,
         pageSize: 10,
@@ -109,26 +107,22 @@ export const result={
         totalPage: 1,
         data:[
           {
-            staffCode:'jiangyx',
+            transferCode:'LG000001',
+            transferType:'轮岗',
             staffName:'叶落森',
-            staffDept:'研发中心',
-            staffEditDate:'2020-08-08',
-            staffType:'前端开发',
-            jobCity:'北京',
-            itcode:'jiangyx',
-            status:0,
-            approvalStatus:'通过'        
+            transferStatus:'生效中',
+            isTrue:'已转正',
+            transferTime:'2008-01-09',
+            transferType:'前端开发'
           },
           {
-            staffCode:'jiangyx2',
-            staffName:'叶落森2',
-            staffDept:'研发中心',
-            staffEditDate:'2020-08-08',
-            staffType:'前端开发',
-            jobCity:'北京',
-            itcode:'jiangyx2',
-            status:0,
-            approvalStatus:'通过'
+            transferCode:'LG000002',
+            transferType:'轮岗',
+            staffName:'叶落森',
+            transferStatus:'生效中',
+            isTrue:'已转正',
+            transferTime:'2008-01-09',
+            transferType:'前端开发'
           }
         ]
       }
