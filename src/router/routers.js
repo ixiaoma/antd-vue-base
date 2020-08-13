@@ -591,3 +591,18 @@ export const constantRouterMap = {
       }
     ]
 }
+
+export const hideInMenuRouterMap = {
+  path: '/hidemenu',
+  component:BlankLayout,
+  redirect: '/hidemenu/baseForm',
+  hidden: true,
+  children:[
+    {
+      path: '/hidemenu/baseForm',
+      name: 'baseForm',
+      component: () => import('@/views/form/basicForm'),
+      meta: { title: '基础表单', keepAlive: true, permission: [ 'form' ] }
+    }
+  ]
+}

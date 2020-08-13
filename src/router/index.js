@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import NProgress from 'nprogress'
-import { constantRouterMap, asyncRouterMap } from './routers'
+import { constantRouterMap, asyncRouterMap, hideInMenuRouterMap } from './routers'
 
 Vue.use(Router)
 
 const router = new Router({
-  routes: [constantRouterMap, asyncRouterMap]
+  routes: [constantRouterMap, asyncRouterMap, hideInMenuRouterMap]
   // mode: 'history'
 })
 

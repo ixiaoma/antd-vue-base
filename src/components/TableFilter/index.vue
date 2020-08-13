@@ -43,17 +43,7 @@
 .search-reset-btn{
   float: right;
 }
-.ant-advanced-search-form {
-  padding: 24px;
-}
 
-.ant-advanced-search-form .ant-form-item {
-  display: flex;
-}
-
-.ant-advanced-search-form .ant-form-item-control-wrapper {
-  flex: 1;
-}
 /* 
 #components-form-demo-advanced-search .ant-form {
   max-width: none;

@@ -1,5 +1,5 @@
 <template>
-  <div :class="prefixCls" :style="{ width: barWidth, transition: '0.3s all' }">
+  <div :class="prefixCls" :style="{ transition: '0.3s all' }">
     <div style="float: left">
       <slot name="extra">{{ extra }}</slot>
     </div>

@@ -195,8 +195,7 @@ export default {
   },
   methods: {
     handleAdd () {
-      this.mdl = null
-      this.visible = true
+      this.$router.push({name:'baseForm',query:{title:'添加员工'}})
     },
     handleEdit (record) {
       this.visible = true
