@@ -33,7 +33,7 @@ export default {
     TableFilter
   },
   data () {
-    this.columns = columns
+    // this.columns = columns
     this.filterList = filterList
     return {
       // create model
@@ -56,7 +56,8 @@ export default {
         
       },
       selectedRowKeys: [],
-      selectedRows: []
+      selectedRows: [],
+      columns:[]
     }
   },
   filters: {
@@ -76,6 +77,9 @@ export default {
     }
   },
   methods: {
+    columnsLoad(){
+      this.columns=columns
+    },
     handleAdd () {
       this.mdl = null
       this.visible = true
@@ -91,7 +95,10 @@ export default {
       this.selectedRowKeys = selectedRowKeys
       this.selectedRows = selectedRows
     }
-  }
+  },
+  mounted() {
+    this.columnsLoad()
+  },
 }
 
 

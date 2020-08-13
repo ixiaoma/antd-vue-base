@@ -53,9 +53,9 @@ const Table = compoenntName => {
 
         <span slot="action" slot-scope="text, record">
           <template>
-            <a @click="handleEdit(record)">配置</a>
+            <a @click="handleSub(record)">查看</a>
             <a-divider type="vertical" />
-            <a @click="handleSub(record)">订阅报警</a>
+            <a @click="handleEdit(record)">编辑</a>
           </template>
         </span>
       </s-table>

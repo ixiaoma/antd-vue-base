@@ -53,6 +53,7 @@
         totalPage: 1,
         data:[
           {
+            id:'12345678',
             agreeCode:'HT20170823',
             agreeName:'员工劳动合同',
             staffName:'叶落森',
@@ -61,6 +62,7 @@
             isTrue:'已转正'
           },
           {
+            id:'23456789',
             agreeCode:'BM20170823',
             agreeName:'公司保密合同',
             staffName:'叶落森',

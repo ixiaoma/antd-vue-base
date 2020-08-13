@@ -1,5 +1,4 @@
-const Code = compoenntName => {
-    return `
+
     export const filterList = [
         {
           searchLabel: '员工工号',
@@ -98,9 +97,4 @@ const Code = compoenntName => {
           }
         ]
       }
-    `
-  };
-
-  module.exports = {
-    Code
-  };
+    

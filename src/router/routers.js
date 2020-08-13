@@ -314,135 +314,197 @@ export const asyncRouterMap = {
           }
         ]
       },
-      //员工管理
+      //人事档案
       {
-        path: '/staffManage',
-        name: 'staffManage',
+        path: '/personnelFiles',
+        name: 'personnelFiles',
         component: RouteView,
-        redirect: '/staffManage/staffList',
-        meta: { title: '员工管理', icon: 'table', permission: [ 'table' ] },
+        redirect: '/personnelFiles/staffList',
+        meta: { title: '人事档案', icon: 'table', permission: [ 'table' ] },
         children: [
           {
-            path: '/staffManage/staffList/:pageNo([1-9]\\d*)?',
+            path: '/personnelFiles/staffList/:pageNo([1-9]\\d*)?',
             name: 'staffList',
             hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
-            component: () => import('@/views/staffList/staffList.vue'),
+            component: () => import('@/views/personnelFiles/staffList/staffList.vue'),
             meta: { title: '员工档案列表', keepAlive: true, permission: [ 'table' ] }
           },
           {
-            path: '/staffManage/staffApprovalList/:pageNo([1-9]\\d*)?',
+            path: '/personnelFiles/staffApprovalList/:pageNo([1-9]\\d*)?',
             name: 'staffApprovalList',
             hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
-            component: () => import('@/views/staffApprovalList/staffApprovalList.vue'),
+            component: () => import('@/views/personnelFiles/staffApprovalList/staffApprovalList.vue'),
             meta: { title: '员工档案审批', keepAlive: true, permission: [ 'table' ] }
           },
+        ]
+      },
+      //人事调配
+      {
+        path: '/personnelDeployment',
+        name: 'personnelDeployment',
+        component: RouteView,
+        redirect: '/personnelDeployment/staffEditList',
+        meta: { title: '人事调配', icon: 'table', permission: [ 'table' ] },
+        children: [
           {
-            path: '/staffManage/staffEditList/:pageNo([1-9]\\d*)?',
+            path: '/personnelDeployment/staffEditList/:pageNo([1-9]\\d*)?',
             name: 'staffEditList',
             hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
-            component: () => import('@/views/staffEditList/staffEditList.vue'),
+            component: () => import('@/views/personnelDeployment/staffEditList/staffEditList.vue'),
             meta: { title: '员工调动列表', keepAlive: true, permission: [ 'table' ] }
           },
           {
-            path: '/staffManage/staffEditApproval/:pageNo([1-9]\\d*)?',
+            path: '/personnelDeployment/staffEditApproval/:pageNo([1-9]\\d*)?',
             name: 'staffEditApproval',
             hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
-            component: () => import('@/views/staffEditApproval/staffEditApproval.vue'),
+            component: () => import('@/views/personnelDeployment/staffEditApproval/staffEditApproval.vue'),
             meta: { title: '员工调动审批', keepAlive: true, permission: [ 'table' ] }
           },
           {
-            path: '/staffManage/staffQuitList/:pageNo([1-9]\\d*)?',
+            path: '/personnelDeployment/staffQuitList/:pageNo([1-9]\\d*)?',
             name: 'staffQuitList',
             hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
-            component: () => import('@/views/staffQuitList/staffQuitList.vue'),
+            component: () => import('@/views/personnelDeployment/staffQuitList/staffQuitList.vue'),
             meta: { title: '员工离职列表', keepAlive: true, permission: [ 'table' ] }
           },
           {
-            path: '/staffManage/staffQuitApproval/:pageNo([1-9]\\d*)?',
+            path: '/personnelDeployment/staffQuitApproval/:pageNo([1-9]\\d*)?',
             name: 'staffQuitApproval',
             hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
-            component: () => import('@/views/staffQuitApproval/staffQuitApproval.vue'),
+            component: () => import('@/views/personnelDeployment/staffQuitApproval/staffQuitApproval.vue'),
             meta: { title: '员工离职审批', keepAlive: true, permission: [ 'table' ] }
           },
           {
-            path: '/staffManage/staffEntryList/:pageNo([1-9]\\d*)?',
+            path: '/personnelDeployment/staffEntryList/:pageNo([1-9]\\d*)?',
             name: 'staffEntryList',
             hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
-            component: () => import('@/views/staffEntryList/staffEntryList.vue'),
+            component: () => import('@/views/personnelDeployment/staffEntryList/staffEntryList.vue'),
             meta: { title: '员工入职列表', keepAlive: true, permission: [ 'table' ] }
           },
           {
-            path: '/staffManage/staffEntryApproval/:pageNo([1-9]\\d*)?',
+            path: '/personnelDeployment/staffEntryApproval/:pageNo([1-9]\\d*)?',
             name: 'staffEntryApproval',
             hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
-            component: () => import('@/views/staffEntryApproval/staffEntryApproval.vue'),
+            component: () => import('@/views/personnelDeployment/staffEntryApproval/staffEntryApproval.vue'),
             meta: { title: '员工入职审批', keepAlive: true, permission: [ 'table' ] }
           },
         ]
       },
+      //我的人事
       {
-        path: '/personnelMatters',
-        name: 'personnelMatters',
+        path: '/myPersonnel',
+        name: 'myPersonnel',
         component: RouteView,
-        redirect: '/personnelMatters/licenceList',
+        redirect: '/myPersonnel/licenceList',
         meta: { title: '我的人事', icon: 'table', permission: [ 'table' ] },
         children: [
           {
-            path: '/personnelMatters/licenceList/:pageNo([1-9]\\d*)?',
+            path: '/myPersonnel/licenceList/:pageNo([1-9]\\d*)?',
             name: 'licenceList',
             hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
-            component: () => import('@/views/licenceList/licenceList.vue'),
+            component: () => import('@/views/myPersonnel/licenceList/licenceList.vue'),
             meta: { title: '我的证照', keepAlive: true, permission: [ 'table' ] }
           },
           {
-            path: '/personnelMatters/agreeList/:pageNo([1-9]\\d*)?',
+            path: '/myPersonnel/agreeList/:pageNo([1-9]\\d*)?',
             name: 'agreeList',
             hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
-            component: () => import('@/views/agreeList/agreeList.vue'),
+            component: () => import('@/views/myPersonnel/agreeList/agreeList.vue'),
             meta: { title: '我的合同', keepAlive: true, permission: [ 'table' ] }
           },
           {
-            path: '/personnelMatters/transferList/:pageNo([1-9]\\d*)?',
+            path: '/myPersonnel/transferList/:pageNo([1-9]\\d*)?',
             name: 'transferList',
             hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
-            component: () => import('@/views/transferList/transferList.vue'),
+            component: () => import('@/views/myPersonnel/transferList/transferList.vue'),
             meta: { title: '我的调动', keepAlive: true, permission: [ 'table' ] }
           },
           {
-            path: '/personnelMatters/workTimeList/:pageNo([1-9]\\d*)?',
+            path: '/myPersonnel/workTimeList/:pageNo([1-9]\\d*)?',
             name: 'workTimeList',
             hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
-            component: () => import('@/views/workTimeList/workTimeList.vue'),
+            component: () => import('@/views/myPersonnel/workTimeList/workTimeList.vue'),
             meta: { title: '我的考勤', keepAlive: true, permission: [ 'table' ] }
           },
           {
-            path: '/personnelMatters/vacationManage/:pageNo([1-9]\\d*)?',
+            path: '/myPersonnel/vacationManage/:pageNo([1-9]\\d*)?',
             name: 'vacationManage',
             hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
-            component: () => import('@/views/vacationManage/vacationManage.vue'),
+            component: () => import('@/views/myPersonnel/vacationManage/vacationManage.vue'),
             meta: { title: '休假管理', keepAlive: true, permission: [ 'table' ] }
           },
           {
-            path: '/personnelMatters/abnormalWorkManage/:pageNo([1-9]\\d*)?',
+            path: '/myPersonnel/abnormalWorkManage/:pageNo([1-9]\\d*)?',
             name: 'abnormalWorkManage',
             hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
-            component: () => import('@/views/abnormalWorkManage/abnormalWorkManage.vue'),
+            component: () => import('@/views/myPersonnel/abnormalWorkManage/abnormalWorkManage.vue'),
             meta: { title: '考勤异常管理', keepAlive: true, permission: [ 'table' ] }
           },
           {
-            path: '/personnelMatters/myAchievements/:pageNo([1-9]\\d*)?',
+            path: '/myPersonnel/myAchievements/:pageNo([1-9]\\d*)?',
             name: 'myAchievements',
             hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
-            component: () => import('@/views/myAchievements/myAchievements.vue'),
+            component: () => import('@/views/myPersonnel/myAchievements/myAchievements.vue'),
             meta: { title: '我的绩效', keepAlive: true, permission: [ 'table' ] }
+          }
+        ]
+      },
+      {
+        path: '/licenceManagement',
+        name: 'licenceManagement',
+        component: RouteView,
+        redirect: '/licenceManagement/licenceInfoList',
+        meta: { title: '证照管理', icon: 'table', permission: [ 'table' ] },
+        children: [
+          {
+            path: '/licenceManagement/licenceInfoList/:pageNo([1-9]\\d*)?',
+            name: 'licenceInfoList',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/licenceManagement/licenceInfoList/licenceInfoList.vue'),
+            meta: { title: '证照信息列表', keepAlive: true, permission: [ 'table' ] }
           },
           // {
-          //   path: '/personnelMatters/staffEntryApproval/:pageNo([1-9]\\d*)?',
-          //   name: 'staffEntryApproval',
+          //   path: '/licenceManagement/agreeList/:pageNo([1-9]\\d*)?',
+          //   name: 'agreeList',
           //   hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
-          //   component: () => import('@/views/staffEntryApproval/staffEntryApproval.vue'),
-          //   meta: { title: '员工入职审批', keepAlive: true, permission: [ 'table' ] }
+          //   component: () => import('@/views/agreeList/agreeList.vue'),
+          //   meta: { title: '我的合同', keepAlive: true, permission: [ 'table' ] }
           // },
+          // {
+          //   path: '/licenceManagement/transferList/:pageNo([1-9]\\d*)?',
+          //   name: 'transferList',
+          //   hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+          //   component: () => import('@/views/transferList/transferList.vue'),
+          //   meta: { title: '我的调动', keepAlive: true, permission: [ 'table' ] }
+          // },
+          // {
+          //   path: '/licenceManagement/workTimeList/:pageNo([1-9]\\d*)?',
+          //   name: 'workTimeList',
+          //   hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+          //   component: () => import('@/views/workTimeList/workTimeList.vue'),
+          //   meta: { title: '我的考勤', keepAlive: true, permission: [ 'table' ] }
+          // },
+          // {
+          //   path: '/licenceManagement/vacationManage/:pageNo([1-9]\\d*)?',
+          //   name: 'vacationManage',
+          //   hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+          //   component: () => import('@/views/vacationManage/vacationManage.vue'),
+          //   meta: { title: '休假管理', keepAlive: true, permission: [ 'table' ] }
+          // },
+          // {
+          //   path: '/licenceManagement/abnormalWorkManage/:pageNo([1-9]\\d*)?',
+          //   name: 'abnormalWorkManage',
+          //   hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+          //   component: () => import('@/views/abnormalWorkManage/abnormalWorkManage.vue'),
+          //   meta: { title: '考勤异常管理', keepAlive: true, permission: [ 'table' ] }
+          // },
+          // {
+          //   path: '/licenceManagement/myAchievements/:pageNo([1-9]\\d*)?',
+          //   name: 'myAchievements',
+          //   hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+          //   component: () => import('@/views/myAchievements/myAchievements.vue'),
+          //   meta: { title: '我的绩效', keepAlive: true, permission: [ 'table' ] }
+          // }
         ]
       },
 
