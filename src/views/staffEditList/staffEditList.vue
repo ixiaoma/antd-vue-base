@@ -8,8 +8,8 @@
       <table-filter :filterList='filterList'/>
       <div class="table-operator">
         <a-button type="primary" icon="plus" @click="handleAdd">新建</a-button>
-        <a-button type="default" icon="export">导出</a-button>
-        <a-button type="default" icon="import">批量导入</a-button>
+        <a-button type="default" icon="download">导出</a-button>
+        <a-button type="default" icon="upload">批量导入</a-button>
       </div>
       <s-table
         ref="table"

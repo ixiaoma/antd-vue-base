@@ -17,7 +17,7 @@
             批量操作 <a-icon type="down" />
           </a-button>
         </a-dropdown>
-        <a-button type="default" icon="export">导出</a-button>
+        <a-button type="default" icon="download">导出</a-button>
       </div>
 
       <s-table
