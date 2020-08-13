@@ -1,27 +1,14 @@
 <style lang="less" scoped>
-  @import "./licenceInfoList.less";
+  @import "./agreeList.less";
 </style>
 <template>
-<div class="licenceInfoList">
-    <!--这是licenceInfoList列表页面-->
+<div class="agreeList">
+    <!--这是agreeList列表页面-->
     <a-card :bordered="false">
       <table-filter :filterList='filterList'/>
-      <div class="table-operator">
-        <a-button type="primary" icon="plus" @click="handleAdd">新建</a-button>
-        <a-dropdown v-action:edit v-if="selectedRowKeys.length > 0">
-          <a-menu slot="overlay">
-            <a-menu-item key="1"><a-icon type="delete" />删除</a-menu-item>
-            <!-- <a-menu-item key="2"><a-icon type="lock" />锁定</a-menu-item> -->
-          </a-menu>
-          <a-button style="margin-left: 8px">
-            批量操作 <a-icon type="down" />
-          </a-button>
-        </a-dropdown>
-      </div>
-
       <s-table
-        ref="table"
-        rowKey="key"
+        ref="table"      
+        :rowKey="(record) =>  record.id"
         :columns="columns"
         :filterList="filterList"
         :data="loadData"
@@ -41,8 +28,6 @@
         <span slot="action" slot-scope="text, record">
           <template>
             <a @click="handleSub(record)">查看</a>
-            <a-divider type="vertical" />
-            <a @click="handleEdit(record)">修改</a>
           </template>
         </span>
       </s-table>
@@ -51,4 +36,4 @@
 </template>
 
 
-<script src="./licenceInfoList.js"></script>
+<script src="./agreeList.js"></script>

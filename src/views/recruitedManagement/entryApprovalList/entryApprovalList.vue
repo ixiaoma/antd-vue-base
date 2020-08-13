@@ -1,9 +1,9 @@
 <style lang="less" scoped>
-  @import "./licenceInfoList.less";
+  @import "./entryApprovalList.less";
 </style>
 <template>
-<div class="licenceInfoList">
-    <!--这是licenceInfoList列表页面-->
+<div class="entryApprovalList">
+    <!--这是entryApprovalList列表页面-->
     <a-card :bordered="false">
       <table-filter :filterList='filterList'/>
       <div class="table-operator">
@@ -41,8 +41,6 @@
         <span slot="action" slot-scope="text, record">
           <template>
             <a @click="handleSub(record)">查看</a>
-            <a-divider type="vertical" />
-            <a @click="handleEdit(record)">修改</a>
           </template>
         </span>
       </s-table>
@@ -51,4 +49,4 @@
 </template>
 
 
-<script src="./licenceInfoList.js"></script>
+<script src="./entryApprovalList.js"></script>

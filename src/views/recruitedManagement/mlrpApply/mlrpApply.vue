@@ -1,9 +1,9 @@
 <style lang="less" scoped>
-  @import "./licenceInfoList.less";
+  @import "./mlrpApply.less";
 </style>
 <template>
-<div class="licenceInfoList">
-    <!--这是licenceInfoList列表页面-->
+<div class="mlrpApply">
+    <!--这是mlrpApply列表页面-->
     <a-card :bordered="false">
       <table-filter :filterList='filterList'/>
       <div class="table-operator">
@@ -11,7 +11,7 @@
         <a-dropdown v-action:edit v-if="selectedRowKeys.length > 0">
           <a-menu slot="overlay">
             <a-menu-item key="1"><a-icon type="delete" />删除</a-menu-item>
-            <!-- <a-menu-item key="2"><a-icon type="lock" />锁定</a-menu-item> -->
+            <a-menu-item key="2"><a-icon type="lock" />锁定</a-menu-item>
           </a-menu>
           <a-button style="margin-left: 8px">
             批量操作 <a-icon type="down" />
@@ -42,7 +42,7 @@
           <template>
             <a @click="handleSub(record)">查看</a>
             <a-divider type="vertical" />
-            <a @click="handleEdit(record)">修改</a>
+            <a @click="handleEdit(record)">编辑</a>
           </template>
         </span>
       </s-table>
@@ -51,4 +51,4 @@
 </template>
 
 
-<script src="./licenceInfoList.js"></script>
+<script src="./mlrpApply.js"></script>

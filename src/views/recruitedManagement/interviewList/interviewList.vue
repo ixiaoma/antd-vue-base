@@ -1,23 +1,11 @@
 <style lang="less" scoped>
-  @import "./licenceInfoList.less";
+  @import "./interviewList.less";
 </style>
 <template>
-<div class="licenceInfoList">
-    <!--这是licenceInfoList列表页面-->
+<div class="interviewList">
+    <!--这是interviewList列表页面-->
     <a-card :bordered="false">
       <table-filter :filterList='filterList'/>
-      <div class="table-operator">
-        <a-button type="primary" icon="plus" @click="handleAdd">新建</a-button>
-        <a-dropdown v-action:edit v-if="selectedRowKeys.length > 0">
-          <a-menu slot="overlay">
-            <a-menu-item key="1"><a-icon type="delete" />删除</a-menu-item>
-            <!-- <a-menu-item key="2"><a-icon type="lock" />锁定</a-menu-item> -->
-          </a-menu>
-          <a-button style="margin-left: 8px">
-            批量操作 <a-icon type="down" />
-          </a-button>
-        </a-dropdown>
-      </div>
 
       <s-table
         ref="table"
@@ -42,7 +30,9 @@
           <template>
             <a @click="handleSub(record)">查看</a>
             <a-divider type="vertical" />
-            <a @click="handleEdit(record)">修改</a>
+            <a @click="handleEdit(record)">预约面试</a>
+            <a-divider type="vertical" />
+            <a @click="handleEdit(record)">面试评价</a>
           </template>
         </span>
       </s-table>
@@ -51,4 +41,4 @@
 </template>
 
 
-<script src="./licenceInfoList.js"></script>
+<script src="./interviewList.js"></script>

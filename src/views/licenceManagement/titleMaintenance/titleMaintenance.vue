@@ -1,9 +1,9 @@
 <style lang="less" scoped>
-  @import "./licenceInfoList.less";
+  @import "./titleMaintenance.less";
 </style>
 <template>
-<div class="licenceInfoList">
-    <!--这是licenceInfoList列表页面-->
+<div class="titleMaintenance">
+    <!--这是titleMaintenance列表页面-->
     <a-card :bordered="false">
       <table-filter :filterList='filterList'/>
       <div class="table-operator">
@@ -42,7 +42,7 @@
           <template>
             <a @click="handleSub(record)">查看</a>
             <a-divider type="vertical" />
-            <a @click="handleEdit(record)">修改</a>
+            <a @click="handleEdit(record)">编辑</a>
           </template>
         </span>
       </s-table>
@@ -51,4 +51,4 @@
 </template>
 
 
-<script src="./licenceInfoList.js"></script>
+<script src="./titleMaintenance.js"></script>
