@@ -556,6 +556,36 @@ export const asyncRouterMap = {
           },
         ]
       }, 
+      {
+        path: '/kpi',
+        name: 'kpi',
+        component: RouteView,
+        redirect: '/kpi/staffAchievements',
+        meta: { title: 'KPI考核', icon: 'table', permission: [ 'table' ] },
+        children: [
+          {
+            path: '/kpi/staffAchievements/:pageNo([1-9]\\d*)?',
+            name: 'staffAchievements',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/KPI/staffAchievements/staffAchievements.vue'),
+            meta: { title: '员工绩效', keepAlive: true, permission: [ 'table' ] }
+          },
+          {
+            path: '/kpi/templateManagement/:pageNo([1-9]\\d*)?',
+            name: 'templateManagement',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/KPI/templateManagement/templateManagement.vue'),
+            meta: { title: '考核模板管理', keepAlive: true, permission: [ 'table' ] }
+          },
+          {
+            path: '/kpi/rewardsPunishments/:pageNo([1-9]\\d*)?',
+            name: 'rewardsPunishments',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/KPI/rewardsPunishments/rewardsPunishments.vue'),
+            meta: { title: '奖惩管理', keepAlive: true, permission: [ 'table' ] }
+          },
+        ]
+      }
     ]
 }
 
