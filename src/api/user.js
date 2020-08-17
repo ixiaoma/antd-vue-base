@@ -1,5 +1,5 @@
 import { axios } from '@/utils/axios'
-
+let frameAPI='api/frame/v1/'
 const userApi = {
   Login: '/auth/login',
   Logout: '/auth/logout',
@@ -12,6 +12,15 @@ const userApi = {
   UserInfo: '/user/info',
   UserMenu: '/user/nav',
   Service: '/service'
+}
+const api={
+  getUserList:frameAPI+'user/condition/page',
+  getDeptTreeData:frameAPI+'dept/depttree',
+  addDeptTree:frameAPI+'dept/',
+  editDeptTree:frameAPI+'dept/update',
+  detailDeptTree:frameAPI+'dept/',
+  delDeptTree:frameAPI+'dept/',
+  rolesList:frameAPI+'roles/list'
 }
 
 /**
@@ -63,3 +72,26 @@ export function get2step (parameter) {
 export function getServiceList (parameter) {
   return axios.get(userApi.Service, { params: parameter })
 }
+
+export function getUserList(parameter) {
+  return axios.post(api.getUserList, parameter)
+}
+export function getDeptTreeData(parameter) {
+  return axios.post(api.getDeptTreeData, parameter)
+}
+export function addDeptTree(parameter) {
+  return axios.post(api.addDeptTree, parameter)
+}
+export function editDeptTree(parameter) {
+  return axios.post(api.editDeptTree, parameter)
+}
+export function detailDeptTree(parameter) {
+  return axios.post(api.detailDeptTree+parameter)
+}
+export function delDeptTree(parameter) {
+  return axios.post(api.delDeptTree+parameter)
+}
+export function rolesList(parameter) {
+  return axios.get(api.rolesList,{params:parameter})
+}
+
