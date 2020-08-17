@@ -314,6 +314,37 @@ export const asyncRouterMap = {
           }
         ]
       },
+      // 系统管理
+      {
+        path: '/systemManagement',
+        name: 'systemManagement',
+        component: RouteView,
+        redirect: '/systemManagement/organizational',
+        meta: { title: '系统管理', icon: 'table', permission: [ 'table' ] },
+        children: [
+          {
+            path: '/systemManagement/organizational/:pageNo([1-9]\\d*)?',
+            name: 'organizational',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/systemManagement/organizational/index.vue'),
+            meta: { title: '组织架构', keepAlive: true, permission: [ 'table' ] }
+          },
+          {
+            path: '/systemManagement/role/:pageNo([1-9]\\d*)?',
+            name: 'role',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/systemManagement/role/index.vue'),
+            meta: { title: '角色管理', keepAlive: true, permission: [ 'table' ] }
+          },
+          {
+            path: '/systemManagement/menu/:pageNo([1-9]\\d*)?',
+            name: 'menu',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/systemManagement/menu/index.vue'),
+            meta: { title: '系统菜单', keepAlive: true, permission: [ 'table' ] }
+          },
+        ]
+      },
       //人事档案
       {
         path: '/personnelFiles',
@@ -556,6 +587,7 @@ export const asyncRouterMap = {
           },
         ]
       }, 
+      //绩效管理
       {
         path: '/kpi',
         name: 'kpi',
