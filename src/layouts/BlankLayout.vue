@@ -42,7 +42,7 @@ export default {
       align-items: center;
       justify-content: space-between;
       padding: 0 50px;
-      z-index: 1;
+      z-index: 2;
       .icon-style{
         font-size: 24px;
         color: #999;

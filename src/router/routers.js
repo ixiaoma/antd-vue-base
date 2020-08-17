@@ -663,7 +663,7 @@ export const hideInMenuRouterMap = {
     {
       path: '/hidemenu/baseForm',
       name: 'baseForm',
-      component: () => import('@/views/form/basicForm'),
+      component: () => import('@/components/BaseForm/index.vue'),
       meta: { title: '基础表单', keepAlive: true, permission: [ 'form' ] }
     }
   ]
