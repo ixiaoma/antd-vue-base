@@ -41,7 +41,6 @@
             e.preventDefault()
             this.form.validateFields((err, values) => {
                 if (!err) {
-                    // this.$emit('next')
                     let saveData = {}
                     this.layoutList.forEach(item=>{
                         item.fieldList.forEach(ele=>{
@@ -55,6 +54,7 @@
                         })
                     })
                     console.log(saveData)
+                    this.$emit('next')
                 }
             })
         },

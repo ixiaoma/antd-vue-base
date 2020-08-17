@@ -98,8 +98,7 @@ export default {
   },
   methods: {
     handleAdd () {
-      this.mdl = null
-      this.visible = true
+      this.$router.push({name:'baseForm',query:{title:'${ compoenntName }'}})
     },
     handleEdit (record) {
       this.visible = true

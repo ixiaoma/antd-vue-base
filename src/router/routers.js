@@ -40,16 +40,10 @@ export const asyncRouterMap = {
       // forms
       {
         path: '/form',
-        redirect: '/form/base-form',
+        redirect: '/form/step-form',
         component: RouteView,
         meta: { title: '表单页', icon: 'form', permission: [ 'form' ] },
         children: [
-          {
-            path: '/form/base-form',
-            name: 'BaseForm',
-            component: () => import('@/views/form/basicForm'),
-            meta: { title: '基础表单', keepAlive: true, permission: [ 'form' ] }
-          },
           {
             path: '/form/step-form',
             name: 'StepForm',
@@ -665,6 +659,11 @@ export const hideInMenuRouterMap = {
       name: 'baseForm',
       component: () => import('@/components/BaseForm/index.vue'),
       meta: { title: '基础表单', keepAlive: true, permission: [ 'form' ] }
+    },{
+      path: '/hidemenu/staff-form',
+      name: 'staffForm',
+      component: () => import('@/views/form/basicForm'),
+      meta: { title: '档案录入', keepAlive: true, permission: [ 'form' ] }
     }
   ]
 }

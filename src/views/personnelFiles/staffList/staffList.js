@@ -75,8 +75,7 @@ export default {
   },
   methods: {
     handleAdd () {
-      this.mdl = null
-      this.visible = true
+      this.$router.push({name:'staffForm',query:{title:'档案录入'}})
     },
     handleEdit (record) {
       this.visible = true

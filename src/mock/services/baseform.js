@@ -85,17 +85,17 @@ const archives = () => {
         },{
           fieldName:'民族',
           fieldKey:'nation',
-          enabled:1,
+          enabled:0,
           fieldType:1
         },{
           fieldName:'国籍',
           fieldKey:'nationality',
-          enabled:1,
+          enabled:0,
           fieldType:1
         },{
           fieldName:'健康状态',
           fieldKey:'healthStatus',
-          enabled:1,
+          enabled:0,
           fieldType:1
         },{
           fieldName:'婚姻状态',
@@ -139,52 +139,52 @@ const archives = () => {
         },{
           fieldName:'联系方式',
           fieldKey:'healthStatus',
-          enabled:1,
+          enabled:0,
           fieldType:1
         },{
           fieldName:'邮箱',
           fieldKey:'healthStatus',
-          enabled:1,
+          enabled:0,
           fieldType:1
         },{
           fieldName:'紧急联系人',
           fieldKey:'healthStatus',
-          enabled:1,
+          enabled:0,
           fieldType:1
         },{
           fieldName:'紧急联系人电话',
           fieldKey:'healthStatus',
-          enabled:1,
+          enabled:0,
           fieldType:1
         },{
           fieldName:'现居住地址',
           fieldKey:'healthStatus',
-          enabled:1,
+          enabled:0,
           fieldType:1
         },{
           fieldName:'特长爱好',
           fieldKey:'healthStatus',
-          enabled:1,
+          enabled:0,
           fieldType:1
         },{
           fieldName:'毕业院校',
           fieldKey:'healthStatus',
-          enabled:1,
+          enabled:0,
           fieldType:1
         },{
           fieldName:'最高学历',
           fieldKey:'healthStatus',
-          enabled:1,
+          enabled:0,
           fieldType:1
         },{
           fieldName:'专业',
           fieldKey:'healthStatus',
-          enabled:1,
+          enabled:0,
           fieldType:1
         },{
           fieldName:'宗教信仰',
           fieldKey:'healthStatus',
-          enabled:1,
+          enabled:0,
           fieldType:1
         },{
           fieldName:'政治面貌',
