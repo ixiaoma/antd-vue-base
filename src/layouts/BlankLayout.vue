@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import { updateTheme } from '@ant-design-vue/pro-layout'
 export default {
   name: 'BlankLayout',
   computed:{
@@ -22,6 +23,11 @@ export default {
     goBack(){
       this.$router.go(-1)
     }
+  },
+  mounted(){
+    if (process.env.NODE_ENV !== 'production' || process.env.VUE_APP_PREVIEW === 'true') {
+      updateTheme('#52c41a')
+    }
   }
 }
 </script>
@@ -32,7 +38,7 @@ export default {
     height: 100%;
     .header{
       background-color: #fff;
-      border-top: 5px solid #2fd2a1;
+      border-top: 5px solid #52c41a;
       position: fixed;
       width: 100%;
       top: 0;
