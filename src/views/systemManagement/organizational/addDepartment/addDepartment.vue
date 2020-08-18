@@ -7,7 +7,7 @@
       <a-form>
         <a-row type="flex">
           <a-col :span="24">
-            <a-form-item label="上级部门：" :label-col="{ span: 8 }" :wrapper-col="{ span: 16 }" :required='true'>
+            <a-form-item v-if="modaltitle=='新建下级'" label="上级部门：" :label-col="{ span: 8 }" :wrapper-col="{ span: 16 }" :required='true'>
               <a-input v-model="parentsname"  placeholder="请输入" disabled/>
             </a-form-item>
           </a-col>

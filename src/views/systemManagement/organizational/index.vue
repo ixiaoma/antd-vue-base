@@ -48,7 +48,7 @@
           </a-col>
       </a-col>
     </a-row>
-    <addDepartment ref="addDepartment"></addDepartment>
+    <addDepartment ref="addDepartment" @deptreflash="deptreflash"></addDepartment>
     <addUserModal ref="addUserModal" @reflash="reflash"></addUserModal>
   </div>
 </template>

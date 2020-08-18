@@ -1,6 +1,6 @@
 import { STable } from '@/components'
 import { Tree } from 'ant-design-vue'
-import { getUserList,getDeptTreeData } from '@/api/user'
+import { getUserList,getDeptTreeData,delDeptTree } from '@/api/user'
 import {columns,result,treeData} from './codeList.js'
 import addDepartment from './addDepartment/addDepartment.vue'
 import addUserModal from './addUserModal/addUserModal.vue'
@@ -42,9 +42,21 @@ export default {
             this.selectedRowKeys = selectedRowKeys
             this.selectedRows = selectedRows
         },
-        handleAdd(){},
-        handleDetail(record){},
-        handleEdit(record){},
+        // handleAdd(){},
+        // handleDetail(record){},
+        // handleEdit(record){},
+        handleAdd() {
+            this.$refs.addUserModal.openModal('add');
+        },
+        handleDetail(record) {
+            this.$refs.addUserModal.openModal('detail',record.id);
+        },
+        handleEdit(record) {
+            this.$refs.addUserModal.openModal('edit',record.id);
+        },
+        toPass(record) {
+            // this.$refs.editPass.openModal(obj.id);
+        },
         roleEdit(record){},
         passEdit(record){},
         handleDel(record){},
@@ -59,8 +71,13 @@ export default {
         },
         selectNode(keys,node) {//点击树节点操作
             this.selectedRowKeys=[]
-            this.titleBatch=node.node.title
-            this.batchParentId=node.node.dataRef.key
+            if(keys.length==0){
+                this.titleBatch=''
+                this.batchParentId=''
+            }else{
+                this.titleBatch=node.node.title
+                this.batchParentId=node.node.dataRef.key
+            }  
             if(node.node.dataRef.parentId==-1||node.node.dataRef.parentId==0){
                 this.queryParam={
                     // companyIds:keys
@@ -80,16 +97,41 @@ export default {
             this.$refs.table.refresh()
         },
         addDeptLoad(){
-            this.$refs.addDepartment.deptModalshow(this.titleBatch,this.batchParentId,'新建')
-            console.log(this.titleBatch,this.batchParentId)
+            this.$refs.addDepartment.deptModalshow(this.titleBatch,this.batchParentId,'新建下级')
+            // console.log(this.titleBatch,this.batchParentId)
         },
         editDeptLoad(){
             this.$refs.addDepartment.deptModalshow(this.titleBatch,this.batchParentId,'编辑')
-            console.log(this.titleBatch,this.batchParentId)
+            // console.log(this.titleBatch,this.batchParentId)
         },
         delDeptLoad(){
-            
-            console.log(this.titleBatch,this.batchParentId)
+            if (this.batchParentId === '') {
+                this.$message.warning("请选择节点");
+                return false
+            }
+            if (this.titleBatch == '全公司') {
+                this.$message.warning("根节点不能删除");
+                return false
+            }
+            let _this=this;
+            this.$confirm({
+                title: '温馨提示',
+                content: '确认删除？',
+                okText: '确认',
+                cancelText: '取消',
+                onOk() {
+                    delDeptTree(_this.batchParentId+'/delete').then(res=>{
+                        if(res.code==200){
+                            _this.$message.success('删除成功');
+                            _this.gettreedata()
+                        }
+                    })
+                  },      
+                  onCancel() {},
+              });
+        },
+        deptreflash(){
+            this.gettreedata()
         }
 
 

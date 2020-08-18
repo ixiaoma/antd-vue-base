@@ -7,7 +7,7 @@ export default {
     },
     data() {
         return {
-            modaltitle:'新建',
+            modaltitle:'新建下级',
             addDepvisible:false,
             confirmLoading:false,
             parentsname:'',
@@ -24,7 +24,9 @@ export default {
             tableDataUser2: [],//观察者数据
             roleData: [],//角色权限数据
             loading1:false,
-            loading2:false
+            loading2:false,
+            titleBatch:'',
+            batchParentId:''
         }
     },
     methods: {
@@ -33,10 +35,8 @@ export default {
                 this.$message.warning('请选择节点');
                 return false;
             }
-            // this.adddepartment.parentId = ''
-            // this.parentsname = this.departmentName
             this.addfrom={
-                parentId: batchParentId,//父级id
+                parentId: '',//父级id
                 name: '',
                 nameShort: '',
                 manager: '',
@@ -44,7 +44,11 @@ export default {
                 dataAuthority: '',
                 roleIds: []
             }
-
+            if(modaltitle=="新建下级"){
+                this.addfrom.parentId=batchParentId
+                this.parentsname=titleBatch
+                this.addDepvisible=true
+            }
             if(modaltitle=='编辑'){
                 detailDeptTree(batchParentId).then(res=>{
                     this.addfrom.name = res.data.name?res.data.name:''
@@ -59,8 +63,6 @@ export default {
                         this.addDepvisible=true
                     }, 300);
                 })
-            }else{
-                this.addDepvisible=true
             }
             this.titleBatch=titleBatch
             this.batchParentId=batchParentId
@@ -80,10 +82,29 @@ export default {
                 this.$message.warning('部门负责人数据权限不能为空');
                 return false;
             }
-            let params=this.addfrom
-            addDeptTree(params).then(res => {
-       
-            })
+            let params=JSON.parse(JSON.stringify(this.addfrom))
+            if(this.modaltitle=="编辑"){
+                delete params.parentId
+                params.id=this.batchParentId
+                editDeptTree(params).then(res => {
+                    if(res.code==200){
+                        this.$message.success('编辑成功');
+                        this.addDepvisible=false
+                        this.$emit('deptreflash')
+                    }
+                    
+                })
+            }else{
+                addDeptTree(params).then(res => {
+                    if(res.code==200){
+                        this.$message.success('新建成功');
+                        this.addDepvisible=false
+                        this.$emit('deptreflash')
+                    }
+                    
+                })
+            }    
+            
         },
         handleCancel(){},
         handleChange(){},
