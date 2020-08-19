@@ -8,7 +8,10 @@
         return {
             layoutList:[],
             activeKey:[],
-            form: this.$form.createForm(this)
+            form: this.$form.createForm(this),
+            imgList:[],
+            previewImage:'',
+            previewVisible: false,
         }
     },
     components:{
@@ -32,10 +35,21 @@
                 }
             ]
         },
+        async handlePreview(file) {
+            console.log(file)
+            this.previewImage = file.thumbUrl;
+            this.previewVisible = true;
+        },
+        handleChange({ fileList }) {
+            this.imgList = fileList;
+        },
+        handleCancel() {
+            this.previewVisible = false;
+        },
         async getInitData(){
-        const res = await getStaffInfo()
-        this.layoutList = res.result
-        this.activeKey = res.result.map((ele,index)=>index)
+            const res = await getStaffInfo()
+            this.layoutList = res.result
+            this.activeKey = res.result.map((ele,index)=>index)
         },
         handleSubmit (e) {
             e.preventDefault()

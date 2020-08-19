@@ -205,7 +205,7 @@ const archives = () => {
           fieldName:'相片',
           fieldKey:'remark',
           enabled:0,
-          fieldType:2
+          fieldType:9
         },{
           fieldName:'备注',
           fieldKey:'remark',

@@ -11,6 +11,25 @@
                                 <a-select v-else-if="i.fieldType == 3" v-decorator="decoratorFn(i)" :placeholder="'请选择'+i.fieldName"/>
                                 <a-cascader v-else-if="i.fieldType == 5" v-decorator="decoratorFn(i)" :placeholder="'请选择'+i.fieldName" :options="i.codeList" :load-data="loadData" change-on-select/>
                                 <a-date-picker v-else-if="i.fieldType == 6" v-decorator="decoratorFn(i)" style="width:100%" :placeholder="'请选择'+i.fieldName"/>
+                                <div class="clearfix" v-else-if="i.fieldType == 9">
+                                    <a-upload
+                                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                                    list-type="picture-card"
+                                    :file-list="imgList"
+                                    @preview="handlePreview"
+                                    @change="handleChange"
+                                    >
+                                    <div v-if="imgList.length < 1">
+                                        <a-icon type="plus" />
+                                        <div class="ant-upload-text">
+                                        Upload
+                                        </div>
+                                    </div>
+                                    </a-upload>
+                                    <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
+                                        <img alt="example" style="width: 100%" :src="previewImage" />
+                                    </a-modal>
+                                </div>
                                 <span v-else class="ant-form-text">{{i.fieldValue}}</span>
                             </a-form-item>
                         </a-col>
