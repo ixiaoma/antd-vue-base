@@ -14,13 +14,21 @@ const userApi = {
   Service: '/service'
 }
 const api={
-  getUserList:frameAPI+'user/condition/page',
-  getDeptTreeData:frameAPI+'dept/depttree',
-  addDeptTree:frameAPI+'dept/',
-  editDeptTree:frameAPI+'dept/update',
-  detailDeptTree:frameAPI+'dept/',
-  delDeptTree:frameAPI+'dept/',
-  rolesList:frameAPI+'roles/list'
+  getUserList:frameAPI+'user/condition/page',//用户列表
+  userEnable: frameAPI+'user/isenableduser/update',//用户禁用启用
+  userSave: frameAPI+'user/save',//用户新增
+  userUpdate: frameAPI+'user/update',//用户修改
+  userDeatil: frameAPI+'user/',//用户id获取详情
+  userDel: frameAPI+'user/deleteids',//用户删除
+  userPassUpdate: frameAPI+'user/rest/user',//修改密码
+  userExport: frameAPI+'user/export',
+  getDeptTreeData:frameAPI+'dept/depttree',//部门tree
+  addDeptTree:frameAPI+'dept/',//部门新增
+  editDeptTree:frameAPI+'dept/update',//部门更新
+  detailDeptTree:frameAPI+'dept/',//部门详情
+  delDeptTree:frameAPI+'dept/',//部门删除
+  rolesList:frameAPI+'roles/list',//角色
+  
 }
 
 /**
@@ -76,6 +84,25 @@ export function getServiceList (parameter) {
 export function getUserList(parameter) {
   return axios.post(api.getUserList, parameter)
 }
+export function userEnable(parameter) {
+  return axios.post(api.userEnable, parameter)
+}
+export function userSave(parameter) {
+  return axios.post(api.userSave, parameter)
+}
+export function userUpdate(parameter) {
+  return axios.post(api.userUpdate, parameter)
+}
+export function userDeatil(parameter) {
+  return axios.get(api.userDeatil+parameter)
+}
+export function userDel(parameter) {
+  return axios.post(api.userDel, parameter)
+}
+export function userPassUpdate(parameter) {
+  return axios.post(api.userPassUpdate, parameter)
+}
+export const userExport=process.env.VUE_APP_API_BASE_URL+api.userExport
 export function getDeptTreeData(parameter) {
   return axios.post(api.getDeptTreeData, parameter)
 }
@@ -94,4 +121,8 @@ export function delDeptTree(parameter) {
 export function rolesList(parameter) {
   return axios.get(api.rolesList,{params:parameter})
 }
+export function rolesAssignUser(parameter,params) {
+  return axios.post(api.userDeatil+parameter,params)
+}
+
 

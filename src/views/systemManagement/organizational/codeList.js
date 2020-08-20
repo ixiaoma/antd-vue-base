@@ -25,6 +25,11 @@ export const columns=[
         scopedSlots: { customRender: 'incumbencyName' },
     },
     {
+        title: '状态',
+        dataIndex: 'enabled',
+        scopedSlots: { customRender: 'enabled' },
+    },
+    {
         title: '操作',
         dataIndex: 'action',
         width: '150px',
@@ -49,7 +54,8 @@ export const result={
             jobCity: '北京',
             itcode: 'jiangyx',
             status: 0,
-            approvalStatus: '通过'
+            approvalStatus: '通过',
+            enabled:1
         },
         {
             id: '22',
@@ -61,7 +67,8 @@ export const result={
             jobCity: '北京',
             itcode: 'jiangyx2',
             status: 0,
-            approvalStatus: '通过'
+            approvalStatus: '通过',
+            enabled:1
         }
     ]
 }

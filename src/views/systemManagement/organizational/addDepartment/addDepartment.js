@@ -1,7 +1,7 @@
 
 import { addDeptTree,editDeptTree,detailDeptTree,delDeptTree,rolesList,getUserList } from '@/api/user'
 export default {
-    name: 'organizational',
+    name: 'addDepartment',
     components: {
        
     },
@@ -106,8 +106,9 @@ export default {
             }    
             
         },
-        handleCancel(){},
-        handleChange(){},
+        handleCancel(){
+            this.addDepvisible=false
+        },
         ObserverDataload1(value) {//获取部门负责人
             if (value !== '') {
                 this.loading1 = true;
