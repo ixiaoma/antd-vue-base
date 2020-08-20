@@ -59,7 +59,7 @@ export default {
            
        },
        openModal(id){
-           this.id = id='1267272966872031234'
+           this.id = id//='1267272966872031234'
            this.showModal=true
        },
        handleCancel(){

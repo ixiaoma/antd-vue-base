@@ -1,11 +1,11 @@
 export const columns=[
     {
         title: '姓名',
-        dataIndex: 'realname',
+        dataIndex: 'realName',
     },
     {
         title: '昵称',
-        dataIndex: 'staffCode'
+        dataIndex: 'nickname'
     },
     {
         title: '公司',
@@ -13,17 +13,17 @@ export const columns=[
     },
     {
         title: '部门',
-        dataIndex: 'departmentName'
+        dataIndex: 'deptName'
     },
     {
         title: '手机号',
-        dataIndex: 'mobilephone'
+        dataIndex: 'cellphone'
     },
-    {
-        title: '在职状态',
-        dataIndex: 'incumbency',
-        scopedSlots: { customRender: 'incumbencyName' },
-    },
+    // {
+    //     title: '在职状态',
+    //     dataIndex: 'incumbency',
+    //     scopedSlots: { customRender: 'incumbencyName' },
+    // },
     {
         title: '状态',
         dataIndex: 'enabled',

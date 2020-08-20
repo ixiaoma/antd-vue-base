@@ -22,39 +22,8 @@
                     <a-button type="primary" icon="search" @click="searchLoad">搜索</a-button>
                     <a-button style="float:right" type="default" icon="download" @click="exportLoad">导出</a-button>
                     <a-button style="float:right" type="primary" icon="plus" @click="handleAdd">新建</a-button>      
-                </div>   
-                <a-table 
-                  ref="table"
-                  size="small"
-                  :bordered="true"
-                  :rowKey="(record) =>  record.id"
-                  :columns="columns" 
-                  :data-source="userData"      
-                  :showPagination="true"
-                  :pagination="pagination"
-                  :scroll="{ x: 1200}"
-                  :loading="loading"
-                  @change="handleTableChange"
-                >
-                <!-- :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }" -->
-                <template slot="incumbencyName" slot-scope="text, record">
-                    <span>{{record.incumbency?"在职":"离职"}}</span>
-                </template>
-                <template slot="enabled" slot-scope="text, record">
-                  <a-switch checked-children="启用" un-checked-children="禁用" :checked="record.enabled?true:false" @change="enabledChange(record)"/>
-                </template>
-                
-                <template slot="action" slot-scope="text, record">
-                    <a-icon type="form" @click="handleEdit(record)"/>
-                    <a-divider type="vertical" />
-                    <a-icon type="unlock" @click="passEdit(record)"/>
-                    <a-divider type="vertical" />
-                    <a-icon type="setting" @click="roleEdit(record)"/>
-                    <a-divider type="vertical" />
-                    <a-icon type="delete" @click="handleDel(record)"/>
-                </template>
-                </a-table>   
-              <!-- <s-table
+                </div>      
+              <s-table
                 ref="table"
                 :rowKey="(record) =>  record.id"
                 :columns="columns"
@@ -79,7 +48,7 @@
                     <a-divider type="vertical" />
                     <a-icon type="delete" @click="handleDel(record)"/>
                 </template>
-                </s-table> -->
+                </s-table>
           </a-col>
       </a-col>
     </a-row>

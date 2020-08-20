@@ -58,7 +58,7 @@ export default {
         })
     },
     openModal(id) {
-      this.id = '1267272966872031234'//id
+      this.id = id
       this.showModal = true
       this.roleAllLoad()
       this.roleSelectLoad()

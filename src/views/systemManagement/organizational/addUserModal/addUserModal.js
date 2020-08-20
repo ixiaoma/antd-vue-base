@@ -69,7 +69,7 @@ export default {
         //打开模态框
         openModal(type,id) {
             this.pageType = type;
-            this.id = id='1267272966872031234'
+            this.id = id
             this.modaltitle = type == 'add' ? '新建账户' : type == 'edit' ? '编辑账户' : '查看账户';
             this.modaldisabled=type=='detail'?true:false
             if(type=='detail'){
