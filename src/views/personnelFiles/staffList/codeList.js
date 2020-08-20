@@ -110,7 +110,7 @@ export const filterList = [
     {
       title: '操作',
       dataIndex: 'action',
-      width: '80px',
+      width: '100px',
       scopedSlots: { customRender: 'action' }
     }
   ]

@@ -4,7 +4,7 @@
       <div class="top">
         <div class="header">
           <a href="/">
-            <span class="title">Title</span>
+            <span class="title">HRO</span>
           </a>
         </div>
         <div class="desc">

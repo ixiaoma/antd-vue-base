@@ -74,8 +74,9 @@ export default {
     }
   },
   methods: {
-    handleAdd () {
-      this.$router.push({name:'staffForm',query:{title:'档案录入'}})
+    handleAdd (data,flag) {
+      // console.log(data,flag)
+      this.$router.push({name:'staffForm',query:{title:`员工档案${flag == 1 ? '新增' : flag == 2 ? '详情' : '修改'}`,flag}})
     },
     handleEdit (record) {
       this.visible = true

@@ -6,7 +6,7 @@
         </a-tab-pane>
         <a-tab-pane v-for="(item,index) in tabLists" :key="index+2" :tab="item.tabName" force-render :disabled = 'disabled'>
           <a-card>
-            <div class="table-operator">
+            <div class="table-operator" v-if='item.tabName != "合同管理"'>
               <a-button type="primary" icon="plus" @click="handleAdd">新建</a-button>
             </div>
             <s-table
@@ -22,7 +22,7 @@
                 <template>
                   <a @click="handleEdit(record)">查看</a>
                   <a-divider type="vertical" />
-                  <a @click="handleSub(record)">修改</a>
+                  <a @click="handleSub(record)" v-if='item.tabName != "合同管理"'>修改</a>
                 </template>
               </span>
             </s-table>
@@ -152,8 +152,176 @@ const tabLists = [
   }
 ]
 
+const tabDetailList = [
+  {
+    tabName:'证件资料',
+    columns:[
+      {
+        title: '',
+        width: '50px',
+        scopedSlots: { customRender: 'serial' }
+      },
+      {
+        title: '员工姓名',
+        dataIndex: 'description'
+      },
+      {
+        title: '证件编号',
+        dataIndex: 'callNo'
+      },
+      {
+        title: '证件名称',
+        dataIndex: 'status'
+      },
+      {
+        title: '生效日期',
+        dataIndex: 'updatedAt'
+      },{
+        title: '到期日期',
+        dataIndex: 'updatedAta'
+      },{
+        title: '状态',
+        dataIndex: 'updatedAtb'
+      },{
+        title: '操作',
+        dataIndex: 'action',
+        width: '150px',
+        scopedSlots: { customRender: 'action' }
+      }
+    ]
+  },{
+    tabName:'合同管理',
+    columns:[
+      {
+        title: '',
+        width: '50px',
+        scopedSlots: { customRender: 'serial' }
+      },{
+        title: '合同编号',
+        dataIndex: 'description'
+      },{
+        title: '合同名称',
+        dataIndex: 'callNo'
+      },{
+        title: '员工姓名',
+        dataIndex: 'status'
+      },{
+        title: '员工部门',
+        dataIndex: 'updatedAt'
+      },{
+        title: '合同状态',
+        dataIndex: 'updatedAta'
+      },{
+        title: '是否转正',
+        dataIndex: 'updatedAtb'
+      },{
+        title: '操作',
+        dataIndex: 'action',
+        width: '150px',
+        scopedSlots: { customRender: 'action' }
+      }
+    ]
+  },{
+    tabName:'员工调动',
+    columns:[
+      {
+        title: '',
+        width: '50px',
+        scopedSlots: { customRender: 'serial' }
+      },{
+        title: '员工姓名',
+        dataIndex: 'description'
+      },{
+        title: '调动编号',
+        dataIndex: 'callNo'
+      },{
+        title: '调动类型',
+        dataIndex: 'status'
+      },{
+        title: '调动时间',
+        dataIndex: 'updatedAt'
+      },{
+        title: '现人员类型',
+        dataIndex: 'updatedAta'
+      },{
+        title: '调动状态',
+        dataIndex: 'updatedAtb'
+      },{
+        title: '操作',
+        dataIndex: 'action',
+        width: '150px',
+        scopedSlots: { customRender: 'action' }
+      }
+    ]
+  },{
+    tabName:'员工离职',
+    columns:[
+      {
+        title: '',
+        width: '50px',
+        scopedSlots: { customRender: 'serial' }
+      },{
+        title: '员工工号',
+        dataIndex: 'description'
+      },{
+        title: '员工姓名',
+        dataIndex: 'callNo'
+      },{
+        title: '员工部门',
+        dataIndex: 'status'
+      },{
+        title: '离职类型',
+        dataIndex: 'updatedAt'
+      },{
+        title: '离职时间',
+        dataIndex: 'updatedAta'
+      },{
+        title: '操作',
+        dataIndex: 'action',
+        width: '150px',
+        scopedSlots: { customRender: 'action' }
+      }
+    ]
+  },{
+    tabName:'奖惩管理',
+    columns:[
+      {
+        title: '',
+        width: '50px',
+        scopedSlots: { customRender: 'serial' }
+      },{
+        title: '员工工号',
+        dataIndex: 'description'
+      },{
+        title: '员工姓名',
+        dataIndex: 'description1'
+      },{
+        title: '部门',
+        dataIndex: 'callNo'
+      },{
+        title: '岗位',
+        dataIndex: 'status'
+      },{
+        title: '奖惩类别',
+        dataIndex: 'updatedAt'
+      },{
+        title: '奖惩内容',
+        dataIndex: 'updatedAta'
+      },{
+        title: '录入时间',
+        dataIndex: 'updatedAtb'
+      },{
+        title: '操作',
+        dataIndex: 'action',
+        width: '150px',
+        scopedSlots: { customRender: 'action' }
+      }
+    ]
+  }
+]
+
 export default {
-  name: 'Add',
+  name: 'StaffForm',
   data(){
     return{
       tabLists,
@@ -180,6 +348,11 @@ export default {
     nextStep(){
       this.disabled = false
       this.activeKey = '2'
+    }
+  },
+  created(){
+    if(this.$route.query.flag == 2){
+      this.tabLists.push(...tabDetailList)
     }
   }
 }

@@ -7,7 +7,7 @@
     <a-card :bordered="false">
       <table-filter :filterList='filterList'/>
       <div class="table-operator">
-        <a-button type="primary" icon="plus" @click="handleAdd">新建</a-button>
+        <a-button type="primary" icon="plus" @click="handleAdd(null,1)">新建</a-button>
         <a-button type="default" icon="download">导出</a-button>
       </div>
 
@@ -29,12 +29,11 @@
         <span slot="description" slot-scope="text">
           <ellipsis :length="4" tooltip>{{ text }}</ellipsis>
         </span>
-
         <span slot="action" slot-scope="text, record">
           <template>
-            <a @click="handleEdit(record)">修改</a>
-            <!-- <a-divider type="vertical" />
-            <a @click="handleSub(record)">订阅报警</a> -->
+            <a @click="handleAdd(record,2)">查看</a>
+            <a-divider type="vertical" />
+            <a @click="handleAdd(record,3)">修改</a>
           </template>
         </span>
       </s-table>

@@ -5,7 +5,10 @@
                 <a-collapse-panel v-for="(item,index) in layoutList" :key="String(index)" :header="item.groupName">
                     <a-row :gutter="56">
                         <a-col v-for="(i,d) in item.fieldList" :key="d" :span="12" >
-                            <a-form-item :label="i.fieldName">
+                            <a-form-item :label="i.fieldName" v-if='readonly'>
+                                <span class="ant-form-text">{{i.fieldValue}}</span>
+                            </a-form-item>
+                            <a-form-item :label="i.fieldName" v-else>
                                 <a-input v-if="i.fieldType == 1" v-decorator="decoratorFn(i)" :placeholder="'请填写'+i.fieldName" />
                                 <a-textarea v-else-if="i.fieldType == 2" rows="4" v-decorator="decoratorFn(i)" :placeholder="'请填写'+i.fieldName"/>
                                 <a-select v-else-if="i.fieldType == 3" v-decorator="decoratorFn(i)" :placeholder="'请选择'+i.fieldName"/>

@@ -12,6 +12,7 @@
             imgList:[],
             previewImage:'',
             previewVisible: false,
+            readonly:false
         }
     },
     components:{
@@ -77,6 +78,7 @@
         }
     },
     created(){
+        this.readonly = this.$route.query.flag == 2
         this.getInitData()
     }
   }
