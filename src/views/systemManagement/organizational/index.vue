@@ -4,6 +4,7 @@
 <template>
   <div class="userSetting">
     <a-row type="flex">
+      <a-col :span="24" style="color:red;font-size:28px">请勿操作此页面数据（数据是净水测试系统的）</a-col>
       <a-col :span="24">
           <a-col :span="6">
                 <a-col :span="24">
@@ -53,33 +54,7 @@
                     <a-divider type="vertical" />
                     <a-icon type="delete" @click="handleDel(record)"/>
                 </template>
-                </a-table>   
-              <!-- <s-table
-                ref="table"
-                :rowKey="(record) =>  record.id"
-                :columns="columns"
-                :data="userData"
-                :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
-                :showPagination="true"
-                :scroll="{ x: 1200}"
-                >
-                <template slot="incumbencyName" slot-scope="text, record">
-                    <span>{{record.incumbency?"在职":"离职"}}</span>
-                </template>
-                <template slot="enabled" slot-scope="text, record">
-                  <a-switch checked-children="启用" un-checked-children="禁用" :checked="record.enabled?true:false" @change="enabledChange(record)"/>
-                </template>
-                
-                <template slot="action" slot-scope="text, record">
-                    <a-icon type="form" @click="handleEdit(record)"/>
-                    <a-divider type="vertical" />
-                    <a-icon type="unlock" @click="passEdit(record)"/>
-                    <a-divider type="vertical" />
-                    <a-icon type="setting" @click="roleEdit(record)"/>
-                    <a-divider type="vertical" />
-                    <a-icon type="delete" @click="handleDel(record)"/>
-                </template>
-                </s-table> -->
+                </a-table>    
           </a-col>
       </a-col>
     </a-row>

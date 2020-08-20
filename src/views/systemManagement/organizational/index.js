@@ -24,15 +24,6 @@ export default {
             page: 1,
             pageSize: 10,
             loading: false,
-            // userData: parameter => {
-            //     // console.log(parameter)
-            //     const requestParameters = Object.assign({}, parameter, this.queryParam)
-            //     // console.log('loadData request parameters:', requestParameters)
-            //     return getUserList(requestParameters).then(res => {
-            //         // return res.data
-            //         return result
-            //     })
-            // },
             treeData: treeData,
             treeDataAdd: [],
             columns: columns,
@@ -45,7 +36,7 @@ export default {
     },
     methods: {
         handleTableChange(pagination) {
-            console.log(pagination);
+            // console.log(pagination);
             const pager = { ...this.pagination };
             pager.current = pagination.current;
             this.pagination = pager;
