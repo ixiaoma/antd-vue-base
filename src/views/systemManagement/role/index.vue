@@ -1,6 +1,7 @@
 <template>
     <div class="roleManage">
         <a-row>
+            <a-col :span="24" style="color:red;font-size:28px">请勿操作此页面数据（数据是净水测试系统的）</a-col>
             <a-col span="8">
                 <a-card size="small" title="角色列表">
                     <a-button class="addBtn" @click="addRole" slot="extra" size="small" type="primary">新建</a-button>
