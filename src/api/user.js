@@ -1,5 +1,6 @@
 import { axios } from '@/utils/axios'
 let frameAPI='api/frame/v1/'
+let configAPI='api/config/v1/'
 const userApi = {
   Login: '/auth/login',
   Logout: '/auth/logout',
@@ -36,6 +37,11 @@ const api={
   rolesSwitchUser:frameAPI+'user/roleid',//角色下的用户
   rolesUserTransfer:frameAPI+'userrole',//用户权限穿梭框
   rolesUserTransferDel:frameAPI+'userrole/delete',//用户权限穿梭框删除
+  menusList:frameAPI+'resource/menu',//'menus/menu',//菜单管理树
+  menusListChild:frameAPI+'resource/menu/',//'menus/menu/',//菜单管理树
+  menusDetail:frameAPI+'resource/',//菜单详情
+  menusAdd:frameAPI+'resource',//菜单新增
+  objectTypeList:configAPI+'objectdefine/list/objectType'//object
   
 }
 
@@ -164,6 +170,29 @@ export function rolesUserTransfer(parameter) {
 export function rolesUserTransferDel(parameter) {
   return axios.post(api.rolesUserTransferDel,parameter)
 }
+export function menusList() {
+  return axios.get(api.menusList)
+}
+export function menusListChild(id) {
+  return axios.get(api.menusListChild+id)
+}
+export function menusDetail(id) {
+  return axios.get(api.menusDetail+id)
+}
+export function menusAdd(params) {
+  return axios.post(api.menusAdd,params)
+}
+export function menusEdit(id,params) {
+  return axios.post(api.menusAdd+'/'+id+'/update',params)
+}
+export function menusDel(id) {
+  return axios.post(api.menusAdd+'/'+id+'/delete')
+}
+export function objectTypeList() {
+  return axios.get(api.objectTypeList)
+}
+
+
 
 
 
