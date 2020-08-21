@@ -5,10 +5,8 @@ export default {
   data () {
     return {
       needTotalList: [],
-
       selectedRows: [],
       selectedRowKeys: [],
-
       localLoading: false,
       localDataSource: [],
       localPagination: Object.assign({}, this.pagination)

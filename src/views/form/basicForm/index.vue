@@ -6,13 +6,16 @@
         </a-tab-pane>
         <a-tab-pane v-for="(item,index) in tabLists" :key="index+2" :tab="item.tabName" force-render :disabled = 'disabled'>
           <a-card>
+            <table-filter v-if='item.filterList' :filterList='item.filterList'/>
             <div class="table-operator" v-if='item.tabName != "合同管理"'>
               <a-button type="primary" icon="plus" @click="handleAdd">新建</a-button>
+              <a-button type="default" icon="download" v-if='item.tabName == "员工离职" || item.tabName == "奖惩管理"'>批量导出</a-button>
             </div>
             <s-table
               ref="table"
               rowKey="key"
               :columns="item.columns"
+              :rowSelection="item.tabName == '员工离职' || item.tabName == '奖惩管理' ? rowSelection : null"
               :data="loadData"
               showPagination="auto">
               <span slot="serial" slot-scope="text, record, index">
@@ -21,8 +24,10 @@
               <span slot="action" slot-scope="text, record">
                 <template>
                   <a @click="handleEdit(record)">查看</a>
-                  <a-divider type="vertical" />
+                  <a-divider type="vertical" v-if='item.tabName != "合同管理"'/>
                   <a @click="handleSub(record)" v-if='item.tabName != "合同管理"'>修改</a>
+                  <a-divider type="vertical" v-if='item.tabName == "员工离职" || item.tabName == "奖惩管理"'/>
+                  <a @click="handleSub(record)" v-if='item.tabName == "员工离职" || item.tabName == "奖惩管理"'>删除</a>
                 </template>
               </span>
             </s-table>
@@ -34,8 +39,9 @@
 </template>
 
 <script>
-import BaseForm from '@/components/BaseForm/index.vue'
 import { STable } from '@/components'
+import BaseForm from '@/components/BaseForm/index.vue'
+import TableFilter from '@/components/TableFilter/index.vue'
 
 import { getServiceList } from '@/api/user'
 
@@ -252,6 +258,24 @@ const tabDetailList = [
         width: '150px',
         scopedSlots: { customRender: 'action' }
       }
+    ],
+    filterList:[
+      {
+        searchLabel: '调动类型',
+        searchKey: 'staffJob',
+        searchType: 'Select',
+        selectList: [
+          {
+            key: '类型',
+            value: '类型'
+          }
+        ]
+      },
+      {
+        searchLabel: '调动时间',
+        searchKey: 'time',
+        searchType:'Time'
+      }
     ]
   },{
     tabName:'员工离职',
@@ -280,6 +304,39 @@ const tabDetailList = [
         dataIndex: 'action',
         width: '150px',
         scopedSlots: { customRender: 'action' }
+      }
+    ],
+    filterList:[
+      {
+      searchLabel: '员工工号',
+      searchKey: 'staffCode'
+    },
+    {
+      searchLabel: '员工姓名',
+      searchKey: 'staffName'
+    },
+    {
+      searchLabel: '员工部门',
+      searchKey: 'staffDept'
+    },
+    {
+      searchLabel: '离职类型',
+      searchKey: 'status',
+      searchType: 'Select',
+      selectList: [
+        {
+          key: '1',
+          value: '在离'
+        },
+        {
+          key: '2',
+          value: '离职'
+        }
+      ]
+    },{
+        searchLabel: '离职时间',
+        searchKey: 'time',
+        searchType:'Time'
       }
     ]
   },{
@@ -316,6 +373,35 @@ const tabDetailList = [
         width: '150px',
         scopedSlots: { customRender: 'action' }
       }
+    ],
+    filterList:[
+      {
+      searchLabel: '员工工号',
+      searchKey: 'staffCode'
+    },
+    {
+      searchLabel: '员工姓名',
+      searchKey: 'staffName'
+    },
+    {
+      searchLabel: '员工部门',
+      searchKey: 'staffDept'
+    },
+    {
+      searchLabel: '奖惩类型',
+      searchKey: 'status',
+      searchType: 'Select',
+      selectList: [
+        {
+          key: '1',
+          value: '在离'
+        },
+        {
+          key: '2',
+          value: '离职'
+        }
+      ]
+    }
     ]
   }
 ]
@@ -327,19 +413,28 @@ export default {
       tabLists,
       activeKey:'1',
       disabled:false,
+      selectedRowKeys: [],
+      selectedRows: [],
       loadData: parameter => {
         const requestParameters = Object.assign({}, parameter, this.queryParam)
-        console.log('loadData request parameters:', requestParameters)
-        return getServiceList(requestParameters)
-          .then(res => {
-            return res.result
-          })
+        return getServiceList(requestParameters).then(res => {
+          return res.result
+        })
       }
     }
   },
   components:{
+    STable,
     BaseForm,
-    STable
+    TableFilter
+  },
+  computed: {
+    rowSelection () {
+      return {
+        selectedRowKeys: this.selectedRowKeys,
+        onChange: this.onSelectChange
+      }
+    }
   },
   methods: {
     handleAdd(){
@@ -348,6 +443,10 @@ export default {
     nextStep(){
       this.disabled = false
       this.activeKey = '2'
+    },
+    onSelectChange (selectedRowKeys, selectedRows) {
+      this.selectedRowKeys = selectedRowKeys
+      this.selectedRows = selectedRows
     }
   },
   created(){

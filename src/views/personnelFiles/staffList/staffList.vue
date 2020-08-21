@@ -15,11 +15,8 @@
         ref="table"
         rowKey="key"
         :columns="columns"
-        :filterList="filterList"
         :data="loadData"
-        :alert="true"
-        :rowSelection="rowSelection"
-        showPagination="auto">
+        :rowSelection="rowSelection">
         <span slot="serial" slot-scope="text, record, index">
           {{ index + 1 }}
         </span>
