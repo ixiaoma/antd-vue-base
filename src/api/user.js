@@ -27,7 +27,15 @@ const api={
   editDeptTree:frameAPI+'dept/update',//部门更新
   detailDeptTree:frameAPI+'dept/',//部门详情
   delDeptTree:frameAPI+'dept/',//部门删除
-  rolesList:frameAPI+'roles/list',//角色
+  rolesList:frameAPI+'roles/list',//用户分配角色
+  rolesPage:frameAPI+'roles',//角色管理中的角色
+  rolesUpdate:frameAPI+'roles/update',//角色编辑
+  rolesCopy: frameAPI+'roles/copy/',//角色复制
+  enabledRole:frameAPI+'roles/isenabledrole/update',//禁用启用
+  rolesOperation:frameAPI+'roles/',
+  rolesSwitchUser:frameAPI+'user/roleid',//角色下的用户
+  rolesUserTransfer:frameAPI+'userrole',//用户权限穿梭框
+  rolesUserTransferDel:frameAPI+'userrole/delete',//用户权限穿梭框删除
   
 }
 
@@ -124,5 +132,38 @@ export function rolesList(parameter) {
 export function rolesAssignUser(parameter,params) {
   return axios.post(api.userDeatil+parameter,params)
 }
+export function rolesPage(parameter) {
+  return axios.get(api.rolesPage,{params:parameter})
+}
+export function addRole(parameter) {
+  return axios.post(api.rolesPage,parameter)
+}
+export function editRole(parameter) {
+  return axios.post(api.rolesUpdate,parameter)
+}
+export function copyRole(id,parameter) {
+  return axios.post(api.rolesCopy+id,parameter)
+}
+export function enabledRole(parameter) {
+  return axios.post(api.enabledRole,parameter)
+}
+export function deleteRole(id) {
+  return axios.post(api.rolesOperation+id+'/delete')
+}
+
+export function rolesMenu(parameter) {
+  return axios.get(api.rolesOperation+parameter)
+}
+export function rolesSwitchUser(parameter) {
+  return  axios.get(api.rolesSwitchUser,{params:parameter})
+}
+
+export function rolesUserTransfer(parameter) {
+  return axios.post(api.rolesUserTransfer,parameter)
+}
+export function rolesUserTransferDel(parameter) {
+  return axios.post(api.rolesUserTransferDel,parameter)
+}
+
 
 
