@@ -37,27 +37,33 @@ export const asyncRouterMap = {
         ]
       },
 
-      // // forms
-      // {
-      //   path: '/form',
-      //   redirect: '/form/step-form',
-      //   component: RouteView,
-      //   meta: { title: '表单页', icon: 'form', permission: [ 'form' ] },
-      //   children: [
-      //     {
-      //       path: '/form/step-form',
-      //       name: 'StepForm',
-      //       component: () => import('@/views/form/stepForm/StepForm'),
-      //       meta: { title: '分步表单', keepAlive: true, permission: [ 'form' ] }
-      //     },
-      //     {
-      //       path: '/form/advanced-form',
-      //       name: 'AdvanceForm',
-      //       component: () => import('@/views/form/advancedForm/AdvancedForm'),
-      //       meta: { title: '高级表单', keepAlive: true, permission: [ 'form' ] }
-      //     }
-      //   ]
-      // },
+      // forms
+      {
+        path: '/form',
+        redirect: '/form/step-form',
+        component: RouteView,
+        meta: { title: '表单页', icon: 'form', permission: [ 'form' ] },
+        children: [
+          {
+            path: '/form/step-form',
+            name: 'StepForm',
+            component: () => import('@/views/form/stepForm/StepForm'),
+            meta: { title: '分步表单', keepAlive: true, permission: [ 'form' ] }
+          },
+          {
+            path: '/form/advanced-form',
+            name: 'AdvanceForm',
+            component: () => import('@/views/form/advancedForm/AdvancedForm'),
+            meta: { title: '高级表单', keepAlive: true, permission: [ 'form' ] }
+          }
+        ]
+      },
+      {
+        path: '/settinglist',
+        name: 'settingList',
+        component: () => import('@/views/fieldSetting/list/index.vue'),
+        meta: { title: '字段配置', icon: 'table'}
+      },
 
       // // list
       // {
@@ -112,29 +118,6 @@ export const asyncRouterMap = {
       //           meta: { title: '搜索列表（应用）', permission: [ 'table' ] }
       //         }
       //       ]
-      //     }
-      //   ]
-      // },
-
-      // // profile
-      // {
-      //   path: '/profile',
-      //   name: 'profile',
-      //   component: RouteView,
-      //   redirect: '/profile/basic',
-      //   meta: { title: '详情页', icon: 'profile', permission: [ 'profile' ] },
-      //   children: [
-      //     {
-      //       path: '/profile/basic',
-      //       name: 'ProfileBasic',
-      //       component: () => import('@/views/profile/basic'),
-      //       meta: { title: '基础详情页', permission: [ 'profile' ] }
-      //     },
-      //     {
-      //       path: '/profile/advanced',
-      //       name: 'ProfileAdvanced',
-      //       component: () => import('@/views/profile/advanced/Advanced'),
-      //       meta: { title: '高级详情页', permission: [ 'profile' ] }
       //     }
       //   ]
       // },
@@ -629,18 +612,15 @@ export const constantRouterMap = {
         path: 'login',
         name: 'login',
         component: () => import(/* webpackChunkName: "user" */ '@/views/user/Login')
-      },
-      {
+      },{
         path: 'register',
         name: 'register',
         component: () => import(/* webpackChunkName: "user" */ '@/views/user/Register')
-      },
-      {
+      },{
         path: 'register-result',
         name: 'registerResult',
         component: () => import(/* webpackChunkName: "user" */ '@/views/user/RegisterResult')
-      },
-      {
+      },{
         path: 'recover',
         name: 'recover',
         component: undefined
@@ -658,12 +638,17 @@ export const hideInMenuRouterMap = {
       path: '/hidemenu/baseForm',
       name: 'baseForm',
       component: () => import('@/components/BaseForm/index.vue'),
-      meta: { title: '基础表单', keepAlive: true, permission: [ 'form' ] }
+      meta: { title: '基础表单'}
     },{
-      path: '/hidemenu/staff-form',
+      path: '/hidemenu/staffForm',
       name: 'staffForm',
       component: () => import('@/views/form/basicForm'),
-      meta: { title: '档案录入', keepAlive: true, permission: [ 'form' ] }
+      meta: { title: '档案录入'}
+    },{
+      path: '/hidemenu/setting',
+      name: 'fieldSetting',
+      component: () => import('@/views/fieldSetting/setting/index.vue'),
+      meta: { title: '字段配置'}
     }
   ]
 }
