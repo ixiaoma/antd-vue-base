@@ -6,7 +6,7 @@
                     <a-col :span="12">
                         <a-form-item label="节点类型" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
                             <a-select v-decorator="['type',validates.type]" mode="default" placeholder="请选择节点类型" style="width: 100%" @change="selNodeType">
-                                <a-select-option v-for="k in nodeTypeSelect" :key="k.id" :value="k.id">
+                                <a-select-option v-for="(k,index) in nodeTypeSelect" :key="index" :value="k.id">
                                 {{ k.name }}
                                 </a-select-option>
                             </a-select>
@@ -30,7 +30,7 @@
                     <a-col :span="12">
                         <a-form-item label="objectType" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
                             <a-select mode="default" :getPopupContainer='triggerNode => triggerNode.parentNode' v-decorator="['objectType',validates.objectType]" placeholder="请选择objectType" style="width: 100%" allowClear>
-                                <a-select-option v-for="(k,index) in objectTypeList" :key="index" :value="k.objectType">
+                                <a-select-option v-for="k in objectTypeList" :key="k.id" :value="k.objectType">
                                 {{ k.name }}
                                 </a-select-option>
                             </a-select>
@@ -51,17 +51,17 @@
                             <a-switch checkedChildren="启用" unCheckedChildren="禁用" v-decorator="['enabledBool', { valuePropName: 'checked' }]"/>
                         </a-form-item>
                     </a-col>
-                    <a-col :span="12" v-if="form.getFieldValue('type') == 1">
+                    <a-col :span="12" v-show="form.getFieldValue('type') == 1">
                         <a-form-item label="菜单节点" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
                             <a-switch checkedChildren="启用" unCheckedChildren="禁用" v-decorator="['leafBool', { valuePropName: 'checked' }]"/>
                         </a-form-item>
                     </a-col>
-                    <a-col :span="12" v-if="form.getFieldValue('type') == 3">
+                    <a-col :span="12" v-show="form.getFieldValue('type') == 3">
                         <a-form-item label="是否列表展示" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
                             <a-switch checkedChildren="是" unCheckedChildren="否" v-decorator="['listDisplay', { valuePropName: 'checked' }]"/>
                         </a-form-item>
                     </a-col>
-                    <a-col :span="12" v-if="form.getFieldValue('type') == 3">
+                    <a-col :span="12" v-show="form.getFieldValue('type') == 3">
                         <a-form-item label="是否详情展示" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
                             <a-switch checkedChildren="是" unCheckedChildren="否" v-decorator="['detailsDisplay', { valuePropName: 'checked' }]"/>
                         </a-form-item>
@@ -77,7 +77,7 @@
                     </a-col>
                      <a-col :span="12">
                         <a-form-item label="描述" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
-                            <a-textarea v-decorator="['description']" :autosize="{ minRows: 2, maxRows: 6 }"/>
+                            <a-textarea v-decorator="['description']" :autoSize="{ minRows: 2, maxRows: 6 }"/>
                         </a-form-item>
                     </a-col>
                 </a-row>

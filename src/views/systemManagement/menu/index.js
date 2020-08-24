@@ -45,9 +45,17 @@ export default {
         },
         
         addTreeNode() {//添加节点操作
+            if(!this.currentId){
+                this.$message.warning('请选择节点');
+                return false
+            }
             this.$refs.addMenu.openModal('add',null,this.currentId,this.roleData,null);
         },
         editTreeNode() {//编辑节点操作
+            if(!this.currentId){
+                this.$message.warning('请选择节点');
+                return false
+            }
             this.$refs.addMenu.openModal('edit',this.currentNode, this.currentId,this.roleData,this.nodeData);
         },
         delTreeNode() {//删除节点操作

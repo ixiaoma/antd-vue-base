@@ -15,7 +15,7 @@
                     </a-col> -->
                     <a-col :span="24">
                         <a-form-item label="描述" :label-col="{ span: 4 }" :wrapper-col="{ span: 19 }">
-                            <a-textarea v-decorator="['description']" :autosize="{ minRows: 2, maxRows: 6 }"/>
+                            <a-textarea v-decorator="['description']" :autoSize="{ minRows: 2, maxRows: 6 }"/>
                         </a-form-item>
                     </a-col>
                 </a-row>

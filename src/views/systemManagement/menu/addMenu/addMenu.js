@@ -15,15 +15,20 @@ export default {
                 url: { rules: [{ required: true, message: '请填写url' }] },
                 code: { rules: [{ required: true, message: '请填写code' }] },
                 icon: { rules: [{ required: false, message: '请填写icon' }] },
-                sort: { rules: [{ type: 'number',required: true, message: '请填写排序' }] },
+                sort: { initialValue:1,rules: [{ type: 'number',required: true, message: '请填写排序' }] },
                 objectType: { rules: [{ required: true, message: '请选择objectType' }] },
                 roleIds: { rules: [{ type: 'array',required: false, message: ' ' }] },
-                description:{ rules: [{ required: false, message: ' ' }] }
+                description:{ rules: [{ required: false, message: ' ' }] },
+                enabledBool:{ initialValue:true},
+                leafBool:{ initialValue:true},
+                listDisplay:{ initialValue:true},
+                detailsDisplay:{ initialValue:true},
             },
             parentId:'',//父节点Id
             currentId:'',//当前节点的id
             roleData:[],
-            objectTypeList:[]
+            objectTypeList:[],
+            nodeData:null
         }
     },
     methods: {
@@ -37,18 +42,20 @@ export default {
             }     
             this.currentId = currentId;
             this.modaltitle = pageType == 'add' ? '新建节点' : '编辑节点';
+            
             if (pageType == 'add') {
-                let timer = setTimeout(()=>{
-                    this.form.setFieldsValue({ type: '1' });
-                    clearTimeout(timer)
-                },100)
+                    this.form.setFieldsValue({ type: '1',description:''});
+                    this.form.getFieldDecorator('detailsDisplay', { initialValue:true })
+                    this.form.getFieldDecorator('enabledBool', { initialValue:true })
+                    this.form.getFieldDecorator('listDisplay', { initialValue:true })
+                    this.form.getFieldDecorator('leafBool', { initialValue:true })           
             } else {
+                this.nodeData=JSON.parse(JSON.stringify(nodeData))
                 let type = nodeData.type.toString();
                 let listDisplay = nodeData.listDisplay=='1'?true:false
                 let detailsDisplay = nodeData.detailsDisplay=='1'?true:false
                 this.form.setFieldsValue({type: type});
                 const { title, url, code, icon, sort, description,objectType,roleIds,enabledBool,leafBool } = { ...nodeData };
-                console.log(enabledBool)
                 type == '1' ? setTimeout(() => {
                     this.form.setFieldsValue({ type, title, url, objectType,icon, sort, enabledBool,leafBool,roleIds, description})
                 },10) : setTimeout(() => {
@@ -60,12 +67,13 @@ export default {
         handleOk() {//保存
             this.form.validateFields((err, values) => {
                 if (err) return;
-                let obj = JSON.parse(JSON.stringify(values));
+                const obj = {...values}
                 obj.parentId = this.parentId;
                 this.confirmLoading = true;
                 if(obj.type == 3){
                     obj.listDisplay = obj.listDisplay ? '1' : '2'
                     obj.detailsDisplay = obj.detailsDisplay ? '1' : '2'
+                    obj.leafBool = true
                     delete obj.url;
                 }  
                 if(obj.type == 1){
@@ -73,7 +81,6 @@ export default {
                     delete obj.listDisplay
                     delete obj.detailsDisplay
                 }  
-           
                 if(this.pageType == 'add') {//新建
                     menusAdd(obj).then(res=>{
                         if(res.code == 200) {
@@ -88,8 +95,15 @@ export default {
                         this.confirmLoading = false;
                     })
                 } else {//编辑
+                    let nodeData=JSON.parse(JSON.stringify(this.nodeData))
                     obj.id=this.currentId
-                    menusEdit(this.currentId,obj).then(res=>{
+                    for (var prop in obj) {
+                        nodeData[prop]=obj[prop]
+                    }
+                    if(nodeData.type==3){
+                        delete nodeData.url
+                    }
+                    menusEdit(this.currentId,nodeData).then(res=>{
                         if(res.code == 200) {
                             this.$message.success('编辑成功');
                             this.$emit('refresh');
@@ -109,10 +123,10 @@ export default {
             this.form = this.$form.createForm(this);
         },
         selNodeType(e) {
-            let timer = setTimeout(()=>{
-                // this.form.setFieldsValue({'enabledBool':true,'leafBool':false });
-                clearTimeout(timer)
-            },100)
+            this.form.getFieldDecorator('detailsDisplay', { initialValue:true })
+            this.form.getFieldDecorator('enabledBool', { initialValue:true })
+            this.form.getFieldDecorator('listDisplay', { initialValue:true })
+            this.form.getFieldDecorator('leafBool', { initialValue:true })         
         },
         objectTypeLoad(){
             objectTypeList().then(res=>{
