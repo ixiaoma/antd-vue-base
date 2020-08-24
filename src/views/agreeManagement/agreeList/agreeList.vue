@@ -27,7 +27,7 @@
 
         <span slot="action" slot-scope="text, record">
           <template>
-            <a @click="handleSub(record)">查看</a>
+            <a @click="handleAdd(record,2)">查看</a>
           </template>
         </span>
       </s-table>

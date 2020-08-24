@@ -75,9 +75,14 @@ export default {
     }
   },
   methods: {
-    handleAdd () {
-      this.mdl = null
-      this.visible = true
+    handleAdd (data,flag) {
+      this.$router.push({
+        name:'baseForm',
+        query:{
+          title:`入职申请${flag == 1 ? '新增' : flag == 2 ? '详情' : '修改'}`,
+          flag
+        }
+      })
     },
     handleEdit (record) {
       this.visible = true

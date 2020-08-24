@@ -20,7 +20,7 @@ const Table = compoenntName => {
     <a-card :bordered="false">
       <table-filter :filterList='filterList'/>
       <div class="table-operator">
-        <a-button type="primary" icon="plus" @click="handleAdd">新建</a-button>
+        <a-button type="primary" icon="plus" @click="handleAdd(null,1)">新建</a-button>
       </div>
 
       <s-table
@@ -43,11 +43,11 @@ const Table = compoenntName => {
         </span>
 
         <span slot="action" slot-scope="text, record">
-          <template>
-            <a @click="handleSub(record)">查看</a>
-            <a-divider type="vertical" />
-            <a @click="handleEdit(record)">编辑</a>
-          </template>
+        <template>         
+          <a @click="handleAdd(record,2)">查看</a>
+          <a-divider type="vertical" />
+          <a @click="handleAdd(record,3)">修改</a>
+        </template>
         </span>
       </s-table>
     </a-card>
