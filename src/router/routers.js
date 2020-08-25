@@ -320,6 +320,13 @@ export const asyncRouterMap = {
             component: () => import('@/views/systemManagement/menu/index.vue'),
             meta: { title: '系统菜单', keepAlive: true, permission: [ 'table' ] }
           },
+          {
+            path: '/systemManagement/systemNotice/:pageNo([1-9]\\d*)?',
+            name: 'systemNotice',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/systemManagement/systemNotice/systemNotice.vue'),
+            meta: { title: '系统公告', keepAlive: true, permission: [ 'table' ] }
+          }
         ]
       },
       //人事档案
@@ -767,6 +774,18 @@ export const hideInMenuRouterMap = {
       name: 'fieldSetting',
       component: () => import('@/views/fieldSetting/setting/index.vue'),
       meta: { title: '字段配置'}
+    },
+    {
+      path: '/hidemenu/noticeAdd',
+      name: 'noticeAdd',
+      component: () => import('@/views/systemManagement/systemNotice/noticeAdd/noticeAdd.vue'),
+      meta: { title: '系统公告新增'}
+    },
+    {
+      path: '/hidemenu/noticeDetail',
+      name: 'noticeDetail',
+      component: () => import('@/views/systemManagement/systemNotice/noticeDetail/noticeDetail.vue'),
+      meta: { title: '系统公告详情'}
     }
   ]
 }

@@ -16,6 +16,7 @@ const userApi = {
 }
 const api={
   getUserList:frameAPI+'user/condition/page',//用户列表
+  getUserLike: frameAPI+'user/getUsersByNickname',//用户模糊查询
   userEnable: frameAPI+'user/isenableduser/update',//用户禁用启用
   userSave: frameAPI+'user/save',//用户新增
   userUpdate: frameAPI+'user/update',//用户修改
@@ -41,8 +42,15 @@ const api={
   menusListChild:frameAPI+'resource/menu/',//'menus/menu/',//菜单管理树
   menusDetail:frameAPI+'resource/',//菜单详情
   menusAdd:frameAPI+'resource',//菜单新增
-  objectTypeList:configAPI+'objectdefine/list/objectType'//object
-  
+  objectTypeList:configAPI+'objectdefine/list/objectType',//object
+  noticePage: frameAPI+'notice/queryPage',//系统公告列表
+  noticeAdd: frameAPI+'notice/add',//系统公告新增
+  noticeEdit: frameAPI+'notice/edit',//系统公告编辑
+  noticeTop: frameAPI+'notice/stick',//系统公告置顶
+  noticeDetail: frameAPI+'notice/getById',//系统公告详情
+  noticeDel: frameAPI+'notice/deletebyids',//系统公告删除
+  noticeRead: frameAPI+'notice/read/',//系统公告已读
+  noticeHome: frameAPI+'notice/getByItcode',//系统公告首页
 }
 
 /**
@@ -97,6 +105,9 @@ export function getServiceList (parameter) {
 
 export function getUserList(parameter) {
   return axios.post(api.getUserList, parameter)
+}
+export function getUserLike(parameter) {
+  return axios.get(api.getUserLike,{params:parameter})
 }
 export function userEnable(parameter) {
   return axios.post(api.userEnable, parameter)
@@ -191,6 +202,24 @@ export function menusDel(id) {
 export function objectTypeList() {
   return axios.get(api.objectTypeList)
 }
+export function noticePage(params) {
+  return axios.post(api.noticePage,params)
+}
+export function noticeAdd(params) {
+  return axios.post(api.noticeAdd,params)
+}
+export function noticeEdit(params) {
+  return axios.post(api.noticeEdit,params)
+}
+export function noticeDetail(params) {
+  return axios.get(api.noticeDetail,{params:params})
+}
+export function noticeDel(params) {
+  return axios.post(api.noticeDel,params)
+}
+// noticeTop: 'notice/stick',//系统公告置顶
+// noticeRead: 'notice/read/',//系统公告已读
+// noticeHome: 'notice/getByItcode',//系统公告首页
 
 
 
