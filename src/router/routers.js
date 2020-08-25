@@ -660,6 +660,58 @@ export const asyncRouterMap = {
             meta: { title: '加班审批', keepAlive: true, permission: [ 'table' ] }
           },
         ]
+      },
+      //费用管理
+      {
+        path: '/costManagement',
+        name: 'costManagement',
+        component: RouteView,
+        redirect: '/costManagement/budgetList',
+        meta: { title: '费用管理', icon: 'table', permission: [ 'table' ] },
+        children: [
+          {
+            path: '/costManagement/budgetList/:pageNo([1-9]\\d*)?',
+            name: 'budgetList',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/costManagement/budgetList/budgetList.vue'),
+            meta: { title: '预算管理列表', keepAlive: true, permission: [ 'table' ] }
+          },
+          {
+            path: '/costManagement/budgetApproval/:pageNo([1-9]\\d*)?',
+            name: 'budgetApproval',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/costManagement/budgetApproval/budgetApproval.vue'),
+            meta: { title: '预算审批', keepAlive: true, permission: [ 'table' ] }
+          },
+          {
+            path: '/costManagement/budgetAdjust/:pageNo([1-9]\\d*)?',
+            name: 'budgetAdjust',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/costManagement/budgetAdjust/budgetAdjust.vue'),
+            meta: { title: '预算调整', keepAlive: true, permission: [ 'table' ] }
+          },
+          {
+            path: '/costManagement/reimbursement/:pageNo([1-9]\\d*)?',
+            name: 'reimbursement',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/costManagement/reimbursement/reimbursement.vue'),
+            meta: { title: '报销列表', keepAlive: true, permission: [ 'table' ] }
+          },
+          {
+            path: '/costManagement/reimbursementApproval/:pageNo([1-9]\\d*)?',
+            name: 'reimbursementApproval',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/costManagement/reimbursementApproval/reimbursementApproval.vue'),
+            meta: { title: '报销审批', keepAlive: true, permission: [ 'table' ] }
+          },
+          {
+            path: '/costManagement/reimbursementAdjust/:pageNo([1-9]\\d*)?',
+            name: 'reimbursementAdjust',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/costManagement/reimbursementAdjust/reimbursementAdjust.vue'),
+            meta: { title: '报销调整', keepAlive: true, permission: [ 'table' ] }
+          }
+        ]
       }
     ]
 }
