@@ -16,7 +16,7 @@ export default{
            this.objectList = res.records
         },
         toSetting(item){
-            this.$router.push({name:'fieldSetting',query:{title:item.name+'配置'}})
+            this.$router.push({name:'fieldSetting',query:{title:item.name+'配置',code:item.code}})
         }
     },
     created(){

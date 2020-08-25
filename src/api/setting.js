@@ -17,8 +17,8 @@ const settingApi = {
 export function getObjectList (parameter) {
     return axios.post(settingApi.objectList,parameter)
 }
-export function fieldDefinedSave (objectDefineCode) {
-    return axios.post(settingApi.fieldDefinedSave+objectDefineCode)
+export function fieldDefinedSave (objectDefineCode,parameter) {
+    return axios.post(settingApi.fieldDefinedSave+objectDefineCode,parameter)
 }
 export function fieldDefinedList (objectDefineCode) {
     return axios.post(settingApi.fieldDefinedList+objectDefineCode)
