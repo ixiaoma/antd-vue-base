@@ -594,6 +594,72 @@ export const asyncRouterMap = {
             meta: { title: '奖惩管理', keepAlive: true, permission: [ 'table' ] }
           },
         ]
+      },
+      //员工考勤
+      {
+        path: '/staffAttendance',
+        name: 'staffAttendance',
+        component: RouteView,
+        redirect: '/staffAttendance/attendanceList',
+        meta: { title: '员工考勤', icon: 'table', permission: [ 'table' ] },
+        children: [
+          {
+            path: '/staffAttendance/attendanceList/:pageNo([1-9]\\d*)?',
+            name: 'attendanceList',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/staffAttendance/attendanceList/attendanceList.vue'),
+            meta: { title: '考勤记录', keepAlive: true, permission: [ 'table' ] }
+          },
+          {
+            path: '/staffAttendance/attendanceDetailList/:pageNo([1-9]\\d*)?',
+            name: 'attendanceDetailList',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/staffAttendance/attendanceDetailList/attendanceDetailList.vue'),
+            meta: { title: '考勤明细', keepAlive: true, permission: [ 'table' ] }
+          },
+          {
+            path: '/staffAttendance/workTraveling/:pageNo([1-9]\\d*)?',
+            name: 'workTraveling',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/staffAttendance/workTraveling/workTraveling.vue'),
+            meta: { title: '出差管理', keepAlive: true, permission: [ 'table' ] }
+          },
+          {
+            path: '/staffAttendance/workTravelingApproval/:pageNo([1-9]\\d*)?',
+            name: 'workTravelingApproval',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/staffAttendance/workTravelingApproval/workTravelingApproval.vue'),
+            meta: { title: '出差审批', keepAlive: true, permission: [ 'table' ] }
+          },
+          {
+            path: '/staffAttendance/vacationManage/:pageNo([1-9]\\d*)?',
+            name: 'vacationManage',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/staffAttendance/vacationManage/vacationManage.vue'),
+            meta: { title: '休假管理', keepAlive: true, permission: [ 'table' ] }
+          },
+          {
+            path: '/staffAttendance/vacationApproval/:pageNo([1-9]\\d*)?',
+            name: 'vacationApproval',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/staffAttendance/vacationApproval/vacationApproval.vue'),
+            meta: { title: '休假审批', keepAlive: true, permission: [ 'table' ] }
+          },
+          {
+            path: '/staffAttendance/workOvertimeManage/:pageNo([1-9]\\d*)?',
+            name: 'workOvertimeManage',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/staffAttendance/workOvertimeManage/workOvertimeManage.vue'),
+            meta: { title: '加班管理', keepAlive: true, permission: [ 'table' ] }
+          },
+          {
+            path: '/staffAttendance/workTravelingApproval/:pageNo([1-9]\\d*)?',
+            name: 'workTravelingApproval',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/staffAttendance/workTravelingApproval/workTravelingApproval.vue'),
+            meta: { title: '加班审批', keepAlive: true, permission: [ 'table' ] }
+          },
+        ]
       }
     ]
 }
