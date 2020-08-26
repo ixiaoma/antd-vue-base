@@ -114,11 +114,6 @@ export default {
                 this.treeData =  JSON.parse(strAdd);
             })
         },
-        getUserLoad(){
-            getUserList().then(res => {
-               
-            })
-        },
         fetchUser(value) {
             console.log('fetching user', value);
             this.lastFetchId += 1;
@@ -130,13 +125,8 @@ export default {
             }
             getUserLike(params).then(res => {
                 if (fetchId !== this.lastFetchId) {
-                    // for fetch callback order
                     return;
                   }
-                //   const data = res.data.map(user => ({
-                //     text:user.nickname,
-                //     value: user.nickname,
-                //   }));
                   this.userData = res.data;
                   this.fetching = false;
             })
@@ -155,16 +145,35 @@ export default {
                 id: this.editid
             }           
             noticeDetail(params).then(res => {
-                if (res.code == 200) {    
-                    
+                if (res.code == 200) {                 
                     let fromdata=res.data
                     fromdata.publishDate=res.data.publishDate?moment(new Date(res.data.publishDate)):null
                     fromdata.expiryDate=res.data.expiryDate?moment(new Date(res.data.expiryDate)):null
                     this.$nextTick(()=>{
-                        let { title,publishDate,expiryDate} = { ...fromdata };
+                        let { title,publishDate,expiryDate,customerType,customerIds} = { ...fromdata };
                         this.form.setFieldsValue({
-                            title,publishDate,expiryDate
+                            title,publishDate,expiryDate,bulletinperson:customerType,customerType
                         })
+                        setTimeout(()=>{
+                            if (this.form.getFieldValue('bulletinperson') == "role") {
+                                this.form.setFieldsValue({
+                                    roleIds:customerIds
+                                })     
+                                // this.form.getFieldDecorator('roleIds', { initialValue:customerIds })                          
+                            } 
+                            if (this.form.getFieldValue('bulletinperson') == "department") {
+                                this.form.setFieldsValue({
+                                    dept:customerIds
+                                }) 
+                                // this.form.getFieldDecorator('dept', { initialValue:customerIds })    
+                            } 
+                            if (this.form.getFieldValue('bulletinperson') == "people") {
+                                this.form.setFieldsValue({
+                                    users:customerIds
+                                }) 
+                                // this.form.getFieldDecorator('users', { initialValue:customerIds })    
+                            }
+                        },200)           
                     })             
                     this.bulletinconcent= Base64.decode(res.data.content);
                     this.editor.txt.html(this.bulletinconcent)            

@@ -217,8 +217,10 @@ export function noticeDetail(params) {
 export function noticeDel(params) {
   return axios.post(api.noticeDel,params)
 }
+export function noticeRead(params) {
+  return axios.post(api.noticeRead+params)
+}
 // noticeTop: 'notice/stick',//系统公告置顶
-// noticeRead: 'notice/read/',//系统公告已读
 // noticeHome: 'notice/getByItcode',//系统公告首页
 
 

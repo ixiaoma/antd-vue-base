@@ -16,8 +16,26 @@
       <div class="table-operator">
         <a-button type="primary" icon="plus" @click="handleAdd(null,1)">新建</a-button>
       </div>
-
-      <s-table
+      <a-table 
+                  ref="table"
+                  size="small"
+                  :bordered="true"
+                  :rowKey="(record) =>  record.id"
+                  :columns="columns" 
+                  :data-source="noticeData"      
+                  :showPagination="true"
+                  :pagination="pagination"
+                  :scroll="{ x: 1200}"
+                  :loading="loading"
+                  @change="handleTableChange"
+                >
+                <template slot="action" slot-scope="text, record">         
+                  <a @click="handleSub(record)">查看</a>
+                  <a-divider type="vertical" />
+                  <a @click="handleAdd(record,3)">修改</a>
+                </template>
+      </a-table>
+      <!-- <s-table
         ref="table"
         :rowKey="(record) =>  record.id"
         :columns="columns"
@@ -26,16 +44,6 @@
         :alert="true"
         :rowSelection="rowSelection"
         showPagination="auto">
-        <span slot="serial" slot-scope="text, record, index">
-          {{ index + 1 }}
-        </span>
-        <span slot="status" slot-scope="text">
-          <a-badge :status="text | statusTypeFilter" :text="text | statusFilter" />
-        </span>
-        <span slot="description" slot-scope="text">
-          <ellipsis :length="4" tooltip>{{ text }}</ellipsis>
-        </span>
-
         <span slot="action" slot-scope="text, record">
         <template>         
           <a @click="handleSub(record)">查看</a>
@@ -43,7 +51,7 @@
           <a @click="handleAdd(record,3)">修改</a>
         </template>
         </span>
-      </s-table>
+      </s-table> -->
     </a-card>
   </div>
 </template>
