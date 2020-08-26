@@ -1,6 +1,7 @@
 // with polyfills
 import 'core-js/stable'
 import 'regenerator-runtime/runtime'
+import draggable from 'vuedraggable'
 
 import Vue from 'vue'
 import App from './App.vue'
@@ -23,6 +24,7 @@ Vue.config.productionTip = false
 
 Vue.component('pro-layout', ProLayout)
 Vue.component('page-header-wrapper', PageHeaderWrapper)
+Vue.component('draggable', draggable)
 
 window.umi_plugin_ant_themeVar = themePluginConfig.theme
 

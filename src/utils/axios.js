@@ -35,6 +35,7 @@ service.interceptors.response.use(res => {
 }, error => {
   if (error.response) {
     const { status } = error.response
+    const { message } = error.response.data
     if (status === 401) {
       sessionStorage.removeItem('access_token')
       // if (token) {
@@ -45,7 +46,8 @@ service.interceptors.response.use(res => {
       //   })
       // }
     }
-    Message.error('接口请求失败')
+    const errorMessage = message ? message : '接口请求失败'
+    Message.error(errorMessage)
   } else {
     Message.error('接口请求失败')
   }

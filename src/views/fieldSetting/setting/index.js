@@ -1,5 +1,6 @@
-import draggable from 'vuedraggable'
-import { saveGroupField, listLayout, deleteGroupField, fieldDefinedSave, fieldDefinedDelete} from '@/api/setting'
+import { saveGroupField, listLayout, deleteGroupField, fieldDefinedSave, fieldDefinedDelete, saveFieldLayout } from '@/api/setting'
+
+import FooterToolBar from '@/layouts/FooterToolbar'
 
 const valueTypeList = [
     {
@@ -58,20 +59,30 @@ export default{
             visible:false,
             fieldVisible:false,
             loading:false,
+            fieldLoading:false,
             form: this.$form.createForm(this, { name: 'block_form' }),
             fieldForm:this.$form.createForm(this, { name: 'field_form' }),
-            collapseList:[],
+            layoutData:null,
             groupName:null,
+            componentData:{
+                attrs:{
+                    bordered:false
+                },
+                props: {
+                    'default-active-key':'0'
+                }
+            },
+            fieldData:null
         }
     },
-    components: {
-        draggable
+    components:{
+        FooterToolBar
     },
     methods:{
-        addModel(){
+        addModel(){//添加或编辑分割线
             this.visible = true
         },
-        handleSubmit(e){
+        handleSubmit(e){//保存分割线
             e.preventDefault();
             this.form.validateFields((err, values) => {
               if (!err) {
@@ -80,45 +91,55 @@ export default{
                     layoutType:'BASIC',
                     objectDefineCode:this.$route.query.code
                 }
-                this.loading = true
+                this.fieldLoading = true
                 saveGroupField(params).then(res=>{
                     this.getInitLayout()
                     this.visible = false
-                    this.loading = false
+                    this.fieldLoading = false
                 }).catch(error=>{
-                    this.loading = false
+                    this.fieldLoading = false
                 })
               }
             });
         },
-        async deleteBlock(item){
+        deleteBlock(item){//删除分割线
             const params = {
-                fieldName:item.fieldCode,
+                fieldName:item.groupName,
                 layoutType:'BASIC',
                 objectDefineCode:this.$route.query.code
             }
-            const res = await deleteGroupField(params)
+            this.$confirm({
+                title: '请确认是否要删除此模块?',
+                content: h => <div style="color:red;">删除后此模块下的字段会自动放到其他模块中</div>,
+                onOk: async ()=>{
+                    const res = await deleteGroupField(params)
+                }
+            })
         },
-        handleCancel(e){
+        handleCancel(e){//关闭分割线弹框
             this.visible = false
         },
-        addField(item){
+        oprationField(groupName,fieldData){//添加字段+编辑字段
             this.fieldVisible = true
-            this.groupName = item.fieldCode
+            this.groupName = groupName
+            this.fieldForm.resetFields()
+            this.fieldData = fieldData || null
         },
-        handleFieldSubmit(e){
+        handleFieldSubmit(e){//保存字段
             e.preventDefault();
             this.fieldForm.validateFields((err, values) => {
               if (!err) {
-                  console.log(values)
                 const params = {
                     ...values,
                     groupName:this.groupName
                 }
+                if(this.fieldData){
+                    params.code = this.fieldData.code
+                }
                 this.loading = true
                 fieldDefinedSave(this.$route.query.code,params).then(res=>{
                     this.getInitLayout()
-                    this.visible = false
+                    this.fieldVisible = false
                     this.loading = false
                 }).catch(error=>{
                     this.loading = false
@@ -126,26 +147,54 @@ export default{
               }
             });
         },
-        editField(){
-            this.fieldVisible = true
-        },
-        deleteField(){
+        deleteField(fieldCode){//删除字段
             const params = {
                 objectDefineCode: this.$route.query.code,
                 fieldCode
             }
-            fieldDefinedDelete()
+            this.$confirm({
+                title: '请确认是否要删除此字段?',
+                content: h => <div style="color:red;">删除后将无法恢复</div>,
+                onOk: async ()=>{
+                    const res = await fieldDefinedDelete(params)
+                    this.getInitLayout()
+                }
+            })
         },
-        handleFieldCancel(){
+        handleFieldCancel(){//关闭字段弹框
             this.fieldVisible = false
         },
-        async getInitLayout(){
+        async getInitLayout(){//获取布局
             const params = {
                 objectDefineCode:this.$route.query.code,
                 layoutType:'BASIC'
             }
             const res = await listLayout(params)
-            this.collapseList = res.display
+            this.layoutData = res
+        },
+        async saveModel(){//保存布局
+            const parameter = {
+                display:this.layoutData.display.map(ele=>{
+                    return {
+                        groupName:ele.groupName,
+                        layoutList:ele.layoutList.map(ele=>{
+                           return {code:ele.code}
+                        })
+                    }
+                }),
+                trash:this.layoutData.trash.map(ele=>{
+                    return {
+                        fieldCode:ele.code,
+                        group:false
+                    }
+                })
+            }
+            const params = {
+                objectDefineCode:this.$route.query.code,
+                layoutType:'BASIC',
+                parameter
+            }
+            const res = await saveFieldLayout(params).catch(err=>{})
         }
     },
     created(){
