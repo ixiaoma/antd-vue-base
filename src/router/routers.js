@@ -326,6 +326,13 @@ export const asyncRouterMap = {
             hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
             component: () => import('@/views/systemManagement/systemNotice/systemNotice.vue'),
             meta: { title: '系统公告', keepAlive: true, permission: [ 'table' ] }
+          },
+          {
+            path: '/systemManagement/rulesManage/:pageNo([1-9]\\d*)?',
+            name: 'rulesManage',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/systemManagement/rulesManage/rulesManage.vue'),
+            meta: { title: '规章制度管理', keepAlive: true, permission: [ 'table' ] }
           }
         ]
       },
@@ -495,13 +502,13 @@ export const asyncRouterMap = {
           }
         ]
       },
-      //合同管理（外包人员）
+      //合同管理
       {
         path: '/agreeManagement',
         name: 'agreeManagement',
         component: RouteView,
         redirect: '/agreeManagement/agreeList',
-        meta: { title: '合同管理（外包人员）', icon: 'table', permission: [ 'table' ] },
+        meta: { title: '合同管理', icon: 'table', permission: [ 'table' ] },
         children: [
           {
             path: '/agreeManagement/agreeList/:pageNo([1-9]\\d*)?',
@@ -786,6 +793,12 @@ export const hideInMenuRouterMap = {
       name: 'noticeDetail',
       component: () => import('@/views/systemManagement/systemNotice/noticeDetail/noticeDetail.vue'),
       meta: { title: '系统公告详情'}
-    }
+    },
+    {
+      path: '/hidemenu/rulesDetail',
+      name: 'rulesDetail',
+      component: () => import('@/views/systemManagement/rulesManage/rulesDetail.vue'),
+      meta: { title: '规章制度详情'}
+    },
   ]
 }
