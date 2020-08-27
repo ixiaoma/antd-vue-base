@@ -5,7 +5,8 @@
 <div class="staffList">
     <!--这是staffList列表页面-->
     <a-card :bordered="false">
-      <table-filter :filterList='filterList'/>
+      <table-filter :filterList='filterList' @refresh='searchRefresh'/>
+
       <div class="table-operator">
         <a-button type="primary" icon="plus" @click="handleAdd(null,1)">新建</a-button>
         <a-button type="default" icon="download">导出</a-button>

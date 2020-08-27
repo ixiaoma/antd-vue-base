@@ -2,7 +2,7 @@
 import moment from 'moment'
 import TableFilter from '@/components/TableFilter/index.vue'
 import { STable, Ellipsis } from '@/components'
-import { getServiceList } from '@/api/user'
+import { getBasePage } from '@/api/commonApi'
 import {columns,filterList,result} from './codeList.js'
 
 const statusMap = {
@@ -42,15 +42,16 @@ export default {
       // 高级搜索 展开/关闭
       advanced: false,
       // 查询参数
-      queryParam: {},
+      queryParam: {
+        filter:{}
+      },
       // 加载数据方法 必须为 Promise 对象
       loadData: parameter => {
-        const requestParameters = Object.assign({}, parameter, this.queryParam)
-        console.log('loadData request parameters:', requestParameters)
-        return getServiceList(requestParameters)
+        const params = Object.assign( parameter, this.queryParam)
+        return getBasePage({pageCode:'example',params})
           .then(res => {
             // return res.result
-            return result
+            return res
           })
       },
       selectedRowKeys: [],
@@ -88,6 +89,10 @@ export default {
     onSelectChange (selectedRowKeys, selectedRows) {
       this.selectedRowKeys = selectedRowKeys
       this.selectedRows = selectedRows
+    },
+    searchRefresh(filterQuery){
+      this.queryParam.filter = filterQuery
+      this.$refs.table.refresh()
     }
   }
 }

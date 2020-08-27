@@ -76,15 +76,15 @@ export const filterList = [
   export const columns = [
     {
       title: '工号',
-      dataIndex: 'staffCode'
+      dataIndex: '4'
     },
     {
       title: '姓名',
-      dataIndex: 'staffName'
+      dataIndex: 'name'
     },
     {
       title: '部门',
-      dataIndex: 'staffDept'
+      dataIndex: '6'
     },
     {
       title: '岗位',

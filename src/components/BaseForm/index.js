@@ -1,5 +1,5 @@
   import moment from 'moment'
-  import { getBaseLayout, getDetailLayout, getEditLayout } from '@/api/commonApi'
+  import { getBaseLayout, getDetailLayout, saveLayout, getEditLayout, saveEditLayout } from '@/api/commonApi'
   
   import FooterToolBar from '@/layouts/FooterToolbar'
   export default {
@@ -20,7 +20,11 @@
     },
     methods:{
         decoratorFn(i){
-            return [ i.fieldKey, { initialValue: i.fieldType == 3 ? i.fieldValue || undefined : i.fieldValue ,rules: [ { required: i.enabled == 1 ? true : false, whitespace:true, message: `${i.fieldName}必填`, type:i.fieldType == 4 || i.fieldType == 5 ? 'array' : i.fieldType == 6 ? 'object' : 'string' } ] } ]
+            let value = i.value
+            if(i.valueType != 'SELECT' && i.valueType != 'CHECKBOX'){
+                value = i.value ? i.value.join(',') : ''
+            }
+            return [ i.code, { initialValue: i.valueType == 'RADIO' ? value || undefined : value ,rules: [ { required: i.enabled == 1 ? true : false, whitespace:true, message: `${i.name}必填`, type:i.valueType == 'SELECT' || i.valueType == 'CHECKBOX' ? 'array' : i.valueType == 'DATETIME' ? 'object' : 'string' } ] } ]
         },
         loadData(selectedOptions){
             const targetOption = selectedOptions[selectedOptions.length - 1]
@@ -57,32 +61,47 @@
             }else{
                 res = await getBaseLayout({pageCode})
             }
-            this.layoutList = res.result
-            this.activeKey = res.result.map((ele,index)=>index)
+            this.layoutList = res
+            this.activeKey = res.map((ele,index)=>index)
         },
         handleSubmit (e) {
             e.preventDefault()
-            this.form.validateFields((err, values) => {
+            this.form.validateFields(async (err, values) => {
                 if (!err) {
-                    let saveData = {}
+                    let saveData = []
                     this.layoutList.forEach(item=>{
-                        item.fieldList.forEach(ele=>{
-                            if(values[ele.fieldKey]){
-                                if(ele.fieldType == 6){
-                                    saveData[ele.fieldKey] = moment(values[ele.fieldKey]).format('YYYY-MM-DD')
-                                }else{
-                                    saveData[ele.fieldKey] = values[ele.fieldKey]
+                        item.fieldDefineValueList.forEach(ele=>{
+                            if(values[ele.code]){
+                                let data = values[ele.code]
+                                if(ele.valueType == 'DATETIME'){
+                                    data = moment(values[ele.code]).format('YYYY-MM-DD')
                                 }
+                                saveData.push({
+                                    code:ele.code,
+                                    value:[data]
+                                })
                             }
                         })
                     })
-                    console.log(saveData)
-                    this.$emit('next')
+                    const { pageCode, id } = this.$route.query
+                    const param = {
+                        pageCode,
+                        params:saveData
+                    }
+                    if(id) param.id = id
+                    const res = await saveLayout(param)
+                    if(res){
+                        this.$emit('next',res)
+                    }
                 }
             })
         },
         goBack(){
-            this.$router.go(-1)
+            if(this.$route.name == 'staffForm'){
+                this.$router.push({name:'staffList'})
+            }else{
+                this.$router.go(-1)
+            }
         }
     },
     created(){

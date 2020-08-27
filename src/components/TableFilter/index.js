@@ -48,7 +48,7 @@ export default {
               searchArr.push({ field: ele.dataIndex, operator, value: operator === 'contain' ? `%${value}%` : value })
             }
           })
-          this.refresh(searchArr)
+          this.$emit('refresh',searchArr)
         })
       },
       filterOption (input, option) {
@@ -58,7 +58,7 @@ export default {
       },
       handleReset () {
         this.form.resetFields()
-        this.refresh([])
+        this.$emit('refresh',{})
       },
       toggle () {
         this.expand = !this.expand

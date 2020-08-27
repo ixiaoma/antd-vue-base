@@ -1,41 +1,38 @@
 <template>
-  <!-- <div class="base-form-index"> -->
     <a-tabs v-model="activeKey" size='small' class="tabs-style">
-        <a-tab-pane key="1" tab="员工信息">
-            <base-form ref='baseForm' @next='nextStep'/>
-        </a-tab-pane>
-        <a-tab-pane v-for="(item,index) in tabLists" :key="index+2" :tab="item.tabName" force-render :disabled = 'disabled'>
-          <a-card>
-            <table-filter v-if='item.filterList' :filterList='item.filterList'/>
-            <div class="table-operator" v-if='item.tabName != "合同管理"'>
-              <a-button type="primary" icon="plus" @click="handleAdd">新建</a-button>
-              <a-button type="default" icon="download" v-if='item.tabName == "员工离职" || item.tabName == "奖惩管理"'>批量导出</a-button>
-            </div>
-            <s-table
-              ref="table"
-              rowKey="key"
-              :columns="item.columns"
-              :rowSelection="item.tabName == '员工离职' || item.tabName == '奖惩管理' ? rowSelection : null"
-              :data="loadData"
-              showPagination="auto">
-              <span slot="serial" slot-scope="text, record, index">
-                {{ index + 1 }}
-              </span>
-              <span slot="action" slot-scope="text, record">
-                <template>
-                  <a @click="handleEdit(record)">查看</a>
-                  <a-divider type="vertical" v-if='item.tabName != "合同管理"'/>
-                  <a @click="handleSub(record)" v-if='item.tabName != "合同管理"'>修改</a>
-                  <a-divider type="vertical" v-if='item.tabName == "员工离职" || item.tabName == "奖惩管理"'/>
-                  <a @click="handleSub(record)" v-if='item.tabName == "员工离职" || item.tabName == "奖惩管理"'>删除</a>
-                </template>
-              </span>
-            </s-table>
-          </a-card>
-        </a-tab-pane>
-      </a-tabs>
-      
-  <!-- </div> -->
+      <a-tab-pane key="1" tab="员工信息">
+          <base-form ref='baseForm' @next='nextStep'/>
+      </a-tab-pane>
+      <a-tab-pane v-for="(item,index) in tabLists" :key="`${index+2}`" :tab="item.tabName" force-render :disabled="disabled">
+        <a-card>
+          <table-filter v-if='item.filterList' :filterList='item.filterList'/>
+          <div class="table-operator" v-if='item.tabName != "合同管理"'>
+            <a-button type="primary" icon="plus" @click="handleAdd">新建</a-button>
+            <a-button type="default" icon="download" v-if='item.tabName == "员工离职" || item.tabName == "奖惩管理"'>批量导出</a-button>
+          </div>
+          <s-table
+            ref="table"
+            rowKey="key"
+            :columns="item.columns"
+            :rowSelection="item.tabName == '员工离职' || item.tabName == '奖惩管理' ? rowSelection : null"
+            :data="loadData"
+            showPagination="auto">
+            <span slot="serial" slot-scope="text, record, index">
+              {{ index + 1 }}
+            </span>
+            <span slot="action" slot-scope="text, record">
+              <template>
+                <a @click="handleEdit(record)">查看</a>
+                <a-divider type="vertical" v-if='item.tabName != "合同管理"'/>
+                <a @click="handleSub(record)" v-if='item.tabName != "合同管理"'>修改</a>
+                <a-divider type="vertical" v-if='item.tabName == "员工离职" || item.tabName == "奖惩管理"'/>
+                <a @click="handleSub(record)" v-if='item.tabName == "员工离职" || item.tabName == "奖惩管理"'>删除</a>
+              </template>
+            </span>
+          </s-table>
+        </a-card>
+      </a-tab-pane>
+    </a-tabs>
 </template>
 
 <script>
@@ -440,7 +437,8 @@ export default {
     handleAdd(){
       this.$router.push({name:'baseForm',query:{title:'社会关系添加'}})
     },
-    nextStep(){
+    nextStep(id){
+      this.$router.push({query:{...this.$route.query,id,flag:3}})
       this.disabled = false
       this.activeKey = '2'
     },
@@ -450,7 +448,9 @@ export default {
     }
   },
   created(){
-    if(this.$route.query.flag == 2){
+    const { flag } = this.$route.query
+    this.disabled = flag == 1
+    if(flag == 2){
       this.tabLists = [...baseLists,...tabDetailList]
     }else {
       this.tabLists = [...baseLists]
@@ -460,9 +460,7 @@ export default {
 </script>
 <style lang="less" scoped>
   .base-form-index, .tabs-style{
-    // height: 100%;
     /deep/.ant-tabs-content{
-      // height: 100%;
       background-color: #fff!important;
     }
   }

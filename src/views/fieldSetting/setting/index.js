@@ -51,11 +51,28 @@ const valueTypeList = [
     }
 ]
 
+const layoutList = [
+    {
+        key:'BASIC',
+        value:'基础布局'
+    },{
+        key:'CREATE',
+        value:'新增布局'
+    },{
+        key:'EDIT',
+        value:'编辑布局'
+    },{
+        key:'DETAIL',
+        value:'详情布局'
+    }
+]
+
 export default{
     name:'fieldSetting',
     data(){
         return{
             valueTypeList,
+            layoutList,
             visible:false,
             fieldVisible:false,
             loading:false,
@@ -72,7 +89,8 @@ export default{
                     'default-active-key':'0'
                 }
             },
-            fieldData:null
+            fieldData:null,
+            activeKey:'BASIC'
         }
     },
     components:{
@@ -88,7 +106,7 @@ export default{
               if (!err) {
                 const params = {
                     ...values,
-                    layoutType:'BASIC',
+                    layoutType:this.activeKey,
                     objectDefineCode:this.$route.query.code
                 }
                 this.fieldLoading = true
@@ -105,7 +123,7 @@ export default{
         deleteBlock(item){//删除分割线
             const params = {
                 fieldName:item.groupName,
-                layoutType:'BASIC',
+                layoutType:this.activeKey,
                 objectDefineCode:this.$route.query.code
             }
             this.$confirm({
@@ -167,7 +185,7 @@ export default{
         async getInitLayout(){//获取布局
             const params = {
                 objectDefineCode:this.$route.query.code,
-                layoutType:'BASIC'
+                layoutType:this.activeKey
             }
             const res = await listLayout(params)
             this.layoutData = res
@@ -191,7 +209,7 @@ export default{
             }
             const params = {
                 objectDefineCode:this.$route.query.code,
-                layoutType:'BASIC',
+                layoutType:this.activeKey,
                 parameter
             }
             const res = await saveFieldLayout(params).catch(err=>{})
