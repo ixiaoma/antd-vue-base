@@ -45,7 +45,7 @@ import TableFilter from '@/components/TableFilter/index.vue'
 
 import { getServiceList } from '@/api/user'
 
-const tabLists = [
+const baseLists = [
   {
     tabName:'社会关系',
     columns:[
@@ -410,7 +410,7 @@ export default {
   name: 'StaffForm',
   data(){
     return{
-      tabLists,
+      tabLists:[],
       activeKey:'1',
       disabled:false,
       selectedRowKeys: [],
@@ -451,7 +451,9 @@ export default {
   },
   created(){
     if(this.$route.query.flag == 2){
-      this.tabLists.push(...tabDetailList)
+      this.tabLists = [...baseLists,...tabDetailList]
+    }else {
+      this.tabLists = [...baseLists]
     }
   }
 }

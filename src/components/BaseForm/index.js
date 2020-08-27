@@ -1,5 +1,5 @@
   import moment from 'moment'
-  import {getStaffInfo} from '@/api/baseform'
+  import { getBaseLayout, getDetailLayout, getEditLayout } from '@/api/commonApi'
   
   import FooterToolBar from '@/layouts/FooterToolbar'
   export default {
@@ -48,7 +48,15 @@
             this.previewVisible = false;
         },
         async getInitData(){
-            const res = await getStaffInfo()
+            let res = null
+            const { flag, pageCode, id } = this.$route.query
+            if(flag == 2){
+                res = await getDetailLayout({pageCode,id})
+            }else if(flag == 3){
+                res = await getEditLayout({pageCode,id})
+            }else{
+                res = await getBaseLayout({pageCode})
+            }
             this.layoutList = res.result
             this.activeKey = res.result.map((ele,index)=>index)
         },
