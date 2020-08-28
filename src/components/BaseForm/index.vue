@@ -6,7 +6,7 @@
                     <a-row :gutter="56">
                         <a-col v-for="(i,d) in item.fieldDefineValueList" :key="d" :span="12" >
                             <a-form-item :label="i.name" v-if='readonly'>
-                                <span class="ant-form-text">{{i.value}}</span>
+                                <span class="ant-form-text">{{i.value ? i.value.join(',') : ''}}</span>
                             </a-form-item>
                             <a-form-item :label="i.name" v-else>
                                 <a-input v-if="i.valueType == 'TEXT_SINGLE'" v-decorator="decoratorFn(i)" :placeholder="'请填写'+i.name" />
@@ -33,6 +33,11 @@
                                         <img alt="example" style="width: 100%" :src="previewImage" />
                                     </a-modal>
                                 </div>
+                                <div class="clearfix" v-else-if="i.valueType == 'ATTACHMENT'">
+                                    <a-upload action="https://www.mocky.io/v2/5cc8019d300000980a055e76">
+                                        <a-button> <a-icon type="upload" /> 上传附件</a-button>
+                                    </a-upload>
+                                </div>
                                 <span v-else class="ant-form-text">{{i.value}}</span>
                             </a-form-item>
                         </a-col>
@@ -40,7 +45,7 @@
                 </a-collapse-panel>
             </a-collapse>
             <footer-tool-bar>
-                <a-button @click="goBack">取消</a-button>
+                <a-button @click="goBack">{{ readonly ? '返回' :"取消" }}</a-button>
                 <a-button type="primary" style="margin-left: 8px" html-type="submit" v-if='!readonly'>提交</a-button>
             </footer-tool-bar>
         </a-form>

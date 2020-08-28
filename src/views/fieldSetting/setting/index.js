@@ -80,16 +80,16 @@ export default{
             form: this.$form.createForm(this, { name: 'block_form' }),
             fieldForm:this.$form.createForm(this, { name: 'field_form' }),
             layoutData:null,
-            groupName:null,
-            componentData:{
-                attrs:{
-                    bordered:false
-                },
-                props: {
-                    'default-active-key':'0'
-                }
-            },
+            // componentData:{
+            //     attrs:{
+            //         bordered:false
+            //     },
+            //     props: {
+            //         'default-active-key':'0'
+            //     }
+            // },
             fieldData:null,
+            activePanel:[],
             activeKey:'BASIC'
         }
     },
@@ -137,9 +137,8 @@ export default{
         handleCancel(e){//关闭分割线弹框
             this.visible = false
         },
-        oprationField(groupName,fieldData){//添加字段+编辑字段
+        oprationField(fieldData){//添加字段+编辑字段
             this.fieldVisible = true
-            this.groupName = groupName
             this.fieldForm.resetFields()
             this.fieldData = fieldData || null
         },
@@ -147,10 +146,7 @@ export default{
             e.preventDefault();
             this.fieldForm.validateFields((err, values) => {
               if (!err) {
-                const params = {
-                    ...values,
-                    groupName:this.groupName
-                }
+                const params = { ...values }
                 if(this.fieldData){
                     params.code = this.fieldData.code
                 }
@@ -189,6 +185,9 @@ export default{
             }
             const res = await listLayout(params)
             this.layoutData = res
+            if(res && res.display){
+                this.activePanel = res.display.map((ele,index)=>`${index}`)
+            }
         },
         async saveModel(){//保存布局
             const parameter = {

@@ -349,7 +349,7 @@ export const asyncRouterMap = {
             name: 'staffList',
             hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
             component: () => import('@/views/personnelFiles/staffList/staffList.vue'),
-            meta: { title: '员工档案列表', keepAlive: true, permission: [ 'table' ] }
+            meta: { title: '员工档案', keepAlive: true, permission: [ 'table' ] }
           },
           {
             path: '/personnelFiles/staffApprovalList/:pageNo([1-9]\\d*)?',

@@ -3,28 +3,17 @@
     <a-form :form="form" @submit="handleSearch" layout="inline">
       <a-row :gutter="48">
         <a-col
-          v-for="(k,i) in filterList"
-          :key="i"
+          v-for="(item,index) in filterList"
+          :key="index"
           :md="8" :sm="24"
-          :style="{ display: i < count ? 'block' : 'none' }"
+          :style="{ display: index < count ? 'block' : 'none' }"
         >
-          <a-form-item :label="k.searchLabel">
-            <a-input-number v-if="k.searchType==&quot;Number&quot;" v-decorator="[k.searchKey]" style="width:100%" :placeholder="k.searchLabel"/>
-            <a-select
-              v-else-if="k.searchType==&quot;Select&quot;"
-              v-decorator="[k.searchKey]"
-              mode="default"
-              :placeholder="k.searchLabel"
-              style="width: 100%"
-              showSearch
-              :filterOption="filterOption"
-              allowClear>
-              <a-select-option v-for="(item,index) in k.selectList" :key="index" :value="item.key">
-                {{ item.value }}
-              </a-select-option>
-            </a-select>
-            <a-date-picker v-else-if="k.searchType==&quot;Time&quot; || k.searchType==&quot;DateTime&quot; || k.searchType==&quot;NotShowTime&quot;" v-decorator="[k.searchKey]" :showTime="k.searchType==&quot;DateTime&quot; ? true : false" style="width:100%"/>
-            <a-input v-else v-decorator="[k.searchKey]" :placeholder="k.searchLabel"/>
+          <a-form-item :label="item.name">
+            <a-select v-if="item.valueType == 'RADIO'" v-decorator="[item.code]" :placeholder="'请选择'+item.name"/>
+            <a-cascader v-else-if="item.valueType == 'SELECT'" v-decorator="[item.code]" :placeholder="'请选择'+item.name" :options="item.codeList" :load-data="loadData" change-on-select/>
+            <a-date-picker v-else-if="item.valueType == 'DATETIME'" v-decorator="[item.code]" style="width:100%" :placeholder="'请选择'+item.name"/>
+            <!-- <a-input-number v-if="k.searchType==&quot;Number&quot;" v-decorator="[k.searchKey]" style="width:100%" :placeholder="k.searchLabel"/> -->
+            <a-input v-else v-decorator="[item.code]" :placeholder="'请填写'+item.name" />
           </a-form-item>
         </a-col>
         <a-col :span="8" :style="{ textAlign: 'right' }" class="search-reset-btn">
@@ -43,9 +32,4 @@
 .search-reset-btn{
   float: right;
 }
-
-/* 
-#components-form-demo-advanced-search .ant-form {
-  max-width: none;
-} */
 </style>

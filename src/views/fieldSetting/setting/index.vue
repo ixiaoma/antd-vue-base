@@ -5,33 +5,37 @@
     </a-tabs>
     <a-row :gutter='56'>
       <a-col span='18'>
-        <draggable v-if='layoutData && layoutData.display' tag='a-collapse' :list='layoutData.display' :component-data="componentData" class="spacial-collape">
-          <a-collapse-panel v-for="(item,i) in layoutData.display" :key="`${i}`" :header="item.groupName">
-              <a slot="extra" @click="e=>e.stopPropagation()" >
-                <a-icon type="plus" v-if='activeKey == "BASIC"' title="添加字段" style="font-size:16px;margin-right:10px" @click="oprationField(item.groupName)"/>
-                <a-icon type="delete" style="font-size:16px" title="删除模块" @click="deleteBlock(item)"/>
-              </a>
-              <a-row :gutter='56'>
-                <draggable v-model="item.layoutList" :options="{group:'filed1'}">
-                  <a-col :span='12' v-for="(childItem,childIndex) in item.layoutList" :key='childIndex'>
-                    <div class="pre-field">
-                      <span>{{childItem.name}}</span>
-                      <div v-if='activeKey == "BASIC"'>
-                        <a @click="oprationField(item.groupName,childItem)">
-                          <a-icon type="edit" style="font-size:16px;margin-right:10px"/>
-                        </a>
-                        <a @click="deleteField(childItem.code)"> 
-                          <a-icon type="delete" style="font-size:16px"/>
-                        </a>
+        <!-- <draggable v-if='layoutData && layoutData.display' tag='a-collapse' :list='layoutData.display' :component-data="componentData" class="spacial-collape"> -->
+          <a-collapse v-model="activePanel" :bordered='false' class="spacial-collape" v-if='layoutData && layoutData.display'>
+            <a-collapse-panel v-for="(item,i) in layoutData.display" :key="`${i}`" :header="item.groupName">
+                <a slot="extra" @click="e=>e.stopPropagation()" >
+                  <a-icon type="delete" style="font-size:16px" title="删除模块" @click="deleteBlock(item)"/>
+                </a>
+                <a-row :gutter='56'>
+                  <draggable v-model="item.layoutList" :options="{group:'filed1'}">
+                    <a-col :span='12' v-for="(childItem,childIndex) in item.layoutList" :key='childIndex'>
+                      <div class="pre-field">
+                        <span>{{childItem.name}}</span>
+                        <div v-if='activeKey == "BASIC"'>
+                          <a @click="oprationField(childItem)">
+                            <a-icon type="edit" style="font-size:16px;margin-right:10px"/>
+                          </a>
+                          <a @click="deleteField(childItem.code)"> 
+                            <a-icon type="delete" style="font-size:16px"/>
+                          </a>
+                        </div>
                       </div>
-                    </div>
-                  </a-col>
-                </draggable>
-              </a-row>
-          </a-collapse-panel>
-        </draggable>
+                    </a-col>
+                  </draggable>
+                </a-row>
+            </a-collapse-panel>
+          </a-collapse>
+        <!-- </draggable> -->
         <a-row type='flex' justify='space-between' style="margin-top:10px">
-          <a-button type="primary" @click="addModel">添加模块</a-button>
+          <div>
+            <a-button type="primary" @click="addModel">添加模块</a-button>
+            <a-button type="primary" v-if='activeKey == "BASIC"' style="margin-left:10px" @click="oprationField(null)">添加字段</a-button>
+          </div>
           <a-button type="primary" @click="saveModel">保存布局</a-button>
         </a-row>
       </a-col>

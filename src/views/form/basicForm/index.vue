@@ -4,7 +4,7 @@
           <base-form ref='baseForm' @next='nextStep'/>
       </a-tab-pane>
       <a-tab-pane v-for="(item,index) in tabLists" :key="`${index+2}`" :tab="item.tabName" force-render :disabled="disabled">
-        <a-card>
+        <a-card v-if='activeKey == index+2'>
           <table-filter v-if='item.filterList' :filterList='item.filterList'/>
           <div class="table-operator" v-if='item.tabName != "合同管理"'>
             <a-button type="primary" icon="plus" @click="handleAdd">新建</a-button>
