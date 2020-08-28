@@ -43,7 +43,7 @@ export const result={
     pageSize: 10,
     totalCount: 2,
     totalPage: 1,
-    data: [
+    records: [
         {
             id: '11',
             staffCode: 'jiangyx',

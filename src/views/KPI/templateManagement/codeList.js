@@ -47,7 +47,7 @@
         pageSize: 10,
         totalCount: 2,
         totalPage: 1,
-        data:[
+        records:[
           {
             templateCode:'MB1234',
             templateName:'正式',

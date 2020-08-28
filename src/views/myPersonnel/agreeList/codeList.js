@@ -51,7 +51,7 @@
         pageSize: 10,
         totalCount: 2,
         totalPage: 1,
-        data:[
+        records:[
           {
             id:'12345678',
             agreeCode:'HT20170823',

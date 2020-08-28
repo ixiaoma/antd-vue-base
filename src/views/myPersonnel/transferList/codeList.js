@@ -105,7 +105,7 @@ export const result={
         pageSize: 10,
         totalCount: 2,
         totalPage: 1,
-        data:[
+        records:[
           {
             transferCode:'LG000001',
             transferType:'轮岗',
