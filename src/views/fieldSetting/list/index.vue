@@ -1,7 +1,7 @@
 <template>
     <div class="setting-list">
         <a-row :gutter="48">
-            <a-col :md="4" v-for="(item,index) in objectList" :key='index'>
+            <a-col :lg="8" :xl="6" :xxl="4" v-for="(item,index) in objectList" :key='index'>
                 <div class="pre-block" @click="toSetting(item)">
                     <div class="left">
                         <a-icon type="setting" style="font-size:36px"/>
@@ -20,7 +20,7 @@
         padding: 20px;
         height: 100%;
         .pre-block{
-            width: 260px;
+            width: 100%;
             height: 100px;
             border: 1px solid #e9e8e8;
             display: flex;

@@ -8,7 +8,7 @@
                     <p>添加审批步骤</p>
                     <p>创建分支</p>
                 </template>
-                <a-icon data-id="10" class="icon addBtn icon-add4" type="plus-circle" />
+                <a-icon data-id="10" class="icon addBtn" type="plus-circle" />
             </a-popover>
         </div>
     </div>

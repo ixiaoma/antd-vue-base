@@ -106,6 +106,9 @@ export default {
         },{
           type:'approval',
           content:'审批人：发起人所在部门负责人'
+        },{
+          type:'approval',
+          content:'审批人：发起人所在部门负责人'
         }
       ]
     }

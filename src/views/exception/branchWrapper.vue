@@ -1,5 +1,5 @@
 <template>
-    <div class="stage-wrapper parallel-stage">
+    <div class="stage-wrapper">
         <div class="branches">
             <div class="branch" v-for="(child,childIndex) in parentItem" :key='childIndex'>
                 <div class="start-line">
