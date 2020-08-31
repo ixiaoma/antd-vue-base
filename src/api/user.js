@@ -51,7 +51,8 @@ const api={
   noticeDel: frameAPI+'notice/deletebyids',//系统公告删除
   noticeRead: frameAPI+'notice/read/',//系统公告已读
   noticeHome: frameAPI+'notice/getByItcode',//系统公告首页
-  fileUpload:frameAPI+'file/upload'//文件上传
+  fileUpload:frameAPI+'file/upload',//文件上传
+  codeTableList:frameAPI+'category/page'//码表管理列表
 }
 
 /**
@@ -222,9 +223,11 @@ export function noticeRead(params) {
   return axios.post(api.noticeRead+params)
 }
 export const fileUpload=process.env.VUE_APP_API_BASE_URL+api.fileUpload
-
 // noticeTop: 'notice/stick',//系统公告置顶
 // noticeHome: 'notice/getByItcode',//系统公告首页
+export function codeTableList(params) {
+  return axios.post(api.codeTableList,params)
+}
 
 
 

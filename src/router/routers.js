@@ -321,6 +321,13 @@ export const asyncRouterMap = {
             meta: { title: '系统菜单', keepAlive: true, permission: [ 'table' ] }
           },
           {
+            path: '/systemManagement/codeTable/:pageNo([1-9]\\d*)?',
+            name: 'codeTable',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/systemManagement/codeTable/index.vue'),
+            meta: { title: '码表管理', keepAlive: true, permission: [ 'table' ] }
+          },
+          {
             path: '/systemManagement/systemNotice/:pageNo([1-9]\\d*)?',
             name: 'systemNotice',
             hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
