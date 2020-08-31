@@ -807,5 +807,11 @@ export const hideInMenuRouterMap = {
       component: () => import('@/views/systemManagement/rulesManage/rulesDetail.vue'),
       meta: { title: '规章制度详情'}
     },
+    {
+      path: '/hidemenu/tableCateValue',
+      name: 'tableCateValue',
+      component: () => import('@/views/systemManagement/codeTable/tableCateValue/tableCateValue.vue'),
+      meta: { title: '码表值管理'}
+    }
   ]
 }

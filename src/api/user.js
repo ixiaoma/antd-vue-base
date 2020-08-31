@@ -52,7 +52,17 @@ const api={
   noticeRead: frameAPI+'notice/read/',//系统公告已读
   noticeHome: frameAPI+'notice/getByItcode',//系统公告首页
   fileUpload:frameAPI+'file/upload',//文件上传
-  codeTableList:frameAPI+'category/page'//码表管理列表
+  codeTableList:frameAPI+'category/page',//码表管理列表
+  addCategory:frameAPI+'category/save',//码表管理列表新增
+  editCategory:frameAPI+'category/edit',//码表管理列表编辑
+  delCategory:frameAPI+'category/deleted/',//码表管理列表删除
+  getCategoryList:frameAPI+'category/list',//获取所有类别
+  getCateValuePage:frameAPI+'codes/page',//码表值管理
+  delCodeValue:frameAPI+'codes/deleted/',//码表值删除  
+  queryParentList: 'codes/save/query/',//多级联动码表值加载上级节点的下拉值
+  loadNextData: 'codes/categorycode/parentcodekey',//多级联动查询
+  addCodeValue: 'codes/value/save',//码表值保存
+  editCodeValue: 'codes/edit',//码表值编辑保存
 }
 
 /**
@@ -228,6 +238,38 @@ export const fileUpload=process.env.VUE_APP_API_BASE_URL+api.fileUpload
 export function codeTableList(params) {
   return axios.post(api.codeTableList,params)
 }
+export function addCategory(params) {
+  return axios.post(api.addCategory,params)
+}
+export function editCategory(params) {
+  return axios.post(api.editCategory,params)
+}
+export function delCategory(params) {
+  return axios.post(api.delCategory+params)
+}
+export function getCategoryList(params) {
+  return axios.get(api.getCategoryList,params)
+}
+export function getCateValuePage(params) {
+  return axios.post(api.getCateValuePage,params)
+}
+export function delCodeValue(params) {
+  return axios.post(api.delCodeValue+params)
+}
+export function queryParentList(params) {
+  return axios.get(api.queryParentList+params)
+}
+export function loadNextData(params) {
+  return axios.get(api.loadNextData,{params:params})
+}
+export function addCodeValue(params) {
+  return axios.post(api.addCodeValue,params)
+}
+export function editCodeValue(params) {
+  return axios.post(api.editCodeValue,params)
+}
+
+
 
 
 

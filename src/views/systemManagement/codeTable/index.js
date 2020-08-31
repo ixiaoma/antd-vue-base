@@ -1,34 +1,35 @@
 
 import moment from 'moment'
-import { codeTableList} from '@/api/user'
+import { codeTableList, delCategory } from '@/api/user'
 import { columns, filterList, result } from './codeList.js'
-
+import addTableCategories from './addTableCategories/addTableCategories.vue'
 
 export default {
   name: 'codeList',
   title: '码表管理',
   components: {
-    
+    addTableCategories
   },
   data() {
     this.columns = columns
     this.filterList = filterList
     return {
       visible: false,
-      queryParam: {
-        
-      },
+      categoryCode: '',
+      categoryName: '',
+      categoryType: '',
       pagination: {},
       page: 1,
       pageSize: 10,
       loading: false,
       noticeData: [],
       selectedRowKeys: [],
-      selectedRows: []
+      selectedRows: [],
+      categoryTypeList: []
     }
   },
   filters: {
-    
+
   },
   computed: {
     rowSelection() {
@@ -54,14 +55,14 @@ export default {
         "page": page ? page : this.page,
         "pageSize": this.pageSize,
         "searchFilter": {
-            "filters": [],
-            "logic": "and"
+          "filters": [],
+          "logic": "and"
         },
         "objectType": "201",
         "conditionId": "",
-        "categoryCode": "",
-        "categoryName": "",
-        "categoryType": ""  
+        "categoryCode": this.categoryCode,
+        "categoryName": this.categoryName,
+        "categoryType": this.categoryType
       }
       this.loading = true;
       codeTableList(params).then(res => {
@@ -74,15 +75,47 @@ export default {
         this.pagination = pagination;
       })
     },
-    tabChange(val) {
-      this.tabActive = val
-      this.noticeDataLoad(1)
+    resetFn() {
+      this.categoryCode = ''
+      this.categoryName = ''
+      this.categoryType = ''
+      this.noticeDataLoad();
     },
-    handleAdd(record, flag) {
-      
+    handleAdd() {
+      this.$refs.addTableCategories.showModal('add');
     },
-    handleEdit(record) {
-      this.visible = true
+    handleEdit(data) {
+      this.$refs.addTableCategories.showModal('edit', data);
+    },
+    handleDel(record) {
+      let _this = this;
+      this.$confirm({
+        title: '温馨提示',
+        content: '确认删除？',
+        okText: '确认',
+        cancelText: '取消',
+        onOk() {
+          delCategory(record.id).then(res => {
+            if (res.code == 200) {
+              _this.$message.success('删除成功');
+              _this.noticeDataLoad();
+            }
+          })
+        },
+        onCancel() { },
+      })
+    },
+    tableValueManage(record){
+      this.$router.push({ 
+        name: 'tableCateValue',
+        query:{
+            categoryCode:record.categoryCode,
+            codeCategoryId:record.id,
+            fieldValueType:record.fieldValueType,
+            nodeLevel:record.nodeLevel,
+            title:`${record.categoryName}-管理`
+        }
+    });
     },
     onSelectChange(selectedRowKeys, selectedRows) {
       this.selectedRowKeys = selectedRowKeys
