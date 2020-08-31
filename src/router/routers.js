@@ -162,7 +162,7 @@ export const asyncRouterMap = {
           {
             path: '/exception/approval',
             name: 'Approval',
-            component: () => import(/* webpackChunkName: "fail" */ '@/views/exception/404'),
+            component: () => import(/* webpackChunkName: "fail" */ '@/views/exception/approval'),
             meta: { title: '审批流', permission: [ 'exception' ] }
           },
           {
