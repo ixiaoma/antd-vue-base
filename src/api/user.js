@@ -1,5 +1,5 @@
 import { axios } from '@/utils/axios'
-let frameAPI='api/frame/v1/'
+let frameAPI='auth/system/'//'api/frame/v1/'
 let configAPI='api/config/v1/'
 const userApi = {
   Login: '/auth/login',

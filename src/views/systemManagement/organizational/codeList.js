@@ -5,7 +5,7 @@ export const columns=[
     },
     {
         title: '昵称',
-        dataIndex: 'nickname'
+        dataIndex: 'username'
     },
     {
         title: '公司',

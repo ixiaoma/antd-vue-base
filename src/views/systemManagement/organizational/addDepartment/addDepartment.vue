@@ -36,7 +36,7 @@
                 @change="managerChange"
             >
                 <a-select-option v-for="(item, index) in tableDataUser1" :value="item.id" :key="item.id+'_'+index">
-                {{item.nickname}}
+                {{item.username}}
                 </a-select-option>
             </a-select>
             </a-form-item>
@@ -55,7 +55,7 @@
             >
                 <a-spin v-if="loading2" slot="notFoundContent" size="small" />
                 <a-select-option v-for="(item, index) in tableDataUser2" :value="item.id" :key="item.id+'_'+index">
-                {{ item.nickname }}
+                {{ item.username }}
                 </a-select-option>
             </a-select>
             </a-form-item>

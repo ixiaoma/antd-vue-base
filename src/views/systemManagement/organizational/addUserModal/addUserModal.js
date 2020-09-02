@@ -33,17 +33,28 @@ export default {
             modaldisabled:false,
             confirmLoading: false,
             salesStatus: [{ codeValue: '在职', codeKey: 1 }, { codeValue: '离职', codeKey: 0 }],
+            userTypeList:[{ codeValue: '联想员工', codeKey: 1 }, { codeValue: '外部员工', codeKey: 0 }],
             sexRadios: [{ label: '男', value: 0 }, { label: '女', value: 1 }],
+            isWonder: [{ label: '是', value: 1 }, { label: '否', value: 0 }],
+            customerList:[
+                {
+                    codeKey: '码表维护',
+                    codeValue: '码表维护'
+                  }
+            ],
             treeData: [],
             validates:{
                 realName:{rules: [{ required: true, message: '请填写姓名' }]},
-                nickname:{rules: [{ required: true, message: '请填写登录名' }]},
+                username:{rules: [{ required: true, message: '请填写登录名' }]},
                 staffNo:{rules: [{ required: false, message: '员工工号系统自动生成' }]},
                 cellphone:{rules: [{ required: true, message: '请填写手机号' },{pattern:/^1\d{10}$/, message: '请填写正确的手机号' }]},
                 email:{rules: [{ required: false, message: '请填写邮箱' },{type: 'email',message: '请填写正确的邮箱'}]},
-                theilCity:{rules: [{ required: true, message: '请选择办公地址' }]},
+                workCity:{rules: [{ required: true, message: '请选择办公地址' }]},
                 sex:{initialValue:0},
-                newSales:{rules: [{ required: true, message: '请填写员工状态' }]},  
+                userType:{rules: [{ required: true, message: '请选择用户类型' }]}, 
+                customerName:{rules: [{ required: true, message: '请选择所属公司' }]},
+                isWonder:{initialValue:0},
+                status:{rules: [{ required: true, message: '请填写员工状态' }]},  
                 // deptId:{rules: [{ required: true, message: '请选择主属部门' }]},
                 dept: {rules:[{ type: 'object',required: true,message:'请选择主属部门'}]},
                 idCard:{rules: [{ required: false,message:''}]},  
@@ -81,19 +92,20 @@ export default {
             this.formField.resetFields()
             if(type == 'edit'||type=='detail'){
                 userDeatil(id).then(res => {
-                    let fromdata=res.data
-                    this.deptId=res.data.deptId
-                    this.deptName=res.data.deptName
-                    fromdata.sex=parseInt(res.data.sex)
-                    fromdata.birthday=res.data.birthday?moment(new Date(res.data.birthday)):null
-                    fromdata.employmentDate=res.data.employmentDate?moment(new Date(res.data.employmentDate)):null
+                    let fromdata=res
+                    this.deptId=res.deptId
+                    this.deptName=res.deptName
+                    fromdata.sex=parseInt(res.sex)
+                    fromdata.isWonder=parseInt(res.isWonder)
+                    fromdata.birthday=res.birthday?moment(new Date(res.birthday)):null
+                    fromdata.employmentDate=res.employmentDate?moment(new Date(res.employmentDate)):null
                     this.$nextTick(()=>{
-                        let { realName,nickname,cellphone,email,theilCity,sex,newSales,idCard,wechat,qq,weibo,birthday,employmentDate } = { ...fromdata };
-                        this.formField.setFieldsValue({realName,nickname,cellphone,email,theilCity,sex,newSales,idCard,wechat,qq,weibo,birthday,employmentDate})
+                        let { realName,username,cellphone,email,workCity,sex,userType,customerName,isWonder,status,idCard,wechat,qq,weibo,birthday,employmentDate } = { ...fromdata };
+                        this.formField.setFieldsValue({realName,username,cellphone,email,workCity,sex,userType,customerName,isWonder,status,idCard,wechat,qq,weibo,birthday,employmentDate})
                         this.formField.setFieldsValue({
                             dept:{
-                                value:res.data.deptId,
-                                label:res.data.deptName
+                                value:res.deptId,
+                                label:res.deptName
                             }
                         })
                     })
@@ -127,19 +139,19 @@ export default {
                 if(this.id){
                     params.id = this.id
                     userUpdate(params).then(res=>{
-                        if(res.code == 200){
+                        // if(res.code == 200){
                           this.$message.success('保存成功')
                           this.showModal = false;
-                          this.$emit('refresh')
-                        }
+                          this.$emit('reflash')
+                        // }
                     })
                 }else{
                     userSave(params).then(res=>{
-                        if(res.code == 200){
+                        // if(res.code == 200){
                           this.$message.success('保存成功')
                           this.showModal = false;
-                          this.$emit('refresh')
-                        }
+                          this.$emit('reflash')
+                        // }
                     })
                 }   
               });
@@ -151,13 +163,16 @@ export default {
         fromCalidates(value){
             this.validates={
                 realName:{rules: [{ required: value, message: '请填写姓名' }]},
-                nickname:{rules: [{ required: value, message: '请填写登录名' }]},
+                username:{rules: [{ required: value, message: '请填写登录名' }]},
                 staffNo:{rules: [{ required: false, message: '员工工号系统自动生成' }]},
                 cellphone:{rules: [{ required: value, message: '请填写手机号' },{pattern:/^1\d{10}$/, message: '请填写正确的手机号' }]},
                 email:{rules: [{ required: false, message: '请填写邮箱' },{type: 'email',message: '请填写正确的邮箱'}]},
-                theilCity:{rules: [{ required: value, message: '请选择办公地址' }]},
+                workCity:{rules: [{ required: value, message: '请选择办公地址' }]},
                 sex:{initialValue:0},
-                newSales:{rules: [{ required: true, message: '请填写员工状态' }]},  
+                userType:{rules: [{ required: true, message: '请选择用户类型' }]},
+                customerName:{rules: [{ required: true, message: '请选择所属公司' }]},
+                isWonder:{initialValue:0},
+                status:{rules: [{ required: true, message: '请填写员工状态' }]},  
                 // deptId:{rules: [{ required: value, message: '请选择主属部门' }]},
                 dept: {rules:[{ type: 'object',required: value,message:'请选择主属部门'}]},
                 idCard:{rules: [{ required: false,message:''}]},  

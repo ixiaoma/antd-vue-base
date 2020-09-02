@@ -51,10 +51,10 @@ export default {
             roleids: this.roledataSelect.join(':')
         }
         rolesAssignUser(this.id + '/userrole', params).then(res => {
-            if (res.code == 200) {
+          
                 this.$message.success("操作成功");
                 this.showModal = false
-            }
+            
         })
     },
     openModal(id) {
@@ -72,11 +72,11 @@ export default {
         }
         rolesList(params).then(res => {
             this.roleData = [];
-            if (res.data.length > 0) {
-                for (var i = 0; i < res.data.length; i++) {
+            if (res.length > 0) {
+                for (var i = 0; i < res.length; i++) {
                     var onedimensionlist = {
-                        key: res.data[i].id,
-                        title: res.data[i].name,
+                        key: res[i].id,
+                        title: res[i].name,
                     };
                     this.roleData.push(onedimensionlist);
                 }
@@ -88,16 +88,16 @@ export default {
     roleSelectLoad(){
         this.roledataSelect = [];
         userDeatil(this.id + '/userrole').then(res => {
-            if (res.code == 200) {
-                if (res.data.length > 0) {
-                    for (var i = 0; i < res.data.length; i++) {
-                        var roledataSelect = res.data[i].id;
+            // if (res.code == 200) {
+                if (res.length > 0) {
+                    for (var i = 0; i < res.length; i++) {
+                        var roledataSelect = res[i].id;
                         this.roledataSelect.push(roledataSelect);
                     }
                 } else {
                     this.roledataSelect = [];
                 }
-            }
+            // }
         })
     }
   },

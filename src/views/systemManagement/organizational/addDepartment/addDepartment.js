@@ -51,15 +51,15 @@ export default {
             }
             if(modaltitle=='编辑'){
                 detailDeptTree(batchParentId).then(res=>{
-                    this.addfrom.name = res.data.name?res.data.name:''
-                    this.addfrom.nameShort = res.data.nameShort?res.data.nameShort:''
-                    this.addfrom.dataAuthority = res.data.dataAuthority?res.data.dataAuthority:''                
-                    this.tableDataUser1=res.data.managerUserList?res.data.managerUserList:[]//部门负责人      
-                    this.tableDataUser2=res.data.obUsers?res.data.obUsers:[]//部门工作观察者
+                    this.addfrom.name = res.name?res.name:''
+                    this.addfrom.nameShort = res.nameShort?res.nameShort:''
+                    this.addfrom.dataAuthority = res.dataAuthority?res.dataAuthority:''                
+                    this.tableDataUser1=res.managerUserList?res.managerUserList:[]//部门负责人      
+                    this.tableDataUser2=res.obUsers?res.obUsers:[]//部门工作观察者
                     setTimeout(() => {
-                        this.addfrom.roleIds = res.data.roleIds?res.data.roleIds:[]            
-                        this.addfrom.manager=res.data.manager?res.data.manager:''//部门负责人
-                        this.addfrom.userIds = res.data.userIds?res.data.userIds:[]//部门工作观察者
+                        this.addfrom.roleIds = res.roleIds?res.roleIds:[]            
+                        this.addfrom.manager=res.manager?res.manager:''//部门负责人
+                        this.addfrom.userIds = res.userIds?res.userIds:[]//部门工作观察者
                         this.addDepvisible=true
                     }, 300);
                 })
@@ -87,20 +87,20 @@ export default {
                 delete params.parentId
                 params.id=this.batchParentId
                 editDeptTree(params).then(res => {
-                    if(res.code==200){
+                    // if(res.code==200){
                         this.$message.success('编辑成功');
                         this.addDepvisible=false
                         this.$emit('deptreflash')
-                    }
+                    // }
                     
                 })
             }else{
                 addDeptTree(params).then(res => {
-                    if(res.code==200){
+                    // if(res.code==200){
                         this.$message.success('新建成功');
                         this.addDepvisible=false
                         this.$emit('deptreflash')
-                    }
+                    // }
                     
                 })
             }    
@@ -113,13 +113,13 @@ export default {
             if (value !== '') {
                 this.loading1 = true;
                 let params = {
-                    nickname: value,
+                    username: value,
                     pageSize: 100,
                     page:1
                 }
                 getUserList(params).then(res => {
                     this.loading1 = false;
-                    this.tableDataUser1 = res.data.records
+                    this.tableDataUser1 = res.records
                 })
             }
         },
@@ -127,13 +127,13 @@ export default {
             if (value !== '') {
                 this.loading2 = true;
                 let params = {
-                    nickname: value,
+                    username: value,
                     pageSize: 100,
                     page:1
                 }
                 getUserList(params).then(res => {
                     this.loading2 = false;
-                    this.tableDataUser2 = res.data.records
+                    this.tableDataUser2 = res.records
                 })
             }
         },
@@ -142,7 +142,7 @@ export default {
                 enabled: true
             }
             rolesList(params).then(res => {
-                this.roleData = res.data;
+                this.roleData = res;
             })
         },
         managerChange(e){

@@ -4,7 +4,6 @@
 <template>
   <div class="userSetting">
     <a-row type="flex">
-      <a-col :span="24" style="color:red;font-size:28px">请勿操作此页面数据（数据是净水测试系统的）</a-col>
       <a-col :span="24">
           <a-col :span="6">
                 <a-col :span="24">
@@ -19,7 +18,7 @@
           </a-col>
           <a-col offset="1" :span="17">        
                <div class="table-operator">
-                    <a-input v-model="nickname" placeholder="请输入用户名" style="width:200px;margin-right:10px"/>
+                    <a-input v-model="username" placeholder="请输入用户名" style="width:200px;margin-right:10px"/>
                     <a-button type="primary" icon="search" @click="searchLoad">搜索</a-button>
                     <a-button style="float:right" type="default" icon="download" @click="exportLoad">导出</a-button>
                     <a-button style="float:right" type="primary" icon="plus" @click="handleAdd">新建</a-button>      

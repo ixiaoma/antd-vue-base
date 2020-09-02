@@ -1,7 +1,6 @@
 <template>
     <div class="menuManage">
         <a-row>
-            <a-col :span="24" style="color:red;font-size:28px">请勿操作此页面数据（数据是净水测试系统的）</a-col>
             <a-col span="11">
                 <a-card size="small" title="菜单列表">
                     <a-button style="margin-right:10px" size="small" type="primary" slot="extra" @click="addTreeNode">添加</a-button>       

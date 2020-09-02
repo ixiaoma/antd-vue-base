@@ -29,7 +29,7 @@ export default {
             columns: columns,
             selectedRowKeys: [],
             selectedRows: [],
-            nickname: '',
+            username: '',
             titleBatch: '',
             batchParentId: ''
         }
@@ -48,22 +48,22 @@ export default {
             let params = {
                 page: page ? page : this.page,
                 pageSize: this.pageSize,
-                nickname: this.nickname,
+                username: this.username,
                 deptId: this.batchParentId
             }
             this.loading = true;
             getUserList(params).then(res => {
                 const pagination = { ...this.pagination };
-                pagination.total = res.data.totalCount;
+                pagination.total = res.totalCount;
                 pagination.current=params.page
                 this.page =params.page
                 this.loading = false;
-                this.userData = res.data.records;
+                this.userData = res.records;
                 this.pagination = pagination;
             })
         },
         searchLoad() {
-            this.queryParam = { nickname: this.nickname }
+            this.queryParam = { username: this.username }
             // this.$refs.table.refresh();
             this.userDataLoad(1)
         },
@@ -76,7 +76,7 @@ export default {
             let deptId = this.batchParentId == 1 ? "" : this.batchParentId
             deptId = deptId ? deptId : ''
             window.open(userExport + '?access_token=' + sessionStorage.getItem('access_token')
-                + '&nickname=' + this.nickname + '&deptId=' + deptId)
+                + '&username=' + this.username + '&deptId=' + deptId)
         },
         handleAdd() {
             this.$refs.addUserModal.treeData = this.treeDataAdd
@@ -90,9 +90,7 @@ export default {
                 enabled: record.enabled ? 1 : 0
             }
             userEnable(params).then(res => {
-                if (res.code == 200) {
-                    this.$message.success("更新成功")
-                }
+                this.$message.success("更新成功")
             })
         },
         handleDetail(record) {
@@ -123,10 +121,8 @@ export default {
                 cancelText: '取消',
                 onOk() {
                     userDel(iddel).then(res => {
-                        if (res.code == 200) {
-                            _this.$message.success('删除成功');
-                            _this.reflash();
-                        }
+                        _this.$message.success('删除成功');
+                        _this.reflash();
                     })
                 },
                 onCancel() { },
@@ -143,8 +139,8 @@ export default {
         gettreedata() {//获取树
             this.treeData = []
             getDeptTreeData().then(res => {
-                let str = JSON.stringify([res.data]);
-                let strAdd = JSON.stringify([res.data]);
+                let str = JSON.stringify([res]);
+                let strAdd = JSON.stringify([res]);
                 str = str.replace(/id/g, "key").replace(/name/g, "title").replace(/subDept/g, "children");
                 strAdd = strAdd.replace(/id/g, "value").replace(/name/g, "title").replace(/subDept/g, "children");
                 this.treeData = JSON.parse(str);
@@ -198,10 +194,8 @@ export default {
                 cancelText: '取消',
                 onOk() {
                     delDeptTree(_this.batchParentId + '/delete').then(res => {
-                        if (res.code == 200) {
-                            _this.$message.success('删除成功');
-                            _this.gettreedata()
-                        }
+                        _this.$message.success('删除成功');
+                        _this.gettreedata()       
                     })
                 },
                 onCancel() { },
