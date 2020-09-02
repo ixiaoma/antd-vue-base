@@ -7,9 +7,10 @@ export default {
     },
     methods: {
         addType(type) {
+            console.log(this.childNodeP)
             this.visible = false;
+            let data = null;
             if (type != 4) {
-                var data;
                 if (type == 1) {
                     data = {
                         "nodeName": "审核人",
@@ -35,9 +36,8 @@ export default {
                         "nodeUserList": []
                     }
                 }
-                this.$emit("update:childNodeP", data)
             } else {
-                this.$emit("update:childNodeP", {
+                data = {
                     "nodeName": "路由",
                     "type": 4,
                     "childNode": null,
@@ -57,8 +57,9 @@ export default {
                         "nodeUserList": [],
                         "childNode": null
                     }]
-                })
+                }
             }
+            data && this.$emit("update:childNodeP", data)
         }
     }
 }

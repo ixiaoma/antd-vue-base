@@ -8,8 +8,8 @@
                         <a-icon style='margin-right:5px' type="team" v-show="nodeConfig.type==2"/>
                         <span v-if="nodeConfig.type==0">{{nodeConfig.nodeName}}</span>
                         <input type="text" class="ant-input editable-title-input" v-if="nodeConfig.type!=0&&isInput"
-                        @blur="blurEvent()" @focus="$event.currentTarget.select()" v-focus
-                        v-model="nodeConfig.nodeName" :placeholder="placeholderList[nodeConfig.type]">
+                            @blur="blurEvent()" @focus="$event.currentTarget.select()"
+                            v-model="nodeConfig.nodeName" :placeholder="placeholderList[nodeConfig.type]">
                         <span class="editable-title" @click="clickEvent()" v-if="nodeConfig.type!=0&&!isInput">{{nodeConfig.nodeName}}</span>
                         <a-icon type="close" class="close" v-if="nodeConfig.type!=0" @click="delNode()"/>
                     </div>
@@ -24,9 +24,6 @@
                             {{copyerStr(nodeConfig)}}
                         </div>
                         <a-icon type="right" class="arrow"/>
-                    </div>
-                    <div class="error_tip" v-if="isTried&&nodeConfig.error">
-                        <i class="anticon anticon-exclamation-circle" style="color: rgb(242, 86, 67);"></i>
                     </div>
                 </div>
             </div>
@@ -58,8 +55,7 @@
                                 <add-node :childNodeP.sync="item.childNode"></add-node>
                             </div>
                         </div>
-                        <nodeWrap v-if="item.childNode && item.childNode" :nodeConfig.sync="item.childNode" :tableId="tableId"
-                        :isTried.sync="isTried" :directorMaxLevel="directorMaxLevel"></nodeWrap>
+                        <nodeWrap v-if="item.childNode && item.childNode" :nodeConfig.sync="item.childNode" :tableId="tableId" :isTried.sync="isTried" :directorMaxLevel="directorMaxLevel"></nodeWrap>
                         <div class="top-left-cover-line" v-if="index==0"></div>
                         <div class="bottom-left-cover-line" v-if="index==0"></div>
                         <div class="top-right-cover-line" v-if="index==nodeConfig.conditionNodes.length-1"></div>
@@ -71,9 +67,10 @@
         </div>
         <nodeWrap v-if="nodeConfig.childNode && nodeConfig.childNode" :nodeConfig.sync="nodeConfig.childNode" :tableId="tableId"
         :isTried.sync="isTried" :directorMaxLevel="directorMaxLevel"></nodeWrap>
+        <drawer ref='drawer'/>
     </div>
 </template>
 <script src='./nodeWrap.js'></script>
 <style scoped>
-@import './nodeWrap.css'
+    @import './nodeWrap.css'
 </style>

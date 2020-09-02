@@ -253,8 +253,9 @@ export default {
 				this.tipVisible = true;
 				return;
 			}
-			this.processConfig.flowPermission = this.flowPermission
-			console.log(JSON.stringify(this.processConfig))
+      this.processConfig.flowPermission = this.flowPermission
+      console.log(this.processConfig)
+			// console.log(JSON.stringify(this.processConfig))
 			// this.$axios.post("", this.processConfig).then(res => {
 			//     if (res.code == 200) {
 			//         this.$message.success("设置成功");

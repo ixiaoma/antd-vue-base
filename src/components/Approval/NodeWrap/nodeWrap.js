@@ -1,4 +1,5 @@
 import addNode from '../AddCode/addNode.vue'
+import drawer from '../Drawer/drawer.vue'
 export default {
     name:'nodeWrap',
     props: ["nodeConfig", "flowPermission", "directorMaxLevel", "isTried", "tableId"],
@@ -48,7 +49,8 @@ export default {
         }
     },
     components:{
-        addNode
+        addNode,
+        drawer
     },
     methods: {
         clickEvent(index) {
@@ -584,24 +586,26 @@ export default {
             }
         },
         setPerson(priorityLevel) {
+            console.log(priorityLevel)
             var { type } = this.nodeConfig;
             if (type == 0) {
-                this.promoterDrawer = true;
+                // this.promoterDrawer = true;
                 this.flowPermission1 = this.flowPermission;
             } else if (type == 1) {
-                this.approverDrawer = true;
+                // this.approverDrawer = true;
                 this.approverConfig = JSON.parse(JSON.stringify(this.nodeConfig))
                 this.approverConfig.settype = this.approverConfig.settype ? this.approverConfig.settype : 1
             } else if (type == 2) {
-                this.copyerDrawer = true;
+                // this.copyerDrawer = true;
                 this.copyerConfig = JSON.parse(JSON.stringify(this.nodeConfig))
                 this.ccSelfSelectFlag = this.copyerConfig.ccSelfSelectFlag == 0 ? [] : [this.copyerConfig.ccSelfSelectFlag]
             } else {
-                this.conditionDrawer = true
+                // this.conditionDrawer = true
                 this.bPriorityLevel = priorityLevel;
                 this.conditionsConfig = JSON.parse(JSON.stringify(this.nodeConfig))
                 this.conditionConfig = this.conditionsConfig.conditionNodes[priorityLevel - 1]
             }
+            this.$refs.drawer.showDrawer()
         },
         arrTransfer(index, type = 1) {//向左-1,向右1
             this.nodeConfig.conditionNodes[index] = this.nodeConfig.conditionNodes.splice(index + type, 1, this.nodeConfig.conditionNodes[index])[0];

@@ -25,9 +25,9 @@ export default {
     }
   },
   mounted(){
-    if (process.env.NODE_ENV !== 'production' || process.env.VUE_APP_PREVIEW === 'true') {
-      updateTheme('#52c41a')
-    }
+    // if (process.env.NODE_ENV !== 'production' || process.env.VUE_APP_PREVIEW === 'true') {
+    //   updateTheme('#52c41a')
+    // }
   }
 }
 </script>
@@ -38,7 +38,7 @@ export default {
     height: 100%;
     .header{
       background-color: #fff;
-      border-top: 5px solid #52c41a;
+      border-top: 5px solid #1890FF;
       position: fixed;
       width: 100%;
       top: 0;

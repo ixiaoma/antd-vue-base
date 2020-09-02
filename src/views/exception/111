@@ -1,14 +1,14 @@
-<el-drawer title="发起人" :visible.sync="promoterDrawer" direction="rtl" class="set_promoter" size="550px" :before-close="savePromoter"> 
+<a-drawer title="发起人" :visible.sync="promoterDrawer" class="set_promoter" size="550px" :before-close="savePromoter"> 
             <div class="demo-drawer__content">
                 <div class="promoter_content drawer_content">
                     <p>{{arrToStr(flowPermission1)?arrToStr(flowPermission1):'所有人'}}</p>
-                    <el-button type="primary" @click="addPromoter">添加/修改发起人</el-button>
+                    <a-button type="primary" @click="addPromoter">添加/修改发起人</a-button>
                 </div>
                 <div class="demo-drawer__footer clear">
-                    <el-button type="primary" @click="savePromoter">确 定</el-button>
-                    <el-button @click="promoterDrawer = false">取 消</el-button>
+                    <a-button type="primary" @click="savePromoter">确 定</a-button>
+                    <a-button @click="promoterDrawer = false">取 消</a-button>
                 </div>
-                <el-dialog title="选择成员" :visible.sync="promoterVisible" width="600px" append-to-body class="promoter_person">
+                <!-- <a-dialog title="选择成员" :visible.sync="promoterVisible" width="600px" append-to-body class="promoter_person">
                     <div class="person_body clear">
                         <div class="person_tree l">
                             <input type="text" placeholder="搜索成员" v-model="promoterSearchName" @input="getDebounceData($event)">
@@ -48,24 +48,24 @@
                         </div>
                     </div>
                     <span slot="footer" class="dialog-footer">
-                        <el-button @click="promoterVisible = false">取 消</el-button>
-                        <el-button type="primary" @click="surePromoter">确 定</el-button>
+                        <a-button @click="promoterVisible = false">取 消</a-button>
+                        <a-button type="primary" @click="surePromoter">确 定</a-button>
                     </span>
-                </el-dialog>
+                </a-dialog> -->
             </div>
-        </el-drawer>
-        <el-drawer title="审批人设置" :visible.sync="approverDrawer" direction="rtl" class="set_promoter" size="550px" :before-close="saveApprover"> 
+        </a-drawer>
+        <a-drawer title="审批人设置" :visible.sync="approverDrawer" class="set_promoter" size="550px" :before-close="saveApprover"> 
             <div class="demo-drawer__content">
                 <div class="drawer_content">
                     <div class="approver_content">
-                        <el-radio-group v-model="approverConfig.settype" class="clear" @change="changeType">
-                            <el-radio :label="1">指定成员</el-radio>
-                            <el-radio :label="2">主管</el-radio>
-                            <el-radio :label="4">发起人自选</el-radio>
-                            <el-radio :label="5">发起人自己</el-radio>
-                            <el-radio :label="7">连续多级主管</el-radio>
-                        </el-radio-group>
-                        <el-button type="primary" @click="addApprover" v-if="approverConfig.settype==1">添加/修改成员</el-button>
+                        <a-radio-group v-model="approverConfig.settype" class="clear" @change="changeType">
+                            <a-radio :label="1">指定成员</a-radio>
+                            <a-radio :label="2">主管</a-radio>
+                            <a-radio :label="4">发起人自选</a-radio>
+                            <a-radio :label="5">发起人自己</a-radio>
+                            <a-radio :label="7">连续多级主管</a-radio>
+                        </a-radio-group>
+                        <a-button type="primary" @click="addApprover" v-if="approverConfig.settype==1">添加/修改成员</a-button>
                         <p class="selected_list" v-if="approverConfig.settype==1">
                             <span v-for="(item,index) in approverConfig.nodeUserList" :key="index">{{item.name}}
                                 <!-- <img src="@/assets/images/add-close1.png" @click="removeEle(approverConfig.nodeUserList,item,'targetId')"> -->
@@ -86,18 +86,18 @@
                         <p>该审批节点设置“发起人自己”后，审批人默认为发起人</p>
                     </div>
                     <div class="approver_self_select" v-show="approverConfig.settype==4">
-                        <el-radio-group v-model="approverConfig.selectMode" style="width: 100%;">
-                            <el-radio :label="1">选一个人</el-radio>
-                            <el-radio :label="2">选多个人</el-radio>
-                        </el-radio-group>
+                        <a-radio-group v-model="approverConfig.selectMode" style="width: 100%;">
+                            <a-radio :label="1">选一个人</a-radio>
+                            <a-radio :label="2">选多个人</a-radio>
+                        </a-radio-group>
                         <h3>选择范围</h3>
-                        <el-radio-group v-model="approverConfig.selectRange" style="width: 100%;" @change="changeRange">
-                            <el-radio :label="1">全公司</el-radio>
-                            <el-radio :label="2">指定成员</el-radio>
-                            <el-radio :label="3">指定角色</el-radio>
-                        </el-radio-group>
-                        <el-button type="primary" @click="addApprover" v-if="approverConfig.selectRange==2">添加/修改成员</el-button>
-                        <el-button type="primary" @click="addRoleApprover" v-if="approverConfig.selectRange==3">添加/修改角色</el-button>
+                        <a-radio-group v-model="approverConfig.selectRange" style="width: 100%;" @change="changeRange">
+                            <a-radio :label="1">全公司</a-radio>
+                            <a-radio :label="2">指定成员</a-radio>
+                            <a-radio :label="3">指定角色</a-radio>
+                        </a-radio-group>
+                        <a-button type="primary" @click="addApprover" v-if="approverConfig.selectRange==2">添加/修改成员</a-button>
+                        <a-button type="primary" @click="addRoleApprover" v-if="approverConfig.selectRange==3">添加/修改角色</a-button>
                         <p class="selected_list" v-if="approverConfig.selectRange==2||approverConfig.selectRange==3">
                             <span v-for="(item,index) in approverConfig.nodeUserList" :key="index">{{item.name}}
                                 <img src="@/assets/images/add-close1.png" @click="removeEle(approverConfig.nodeUserList,item,'targetId')">
@@ -116,26 +116,26 @@
                     </div>
                     <div class="approver_some" v-if="(approverConfig.settype==1&&approverConfig.nodeUserList.length>1)||approverConfig.settype==2||(approverConfig.settype==4&&approverConfig.selectMode==2)">
                         <p>多人审批时采用的审批方式</p>
-                        <el-radio-group v-model="approverConfig.examineMode" class="clear">
-                            <el-radio :label="1">依次审批</el-radio>
+                        <a-radio-group v-model="approverConfig.examineMode" class="clear">
+                            <a-radio :label="1">依次审批</a-radio>
                             <br/>
-                            <el-radio :label="2" v-if="approverConfig.settype!=2">会签(须所有审批人同意)</el-radio>
-                        </el-radio-group>
+                            <a-radio :label="2" v-if="approverConfig.settype!=2">会签(须所有审批人同意)</a-radio>
+                        </a-radio-group>
                     </div>
                     <div class="approver_some" v-if="approverConfig.settype==2||approverConfig.settype==7">
                         <p>审批人为空时</p>
-                        <el-radio-group v-model="approverConfig.noHanderAction" class="clear">
-                            <el-radio :label="1">自动审批通过/不允许发起</el-radio>
+                        <a-radio-group v-model="approverConfig.noHanderAction" class="clear">
+                            <a-radio :label="1">自动审批通过/不允许发起</a-radio>
                             <br/>
-                            <el-radio :label="2">转交给审核管理员</el-radio>
-                        </el-radio-group>
+                            <a-radio :label="2">转交给审核管理员</a-radio>
+                        </a-radio-group>
                     </div>
                 </div>
                 <div class="demo-drawer__footer clear">
-                    <el-button type="primary" @click="saveApprover">确 定</el-button>
-                    <el-button @click="approverDrawer = false">取 消</el-button>
+                    <a-button type="primary" @click="saveApprover">确 定</a-button>
+                    <a-button @click="approverDrawer = false">取 消</a-button>
                 </div>
-                <el-dialog title="选择成员" :visible.sync="approverVisible" width="600px" append-to-body class="promoter_person">
+                <!-- <a-dialog title="选择成员" :visible.sync="approverVisible" width="600px" append-to-body class="promoter_person">
                     <div class="person_body clear">
                         <div class="person_tree l">
                             <input type="text" placeholder="搜索成员" v-model="approverSearchName" @input="getDebounceData($event)">
@@ -169,11 +169,11 @@
                         </div>
                     </div>
                     <span slot="footer" class="dialog-footer">
-                        <el-button @click="approverVisible = false">取 消</el-button>
-                        <el-button type="primary" @click="sureApprover">确 定</el-button>
+                        <a-button @click="approverVisible = false">取 消</a-button>
+                        <a-button type="primary" @click="sureApprover">确 定</a-button>
                     </span>
-                </el-dialog>
-                 <el-dialog title="选择角色" :visible.sync="approverRoleVisible" width="600px" append-to-body class="promoter_person">
+                </a-dialog>
+                 <a-dialog title="选择角色" :visible.sync="approverRoleVisible" width="600px" append-to-body class="promoter_person">
                     <div class="person_body clear">
                         <div class="person_tree l">
                             <input type="text" placeholder="搜索角色" v-model="approverRoleSearchName" @input="getDebounceData($event,2)">
@@ -198,38 +198,38 @@
                         </div>
                     </div>
                     <span slot="footer" class="dialog-footer">
-                        <el-button @click="approverRoleVisible = false">取 消</el-button>
-                        <el-button type="primary" @click="sureApprover">确 定</el-button>
+                        <a-button @click="approverRoleVisible = false">取 消</a-button>
+                        <a-button type="primary" @click="sureApprover">确 定</a-button>
                     </span>
-                </el-dialog>
+                </a-dialog> -->
             </div>
-        </el-drawer>
-        <el-drawer title="抄送人设置" :visible.sync="copyerDrawer" direction="rtl" class="set_copyer" size="550px" :before-close="saveCopyer"> 
+        </a-drawer>
+        <a-drawer title="抄送人设置" :visible.sync="copyerDrawer" class="set_copyer" size="550px" :before-close="saveCopyer"> 
             <div class="demo-drawer__content">
                 <div class="copyer_content drawer_content">
-                    <el-button type="primary" @click="addCopyer">添加成员</el-button>
+                    <a-button type="primary" @click="addCopyer">添加成员</a-button>
                     <p class="selected_list">
                         <span v-for="(item,index) in copyerConfig.nodeUserList" :key="index">{{item.name}}
                             <img src="@/assets/images/add-close1.png" @click="removeEle(copyerConfig.nodeUserList,item,'targetId')">
                         </span>
                         <a v-if="copyerConfig.nodeUserList&&copyerConfig.nodeUserList.length!=0" @click="copyerConfig.nodeUserList=[]">清除</a>
                     </p>
-                    <el-checkbox-group v-model="ccSelfSelectFlag" class="clear">
-                        <el-checkbox :label="1">允许发起人自选抄送人</el-checkbox>
-                    </el-checkbox-group>
+                    <a-checkbox-group v-model="ccSelfSelectFlag" class="clear">
+                        <a-checkbox :label="1">允许发起人自选抄送人</a-checkbox>
+                    </a-checkbox-group>
                 </div>
                 <div class="demo-drawer__footer clear">
-                    <el-button type="primary" @click="saveCopyer">确 定</el-button>
-                    <el-button @click="copyerDrawer = false">取 消</el-button>
+                    <a-button type="primary" @click="saveCopyer">确 定</a-button>
+                    <a-button @click="copyerDrawer = false">取 消</a-button>
                 </div>
-                <el-dialog title="选择成员" :visible.sync="copyerVisible" width="600px" append-to-body class="promoter_person">
+                <!-- <a-dialog title="选择成员" :visible.sync="copyerVisible" width="600px" append-to-body class="promoter_person">
                     <div class="person_body clear">
                         <div class="person_tree l">
                             <input type="text" placeholder="搜索成员" v-model="copyerSearchName" @input="getDebounceData($event,activeName)">
-                            <el-tabs v-model="activeName" @tab-click="handleClick">
-                                <el-tab-pane label="组织架构" name="1"></el-tab-pane>
-                                <el-tab-pane label="角色列表" name="2"></el-tab-pane>
-                            </el-tabs>
+                            <a-tabs v-model="activeName" @tab-click="handleClick">
+                                <a-tab-pane label="组织架构" name="1"></a-tab-pane>
+                                <a-tab-pane label="角色列表" name="2"></a-tab-pane>
+                            </a-tabs>
                             <p class="ellipsis tree_nav" v-if="activeName==1&&!copyerSearchName">
                                 <span @click="getDepartmentList(0)" class="ellipsis">天下</span>
                                 <span v-for="(item,index) in departments.titleDepartments" class="ellipsis" 
@@ -271,13 +271,13 @@
                         </div>
                     </div>
                     <span slot="footer" class="dialog-footer">
-                        <el-button @click="copyerVisible = false">取 消</el-button>
-                        <el-button type="primary" @click="sureCopyer">确 定</el-button>
+                        <a-button @click="copyerVisible = false">取 消</a-button>
+                        <a-button type="primary" @click="sureCopyer">确 定</a-button>
                     </span>
-                </el-dialog>
+                </a-dialog> -->
             </div>
-        </el-drawer>
-        <el-drawer title="条件设置" :visible.sync="conditionDrawer" direction="rtl" class="condition_copyer" size="550px" :before-close="saveCondition"> 
+        </a-drawer>
+        <a-drawer title="条件设置" :visible.sync="conditionDrawer" class="condition_copyer" width="550px" :before-close="saveCondition"> 
             <select v-model="conditionConfig.priorityLevel">
                 <option v-for="item in conditionsConfig.conditionNodes.length" :value="item" :key="item">优先级{{item}}</option>
             </select>
@@ -331,8 +331,8 @@
                             <a v-if="item.type==2" @click="removeEle(conditionConfig.conditionList,item,'columnId')">删除</a>
                         </li>
                     </ul>
-                    <el-button type="primary" @click="addCondition">添加条件</el-button>
-                    <el-dialog title="选择条件" :visible.sync="conditionVisible" width="480px" append-to-body class="condition_list">
+                    <a-button type="primary" @click="addCondition">添加条件</a-button>
+                    <!-- <a-dialog title="选择条件" :visible.sync="conditionVisible" width="480px" append-to-body class="condition_list">
                         <p>请选择用来区分审批流程的条件字段</p>
                         <p class="check_box">
                             <a :class="toggleClass(conditionList,{columnId:0},'columnId')&&'active'" @click="toChecked(conditionList,{columnId:0},'columnId')">发起人</a>
@@ -340,19 +340,19 @@
                             @click="toChecked(conditionList,item,'columnId')">{{item.showName}}</a>
                         </p>
                         <span slot="footer" class="dialog-footer">
-                            <el-button @click="conditionVisible = false">取 消</el-button>
-                            <el-button type="primary" @click="sureCondition">确 定</el-button>
+                            <a-button @click="conditionVisible = false">取 消</a-button>
+                            <a-button type="primary" @click="sureCondition">确 定</a-button>
                         </span>
-                    </el-dialog>
+                    </a-dialog> -->
                 </div>
-                <el-dialog title="选择成员" :visible.sync="conditionRoleVisible" width="600px" append-to-body class="promoter_person">
+                <!-- <a-dialog title="选择成员" :visible.sync="conditionRoleVisible" width="600px" append-to-body class="promoter_person">
                     <div class="person_body clear">
                         <div class="person_tree l">
                             <input type="text" placeholder="搜索成员" v-model="conditionRoleSearchName" @input="getDebounceData($event,activeName)">
-                            <el-tabs v-model="activeName" @tab-click="handleClick">
-                                <el-tab-pane label="组织架构" name="1"></el-tab-pane>
-                                <el-tab-pane label="角色列表" name="2"></el-tab-pane>
-                            </el-tabs>
+                            <a-tabs v-model="activeName" @tab-click="handleClick">
+                                <a-tab-pane label="组织架构" name="1"></a-tab-pane>
+                                <a-tab-pane label="角色列表" name="2"></a-tab-pane>
+                            </a-tabs>
                             <p class="ellipsis tree_nav" v-if="activeName==1&&!conditionRoleSearchName">
                                 <span @click="getDepartmentList(0)" class="ellipsis">天下</span>
                                 <span v-for="(item,index) in departments.titleDepartments" class="ellipsis" 
@@ -400,13 +400,13 @@
                         </div>
                     </div>
                     <span slot="footer" class="dialog-footer">
-                        <el-button @click="conditionRoleVisible = false">取 消</el-button>
-                        <el-button type="primary" @click="sureConditionRole">确 定</el-button>
+                        <a-button @click="conditionRoleVisible = false">取 消</a-button>
+                        <a-button type="primary" @click="sureConditionRole">确 定</a-button>
                     </span>
-                </el-dialog>
+                </a-dialog> -->
                 <div class="demo-drawer__footer clear">
-                    <el-button type="primary" @click="saveCondition">确 定</el-button>
-                    <el-button @click="conditionDrawer = false">取 消</el-button>
+                    <a-button type="primary" @click="saveCondition">确 定</a-button>
+                    <a-button @click="conditionDrawer = false">取 消</a-button>
                 </div>
             </div>
-        </el-drawer>
+        </a-drawer>

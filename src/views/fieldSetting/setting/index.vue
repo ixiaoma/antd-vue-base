@@ -40,7 +40,7 @@
         </a-row>
       </a-col>
       <a-col span='6'>
-        <a-card title="回收站" :bordered="false" :bodyStyle="{padding:'10px 0'}" :headStyle="{borderBottom:'3px solid #52c41a'}">
+        <a-card title="回收站" :bordered="false" :bodyStyle="{padding:'10px 0'}" :headStyle="{borderBottom:'3px solid #1890FF'}">
           <draggable style="height:300px" v-if='layoutData && layoutData.trash' v-model="layoutData.trash" :options="{group:'filed1'}">
               <a-col v-for="(trashItem,trashIndex) in layoutData.trash" :key='trashIndex'>
                 <div class="pre-field">{{trashItem.name}}</div>
