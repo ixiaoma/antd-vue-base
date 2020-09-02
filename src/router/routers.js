@@ -64,6 +64,12 @@ export const asyncRouterMap = {
         component: () => import('@/views/fieldSetting/list/index.vue'),
         meta: { title: '字段配置', icon: 'table'}
       },
+      {
+        path: '/approval',
+        name: 'approval',
+        component: () => import(/* webpackChunkName: "fail" */ '@/views/approval/approval.vue'),
+        meta: { title: '审批流', icon: 'table' }
+      },
 
       // // list
       // {
@@ -146,33 +152,33 @@ export const asyncRouterMap = {
       // },
 
       // // Exception
-      {
-        path: '/exception',
-        name: 'exception',
-        component: RouteView,
-        redirect: '/exception/403',
-        meta: { title: '异常页', icon: 'warning', permission: [ 'exception' ] },
-        children: [
-          {
-            path: '/exception/403',
-            name: 'Exception403',
-            component: () => import(/* webpackChunkName: "fail" */ '@/views/exception/403'),
-            meta: { title: '403', permission: [ 'exception' ] }
-          },
-          {
-            path: '/exception/approval',
-            name: 'Approval',
-            component: () => import(/* webpackChunkName: "fail" */ '@/views/exception/approval'),
-            meta: { title: '审批流', permission: [ 'exception' ] }
-          },
-          {
-            path: '/exception/500',
-            name: 'Exception500',
-            component: () => import(/* webpackChunkName: "fail" */ '@/views/exception/500'),
-            meta: { title: '500', permission: [ 'exception' ] }
-          }
-        ]
-      },
+      // {
+      //   path: '/exception',
+      //   name: 'exception',
+      //   component: RouteView,
+      //   redirect: '/exception/403',
+      //   meta: { title: '异常页', icon: 'warning', permission: [ 'exception' ] },
+      //   children: [
+      //     {
+      //       path: '/exception/403',
+      //       name: 'Exception403',
+      //       component: () => import(/* webpackChunkName: "fail" */ '@/views/exception/403'),
+      //       meta: { title: '403', permission: [ 'exception' ] }
+      //     },
+      //     {
+      //       path: '/exception/approval',
+      //       name: 'Approval',
+      //       component: () => import(/* webpackChunkName: "fail" */ '@/views/exception/approval'),
+      //       meta: { title: '审批流', permission: [ 'exception' ] }
+      //     },
+      //     {
+      //       path: '/exception/500',
+      //       name: 'Exception500',
+      //       component: () => import(/* webpackChunkName: "fail" */ '@/views/exception/500'),
+      //       meta: { title: '500', permission: [ 'exception' ] }
+      //     }
+      //   ]
+      // },
 
       // // account
       // {

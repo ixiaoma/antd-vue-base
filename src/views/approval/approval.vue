@@ -1,8 +1,8 @@
 <template>
   <div class="fd-nav">
     <div class="fd-nav-right">
-				<!-- <button type="button" class="ant-btn button-preview"><span>预 览</span></button> -->
-      <a-button type="primary" class="button-publish" @click="saveSet"><span>发 布</span></a-button>
+      <a-button ghost class="button-publish"><span>保存</span></a-button>
+      <a-button ghost class="button-publish" @click="saveSet"><span>发 布</span></a-button>
     </div>
     <div class="fd-nav-content">
 			<section class="dingflow-design">
@@ -30,7 +30,7 @@
 }
 </style>
 <script>
-import nodeWrap from '@/components/Approval/NodeWrap/nodeWrap.vue'
+import nodeWrap from './NodeWrap/nodeWrap.vue'
 const returnData = {
         "tableId": 1,
         "workFlowVersionId": "",

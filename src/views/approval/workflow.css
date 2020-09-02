@@ -7432,29 +7432,19 @@ html {
     min-width: 80px;
     margin-left: 4px;
     margin-right: 15px;
-    border-color: #fff;
 }
 
 .fd-nav .button-publish.ant-btn:focus,
 .fd-nav .button-publish.ant-btn:hover {
-    color: #3296fa;
+    color: #fff;
     border-color: #fff;
     box-shadow: 0 10px 20px 0 rgba(0, 0, 0, .3)
 }
 
 .fd-nav .button-publish.ant-btn:active {
-    color: #3296fa;
+    color: #fff;
     background: #d6eaff;
     box-shadow: none
-}
-
-.fd-nav .button-publish .ant-btn.disabled,
-.fd-nav .button-publish .ant-btn[disabled] {
-    min-width: 80px;
-    border-color: #96c9fe;
-    background: #96c9fe;
-    pointer-events: none;
-    color: #3296fa
 }
 
 .fd-nav .button-preview {
