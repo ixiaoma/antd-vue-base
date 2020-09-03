@@ -7,9 +7,4 @@
   </div>
 </template>
 
-
-<script src="./staffList.js"></script>
-
-
-
 <script src="./workTraveling.js"></script>

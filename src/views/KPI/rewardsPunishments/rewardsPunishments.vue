@@ -1,6 +1,6 @@
 <template>
   <div class="rewardsPunishments">
-      <search-table pageCode='rpmgmt'/>
+      <search-table pageCode='performance_rewards_punishment'/>
   </div>
 </template>
 
