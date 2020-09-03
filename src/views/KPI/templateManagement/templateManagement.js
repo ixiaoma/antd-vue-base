@@ -1,6 +1,6 @@
 
 
-import SearchTable from '@/components/SearchTable/searchTable.vue'
+import { SearchTable } from '@/components'
 
 export default {
   name: 'rewardsPunishmentsList',

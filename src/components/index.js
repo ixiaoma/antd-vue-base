@@ -23,6 +23,7 @@ import IconSelector from '@/components/IconSelector'
 import TagSelect from '@/components/TagSelect'
 import StandardFormRow from '@/components/StandardFormRow'
 import ArticleListContent from '@/components/ArticleListContent'
+import SearchTable from '@/components/SearchTable/searchTable.vue'
 
 import Dialog from '@/components/Dialog'
 
@@ -49,5 +50,6 @@ export {
   TagSelect,
   StandardFormRow,
   ArticleListContent,
-  Dialog
+  Dialog,
+  SearchTable
 }
