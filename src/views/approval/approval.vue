@@ -1,5 +1,8 @@
 <template>
   <div class="fd-nav">
+    <div class="fd-nav-left">
+				<div class="fd-nav-back" @click="toReturn"><a-icon type="left"/></div>
+    </div>
     <div class="fd-nav-right">
       <a-button ghost class="button-publish"><span>保存</span></a-button>
       <a-button ghost class="button-publish" @click="saveSet"><span>发 布</span></a-button>
@@ -216,7 +219,7 @@ export default {
   },
 	methods: {
 		toReturn() {
-			//window.location.href = ""
+			this.$router.go(-1)
 		},
 		reErr(data) {
 			if (data.childNode) {

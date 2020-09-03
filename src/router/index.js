@@ -6,10 +6,10 @@ import { constantRouterMap, asyncRouterMap, hideInMenuRouterMap } from './router
 Vue.use(Router)
 
 const router = new Router({
-  routes: [constantRouterMap, asyncRouterMap, hideInMenuRouterMap]
+  routes: [constantRouterMap, hideInMenuRouterMap]
   // mode: 'history'
 })
-
+let flag = false
 const whiteList = ['login', 'register']// 白名单列表
 
 router.beforeEach(async (to, from, next) => {
@@ -19,7 +19,20 @@ router.beforeEach(async (to, from, next) => {
     if (to.name === 'login') {
       next('/')
     } else {
-      next()
+      if(!flag){
+        router.options.routes.push(asyncRouterMap)
+        router.addRoutes([asyncRouterMap])
+        flag = true
+        const redirect = decodeURIComponent(from.query.redirect || to.path)
+        if (to.path === redirect) {
+          next({ ...to, replace: true })
+        } else {
+          // 跳转到目的路由
+          next({ path: redirect })
+        }
+      }else{
+        next()
+      }
     }
   } else {
     if (whiteList.includes(to.name)) {
