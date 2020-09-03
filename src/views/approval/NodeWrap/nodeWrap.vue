@@ -70,7 +70,9 @@
         <drawer ref='drawer'/>
     </div>
 </template>
-<script src='./nodeWrap.js'></script>
-<style scoped>
-    @import './nodeWrap.css'
+
+<style lang="less" scoped>
+  @import './nodeWrap.css';
 </style>
+
+<script src='./nodeWrap.js'></script>

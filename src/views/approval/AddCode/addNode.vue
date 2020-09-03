@@ -30,8 +30,7 @@
     </div>
 </template>
 <script src='./addCode.js'></script>
-<style scoped>
-@import '../workflow.css';
+<style scoped>、
 .dingflow-design .add-node-btn-box {
     width: 240px;
     display: -webkit-inline-box;

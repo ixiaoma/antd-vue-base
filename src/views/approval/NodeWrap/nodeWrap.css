@@ -1,4 +1,4 @@
-@import '../workflow.css';
+@import './workflow.css';
 .error_tip {
     position: absolute;
     top: 0px;

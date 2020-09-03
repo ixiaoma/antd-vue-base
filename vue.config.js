@@ -9,7 +9,7 @@ function resolve (dir) {
   return path.join(__dirname, dir)
 }
 
-const isProd = process.env.NODE_ENV === 'production'
+const isProd = process.env.NODE_ENV != 'development'
 
 const assetsCDN = {
   // webpack build externals
@@ -31,6 +31,7 @@ const assetsCDN = {
 
 // vue.config.js
 const vueConfig = {
+  publicPath:'./',
   configureWebpack: {
     // webpack plugins
     plugins: [
@@ -43,7 +44,7 @@ const vueConfig = {
       })
     ],
     // if prod, add externals
-    externals: isProd ? assetsCDN.externals : {}
+    // externals: isProd ? assetsCDN.externals : {}
   },
 
   chainWebpack: (config) => {
