@@ -1,5 +1,5 @@
 <template>
-  <div class="rewardsPunishments">
+  <div class="templateManagement">
       <search-table pageCode='assessment_setup'/>
   </div>
 </template>

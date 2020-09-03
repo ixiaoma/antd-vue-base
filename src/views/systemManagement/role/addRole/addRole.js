@@ -34,11 +34,11 @@ export default {
                 this.confirmLoading = true;
                 if(this.pageType == 'add') {//新建
                     addRole(obj).then(res=>{
-                        if(res.code == 200) {
+                        // if(res.code == 200) {
                             this.$message.success('新建成功');
                             this.$emit('refresh');
                             this.showModal = false;
-                        }
+                        // }
                         this.confirmLoading = false;
                     }).then(()=>{
                         this.form = this.$form.createForm(this);
@@ -48,11 +48,11 @@ export default {
                 } else if(this.pageType == 'edit') {//编辑
                     obj.id = this.currentId; 
                     editRole(obj).then(res=>{
-                        if(res.code == 200) {
+                        // if(res.code == 200) {
                             this.$message.success('编辑成功');
                             this.$emit('refresh');
                             this.showModal = false;
-                        }
+                        // }
                         this.confirmLoading = false;
                     }).then(()=>{
                         this.form = this.$form.createForm(this);
@@ -61,11 +61,11 @@ export default {
                     })
                 } else if(this.pageType == 'copy') {//复制
                     copyRole(this.currentId,obj).then(res=>{
-                        if(res.code == 200) {
+                        // if(res.code == 200) {
                             this.$message.success('复制成功');
                             this.$emit('refresh');
                             this.showModal = false;
-                        }
+                        // }
                         this.confirmLoading = false;
                     }).then(()=>{
                         this.form = this.$form.createForm(this);

@@ -28,9 +28,9 @@
                         </a-form-item>
                     </a-col>
                     <a-col :span="12">
-                        <a-form-item label="objectType" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
-                            <a-select mode="default" :getPopupContainer='triggerNode => triggerNode.parentNode' v-decorator="['objectType',validates.objectType]" placeholder="请选择objectType" style="width: 100%" allowClear>
-                                <a-select-option v-for="k in objectTypeList" :key="k.id" :value="k.objectType">
+                        <a-form-item label="objectCode" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
+                            <a-select mode="default" :getPopupContainer='triggerNode => triggerNode.parentNode' v-decorator="['objectCode',validates.objectCode]" placeholder="请选择objectCode" style="width: 100%" allowClear>
+                                <a-select-option v-for="k in objectTypeList" :key="k.code" :value="k.code">
                                 {{ k.name }}
                                 </a-select-option>
                             </a-select>

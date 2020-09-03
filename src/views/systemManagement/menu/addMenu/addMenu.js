@@ -16,7 +16,7 @@ export default {
                 code: { rules: [{ required: true, message: '请填写code' }] },
                 icon: { rules: [{ required: false, message: '请填写icon' }] },
                 sort: { initialValue:1,rules: [{ type: 'number',required: true, message: '请填写排序' }] },
-                objectType: { rules: [{ required: true, message: '请选择objectType' }] },
+                objectCode: { rules: [{ required: false, message: '请选择objectType' }] },
                 roleIds: { rules: [{ type: 'array',required: false, message: ' ' }] },
                 description:{ rules: [{ required: false, message: ' ' }] },
                 enabledBool:{ initialValue:true},
@@ -55,21 +55,22 @@ export default {
                 let listDisplay = nodeData.listDisplay=='1'?true:false
                 let detailsDisplay = nodeData.detailsDisplay=='1'?true:false
                 this.form.setFieldsValue({type: type});
-                const { title, url, code, icon, sort, description,objectType,roleIds,enabledBool,leafBool } = { ...nodeData };
+                const { title, url, code, icon, sort, description,objectCode,roleIds,enabledBool,leafBool } = { ...nodeData };
                 type == '1' ? setTimeout(() => {
-                    this.form.setFieldsValue({ type, title, url, objectType,icon, sort, enabledBool,leafBool,roleIds, description})
+                    this.form.setFieldsValue({ type, title, url, objectCode,icon, sort, enabledBool,leafBool,roleIds, description})
                 },10) : setTimeout(() => {
-                    this.form.setFieldsValue({ type, title, code, objectType,sort, enabledBool, listDisplay, detailsDisplay ,roleIds,description})
+                    this.form.setFieldsValue({ type, title, code, objectCode,sort, enabledBool, listDisplay, detailsDisplay ,roleIds,description})
                 },10)
             }
             this.showModal = true;
         },
         handleOk() {//保存
+            let that=this
             this.form.validateFields((err, values) => {
                 if (err) return;
                 const obj = {...values}
-                obj.parentId = this.parentId;
-                this.confirmLoading = true;
+                obj.parentId = that.parentId;
+                that.confirmLoading = true;
                 if(obj.type == 3){
                     obj.listDisplay = obj.listDisplay ? '1' : '2'
                     obj.detailsDisplay = obj.detailsDisplay ? '1' : '2'
@@ -81,39 +82,40 @@ export default {
                     delete obj.listDisplay
                     delete obj.detailsDisplay
                 }  
-                if(this.pageType == 'add') {//新建
+                obj['roleIds']=obj.roleIds?obj.roleIds:[]
+                if(that.pageType == 'add') {//新建
                     menusAdd(obj).then(res=>{
-                        if(res.code == 200) {
-                            this.$message.success('新建成功');
-                            this.$emit('refresh');
-                            this.showModal = false;
-                        }
-                        this.confirmLoading = false;
+                        // if(res.code == 200) {
+                            that.$message.success('新建成功');
+                            that.$emit('refresh');
+                            that.showModal = false;
+                        // }
+                        that.confirmLoading = false;
                     }).then(()=>{
-                        this.form = this.$form.createForm(this);
+                        that.form = that.$form.createForm(that);
                     }).catch(res=>{
-                        this.confirmLoading = false;
+                        that.confirmLoading = false;
                     })
                 } else {//编辑
-                    let nodeData=JSON.parse(JSON.stringify(this.nodeData))
-                    obj.id=this.currentId
+                    let nodeData=JSON.parse(JSON.stringify(that.nodeData))
+                    obj.id=that.currentId
                     for (var prop in obj) {
                         nodeData[prop]=obj[prop]
                     }
                     if(nodeData.type==3){
                         delete nodeData.url
                     }
-                    menusEdit(this.currentId,nodeData).then(res=>{
-                        if(res.code == 200) {
-                            this.$message.success('编辑成功');
-                            this.$emit('refresh');
-                            this.showModal = false;
-                        }
-                        this.confirmLoading = false;
+                    menusEdit(that.currentId,nodeData).then(res=>{
+                        // if(res.code == 200) {
+                            that.$message.success('编辑成功');
+                            that.$emit('refresh');
+                            that.showModal = false;
+                        // }
+                        that.confirmLoading = false;
                     }).then(()=>{
-                        this.form = this.$form.createForm(this);
+                        that.form = that.$form.createForm(that);
                     }).catch(res=>{
-                        this.confirmLoading = false;
+                        that.confirmLoading = false;
                     })
                 }
             });
@@ -129,10 +131,14 @@ export default {
             this.form.getFieldDecorator('leafBool', { initialValue:true })         
         },
         objectTypeLoad(){
-            objectTypeList().then(res=>{
-                if(res.code == 200){
-                    this.objectTypeList = res.data;
-                }
+            let params={
+                "pageNo":1,
+                "pageSize":1000
+            }
+            objectTypeList(params).then(res=>{
+                // if(res.code == 200){
+                    this.objectTypeList = res.records;
+                // }
             })
         }
         

@@ -17,13 +17,3 @@ export default {
     
   }
 }
-
-
-
-
-
-
-
-
-
-

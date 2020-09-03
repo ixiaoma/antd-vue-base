@@ -28,9 +28,9 @@ export default {
                 this.currentNode = null;
             }
             this.currentId&&menusDetail(this.currentId).then(res=>{
-                if(res.code==200){
-                    this.nodeData=res.data
-                    let arr=res.data.roleIds
+                // if(res.code==200){
+                    this.nodeData=res
+                    let arr=res.roleIds
                     let roleNameArr=[]
                     for(let i = 0;i < arr.length;i ++){
                         for(let j = 0;j < this.roleData.length; j++){
@@ -40,7 +40,7 @@ export default {
                         }
                     }
                     this.roleName = roleNameArr.join(',')
-                }
+                // }
             })
         },
         
@@ -74,12 +74,12 @@ export default {
                     cancelText: '取消',
                     onOk() {
                         menusDel(that.currentId).then(res=>{
-                            if(res.code == 200) {
+                            // if(res.code == 200) {
                                 that.$message.success('删除成功');
                                 that.getFirstNodeData();
-                            }else{
-                                that.$message.warning(res.message);   
-                            }
+                            // }else{
+                            //     that.$message.warning(res.message);   
+                            // }
                         })
                     },
                     onCancel() { },
@@ -88,8 +88,8 @@ export default {
         },
         getFirstNodeData() {//菜单列表
             menusList().then(res=>{
-                if(res && res.code == 200) {
-                    let str = JSON.stringify(res.data);
+                // if(res && res.code == 200) {
+                    let str = JSON.stringify(res);
                     str = str.replace(/id/g, "key")
                     this.treeData = str.length ? JSON.parse(str) : [];
                     this.treeData.forEach(ele=>{
@@ -98,7 +98,7 @@ export default {
                             ele.children = [{title:'暂无子节点'}];
                         }
                     })
-                }
+                // }
             })
         },
         // expand(keys) {//展开或者收起树节点
@@ -107,8 +107,8 @@ export default {
         expand(keys,node){//获取子节点
             let id=node.key?node.key:node.node.eventKey
             menusListChild(id).then(res=>{
-                if(res.code == 200){
-                    let str = JSON.stringify(res.data);
+                // if(res.code == 200){
+                    let str = JSON.stringify(res);
                     str = str.replace(/id/g, "key")
                     let treedata=JSON.parse(str)
                     let modelData = JSON.parse(JSON.stringify(this.treeData))
@@ -124,7 +124,7 @@ export default {
                         //     this.getFirstNodeData();
                         // }
                     }
-                }
+                // }
             })
             this.detailModal = false
             this.isClass = -1;
@@ -147,7 +147,7 @@ export default {
                 enabled: true
             }
             rolesList(params).then(res => {
-                this.roleData = res.data;
+                this.roleData = res;
             })
         },
     },

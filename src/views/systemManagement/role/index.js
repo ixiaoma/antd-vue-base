@@ -1,6 +1,6 @@
 import addRole from './addRole/addRole.vue'
 import { Tree, Transfer } from 'ant-design-vue'
-import { rolesPage,enabledRole,deleteRole, rolesMenu, getUserList, rolesSwitchUser,rolesUserTransfer,rolesUserTransferDel } from '@/api/user'
+import { menusList,rolesPage,enabledRole,deleteRole, rolesMenu, getUserList, rolesSwitchUser,rolesUserTransfer,rolesUserTransferDel,roleResource,saveRoleResource } from '@/api/user'
 export default {
     name: 'role',
     components: {
@@ -28,39 +28,40 @@ export default {
                 pageSize: 500
             }
             rolesPage(params).then(res => {
-                if (res && res.code == 200) {
-                    res.data.records.forEach(ele => {
+                // if (res && res.code == 200) {
+                    res.records.forEach(ele => {
                         ele.enabled = ele.enabled == '1' ? true : false;
                     })
-                    this.roleList = res.data.records ? res.data.records : [];
-                }
+                    this.roleList = res.records ? res.records : [];
+                // }
             })
         },
-        // getMenusList() {//获取菜单列表
-        //   menusList().then(res => {
-        //     if (res && res.code == 200) {
-        //       let str = JSON.stringify(res.data);
-        //       str = str.replace(/childList/g, "children");
-        //       this.treeData = str.length ? JSON.parse(str) : [];
-        //       this.treeData.length && this.changeAllTreeNode(this.treeData);
-        //     }
-        //   })
-        // },
+        getMenusList() {//获取菜单列表
+          menusList().then(res => {
+            // if (res && res.code == 200) {
+              let str = JSON.stringify(res);
+              str = str.replace(/id/g, "key")
+            //   str = str.replace(/childList/g, "children");
+              this.treeData = str.length ? JSON.parse(str) : [];
+              this.treeData.length && this.changeAllTreeNode(this.treeData);
+            // }
+          })
+        },
         getAllUserList() {//获取用户列表
             let params = {
                 pageSize: 5000
             }
             getUserList(params).then(res => {
-                if (res && res.code == 200) {
-                    res.data.records.forEach(ele => {
+                // if (res && res.code == 200) {
+                    res.records.forEach(ele => {
                         let obj={
                             key:ele.id,
-                            title:ele.nickname + '(' + ele.realName + ')'
+                            title:ele.username + '(' + ele.realName + ')'
                         }
                         this.userData.push(obj)
                     })
                     // this.userData = res.data.records ? res.data.records : [];
-                }
+                // }
             })
         },
         changeAllTreeNode(node) {//修改所有树节点的字段名
@@ -91,10 +92,10 @@ export default {
                 cancelText: '取消',
                 onOk() {
                     deleteRole(data.id).then(res => {
-                        if (res.code == 200) {
+                        // if (res.code == 200) {
                             that.$message.success('删除成功');
                             that.getRoleList();
-                        }
+                        // }
                     })
                 },
                 onCancel() { },
@@ -106,41 +107,47 @@ export default {
                 enabled: item.enabled ? 0 : 1
             }
             enabledRole(params).then(res => {
-                if (res && res.code == 200) {
+                // if (res && res.code == 200) {
                     this.$message.success('操作成功');
                     this.getRoleList();
-                }
+                // }
             })
         },
         setRole(id) {//角色配置
             rolesMenu(id + '/tree').then(res => {
-                if (res && res.code == 200) {
+                // if (res && res.code == 200) {
                     // this.checkedKeys = res.data ? res.data : [];
                     // this.defaultExpandedKeys = this.checkedKeys;
-                    if (res.data && res.data.length) {              
-                        let powerData = JSON.stringify(res.data);
+                    if (res && res.length) {              
+                        let powerData = JSON.stringify(res);
                         powerData = powerData.replace(/name/g, 'title');
-                        powerData = powerData.replace(/parentId/g, 'parentmoduleid');
+                        // powerData = powerData.replace(/parentId/g, 'parentmoduleid');
                         powerData = powerData.replace(/childrenModules/g, 'children');
-                        powerData = powerData.replace(/moduleId/g, 'id');
+                        powerData = powerData.replace(/moduleId/g, 'key');
                         powerData = JSON.parse(powerData);
                         this.treeData = powerData
                     } else {
                         this.treeData = []
                     }
-                }
+                // }
+            }).then(()=>{
+                roleResource(id).then(res => {
+                   this.checkedKeys = res ? res : [];
+                   this.defaultExpandedKeys = this.checkedKeys;
+                })
             }).then(() => {
                 let params = {
                     roleId: id
                 }
                 rolesSwitchUser(params).then(res => {
-                    if (res && res.code == 200) {
+                    // debugger
+                    // if (res && res.code == 200) {
                         let arr = []
-                        res.data.records.forEach(ele => {
+                        res.records.forEach(ele => {
                             arr.push(ele.id);
                         })
                         this.userTargetKeys = arr
-                    }
+                    // }
                 }).then(res => {
                     this.currentRoleId = id;
                 })
@@ -184,22 +191,20 @@ export default {
             this.checkedKeys = checkedKeys.checked;
         },
         saveSettingInfo() {
-            let params = {
-                roleId: this.currentRoleId
-            }
+            let params = {}
+            
             if (this.activeKey == 'menu') {
-                // const checkList = this.checkedKeys
-                // this.checkedNodes.forEach(val => {
-                //     if (val && !this.checkedKeys.filter(ele => ele == val).length) {
-                //         checkList.push(val)
-                //     }
-                // })
-                // params.resourceIds = checkList;
-                // saveRoleResource(params).then(res => {
-                //     if (res && res.code == 200) {
-                //         this.$message.success('保存成功')
-                //     }
-                // })
+                const checkList = this.checkedKeys
+                this.checkedNodes.forEach(val=>{
+                  if(val && !this.checkedKeys.filter(ele=>ele == val).length){
+                    checkList.push(val)
+                  }
+                })
+                params.moduleidlist = checkList.join(':');
+
+                saveRoleResource(this.currentRoleId,params).then(res => { 
+                    this.$message.success('保存成功')               
+                })
             }
         },
     },

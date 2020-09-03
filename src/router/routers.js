@@ -611,7 +611,7 @@ export const asyncRouterMap = {
             name: 'templateManagement',
             hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
             component: () => import('@/views/KPI/templateManagement/templateManagement.vue'),
-            meta: { title: '考核模板管理', keepAlive: true, permission: [ 'table' ] }
+            meta: { title: '绩效考核设置管理', keepAlive: true, permission: [ 'table' ] }
           },
           {
             path: '/kpi/rewardsPunishments/:pageNo([1-9]\\d*)?',

@@ -1,5 +1,6 @@
 import { axios } from '@/utils/axios'
-let frameAPI='auth/system/'//'api/frame/v1/'
+let frameAPI='frame/'//'api/frame/v1/'
+let systemAPI='auth/system/'
 let configAPI='api/config/v1/'
 const userApi = {
   Login: '/auth/login',
@@ -15,34 +16,36 @@ const userApi = {
   Service: '/service'
 }
 const api={
-  getUserList:frameAPI+'user/condition/page',//用户列表
-  getUserLike: frameAPI+'user/getUsersByNickname',//用户模糊查询
-  userEnable: frameAPI+'user/isenableduser/update',//用户禁用启用
-  userSave: frameAPI+'user/save',//用户新增
-  userUpdate: frameAPI+'user/update',//用户修改
-  userDeatil: frameAPI+'user/',//用户id获取详情
-  userDel: frameAPI+'user/deleteids',//用户删除
-  userPassUpdate: frameAPI+'user/rest/user',//修改密码
-  userExport: frameAPI+'user/export',
-  getDeptTreeData:frameAPI+'dept/depttree',//部门tree
-  addDeptTree:frameAPI+'dept/',//部门新增
-  editDeptTree:frameAPI+'dept/update',//部门更新
-  detailDeptTree:frameAPI+'dept/',//部门详情
-  delDeptTree:frameAPI+'dept/',//部门删除
-  rolesList:frameAPI+'roles/list',//用户分配角色
-  rolesPage:frameAPI+'roles',//角色管理中的角色
-  rolesUpdate:frameAPI+'roles/update',//角色编辑
-  rolesCopy: frameAPI+'roles/copy/',//角色复制
-  enabledRole:frameAPI+'roles/isenabledrole/update',//禁用启用
-  rolesOperation:frameAPI+'roles/',
-  rolesSwitchUser:frameAPI+'user/roleid',//角色下的用户
-  rolesUserTransfer:frameAPI+'userrole',//用户权限穿梭框
-  rolesUserTransferDel:frameAPI+'userrole/delete',//用户权限穿梭框删除
-  menusList:frameAPI+'resource/menu',//'menus/menu',//菜单管理树
-  menusListChild:frameAPI+'resource/menu/',//'menus/menu/',//菜单管理树
-  menusDetail:frameAPI+'resource/',//菜单详情
-  menusAdd:frameAPI+'resource',//菜单新增
-  objectTypeList:configAPI+'objectdefine/list/objectType',//object
+  getUserList:systemAPI+'user/condition/page',//用户列表
+  getUserLike: systemAPI+'user/getUsersByNickname',//用户模糊查询
+  userEnable: systemAPI+'user/isenableduser/update',//用户禁用启用
+  userSave: systemAPI+'user/save',//用户新增
+  userUpdate: systemAPI+'user/update',//用户修改
+  userDeatil: systemAPI+'user/',//用户id获取详情
+  userDel: systemAPI+'user/deleteids',//用户删除
+  userPassUpdate: systemAPI+'user/rest/user',//修改密码
+  userExport: systemAPI+'user/export',
+  getDeptTreeData:systemAPI+'dept/depttree',//部门tree
+  addDeptTree:systemAPI+'dept/',//部门新增
+  editDeptTree:systemAPI+'dept/update',//部门更新
+  detailDeptTree:systemAPI+'dept/',//部门详情
+  delDeptTree:systemAPI+'dept/',//部门删除
+  rolesList:systemAPI+'role/list',//用户分配角色
+  rolesPage:systemAPI+'role',//角色管理中的角色
+  rolesUpdate:systemAPI+'role/update',//角色编辑
+  rolesCopy: systemAPI+'role/copy/',//角色复制
+  enabledRole:systemAPI+'role/isenabledrole/update',//禁用启用
+  rolesOperation:systemAPI+'role/',
+  rolesSwitchUser:systemAPI+'user/roleid',//角色下的用户
+  rolesUserTransfer:systemAPI+'userRole',//用户权限穿梭框
+  rolesUserTransferDel:systemAPI+'userRole/delete',//用户权限穿梭框删除
+  saveRoleResource:systemAPI+'role/',//角色对应的菜单保存
+  roleResource:systemAPI+'roleResource/',//角色对应的菜单选中的id
+  menusList:systemAPI+'resource/menu',//'menus/menu',//菜单管理树
+  menusListChild:systemAPI+'resource/menu/',//'menus/menu/',//菜单管理树
+  menusDetail:systemAPI+'resource/',//菜单详情
+  menusAdd:systemAPI+'resource',//菜单新增
+  objectTypeList:frameAPI+'object-define/page',//object
   noticePage: frameAPI+'notice/queryPage',//系统公告列表
   noticeAdd: frameAPI+'notice/add',//系统公告新增
   noticeEdit: frameAPI+'notice/edit',//系统公告编辑
@@ -193,6 +196,12 @@ export function rolesUserTransfer(parameter) {
 export function rolesUserTransferDel(parameter) {
   return axios.post(api.rolesUserTransferDel,parameter)
 }
+export function saveRoleResource(id,parameter) {
+  return axios.post(api.saveRoleResource+id+'/resource/update',parameter)
+}
+export function roleResource(id) {
+  return axios.get(api.roleResource+id)
+}
 export function menusList() {
   return axios.get(api.menusList)
 }
@@ -211,8 +220,8 @@ export function menusEdit(id,params) {
 export function menusDel(id) {
   return axios.post(api.menusAdd+'/'+id+'/delete')
 }
-export function objectTypeList() {
-  return axios.get(api.objectTypeList)
+export function objectTypeList(params) {
+  return axios.post(api.objectTypeList,params)
 }
 export function noticePage(params) {
   return axios.post(api.noticePage,params)
