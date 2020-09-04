@@ -680,7 +680,7 @@ export const asyncRouterMap = {
             meta: { title: '加班管理', keepAlive: true, permission: [ 'table' ] }
           },
           {
-            path: '/staffAttendance/workTravelingApproval/:pageNo([1-9]\\d*)?',
+            path: '/staffAttendance/workTravelingApproval2/:pageNo([1-9]\\d*)?',
             name: 'workTravelingApproval2',
             hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
             component: () => import('@/views/staffAttendance/workTravelingApproval/workTravelingApproval.vue'),

@@ -3,7 +3,7 @@
 </style>
 <template>
   <div class="workTraveling">
-      <search-table pageCode='trip'/>
+      <search-table pageCode='attendance_trip'/>
   </div>
 </template>
 

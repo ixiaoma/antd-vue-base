@@ -16,7 +16,7 @@
             <a-input v-else v-decorator="[item.code]" :placeholder="'请填写'+item.name" />
           </a-form-item>
         </a-col>
-        <a-col :span="8" :style="{ textAlign: 'right' }" class="search-reset-btn">
+        <a-col :span="8" :style="{ textAlign: 'right' }" class="search-reset-btn" v-if='filterList.length'>
           <a-button type="primary" icon="search" @click="handleSearch">查询</a-button>
           <a-button style="margin-left: 8px" icon="sync" @click="handleReset">重置</a-button>
           <a v-if="filterList.length > 2" :style="{ marginLeft: '8px', fontSize: '14px' }" @click="toggle">
