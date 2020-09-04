@@ -20,20 +20,20 @@ import { getServiceList } from '@/api/user'
 const baseLists = [
   {
     tabName:'社会关系',
-    pageCode:'social_relations'
+    pageCode:'socialRelations'
   },{
     tabName:'工作经历',
-    pageCode:'work_experience'
+    pageCode:'workExperience'
   },{
     tabName:'教育经历',
-    pageCode:'educational_experience'
+    pageCode:'educationalExperience'
   }
 ]
 
 const tabDetailList = [
   {
     tabName:'证件资料',
-    pageCode:'license_info'
+    pageCode:'licenseInfo'
   },{
     tabName:'合同管理',
     pageCode:'management'
@@ -42,7 +42,7 @@ const tabDetailList = [
     pageCode:'transfer'
   },{
     tabName:'员工离职',
-    pageCode:'leave_office'
+    pageCode:'leaveOffice'
   }
 ]
 

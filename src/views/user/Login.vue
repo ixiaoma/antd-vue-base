@@ -161,13 +161,14 @@ export default {
           delete loginParams.username
           loginParams[!state.loginType ? 'email' : 'username'] = values.username
           loginParams.password = md5(values.password)
-          login(loginParams).then(res => {
-            sessionStorage.setItem('ACCESS_TOKEN', res.result.token)
-            this.$router.push({ path: '/' })
-          // eslint-disable-next-line handle-callback-err
-          }).catch(err => {
-            state.loginBtn = false
-          })
+          sessionStorage.setItem('ACCESS_TOKEN', '4291d7da9005377ec9aec4a71ea837f')
+          this.$router.push({ path: '/' })
+          // login(loginParams).then(res => {
+          //   sessionStorage.setItem('ACCESS_TOKEN', res.result.token)
+          //   this.$router.push({ path: '/' })
+          // }).catch(err => {
+          //   state.loginBtn = false
+          // })
         } else {
           setTimeout(() => {
             state.loginBtn = false
