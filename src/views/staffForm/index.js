@@ -1,18 +1,5 @@
-<template>
-    <a-tabs v-model="activeKey" size='small' class="tabs-style">
-      <a-tab-pane key="1" tab="员工信息">
-          <base-form ref='baseForm' @next='nextStep'/>
-      </a-tab-pane>
-      <a-tab-pane v-for="(item,index) in tabLists" :key="`${index+2}`" :tab="item.tabName" force-render :disabled="disabled">
-        <a-card v-if='activeKey == index+2'>
-          <search-table :pageCode='item.pageCode'/>
-        </a-card>
-      </a-tab-pane>
-    </a-tabs>
-</template>
-
-<script>
-import { SearchTable } from '@/components'
+import { STable } from '@/components'
+import TableFilter from '@/components/TableFilter/index.vue'
 import BaseForm from '@/components/BaseForm/index.vue'
 
 import { getServiceList } from '@/api/user'
@@ -20,20 +7,22 @@ import { getServiceList } from '@/api/user'
 const baseLists = [
   {
     tabName:'社会关系',
-    pageCode:'socialRelations'
+    pageCode:'social',
+    nullAble:true
   },{
     tabName:'工作经历',
-    pageCode:'workExperience'
+    pageCode:'work'
   },{
     tabName:'教育经历',
-    pageCode:'educationalExperience'
+    pageCode:'educational',
+    nullAble:true
   }
 ]
 
 const tabDetailList = [
   {
     tabName:'证件资料',
-    pageCode:'licenseInfo'
+    pageCode:'license'
   },{
     tabName:'合同管理',
     pageCode:'management'
@@ -42,7 +31,7 @@ const tabDetailList = [
     pageCode:'transfer'
   },{
     tabName:'员工离职',
-    pageCode:'leaveOffice'
+    pageCode:'leave'
   }
 ]
 
@@ -53,18 +42,17 @@ export default {
       tabLists:[],
       activeKey:'1',
       disabled:false,
+      visible:false,
+      modalTitle:'',
+      formCode:'',
       selectedRowKeys: [],
       selectedRows: [],
-      loadData: parameter => {
-        const requestParameters = Object.assign({}, parameter, this.queryParam)
-        return getServiceList(requestParameters).then(res => {
-          return res.result
-        })
-      }
+      loadData: []
     }
   },
   components:{
-    SearchTable,
+    STable,
+    TableFilter,
     BaseForm
   },
   computed: {
@@ -76,8 +64,10 @@ export default {
     }
   },
   methods: {
-    handleAdd(){
-      this.$router.push({name:'baseForm',query:{title:'社会关系添加'}})
+    handleAdd(item){
+      this.modalTitle = item.tabName
+      this.formCode = item.pageCode
+      this.visible = true
     },
     nextStep(id){
       this.$router.push({query:{...this.$route.query,id,flag:3}})
@@ -99,11 +89,3 @@ export default {
     }
   }
 }
-</script>
-<style lang="less" scoped>
-  .base-form-index, .tabs-style{
-    /deep/.ant-tabs-content{
-      background-color: #fff!important;
-    }
-  }
-</style>

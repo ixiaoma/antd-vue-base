@@ -44,7 +44,7 @@ const vueConfig = {
       })
     ],
     // if prod, add externals
-    // externals: isProd ? assetsCDN.externals : {}
+    externals: isProd ? assetsCDN.externals : {}
   },
 
   chainWebpack: (config) => {

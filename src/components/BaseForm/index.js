@@ -15,6 +15,12 @@
             readonly:false
         }
     },
+    props:{
+        formCode:{
+            type:String,
+            default:''
+        }
+    },
     components:{
         FooterToolBar
     },
@@ -54,12 +60,13 @@
         async getInitData(){
             let res = null
             const { flag, pageCode, id } = this.$route.query
+            const code = this.formCode ? this.formCode : pageCode
             if(flag == 2){
-                res = await getDetailLayout({pageCode,id})
+                res = await getDetailLayout({pageCode:code,id})
             }else if(flag == 3){
-                res = await getEditLayout({pageCode,id})
+                res = await getEditLayout({pageCode:code,id})
             }else{
-                res = await getBaseLayout({pageCode})
+                res = await getBaseLayout({pageCode:code})
             }
             this.layoutList = res
             this.activeKey = res.map((ele,index)=>index)

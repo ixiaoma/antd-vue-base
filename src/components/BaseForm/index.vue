@@ -1,6 +1,6 @@
 <template>
     <a-card :bordered="false">
-        <a-form :form="form" @submit="handleSubmit" class="ant-advanced-search-form">
+        <a-form :form="form" @submit="handleSubmit" :label-col="{ span: 5 }" :wrapper-col="{ span: 16 }">
             <a-collapse v-model="activeKey" :bordered="false" class="spacial-collape" expand-icon-position='right'>
                 <a-collapse-panel v-for="(item,index) in layoutList" :key="String(index)" :header="item.groupName">
                     <a-row :gutter="56">

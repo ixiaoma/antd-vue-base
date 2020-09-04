@@ -787,7 +787,7 @@ export const hideInMenuRouterMap = {
     },{
       path: '/hidemenu/staffForm',
       name: 'staffForm',
-      component: () => import('@/views/form/basicForm'),
+      component: () => import('@/views/staffForm/index.vue'),
       meta: { title: '档案录入'}
     },{
       path: '/hidemenu/setting',

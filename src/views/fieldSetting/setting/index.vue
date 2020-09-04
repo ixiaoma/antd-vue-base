@@ -24,6 +24,10 @@
                             <a-icon type="delete" style="font-size:16px"/>
                           </a>
                         </div>
+                        <div v-else>
+                          <a-switch checked-children="必填" un-checked-children="非必填" style="margin-right:10px"/>
+                          <a-switch checked-children="只读" un-checked-children="非只读"/>
+                        </div>
                       </div>
                     </a-col>
                   </draggable>
@@ -105,7 +109,12 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
+    cursor: pointer;
   }
+  .pre-field:hover{
+      border-color: #1890ff;
+      color: #1890ff;
+    }
   .ant-card-head-title{
     padding: 10px 0!important;
   }
