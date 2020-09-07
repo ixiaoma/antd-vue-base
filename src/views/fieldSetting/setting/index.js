@@ -137,7 +137,7 @@ export default{
         handleCancel(e){//关闭分割线弹框
             this.visible = false
         },
-        oprationField(fieldData){//添加字段+编辑字段
+        oprationField(groupName,fieldData){//添加字段+编辑字段
             this.fieldVisible = true
             this.fieldForm.resetFields()
             this.fieldData = fieldData || null

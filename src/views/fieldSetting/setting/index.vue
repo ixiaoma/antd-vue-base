@@ -9,6 +9,7 @@
           <a-collapse v-model="activePanel" :bordered='false' class="spacial-collape" v-if='layoutData && layoutData.display'>
             <a-collapse-panel v-for="(item,i) in layoutData.display" :key="`${i}`" :header="item.groupName">
                 <a slot="extra" @click="e=>e.stopPropagation()" >
+                  <a-icon type="plus" v-if='activeKey == "BASIC"' style="margin-right:10px;font-size:16px" title="删除模块" @click="oprationField(item)"/>
                   <a-icon type="delete" style="font-size:16px" title="删除模块" @click="deleteBlock(item)"/>
                 </a>
                 <a-row :gutter='56'>
@@ -17,7 +18,7 @@
                       <div class="pre-field">
                         <span>{{childItem.name}}</span>
                         <div v-if='activeKey == "BASIC"'>
-                          <a @click="oprationField(childItem)">
+                          <a @click="oprationField(item,childItem)">
                             <a-icon type="edit" style="font-size:16px;margin-right:10px"/>
                           </a>
                           <a @click="deleteField(childItem.code)"> 
@@ -38,7 +39,7 @@
         <a-row type='flex' justify='space-between' style="margin-top:10px">
           <div>
             <a-button type="primary" @click="addModel">添加模块</a-button>
-            <a-button type="primary" v-if='activeKey == "BASIC"' style="margin-left:10px" @click="oprationField(null)">添加字段</a-button>
+            <!-- <a-button type="primary" v-if='activeKey == "BASIC"' style="margin-left:10px" @click="oprationField(null)">添加字段</a-button> -->
           </div>
           <a-button type="primary" @click="saveModel">保存布局</a-button>
         </a-row>
