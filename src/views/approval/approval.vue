@@ -29,7 +29,7 @@
 
 <script>
   import nodeWrap from './NodeWrap/nodeWrap.vue'
-  import { getApprovalDate } from '@/api/approval'
+  import { getApprovalDate,saveApproval } from '@/api/approval'
   const returnData = {
     "tableId": 1,
     "workFlowVersionId": "",
@@ -252,8 +252,13 @@
           this.tipVisible = true;
           return;
         }
-        this.processConfig.flowPermission = this.flowPermission
-        console.log(this.processConfig)
+        // this.processConfig.flowPermission = this.flowPermission
+        // console.log(this.processConfig)
+        const parameter = {
+          id:1,
+          params:this.processConfig.nodeConfig
+        }
+        saveApproval(parameter)
         // console.log(JSON.stringify(this.processConfig))
         // this.$axios.post("", this.processConfig).then(res => {
         //     if (res.code == 200) {

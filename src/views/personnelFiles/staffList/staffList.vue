@@ -1,6 +1,6 @@
 <template>
   <div class="staffList">
-      <search-table pageCode='performance_rewards_punishment'/>
+      <search-table pageCode='basic_info'/>
   </div>
 </template>
 

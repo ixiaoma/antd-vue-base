@@ -34,7 +34,7 @@
             if(i.valueType != 'SELECT' && i.valueType != 'CHECKBOX'){
                 value = i.value ? i.value.join(',') : ''
             }
-            return [ i.code, { initialValue: i.valueType == 'RADIO' ? value || undefined : value ,rules: [ { required: i.enabled == 1 ? true : false, whitespace:true, message: `${i.name}必填`, type:i.valueType == 'SELECT' || i.valueType == 'CHECKBOX' ? 'array' : i.valueType == 'DATETIME' ? 'object' : 'string' } ] } ]
+            return [ i.code, { initialValue: i.valueType == 'RADIO' ? value || undefined : i.valueType == 'DATETIME' ? value || null : value ,rules: [ { required: i.enabled == 1 ? true : false, whitespace:true, message: `${i.name}必填`, type:(i.valueType == 'SELECT' || i.valueType == 'CHECKBOX') ? 'array' : i.valueType == 'DATETIME' ? 'object' : 'string' } ] } ]
         },
         loadData(selectedOptions){
             const targetOption = selectedOptions[selectedOptions.length - 1]
