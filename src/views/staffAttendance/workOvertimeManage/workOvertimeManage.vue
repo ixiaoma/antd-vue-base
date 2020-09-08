@@ -3,7 +3,7 @@
 </style>
 <template>
 <div class="workOvertimeManage">
-    <search-table pageCode='attendance_overtime'/>
+    <search-table pageCode='overtime'/>
   </div>
 </template>
 

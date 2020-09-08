@@ -38,26 +38,26 @@ export const asyncRouterMap = {
       },
 
       // forms
-      {
-        path: '/form',
-        redirect: '/form/step-form',
-        component: RouteView,
-        meta: { title: '表单页', icon: 'form', permission: [ 'form' ] },
-        children: [
-          {
-            path: '/form/step-form',
-            name: 'StepForm',
-            component: () => import('@/views/form/stepForm/StepForm'),
-            meta: { title: '分步表单', keepAlive: true, permission: [ 'form' ] }
-          },
-          {
-            path: '/form/advanced-form',
-            name: 'AdvanceForm',
-            component: () => import('@/views/form/advancedForm/AdvancedForm'),
-            meta: { title: '高级表单', keepAlive: true, permission: [ 'form' ] }
-          }
-        ]
-      },
+      // {
+      //   path: '/form',
+      //   redirect: '/form/step-form',
+      //   component: RouteView,
+      //   meta: { title: '表单页', icon: 'form', permission: [ 'form' ] },
+      //   children: [
+      //     {
+      //       path: '/form/step-form',
+      //       name: 'StepForm',
+      //       component: () => import('@/views/form/stepForm/StepForm'),
+      //       meta: { title: '分步表单', keepAlive: true, permission: [ 'form' ] }
+      //     },
+      //     {
+      //       path: '/form/advanced-form',
+      //       name: 'AdvanceForm',
+      //       component: () => import('@/views/form/advancedForm/AdvancedForm'),
+      //       meta: { title: '高级表单', keepAlive: true, permission: [ 'form' ] }
+      //     }
+      //   ]
+      // },
       {
         path: '/settinglist',
         name: 'settingList',
@@ -519,18 +519,8 @@ export const asyncRouterMap = {
       {
         path: '/agreeManagement',
         name: 'agreeManagement',
-        component: RouteView,
-        redirect: '/agreeManagement/agreeList',
-        meta: { title: '合同管理', icon: 'table', permission: [ 'table' ] },
-        children: [
-          {
-            path: '/agreeManagement/agreeList/:pageNo([1-9]\\d*)?',
-            name: 'agreeManagementList',
-            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
-            component: () => import('@/views/agreeManagement/agreeList/agreeList.vue'),
-            meta: { title: '合同管理列表', keepAlive: true, permission: [ 'table' ] }
-          },
-        ]
+        component: () => import('@/views/agreeManagement/agreeList/agreeList.vue'),
+            meta: { title: '合同管理', icon: 'table', keepAlive: true, permission: [ 'table' ] }
       },
       //招聘管理
       {

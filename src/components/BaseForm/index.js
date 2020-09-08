@@ -2,6 +2,7 @@
   import { getBaseLayout, getDetailLayout, saveLayout, getEditLayout, saveEditLayout } from '@/api/commonApi'
   
   import FooterToolBar from '@/layouts/FooterToolbar'
+  import TreeSelect from './tree.vue'
   export default {
     name:'BaseFormLayout',
     data () {
@@ -26,15 +27,30 @@
         }
     },
     components:{
-        FooterToolBar
+        FooterToolBar,
+        TreeSelect
     },
     methods:{
         decoratorFn(i){
+            return [ i.code, { initialValue: this.initialValue(i),rules: [ { required: i.enabled == 1 ? true : false, whitespace:true, message: `${i.name}必填`, type:this.initType(i.valueType) }, {...this.initPattern(i.valueType)} ],validateTrigger:'blur' } ]
+        },
+        initialValue(i){
             let value = i.value
             if(i.valueType != 'SELECT' && i.valueType != 'CHECKBOX'){
                 value = i.value ? i.value.join(',') : ''
             }
-            return [ i.code, { initialValue: i.valueType == 'RADIO' ? value || undefined : value ,rules: [ { required: i.enabled == 1 ? true : false, whitespace:true, message: `${i.name}必填`, type:i.valueType == 'SELECT' || i.valueType == 'CHECKBOX' ? 'array' : i.valueType == 'DATETIME' ? 'object' : 'string' } ] } ]
+            i.valueType == 'RADIO' ? value || undefined : i.valueType == 'DATETIME' ? value || null : value 
+        },
+        initType(valueType){
+            return (valueType == 'SELECT' || valueType == 'CHECKBOX') ? 'array' : valueType == 'DATETIME' ? 'object' : 'string'
+        },
+        initPattern(valueType){
+            if(valueType == 'PHONE'){
+                return {
+                    pattern:/^1[3456789]\d{9}$/,
+                    message : '请填写正确的手机号'
+                }    
+            }
         },
         loadData(selectedOptions){
             const targetOption = selectedOptions[selectedOptions.length - 1]
