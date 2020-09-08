@@ -71,7 +71,9 @@ export default {
         },
         conditionStr(item, index) {
             var { conditionList, nodeUserList } = item;
-            if (conditionList.length == 0) {
+            if(!conditionList ){
+                return '请设置条件'
+            }else if (conditionList.length == 0) {
                 return (index == this.nodeConfig.conditionNodes.length - 1) && this.nodeConfig.conditionNodes[0].conditionList.length != 0 ? '其他条件进入此流程' : '请设置条件'
             } else {
                 let str = ""
@@ -618,11 +620,11 @@ export default {
             this.$emit("update:nodeConfig", this.nodeConfig);
         }
     },mounted() {
-        if (this.nodeConfig.type == 1) {
+        if (this.nodeConfig.nodeType == 'APPROVE') {
             this.nodeConfig.error = !this.setApproverStr(this.nodeConfig)
-        } else if (this.nodeConfig.type == 2) {
+        } else if (this.nodeConfig.nodeType == 2) {
             this.nodeConfig.error = !this.copyerStr(this.nodeConfig)
-        } else if (this.nodeConfig.type == 4) {
+        } else if (this.nodeConfig.nodeType == 4) {
             for (var i = 0; i < this.nodeConfig.conditionNodes.length; i++) {
                 this.nodeConfig.conditionNodes[i].error = this.conditionStr(this.nodeConfig.conditionNodes[i], i) == "请设置条件" && i != this.nodeConfig.conditionNodes.length - 1
             }

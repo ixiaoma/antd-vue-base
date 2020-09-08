@@ -7,14 +7,14 @@ import { getServiceList } from '@/api/user'
 const baseLists = [
   {
     tabName:'社会关系',
-    pageCode:'social',
+    pageCode:'social_relations',
     nullAble:true
   },{
     tabName:'工作经历',
-    pageCode:'work'
+    pageCode:'work_experience'
   },{
     tabName:'教育经历',
-    pageCode:'educational',
+    pageCode:'educational_experience',
     nullAble:true
   }
 ]
@@ -31,7 +31,7 @@ const tabDetailList = [
     pageCode:'transfer'
   },{
     tabName:'员工离职',
-    pageCode:'leave'
+    pageCode:'leave_office'
   }
 ]
 
