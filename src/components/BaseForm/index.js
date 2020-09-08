@@ -19,6 +19,10 @@
         formCode:{
             type:String,
             default:''
+        },
+        showBottom:{
+            type:Boolean,
+            default:true
         }
     },
     components:{

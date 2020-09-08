@@ -6,9 +6,9 @@
           <span style="color:red">*</span>
           员工信息
         </span>
-          <base-form ref='baseForm' @next='nextStep'/>
+          <base-form ref='baseForm' @next='nextStep' :showBottom='false'/>
       </a-tab-pane>
-      <a-tab-pane v-for="(item,index) in tabLists" :key="`${index+2}`" force-render :disabled="disabled">
+      <a-tab-pane v-for="(item,index) in tabLists" :key="`${index+2}`" force-render>
         <span slot="tab">
           <span v-if='item.nullAble' style="color:red">*</span>
           {{item.tabName}}
@@ -44,8 +44,12 @@
       </a-tab-pane>
     </a-tabs>
     <a-modal v-model="visible" :title="modalTitle" width='70%' :bodyStyle='{padding:0}'>
-      <base-form v-if='visible' ref='baseForm' :formCode='formCode' @next='nextStep'/>
+      <base-form v-if='visible' ref='baseForm' :formCode='formCode' @next='nextStep' :showBottom='false'/>
     </a-modal>
+    <footer-tool-bar>
+        <a-button @click="goBack">{{ readonly ? '返回' :"取消" }}</a-button>
+        <a-button type="primary" style="margin-left: 8px" html-type="submit" v-if='!readonly'>提交</a-button>
+    </footer-tool-bar>
   </div>
 </template>
 

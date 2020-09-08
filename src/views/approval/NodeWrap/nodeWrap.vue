@@ -3,7 +3,7 @@
         <div class="node-wrap" v-if="nodeConfig.nodeType!='EXCLUSIVE' && nodeConfig.name != 'end_event'">
             <div class="node-wrap-box" :class="(nodeConfig.name == 'start_event'?'start-node ':'')+(isTried&&nodeConfig.error?'active error':'')">
                 <div>
-                    <div class="title" :style="'background: rgb('+ ['87, 106, 149','255, 148, 62','50, 150, 250'][nodeConfig.nodeType] +');'">
+                    <div class="title" :style="'background: rgb('+ ['87, 106, 149','255, 148, 62','50, 150, 250'][nodeConfig.name == 'start_event' ? 0 : nodeConfig.nodeType == 'APPROVE' ? 1 : 2] +');'">
                         <a-icon style='margin-right:5px' type="user" v-show="nodeConfig.nodeType=='APPROVE'"/>
                         <a-icon style='margin-right:5px' type="team" v-show="nodeConfig.nodeType==2"/>
                         <span v-if="nodeConfig.name == 'start_event'">发起人</span>

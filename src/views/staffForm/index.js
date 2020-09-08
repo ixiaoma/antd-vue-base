@@ -1,6 +1,7 @@
 import { STable } from '@/components'
 import TableFilter from '@/components/TableFilter/index.vue'
 import BaseForm from '@/components/BaseForm/index.vue'
+import FooterToolBar from '@/layouts/FooterToolbar'
 
 import { getServiceList } from '@/api/user'
 
@@ -41,7 +42,7 @@ export default {
     return{
       tabLists:[],
       activeKey:'1',
-      disabled:false,
+      readonly:false,
       visible:false,
       modalTitle:'',
       formCode:'',
@@ -53,7 +54,8 @@ export default {
   components:{
     STable,
     TableFilter,
-    BaseForm
+    BaseForm,
+    FooterToolBar
   },
   computed: {
     rowSelection () {
@@ -71,18 +73,20 @@ export default {
     },
     nextStep(id){
       this.$router.push({query:{...this.$route.query,id,flag:3}})
-      this.disabled = false
       this.activeKey = '2'
     },
     onSelectChange (selectedRowKeys, selectedRows) {
       this.selectedRowKeys = selectedRowKeys
       this.selectedRows = selectedRows
+    },
+    goBack(){
+      this.$router.go(-1)
     }
   },
   created(){
     const { flag } = this.$route.query
-    // this.disabled = flag == 1
     if(flag == 2){
+      this.readonly = true
       this.tabLists = [...baseLists,...tabDetailList]
     }else {
       this.tabLists = [...baseLists]

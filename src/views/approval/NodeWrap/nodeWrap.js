@@ -53,6 +53,18 @@ export default {
         drawer
     },
     methods: {
+        setTitleColor(type){
+            let number = 0
+            switch (type){
+                case 'APPROVE' :
+                    number  = 1
+                break;
+                // case ''
+                default:
+                    number = 0
+            }
+            return number
+        },
         clickEvent(index) {
             if (index || index === 0) {
                 this.$set(this.isInputList, index, true)
