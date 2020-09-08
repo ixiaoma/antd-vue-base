@@ -9,7 +9,7 @@
                                 <span class="ant-form-text">{{i.value ? i.value.join(',') : ''}}</span>
                             </a-form-item>
                             <a-form-item :label="i.name" v-else>
-                                <a-input v-if="i.valueType == 'TEXT_SINGLE'" v-decorator="decoratorFn(i)" :placeholder="'请填写'+i.name" />
+                                <a-input v-if="i.valueType == 'TEXT_SINGLE' || i.valueType == 'PHONE'" :maxLength="i.valueType == 'PHONE' ? 11 : null" v-decorator="decoratorFn(i)" :placeholder="'请填写'+i.name" />
                                 <a-textarea v-else-if="i.valueType == 'TEXT_MULTI'" rows="4" v-decorator="decoratorFn(i)" :placeholder="'请填写'+i.name"/>
                                 <a-select v-else-if="i.valueType == 'RADIO'" v-decorator="decoratorFn(i)" :placeholder="'请选择'+i.name"/>
                                 <a-cascader v-else-if="i.valueType == 'SELECT'" v-decorator="decoratorFn(i)" :placeholder="'请选择'+i.name" :options="i.codeList" :load-data="loadData" change-on-select/>
@@ -38,6 +38,7 @@
                                         <a-button> <a-icon type="upload" /> 上传附件</a-button>
                                     </a-upload>
                                 </div>
+                                <!-- <tree-select v-else-if="i.valueType == 'ATTACHMENT'"/> -->
                                 <span v-else class="ant-form-text">{{i.value}}</span>
                             </a-form-item>
                         </a-col>
