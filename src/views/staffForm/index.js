@@ -2,6 +2,8 @@ import { STable } from '@/components'
 import TableFilter from '@/components/TableFilter/index.vue'
 import BaseForm from '@/components/BaseForm/index.vue'
 import FooterToolBar from '@/layouts/FooterToolbar'
+import moment from 'moment'
+import { saveEditLayout , saveLayout } from '@/api/commonApi'
 
 import { getServiceList } from '@/api/user'
 
@@ -9,14 +11,49 @@ const baseLists = [
   {
     tabName:'社会关系',
     pageCode:'social_relations',
-    nullAble:true
+    nullAble:true , 
+    loadData:[],
+    columns:[
+      {
+        title: '序号',
+        scopedSlots: { customRender: 'serial' }
+      },
+      {
+        title: '与本人关系',
+        dataIndex: 'relationshipWithMyself'
+      },
+      {
+        title:'成员姓名',
+        dataIndex: 'memberName'
+      },
+      {
+        title:'出生日期',
+        dataIndex: 'memberDate'
+      },
+      {
+        title:'工作单位及职务',
+        dataIndex:'workUnitAndPosition'
+      },
+      {
+        title:'政治面貌',
+        dataIndex:'politicCountenance'
+      },
+      {
+        title: '操作',
+        dataIndex: 'action',
+        width: '150px',
+        scopedSlots: { customRender: 'action' }
+      }
+    ]
   },{
     tabName:'工作经历',
-    pageCode:'work_experience'
+    pageCode:'work_experience',
+    loadData:[]
   },{
     tabName:'教育经历',
     pageCode:'educational_experience',
-    nullAble:true
+    nullAble:true,
+    loadData:[]
   }
 ]
 
@@ -48,7 +85,10 @@ export default {
       formCode:'',
       selectedRowKeys: [],
       selectedRows: [],
-      loadData: []
+      loadData: [
+
+      ],
+      tableIndex: -1 , // -1 新建 ， >=0 编辑某项
     }
   },
   components:{
@@ -63,13 +103,36 @@ export default {
         selectedRowKeys: this.selectedRowKeys,
         onChange: this.onSelectChange
       }
-    }
+    },
   },
   methods: {
     handleAdd(item){
+      this.tableIndex = -1 ; 
       this.modalTitle = item.tabName
       this.formCode = item.pageCode
       this.visible = true
+    },
+    handleEdit(item ,record , index){
+      this.tableIndex = index ; 
+      this.modalTitle = item.tabName
+      this.formCode = item.pageCode
+      this.visible = true
+      setTimeout(() => {
+        let modalForm = this.$refs.modalForm ;
+        modalForm.layoutList.forEach(item =>{
+          item.fieldDefineValueList.forEach(ele=>{
+            if(ele.code){
+              if(ele.valueType == 'DATETIME'){
+                ele.value = [moment(record[ele.code] , 'YYYY-MM-DD')]
+                // console.log(moment(record[ele.code] , 'YYYY-MM-DD'))
+                return ; 
+              }
+              ele.value = [record[ele.code]]
+            }
+          })
+        })
+        console.log(modalForm.layoutList , 'modalForm.layoutList')
+      }, 100);
     },
     nextStep(id){
       this.$router.push({query:{...this.$route.query,id,flag:3}})
@@ -81,7 +144,34 @@ export default {
     },
     goBack(){
       this.$router.go(-1)
-    }
+    },
+    onOk(){
+      // 将填写信息存入表格数据中
+        let modalForm = this.$refs.modalForm ; 
+        modalForm.form.validateFields(async (err, values) => {
+          if (!err) {
+              modalForm.layoutList.forEach(item=>{
+                  item.fieldDefineValueList.forEach(ele=>{
+                      if(values[ele.code]){
+                          let data = values[ele.code]
+                          if(ele.valueType == 'DATETIME'){
+                            values[ele.code] = moment(values[ele.code]).format('YYYY-MM-DD')
+                          }
+                      }
+                  })
+              })
+              // console.log(values , 'values')
+              let { tableIndex } = this ; 
+              if( tableIndex == -1 ){ // 新增 
+                this.tabLists[this.activeKey - 2].loadData.push(values) ; 
+              }else{ // 编辑
+                this.tabLists[this.activeKey - 2].loadData.splice(tableIndex , 1 , values) ; 
+              }
+              this.visible = false ; 
+              // console.log(saveData , this.formCode , 'saveData')
+          }
+      })
+    },
   },
   created(){
     const { flag } = this.$route.query

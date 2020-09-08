@@ -24,14 +24,14 @@
             rowKey="key"
             :columns="item.columns"
             :rowSelection="item.tabName == '员工离职' || item.tabName == '奖惩管理' ? rowSelection : null"
-            :data="loadData"
+            :data="item.loadData"
             showPagination="auto">
             <span slot="serial" slot-scope="text, record, index">
               {{ index + 1 }}
             </span>
-            <span slot="action" slot-scope="text, record">
+            <span slot="action" slot-scope="text, record, index">
               <template>
-                <a @click="handleEdit(record)">查看</a>
+                <a @click="handleEdit(item , record , index)">查看</a>
                 <a-divider type="vertical" v-if='item.tabName != "合同管理"'/>
                 <a @click="handleSub(record)" v-if='item.tabName != "合同管理"'>修改</a>
                 <a-divider type="vertical" v-if='item.tabName == "员工离职" || item.tabName == "奖惩管理"'/>
@@ -43,11 +43,12 @@
         </a-card>
       </a-tab-pane>
     </a-tabs>
-    <a-modal v-model="visible" :title="modalTitle" width='70%' :bodyStyle='{padding:0}'>
-      <base-form v-if='visible' ref='baseForm' :formCode='formCode' @next='nextStep' :showBottom='false'/>
+    <a-modal v-model="visible" :title="modalTitle" width='70%' :bodyStyle='{padding:0}' @ok="onOk">
+      <base-form v-if='visible' ref='modalForm' :formCode='formCode' @next='nextStep' :showBottom='false'/>
     </a-modal>
     <footer-tool-bar>
         <a-button @click="goBack">{{ readonly ? '返回' :"取消" }}</a-button>
+        <a-button  style="margin-left: 8px" >暂存</a-button>
         <a-button type="primary" style="margin-left: 8px" html-type="submit" v-if='!readonly'>提交</a-button>
     </footer-tool-bar>
   </div>
