@@ -48,12 +48,88 @@ const baseLists = [
   },{
     tabName:'工作经历',
     pageCode:'work_experience',
-    loadData:[]
+    loadData:[] , 
+    columns:[
+      {
+        title: '序号',
+        scopedSlots: { customRender: 'serial' }
+      },
+      {
+        title: '工作起始时间',
+        dataIndex: 'workStartDate'
+      },
+      {
+        title:'工作结束时间',
+        dataIndex: 'workEndDate'
+      },
+      {
+        title:'所在单位',
+        dataIndex: 'unitBelongs'
+      },
+      {
+        title:'从事工作或担任职务',
+        dataIndex:'workOrDuty'
+      },
+      {
+        title:'工作内容',
+        dataIndex:'jobContent'
+      },
+      {
+        title:'证明人',
+        dataIndex:'witness'
+      },
+      {
+        title: '操作',
+        dataIndex: 'action',
+        width: '150px',
+        scopedSlots: { customRender: 'action' }
+      }
+    ]
   },{
     tabName:'教育经历',
     pageCode:'educational_experience',
     nullAble:true,
-    loadData:[]
+    loadData:[],
+    columns:[
+      {
+        title: '序号',
+        scopedSlots: { customRender: 'serial' }
+      },
+      {
+        title: '学位证书编号',
+        dataIndex: 'degreeCertificateNumber'
+      },
+      {
+        title:'所学专业',
+        dataIndex: 'studySpeciality'
+      },
+      {
+        title:'入学时间',
+        dataIndex: 'studyStartTime'
+      },
+      {
+        title:'学习形式',
+        dataIndex:'studyType'
+      },
+      {
+        title:'学制',
+        dataIndex:'studyPeriod'
+      },
+      {
+        title:'毕业时间',
+        dataIndex:'graduationTime'
+      },
+      {
+        title:'毕业院校',
+        dataIndex:'graduateSchool'
+      },
+      {
+        title: '操作',
+        dataIndex: 'action',
+        width: '150px',
+        scopedSlots: { customRender: 'action' }
+      }
+    ]
   }
 ]
 
@@ -113,26 +189,28 @@ export default {
       this.visible = true
     },
     handleEdit(item ,record , index){
+      console.log(item , record , 'item record')
       this.tableIndex = index ; 
       this.modalTitle = item.tabName
       this.formCode = item.pageCode
       this.visible = true
-      setTimeout(() => {
+      let timer = setTimeout(() => {
+        clearTimeout(timer)
         let modalForm = this.$refs.modalForm ;
-        modalForm.layoutList.forEach(item =>{
+        modalForm.layoutList = modalForm.layoutList.map(item =>{
           item.fieldDefineValueList.forEach(ele=>{
             if(ele.code){
               if(ele.valueType == 'DATETIME'){
-                ele.value = [moment(record[ele.code] , 'YYYY-MM-DD')]
-                // console.log(moment(record[ele.code] , 'YYYY-MM-DD'))
+                ele.value =[ moment(record[ele.code] , 'YYYY-MM-DD') ]
                 return ; 
               }
               ele.value = [record[ele.code]]
             }
           })
+          return item ; 
         })
         console.log(modalForm.layoutList , 'modalForm.layoutList')
-      }, 100);
+      }, 200);
     },
     nextStep(id){
       this.$router.push({query:{...this.$route.query,id,flag:3}})
@@ -160,7 +238,6 @@ export default {
                       }
                   })
               })
-              // console.log(values , 'values')
               let { tableIndex } = this ; 
               if( tableIndex == -1 ){ // 新增 
                 this.tabLists[this.activeKey - 2].loadData.push(values) ; 
@@ -168,7 +245,6 @@ export default {
                 this.tabLists[this.activeKey - 2].loadData.splice(tableIndex , 1 , values) ; 
               }
               this.visible = false ; 
-              // console.log(saveData , this.formCode , 'saveData')
           }
       })
     },
@@ -177,7 +253,7 @@ export default {
     const { flag } = this.$route.query
     if(flag == 2){
       this.readonly = true
-      this.tabLists = [...baseLists,...tabDetailList]
+      this.tabLists = [...baseLists]
     }else {
       this.tabLists = [...baseLists]
     }
