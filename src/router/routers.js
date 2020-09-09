@@ -65,11 +65,12 @@ export const asyncRouterMap = {
         meta: { title: '字段配置', icon: 'table'}
       },
       {
-        path: '/approval',
-        name: 'approval',
-        component: () => import(/* webpackChunkName: "fail" */ '@/views/approval/approval.vue'),
+        path: '/approvalManagement',
+        name: 'approvalManagement',
+        component: () => import(/* webpackChunkName: "fail" */ '@/views/approvalManagement/index.vue'),
         meta: { title: '审批流', icon: 'table' }
       },
+      
 
       // // list
       // {
@@ -808,6 +809,18 @@ export const hideInMenuRouterMap = {
       name: 'tableCateValue',
       component: () => import('@/views/systemManagement/codeTable/tableCateValue/tableCateValue.vue'),
       meta: { title: '码表值管理'}
-    }
+    },
+    {
+      path: '/hidemenu/approvalSetting',
+      name: 'approvalSetting',
+      component: () => import(/* webpackChunkName: "fail" */ '@/views/approvalSetting/index.vue'),
+      meta: { title: '审批流程设置' }
+    },
+    {
+      path: '/hidemenu/approvalFlow',
+      name: 'approvalFlow',
+      component: () => import(/* webpackChunkName: "fail" */ '@/views/approvalFlow/approval.vue'),
+      meta: { title: '审批流程设置' }
+    },
   ]
 }

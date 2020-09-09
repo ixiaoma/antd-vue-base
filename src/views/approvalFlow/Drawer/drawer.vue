@@ -156,27 +156,4 @@
     </a-drawer>
   </div>
 </template>
-<script>
-export default {
-  data() {
-    return {
-      form: this.$form.createForm(this),
-      visible: false,
-    };
-  },
-  props:{
-      drawerTitle:{
-          type:String,
-          default:'title'
-      }
-  },
-  methods: {
-    showDrawer() {
-      this.visible = true;
-    },
-    onClose() {
-      this.visible = false;
-    },
-  },
-};
-</script>
+<script src='./drawer.js'></script>

@@ -53,7 +53,7 @@ export default {
         drawer
     },
     methods: {
-        setTitleColor(type){
+        setTitleColor(type){//设置title颜色
             let number = 0
             switch (type){
                 case 'APPROVE' :
@@ -65,14 +65,14 @@ export default {
             }
             return number
         },
-        clickEvent(index) {
+        clickEvent(index) {//点击修改title
             if (index || index === 0) {
                 this.$set(this.isInputList, index, true)
             } else {
                 this.isInput = true;
             }
         },
-        blurEvent(index) {
+        blurEvent(index) {//失焦保存title
             if (index || index === 0) {
                 this.$set(this.isInputList, index, false)
                 this.nodeConfig.conditionNodes[index].nodeName = this.nodeConfig.conditionNodes[index].nodeName ? this.nodeConfig.conditionNodes[index].nodeName : "条件"
@@ -81,7 +81,7 @@ export default {
                 this.nodeConfig.nodeName = this.nodeConfig.nodeName ? this.nodeConfig.nodeName : this.placeholderList[this.nodeConfig.type]
             }
         },
-        conditionStr(item, index) {
+        conditionStr(item, index) {//条件设置
             var { conditionList, nodeUserList } = item;
             if(!conditionList ){
                 return '请设置条件'
@@ -114,6 +114,73 @@ export default {
                 return str ? str.substring(0, str.length - 4) : '请设置条件'
             }
         },
+        delNode() {//删除节点
+            this.$emit("update:nodeConfig", this.nodeConfig.childNode);
+        },
+        addTerm() {//添加条件
+            let len = this.nodeConfig.conditionNodes.length + 1
+            this.nodeConfig.conditionNodes.push({
+                "nodeName": "条件" + len,
+                "type": 3,
+                "priorityLevel": len,
+                "conditionList": [],
+                "nodeUserList": [],
+                "childNode": null
+            });
+            for (var i = 0; i < this.nodeConfig.conditionNodes.length; i++) {
+                this.nodeConfig.conditionNodes[i].error = this.conditionStr(this.nodeConfig.conditionNodes[i], i) == "请设置条件" && i != this.nodeConfig.conditionNodes.length - 1
+            }
+            this.$emit("update:nodeConfig", this.nodeConfig);
+        },
+        delTerm(index) {//删除条件
+            this.nodeConfig.conditionNodes.splice(index, 1)
+            for (var i = 0; i < this.nodeConfig.conditionNodes.length; i++) {
+                this.nodeConfig.conditionNodes[i].error = this.conditionStr(this.nodeConfig.conditionNodes[i], i) == "请设置条件" && i != this.nodeConfig.conditionNodes.length - 1
+            }
+            this.$emit("update:nodeConfig", this.nodeConfig);
+            if (this.nodeConfig.conditionNodes.length == 1) {
+                if (this.nodeConfig.childNode) {
+                    if (this.nodeConfig.conditionNodes[0].childNode) {
+                        this.reData(this.nodeConfig.conditionNodes[0].childNode, this.nodeConfig.childNode)
+                    } else {
+                        this.nodeConfig.conditionNodes[0].childNode = this.nodeConfig.childNode
+                    }
+                }
+                this.$emit("update:nodeConfig", this.nodeConfig.conditionNodes[0].childNode);
+            }
+        },
+        setPerson(priorityLevel) {//设置审批人、抄送人等（点击块的操作）
+            var { nodeType,name } = this.nodeConfig;
+            console.log(nodeType,name)
+            // if (type == 0) {
+            //     // this.promoterDrawer = true;
+            //     this.flowPermission1 = this.flowPermission;
+            // } else if (type == 1) {
+            //     // this.approverDrawer = true;
+            //     this.approverConfig = JSON.parse(JSON.stringify(this.nodeConfig))
+            //     this.approverConfig.settype = this.approverConfig.settype ? this.approverConfig.settype : 1
+            // } else if (type == 2) {
+            //     // this.copyerDrawer = true;
+            //     this.copyerConfig = JSON.parse(JSON.stringify(this.nodeConfig))
+            //     this.ccSelfSelectFlag = this.copyerConfig.ccSelfSelectFlag == 0 ? [] : [this.copyerConfig.ccSelfSelectFlag]
+            // } else {
+            //     // this.conditionDrawer = true
+            //     this.bPriorityLevel = priorityLevel;
+            //     this.conditionsConfig = JSON.parse(JSON.stringify(this.nodeConfig))
+            //     this.conditionConfig = this.conditionsConfig.conditionNodes[priorityLevel - 1]
+            // }
+            this.$refs.drawer.showDrawer(this.nodeConfig)
+        },
+        arrTransfer(index, type = 1) {//向左-1,向右1
+            this.nodeConfig.conditionNodes[index] = this.nodeConfig.conditionNodes.splice(index + type, 1, this.nodeConfig.conditionNodes[index])[0];
+            this.nodeConfig.conditionNodes.map((item, index) => {
+                item.priorityLevel = index + 1
+            })
+            for (var i = 0; i < this.nodeConfig.conditionNodes.length; i++) {
+                this.nodeConfig.conditionNodes[i].error = this.conditionStr(this.nodeConfig.conditionNodes[i], i) == "请设置条件" && i != this.nodeConfig.conditionNodes.length - 1
+            }
+            this.$emit("update:nodeConfig", this.nodeConfig);
+        },
         dealStr(str, obj) {
             let arr = [];
             let list = str.split(",");
@@ -125,6 +192,13 @@ export default {
                 })
             }
             return arr.join("或")
+        },
+        reData(data, addData) {
+            if (!data.childNode) {
+                data.childNode = addData
+            } else {
+                this.reData(data.childNode, addData)
+            }
         },
         addConditionRole() {
             this.conditionRoleSearchName = "";
@@ -556,82 +630,9 @@ export default {
             this.$axios.get(`${process.env.BASE_URL}departments.json?parentId=${parentId}`).then(res => {
                 this.departments = res.data;
             })
-        },
-        delNode() {
-            this.$emit("update:nodeConfig", this.nodeConfig.childNode);
-        },
-        addTerm() {
-            let len = this.nodeConfig.conditionNodes.length + 1
-            this.nodeConfig.conditionNodes.push({
-                "nodeName": "条件" + len,
-                "type": 3,
-                "priorityLevel": len,
-                "conditionList": [],
-                "nodeUserList": [],
-                "childNode": null
-            });
-            for (var i = 0; i < this.nodeConfig.conditionNodes.length; i++) {
-                this.nodeConfig.conditionNodes[i].error = this.conditionStr(this.nodeConfig.conditionNodes[i], i) == "请设置条件" && i != this.nodeConfig.conditionNodes.length - 1
-            }
-            this.$emit("update:nodeConfig", this.nodeConfig);
-        },
-        delTerm(index) {
-            this.nodeConfig.conditionNodes.splice(index, 1)
-            for (var i = 0; i < this.nodeConfig.conditionNodes.length; i++) {
-                this.nodeConfig.conditionNodes[i].error = this.conditionStr(this.nodeConfig.conditionNodes[i], i) == "请设置条件" && i != this.nodeConfig.conditionNodes.length - 1
-            }
-            this.$emit("update:nodeConfig", this.nodeConfig);
-            if (this.nodeConfig.conditionNodes.length == 1) {
-                if (this.nodeConfig.childNode) {
-                    if (this.nodeConfig.conditionNodes[0].childNode) {
-                        this.reData(this.nodeConfig.conditionNodes[0].childNode, this.nodeConfig.childNode)
-                    } else {
-                        this.nodeConfig.conditionNodes[0].childNode = this.nodeConfig.childNode
-                    }
-                }
-                this.$emit("update:nodeConfig", this.nodeConfig.conditionNodes[0].childNode);
-            }
-        },
-        reData(data, addData) {
-            if (!data.childNode) {
-                data.childNode = addData
-            } else {
-                this.reData(data.childNode, addData)
-            }
-        },
-        setPerson(priorityLevel) {
-            console.log(priorityLevel)
-            var { type } = this.nodeConfig;
-            if (type == 0) {
-                // this.promoterDrawer = true;
-                this.flowPermission1 = this.flowPermission;
-            } else if (type == 1) {
-                // this.approverDrawer = true;
-                this.approverConfig = JSON.parse(JSON.stringify(this.nodeConfig))
-                this.approverConfig.settype = this.approverConfig.settype ? this.approverConfig.settype : 1
-            } else if (type == 2) {
-                // this.copyerDrawer = true;
-                this.copyerConfig = JSON.parse(JSON.stringify(this.nodeConfig))
-                this.ccSelfSelectFlag = this.copyerConfig.ccSelfSelectFlag == 0 ? [] : [this.copyerConfig.ccSelfSelectFlag]
-            } else {
-                // this.conditionDrawer = true
-                this.bPriorityLevel = priorityLevel;
-                this.conditionsConfig = JSON.parse(JSON.stringify(this.nodeConfig))
-                this.conditionConfig = this.conditionsConfig.conditionNodes[priorityLevel - 1]
-            }
-            this.$refs.drawer.showDrawer()
-        },
-        arrTransfer(index, type = 1) {//向左-1,向右1
-            this.nodeConfig.conditionNodes[index] = this.nodeConfig.conditionNodes.splice(index + type, 1, this.nodeConfig.conditionNodes[index])[0];
-            this.nodeConfig.conditionNodes.map((item, index) => {
-                item.priorityLevel = index + 1
-            })
-            for (var i = 0; i < this.nodeConfig.conditionNodes.length; i++) {
-                this.nodeConfig.conditionNodes[i].error = this.conditionStr(this.nodeConfig.conditionNodes[i], i) == "请设置条件" && i != this.nodeConfig.conditionNodes.length - 1
-            }
-            this.$emit("update:nodeConfig", this.nodeConfig);
         }
-    },mounted() {
+    },
+    mounted() {
         if (this.nodeConfig.nodeType == 'APPROVE') {
             this.nodeConfig.error = !this.setApproverStr(this.nodeConfig)
         } else if (this.nodeConfig.nodeType == 2) {
