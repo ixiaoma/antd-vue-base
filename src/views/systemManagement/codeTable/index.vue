@@ -18,10 +18,10 @@
                     </a-form-item>
                 </a-col>
                 <a-col :lg='8' :md="12" :sm="24">
-                    <a-form-item label="码表类别类型">
+                    <a-form-item label="码表数据类型">
                         <a-select v-model="categoryType" mode="default" placeholder="请选择码表类别类型" allowClear>
-                            <a-select-option v-for="k in categoryTypeList" :key="k.id" :value="k.id">
-                            {{ k.name }}
+                            <a-select-option v-for="k in categoryTypeList" :key="k.codeKey" :value="k.codeKey">
+                            {{ k.codeValue }}
                             </a-select-option>
                         </a-select>
                     </a-form-item>
@@ -29,14 +29,15 @@
                 </a-row>
               <a-row type="flex" justify="end" :gutter="24">
                 <a-col>
+                    <a-button type="primary" icon="plus" @click="handleAdd()">新建</a-button>
                     <a-button type="primary" style="margin:0 10px" icon="search" @click="noticeDataLoad()">查询</a-button>
                     <a-button icon="sync" class="middle-btn" @click="resetFn">重置</a-button>
                 </a-col>
             </a-row>
         </a-form>
-      <div class="table-operator">
+      <!-- <div class="table-operator">
         <a-button type="primary" icon="plus" @click="handleAdd()">新建</a-button>
-      </div>
+      </div> -->
       <a-table 
                   ref="table"
                   size="small"
@@ -46,10 +47,12 @@
                   :data-source="noticeData"      
                   :showPagination="true"
                   :pagination="pagination"
-                  :scroll="{ x: 1200}"
                   :loading="loading"
                   @change="handleTableChange"
                 >
+                <template slot="type" slot-scope="text, record">
+                    <span>{{record.type==3?"单选/多选":"多级联动"}}</span>
+                </template>
                 <template slot="action" slot-scope="text, record">         
                   <a @click="handleEdit(record)">修改</a>
                   <a-divider type="vertical" />
@@ -59,7 +62,7 @@
                 </template>
       </a-table>
     </a-card>
-    <addTableCategories ref="addTableCategories" @refresh="handleTableChange()"></addTableCategories>
+    <addTableCategories ref="addTableCategories" @refresh="noticeDataLoad()"></addTableCategories>
   </div>
 </template>
 

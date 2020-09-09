@@ -59,7 +59,8 @@ const api={
   addCategory:frameAPI+'code-category/save',//码表管理列表新增
   editCategory:frameAPI+'category/edit',//码表管理列表编辑
   delCategory:frameAPI+'code-category/delete',//码表管理列表删除
-  getCategoryList:frameAPI+'category/list',//获取所有类别
+  // getCategoryList:frameAPI+'category/list',//获取所有类别
+  getCategoryList:frameAPI+'code-category/parent',//获取所有类别
   getCateValuePage:frameAPI+'codes/page',//码表值管理
   delCodeValue:frameAPI+'codes/deleted/',//码表值删除  
   queryParentList: 'codes/save/query/',//多级联动码表值加载上级节点的下拉值

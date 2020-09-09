@@ -500,20 +500,20 @@ export const asyncRouterMap = {
             component: () => import('@/views/licenceManagement/licenceInfoList/licenceInfoList.vue'),
             meta: { title: '证照信息列表', keepAlive: true, permission: [ 'table' ] }
           },
-          {
-            path: '/licenceManagement/titleMaintenance/:pageNo([1-9]\\d*)?',
-            name: 'titleMaintenance',
-            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
-            component: () => import('@/views/licenceManagement/titleMaintenance/titleMaintenance.vue'),
-            meta: { title: '职称维护', keepAlive: true, permission: [ 'table' ] }
-          },
-          {
-            path: '/licenceManagement/titleEvaluation/:pageNo([1-9]\\d*)?',
-            name: 'titleEvaluation',
-            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
-            component: () => import('@/views/licenceManagement/titleEvaluation/titleEvaluation.vue'),
-            meta: { title: '职称评定', keepAlive: true, permission: [ 'table' ] }
-          }
+          // {
+          //   path: '/licenceManagement/titleMaintenance/:pageNo([1-9]\\d*)?',
+          //   name: 'titleMaintenance',
+          //   hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+          //   component: () => import('@/views/licenceManagement/titleMaintenance/titleMaintenance.vue'),
+          //   meta: { title: '职称维护', keepAlive: true, permission: [ 'table' ] }
+          // },
+          // {
+          //   path: '/licenceManagement/titleEvaluation/:pageNo([1-9]\\d*)?',
+          //   name: 'titleEvaluation',
+          //   hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+          //   component: () => import('@/views/licenceManagement/titleEvaluation/titleEvaluation.vue'),
+          //   meta: { title: '职称评定', keepAlive: true, permission: [ 'table' ] }
+          // }
         ]
       },
       //合同管理
@@ -701,13 +701,13 @@ export const asyncRouterMap = {
             component: () => import('@/views/costManagement/budgetApproval/budgetApproval.vue'),
             meta: { title: '预算审批', keepAlive: true, permission: [ 'table' ] }
           },
-          {
-            path: '/costManagement/budgetAdjust/:pageNo([1-9]\\d*)?',
-            name: 'budgetAdjust',
-            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
-            component: () => import('@/views/costManagement/budgetAdjust/budgetAdjust.vue'),
-            meta: { title: '预算调整', keepAlive: true, permission: [ 'table' ] }
-          },
+          // {
+          //   path: '/costManagement/budgetAdjust/:pageNo([1-9]\\d*)?',
+          //   name: 'budgetAdjust',
+          //   hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+          //   component: () => import('@/views/costManagement/budgetAdjust/budgetAdjust.vue'),
+          //   meta: { title: '预算调整', keepAlive: true, permission: [ 'table' ] }
+          // },
           {
             path: '/costManagement/reimbursement/:pageNo([1-9]\\d*)?',
             name: 'reimbursement',

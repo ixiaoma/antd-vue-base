@@ -25,7 +25,10 @@ export default {
       noticeData: [],
       selectedRowKeys: [],
       selectedRows: [],
-      categoryTypeList: []
+      categoryTypeList: [
+        {codeKey:'3',codeValue:'单选/多选'},
+        {codeKey:'5',codeValue:'多级联动'}
+      ]
     }
   },
   filters: {
@@ -64,10 +67,31 @@ export default {
       //   "categoryName": this.categoryName,
       //   "categoryType": this.categoryType
       // }
+      // if(this.categoryCode){
+      //   filters: [{
+      //     "field": "jobNumber",
+      //     "operator": "eq",
+      //     "value": "11111"
+      //   }],
+      // logic: "and"
+
+      // }
       let params = {
         pageNo: page ? page : this.page,
         pageSize: this.pageSize,
-        filter:{}
+        filter:{
+          filters:[],
+          logic: "and"
+        }
+      }
+      if(this.categoryCode){
+        params.filter.filters.push({"field": "code","operator": "contain","value": this.categoryCode})
+      }
+      if(this.categoryName){
+        params.filter.filters.push({"field": "name","operator": "contain","value": this.categoryName})
+      }
+      if(this.categoryType){
+        params.filter.filters.push({"field": "type","operator": "eq","value": this.categoryType})
       }
       this.loading = true;
       codeTableList(params).then(res => {
@@ -101,11 +125,11 @@ export default {
         okText: '确认',
         cancelText: '取消',
         onOk() {
-          delCategory(record.id).then(res => {
-            if (res.code == 200) {
+          delCategory([record.id]).then(res => {
+            // if (res.code == 200) {
               _this.$message.success('删除成功');
               _this.noticeDataLoad();
-            }
+            // }
           })
         },
         onCancel() { },
@@ -115,11 +139,11 @@ export default {
       this.$router.push({ 
         name: 'tableCateValue',
         query:{
-            categoryCode:record.categoryCode,
+            categoryCode:record.code,
             codeCategoryId:record.id,
-            fieldValueType:record.fieldValueType,
+            fieldValueType:record.type,
             nodeLevel:record.nodeLevel,
-            title:`${record.categoryName}-管理`
+            title:`${record.name}-管理`
         }
     });
     },

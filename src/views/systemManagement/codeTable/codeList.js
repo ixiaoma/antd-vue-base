@@ -19,26 +19,27 @@ export const filterList = [
 export const columns = [
     {
         title: '类别编码',
-        dataIndex: 'categoryCode'
+        dataIndex: 'code'
     },
     {
         title: '类别名称',
-        dataIndex: 'categoryName'
+        dataIndex: 'name'
     },
     {
         title: '数据类型',
-        dataIndex: 'fieldValueTypeStr'
+        dataIndex: 'type',
+        scopedSlots: { customRender: 'type' },
     },
     {
         title: '节点层级',
         dataIndex: 'nodeLevel',
         sorter: true
     },
-    {
-        title: '所属类型',
-        dataIndex: 'categoryTypeStr',
-        sorter: true
-    },
+    // {
+    //     title: '所属类型',
+    //     dataIndex: 'categoryTypeStr',
+    //     sorter: true
+    // },
     {
         title: '操作',
         dataIndex: 'action',
