@@ -3,7 +3,7 @@
         <!-- v-model="activeKey" -->
         <a-tabs default-active-key="1" size='small' class="tabs-style">
             <a-tab-pane key="1" tab='模版设置'>
-                
+                <model-setting/>
             </a-tab-pane>
             <a-tab-pane key="2" tab='审批设置'>
                 <a-button type="primary" @click="toSetting">配置</a-button>
@@ -13,6 +13,7 @@
 </template>
 <script>
     import { Icon } from 'ant-design-vue'
+    import modelSetting from './modelSetting/modelSetting.vue'
 
     const IconFont = Icon.createFromIconfontCN({
     scriptUrl: '//at.alicdn.com/t/font_1976655_pmtz41pdboo.js'
@@ -29,7 +30,8 @@
             }
         },
         components:{
-            IconFont
+            IconFont,
+            modelSetting
         },
         methods:{
             toSetting(){

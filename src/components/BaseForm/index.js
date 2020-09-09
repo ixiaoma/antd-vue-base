@@ -13,7 +13,11 @@
             imgList:[],
             previewImage:'',
             previewVisible: false,
-            readonly:false
+            readonly:false,
+            config: {
+                initialValue:null,
+                rules: [{type: 'object', required: false, whitespace:true, message: 'Please select time!' }],
+            },
         }
     },
     props:{
@@ -32,29 +36,35 @@
     },
     methods:{
         decoratorFn(i){
-            return [ i.code, { initialValue: this.initialValue(i),rules: [ { required: i.enabled == 1 ? true : false, whitespace:true, message: `${i.name}必填`, type:this.initType(i.valueType) }, {...this.initPattern(i.valueType)} ],validateTrigger:'blur' } ]
-        },
-        initialValue(i){
-            let returnValue = i.value
+            let initialValue = ''
             if(i.valueType != 'SELECT' && i.valueType != 'CHECKBOX'){
-                returnValue = i.value ? i.value.join(',') : ''
-            }else if(i.valueType == 'DATETIME'){
-                returnValue = i.value ? moment(i.value, 'YYYY/MM/DD') : null
-            }else if(i.valueType == 'RADIO'){
-                returnValue = i.value || undefined
+                const currentValue = i.value && i.value.length ? i.value.join(',') : ''
+                if(i.valueType == 'DATETIME'){
+                    initialValue = currentValue ? moment(currentValue, 'YYYY-MM-DD') : null
+                } else if(i.valueType == 'RADIO'){
+                    initialValue = currentValue || undefined
+                }
             }
-            return returnValue
-        },
-        initType(valueType){
-            return (valueType == 'SELECT' || valueType == 'CHECKBOX') ? 'array' : valueType == 'DATETIME' ? 'date' : 'string'
-        },
-        initPattern(valueType){
-            if(valueType == 'PHONE'){
-                return {
+            const rules = [
+                {
+                    type : i.valueType == 'DATETIME' ? 'object' : 'string',
+                    required: i.enabled == 1 ? true : false,
+                    whitespace:true,
+                    message: `${i.name}必填`
+                }
+            ]
+            if(i.valueType == 'PHONE'){
+                rules.push({
                     pattern:/^1[3456789]\d{9}$/,
                     message : '请填写正确的手机号'
-                }    
+                }) 
             }
+            const config = {
+                initialValue,
+                rules,
+                validateTrigger:i.valueType == 'PHONE' ? 'blur' : 'change'
+            }
+            return [i.code,config]
         },
         loadData(selectedOptions){
             const targetOption = selectedOptions[selectedOptions.length - 1]
@@ -71,7 +81,6 @@
             ]
         },
         async handlePreview(file) {
-            console.log(file)
             this.previewImage = file.thumbUrl;
             this.previewVisible = true;
         },
@@ -105,7 +114,7 @@
                             if(values[ele.code]){
                                 let data = values[ele.code]
                                 if(ele.valueType == 'DATETIME'){
-                                    data = moment(values[ele.code]).format('YYYY-MM-DD')
+                                    data = moment(values[ele.code]).format('YYYY-MM-DD HH:mm:ss')
                                 }
                                 saveData.push({
                                     code:ele.code,

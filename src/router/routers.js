@@ -68,7 +68,7 @@ export const asyncRouterMap = {
         path: '/approvalManagement',
         name: 'approvalManagement',
         component: () => import(/* webpackChunkName: "fail" */ '@/views/approvalManagement/index.vue'),
-        meta: { title: '审批流', icon: 'table' }
+        meta: { title: '审批设置', icon: 'table' }
       },
       
 
@@ -814,7 +814,7 @@ export const hideInMenuRouterMap = {
       path: '/hidemenu/approvalSetting',
       name: 'approvalSetting',
       component: () => import(/* webpackChunkName: "fail" */ '@/views/approvalSetting/index.vue'),
-      meta: { title: '审批流程设置' }
+      meta: { title: '审批设置' }
     },
     {
       path: '/hidemenu/approvalFlow',
