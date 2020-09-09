@@ -35,14 +35,18 @@
             return [ i.code, { initialValue: this.initialValue(i),rules: [ { required: i.enabled == 1 ? true : false, whitespace:true, message: `${i.name}必填`, type:this.initType(i.valueType) }, {...this.initPattern(i.valueType)} ],validateTrigger:'blur' } ]
         },
         initialValue(i){
-            let value = i.value
+            let returnValue = i.value
             if(i.valueType != 'SELECT' && i.valueType != 'CHECKBOX'){
-                value = i.value ? i.value.join(',') : ''
+                returnValue = i.value ? i.value.join(',') : ''
+            }else if(i.valueType == 'DATETIME'){
+                returnValue = i.value ? moment(i.value, 'YYYY/MM/DD') : null
+            }else if(i.valueType == 'RADIO'){
+                returnValue = i.value || undefined
             }
-            i.valueType == 'RADIO' ? value || undefined : i.valueType == 'DATETIME' ? value || null : value 
+            return returnValue
         },
         initType(valueType){
-            return (valueType == 'SELECT' || valueType == 'CHECKBOX') ? 'array' : valueType == 'DATETIME' ? 'object' : 'string'
+            return (valueType == 'SELECT' || valueType == 'CHECKBOX') ? 'array' : valueType == 'DATETIME' ? 'date' : 'string'
         },
         initPattern(valueType){
             if(valueType == 'PHONE'){
