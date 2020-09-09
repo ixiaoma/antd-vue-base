@@ -26,8 +26,8 @@
                           </a>
                         </div>
                         <div v-else>
-                          <a-switch checked-children="必填" un-checked-children="非必填" style="margin-right:10px"/>
-                          <a-switch checked-children="只读" un-checked-children="非只读"/>
+                          <a-switch v-model="childItem.notNull" checked-children="必填"  un-checked-children="非必填" style="margin-right:10px"/>
+                          <a-switch v-model="childItem.readOnly" checked-children="只读" un-checked-children="非只读"/>
                         </div>
                       </div>
                     </a-col>
