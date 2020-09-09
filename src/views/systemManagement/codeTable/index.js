@@ -139,6 +139,7 @@ export default {
       this.$router.push({ 
         name: 'tableCateValue',
         query:{
+            categoryName:record.name,
             categoryCode:record.code,
             codeCategoryId:record.id,
             fieldValueType:record.type,

@@ -61,12 +61,13 @@ const api={
   delCategory:frameAPI+'code-category/delete',//码表管理列表删除
   // getCategoryList:frameAPI+'category/list',//获取所有类别
   getCategoryList:frameAPI+'code-category/parent',//获取所有类别
-  getCateValuePage:frameAPI+'codes/page',//码表值管理
-  delCodeValue:frameAPI+'codes/deleted/',//码表值删除  
-  queryParentList: 'codes/save/query/',//多级联动码表值加载上级节点的下拉值
-  loadNextData: 'codes/categorycode/parentcodekey',//多级联动查询
-  addCodeValue: 'codes/value/save',//码表值保存
-  editCodeValue: 'codes/edit',//码表值编辑保存
+  getCateValuePage:frameAPI+'code-item/list/',//码表值管理
+  delCodeValue:frameAPI+'code-item/delete',//码表值删除  
+  queryParentList: frameAPI+'codes/save/query/',//多级联动码表值加载上级节点的下拉值
+  loadNextData: frameAPI+'codes/categorycode/parentcodekey',//多级联动查询
+  addCodeValue: frameAPI+'code-item/save',//码表值保存
+  editCodeValue: frameAPI+'code-item/edit',//码表值编辑保存
+  tableCateDefault:frameAPI+'code-item/default/'//是否默认
 }
 
 /**
@@ -260,11 +261,11 @@ export function delCategory(params) {
 export function getCategoryList(params) {
   return axios.get(api.getCategoryList,params)
 }
-export function getCateValuePage(params) {
-  return axios.post(api.getCateValuePage,params)
+export function getCateValuePage(code,params) {
+  return axios.post(api.getCateValuePage+code,params)
 }
 export function delCodeValue(params) {
-  return axios.post(api.delCodeValue+params)
+  return axios.post(api.delCodeValue,params)
 }
 export function queryParentList(params) {
   return axios.get(api.queryParentList+params)
@@ -278,6 +279,10 @@ export function addCodeValue(params) {
 export function editCodeValue(params) {
   return axios.post(api.editCodeValue,params)
 }
+export function tableCateDefault(id,params) {
+  return axios.post(api.tableCateDefault+id,params)
+}
+
 
 
 
