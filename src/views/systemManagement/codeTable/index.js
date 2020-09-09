@@ -49,29 +49,35 @@ export default {
       this.noticeDataLoad()
     },
     noticeDataLoad(page) {
+      // let params = {
+      //   "take": 20,
+      //   "skip": 0,
+      //   "pageNo": page ? page : this.page,
+      //   "pageSize": this.pageSize,
+      //   "searchFilter": {
+      //     "filters": [],
+      //     "logic": "and"
+      //   },
+      //   "objectType": "201",
+      //   "conditionId": "",
+      //   "categoryCode": this.categoryCode,
+      //   "categoryName": this.categoryName,
+      //   "categoryType": this.categoryType
+      // }
       let params = {
-        "take": 20,
-        "skip": 0,
-        "page": page ? page : this.page,
-        "pageSize": this.pageSize,
-        "searchFilter": {
-          "filters": [],
-          "logic": "and"
-        },
-        "objectType": "201",
-        "conditionId": "",
-        "categoryCode": this.categoryCode,
-        "categoryName": this.categoryName,
-        "categoryType": this.categoryType
+        pageNo: page ? page : this.page,
+        pageSize: this.pageSize,
+        filter:{}
       }
       this.loading = true;
       codeTableList(params).then(res => {
-        const pagination = { ...this.pagination };
-        pagination.total = res.data.totalCount;
-        pagination.current = params.page
-        this.page = params.page
+        console.log(res)
+        let pagination = { ...this.pagination };
+        pagination.total = res.totalCount;
+        pagination.current = params.pageNo
+        this.page = params.pageNo
         this.loading = false;
-        this.noticeData = res.data.records;
+        this.noticeData = res.records;
         this.pagination = pagination;
       })
     },

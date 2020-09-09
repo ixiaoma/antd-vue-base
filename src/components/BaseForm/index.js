@@ -122,6 +122,7 @@
                     if(id) param.id = id
                     const res = await saveLayout(param)
                     if(res){
+                        this.$router.go(-1)
                         this.$emit('next',res)
                     }
                 }

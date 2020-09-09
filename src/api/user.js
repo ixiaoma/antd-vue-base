@@ -55,10 +55,10 @@ const api={
   noticeRead: frameAPI+'notice/read/',//系统公告已读
   noticeHome: frameAPI+'notice/getByItcode',//系统公告首页
   fileUpload:frameAPI+'file/upload',//文件上传
-  codeTableList:frameAPI+'category/page',//码表管理列表
-  addCategory:frameAPI+'category/save',//码表管理列表新增
+  codeTableList:frameAPI+'code-category/page',//码表管理列表
+  addCategory:frameAPI+'code-category/save',//码表管理列表新增
   editCategory:frameAPI+'category/edit',//码表管理列表编辑
-  delCategory:frameAPI+'category/deleted/',//码表管理列表删除
+  delCategory:frameAPI+'code-category/delete',//码表管理列表删除
   getCategoryList:frameAPI+'category/list',//获取所有类别
   getCateValuePage:frameAPI+'codes/page',//码表值管理
   delCodeValue:frameAPI+'codes/deleted/',//码表值删除  
@@ -254,7 +254,7 @@ export function editCategory(params) {
   return axios.post(api.editCategory,params)
 }
 export function delCategory(params) {
-  return axios.post(api.delCategory+params)
+  return axios.post(api.delCategory,params)
 }
 export function getCategoryList(params) {
   return axios.get(api.getCategoryList,params)

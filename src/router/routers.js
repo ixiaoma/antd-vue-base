@@ -531,20 +531,20 @@ export const asyncRouterMap = {
         redirect: '/recruitedManagement/staffApply',
         meta: { title: '招聘管理', icon: 'table', permission: [ 'table' ] },
         children: [
-          {
-            path: '/recruitedManagement/staffApply/:pageNo([1-9]\\d*)?',
-            name: 'staffApply',
-            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
-            component: () => import('@/views/recruitedManagement/staffApply/staffApply.vue'),
-            meta: { title: '人员申请', keepAlive: true, permission: [ 'table' ] }
-          },
-          {
-            path: '/recruitedManagement/staffApproval/:pageNo([1-9]\\d*)?',
-            name: 'staffApproval',
-            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
-            component: () => import('@/views/recruitedManagement/staffApproval/staffApproval.vue'),
-            meta: { title: '人员审批', keepAlive: true, permission: [ 'table' ] }
-          },
+          // {
+          //   path: '/recruitedManagement/staffApply/:pageNo([1-9]\\d*)?',
+          //   name: 'staffApply',
+          //   hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+          //   component: () => import('@/views/recruitedManagement/staffApply/staffApply.vue'),
+          //   meta: { title: '人员申请', keepAlive: true, permission: [ 'table' ] }
+          // },
+          // {
+          //   path: '/recruitedManagement/staffApproval/:pageNo([1-9]\\d*)?',
+          //   name: 'staffApproval',
+          //   hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+          //   component: () => import('@/views/recruitedManagement/staffApproval/staffApproval.vue'),
+          //   meta: { title: '人员审批', keepAlive: true, permission: [ 'table' ] }
+          // },
           {
             path: '/recruitedManagement/mlrpApply/:pageNo([1-9]\\d*)?',
             name: 'mlrpApply',
@@ -559,27 +559,27 @@ export const asyncRouterMap = {
             component: () => import('@/views/recruitedManagement/resumeList/resumeList.vue'),
             meta: { title: '简历管理', keepAlive: true, permission: [ 'table' ] }
           },
-          {
-            path: '/recruitedManagement/interviewList/:pageNo([1-9]\\d*)?',
-            name: 'interviewList',
-            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
-            component: () => import('@/views/recruitedManagement/interviewList/interviewList.vue'),
-            meta: { title: '面试', keepAlive: true, permission: [ 'table' ] }
-          },
-          {
-            path: '/recruitedManagement/entryApplyList/:pageNo([1-9]\\d*)?',
-            name: 'entryApplyList',
-            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
-            component: () => import('@/views/recruitedManagement/entryApplyList/entryApplyList.vue'),
-            meta: { title: '入职申请', keepAlive: true, permission: [ 'table' ] }
-          },
-          {
-            path: '/recruitedManagement/entryApprovalList/:pageNo([1-9]\\d*)?',
-            name: 'entryApprovalList',
-            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
-            component: () => import('@/views/recruitedManagement/entryApprovalList/entryApprovalList.vue'),
-            meta: { title: '入职审批', keepAlive: true, permission: [ 'table' ] }
-          },
+          // {
+          //   path: '/recruitedManagement/interviewList/:pageNo([1-9]\\d*)?',
+          //   name: 'interviewList',
+          //   hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+          //   component: () => import('@/views/recruitedManagement/interviewList/interviewList.vue'),
+          //   meta: { title: '面试', keepAlive: true, permission: [ 'table' ] }
+          // },
+          // {
+          //   path: '/recruitedManagement/entryApplyList/:pageNo([1-9]\\d*)?',
+          //   name: 'entryApplyList',
+          //   hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+          //   component: () => import('@/views/recruitedManagement/entryApplyList/entryApplyList.vue'),
+          //   meta: { title: '入职申请', keepAlive: true, permission: [ 'table' ] }
+          // },
+          // {
+          //   path: '/recruitedManagement/entryApprovalList/:pageNo([1-9]\\d*)?',
+          //   name: 'entryApprovalList',
+          //   hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+          //   component: () => import('@/views/recruitedManagement/entryApprovalList/entryApprovalList.vue'),
+          //   meta: { title: '入职审批', keepAlive: true, permission: [ 'table' ] }
+          // },
         ]
       }, 
       //绩效管理

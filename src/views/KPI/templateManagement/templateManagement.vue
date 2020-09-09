@@ -1,6 +1,6 @@
 <template>
   <div class="templateManagement">
-      <search-table pageCode='assessment_setup'/>
+      <search-table pageCode='performance_assessment_setup'/>
   </div>
 </template>
 
