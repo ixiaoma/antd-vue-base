@@ -11,6 +11,7 @@ export default {
             multiArr:[],
             tableValueArr:[{//码表值
                 sort : 1,
+                codeKey:'',
                 codeValue : '',
             }],
             btnLoading:false,
@@ -72,6 +73,7 @@ export default {
         addTableValue(index) {//添加码表值
             let obj = {
                 sort : 1,
+                codeKey:'',
                 codeValue : ''
             }
             this.tableValueArr.splice(index + 1,0,obj);
@@ -80,6 +82,7 @@ export default {
             if(this.tableValueArr.length == 1) {
                 this.tableValueArr = [{
                     sort : 1,
+                    codeKey:'',
                     codeValue : ''
                 }];
             } else {
@@ -100,8 +103,12 @@ export default {
                         this.$message.warning('请填写"码表值排序' + (i + 1) + '"的值')
                         return ;
                     }
+                    if(!this.tableValueArr[i].codeKey) {//判断是否填写了码表值
+                        this.$message.warning('请填写"码表Key值' + (i + 1) + '"的值')
+                        return ;
+                    }
                     if(!this.tableValueArr[i].codeValue) {//判断是否填写了码表值
-                        this.$message.warning('请填写"码表值' + (i + 1) + '"的值')
+                        this.$message.warning('请填写"码表Value值' + (i + 1) + '"的值')
                         return ;
                     }
                 }
@@ -168,6 +175,7 @@ export default {
         clearFormData() {//清空表单数据
             this.tableValueArr = [{
                 sort : 1,
+                codeKey:'',
                 codeValue : ''
             }];
             this.btnLoading = false;
