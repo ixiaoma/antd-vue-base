@@ -7,14 +7,13 @@
     <a-card :bordered="false">
       <table-filter :filterList='filterList'/>
       <div class="table-operator">
-        <a-button type="primary" icon="plus" @click="handleAdd(null,1)">新建</a-button>
+        <a-button type="primary" icon="plus" @click="typeVisible = true ">新建</a-button>
       </div>
 
       <s-table
         ref="table"
         rowKey="key"
         :columns="columns"
-        :filterList="filterList"
         :data="loadData"
         :alert="true"
         :rowSelection="rowSelection"
@@ -38,6 +37,35 @@
         </span>
       </s-table>
     </a-card>
+
+    <!-- 选择类型弹窗 -->
+    <a-modal
+      title="选择报销类型"
+      :visible="typeVisible"
+      @ok="typeOk"
+      @cancel="typeCancel"
+      :footer="null"
+    >
+      <div>
+        <a-button type="primary" style="margin-bottom:15px">日常报销</a-button>
+      </div>
+      <div >
+        <p>非行政类报销</p>
+        <div class="type-box">
+          <a-button 
+          type="primary" 
+          v-for="(typeItem , i) in typeList" 
+          @click="addReimbursement(typeItem)"
+          :key="i">{{typeItem.name}}</a-button>
+        </div>
+      </div>
+
+      <div style="height:30px"></div>
+
+    </a-modal>
+
+    <add-form-modal ref="addFormModal"></add-form-modal>
+    <add-table-modal ref="addTableModal"></add-table-modal>
   </div>
 </template>
 

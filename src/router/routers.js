@@ -808,6 +808,12 @@ export const hideInMenuRouterMap = {
       name: 'tableCateValue',
       component: () => import('@/views/systemManagement/codeTable/tableCateValue/tableCateValue.vue'),
       meta: { title: '码表值管理'}
-    }
+    },
+    {
+      path: '/hidemenu/addReimbursement',
+      name: 'addReimbursement',
+      component: () => import('@/views/costManagement/reimbursement/addReimbursement/addReimbursement.vue'),
+      meta: { title: '新增报销'}
+    },
   ]
 }

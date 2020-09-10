@@ -44,25 +44,35 @@
           dataIndex: 'staffName'
         },
         {
-          title: '描述',
+          title: '工作城市',
           dataIndex: 'description',
           scopedSlots: { customRender: 'description' }
         },
         {
-          title: '服务调用次数',
+          title: '报销月份',
           dataIndex: 'callNo',
           sorter: true,
           needTotal: true,
           customRender: (text) => text + ' 次'
         },
         {
-          title: '状态',
+          title: '费用报销合计',
           dataIndex: 'status',
           scopedSlots: { customRender: 'status' }
         },
         {
-          title: '更新时间',
+          title: '补贴报销合计',
           dataIndex: 'updatedAt',
+          sorter: true
+        },
+        {
+          title: '提交时间',
+          dataIndex: 'at',
+          sorter: true
+        },
+        {
+          title: '审批状态',
+          dataIndex: 'a',
           sorter: true
         },
         {
@@ -85,7 +95,7 @@
             staffDept:'研发中心',
             agreestatus:'生效中',
             isTrue:'已转正',
-            status:0
+            status:0,
           },
           {
             staffCode:'BM20170823',
@@ -93,8 +103,129 @@
             staffDept:'研发中心',
             agreestatus:'生效中',
             isTrue:'已转正',
-            status:0
+            status:0,
           }
         ]
       }
-    
+
+
+
+
+
+export const typeList = [
+  {
+    name: '团建' , 
+    type: 1 , 
+    columns:[
+      {
+        title: '部门',
+        dataIndex: 'callNo'
+      },
+      {
+        title:'活动日期',
+        dataIndex: 'date' 
+      },
+      {
+        title: '活动天数',
+        dataIndex: 'day'
+      },
+      {
+        title: '活动地址',
+        dataIndex: 'addr'
+      },
+      {
+        title: '参与人员',
+        dataIndex: 'person'
+      },
+      {
+        title: '总金额' , 
+        dataIndex: 'moneyCount'
+      },
+      {
+        title: '备注',
+        dataIndex: 'description'
+      },
+      {
+        title: '操作',
+        dataIndex: 'action',
+        width: '150px',
+        scopedSlots: { customRender: 'action' }
+      }
+    ],
+    fieldList:[
+      // input 
+      {
+          label: '部门' , 
+          type: 'input' ,
+          field: 'callNo' ,
+          placeholder:'输入部门',
+          decorator: ['callNo', { rules: [
+                  {
+                      required: true, 
+                      message: '请输入部门' 
+                  }
+              ]
+          }]
+      },
+      // select 
+      {
+          label: '活动日期' ,
+          type: 'select' ,
+          field: 'date' , 
+          placeholder:'select date',
+          selectOption: [
+              { value : 1 , name : 'male' },
+              { value : 2 , name : 'female' },
+          ],
+          decorator: [
+              'gender',
+              { rules: 
+                  [
+                      {
+                          required: true, 
+                          message: 'Please select your gender!' 
+                      }
+                  ]
+              },
+          ]
+      },
+      // time
+      {
+          label: '活动日期' ,
+          type: 'date' ,
+          field: 'date' , 
+          placeholder:'请选择活动日期',
+          format: 'YYYY-MM-DD' , 
+          decorator: [
+              'date', 
+              { rules: 
+                  [
+                      {
+                          required: true, 
+                          message: '请选择日期' 
+                      }
+                  ]
+              }
+          ],
+      },
+      // 活动天数
+      {
+        label: '活动天数',
+        type: 'inputNumber',
+        field: 'day',
+        placeholder: '输入活动天数' , 
+        min: 0 ,
+        decorator: [
+          'day' , 
+          { rules :[ { required : true , message:'请输入活动天数' } ] }
+        ]
+      }
+  ]
+  },
+  { name: '生日费' , type: 2 },
+  { name: '培训/考试费' , type: 3 },
+  { name: '会议费' , type: 4 },
+  { name: '其他' , type: 5 },
+]
+
+

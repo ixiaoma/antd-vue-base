@@ -3,8 +3,9 @@ import moment from 'moment'
 import TableFilter from '@/components/TableFilter/index.vue'
 import { STable, Ellipsis } from '@/components'
 import { getServiceList } from '@/api/user'
-import {columns,filterList,result} from './codeList.js'
-
+import {columns,filterList,result , typeList} from './codeList.js'
+import addFormModal from "./addFormModal/addFormModal.vue"
+import addTableModal from "./addTableModal/addTableModal.vue"
 const statusMap = {
   0: {
     status: 'default',
@@ -30,11 +31,14 @@ export default {
   components: {
     STable,
     Ellipsis,
-    TableFilter
+    TableFilter,
+    addFormModal,
+    addTableModal
   },
   data () {
     this.columns = columns
     this.filterList = filterList
+    this.typeList = typeList
     return {
       // create model
       visible: false,
@@ -55,7 +59,9 @@ export default {
           })
       },
       selectedRowKeys: [],
-      selectedRows: []
+      selectedRows: [] , 
+      // 选择类型弹窗参数
+      typeVisible:false 
     }
   },
   filters: {
@@ -75,9 +81,23 @@ export default {
     }
   },
   methods: {
+    // 选择类型弹窗
+    typeOk(){
+      this.typeVisible = false ; 
+    },
+    typeCancel(){
+      this.typeVisible = false ; 
+    },
+    // 添加报销
+    addReimbursement(item){
+      this.typeVisible = false ; 
+      this.$refs.addTableModal.modalShow( item ); 
+    },
+ 
+
     handleAdd (data,flag) {
       this.$router.push({
-        name:'baseForm',
+        name:'addReimbursement',
         query:{
           title:`报销管理${flag == 1 ? '新增' : flag == 2 ? '详情' : '修改'}`,
           flag
