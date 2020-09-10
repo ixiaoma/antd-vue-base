@@ -7,7 +7,7 @@
         <a-modal
             v-model="tableModal"
             :title="modalTit"
-            :width="pageType == 'add' ? 800 : '30%'"
+            :width="pageType == 'add' ? 1000 : '50%'"
             class="tableValueModal"
             @cancel="cancelFn">
             <a-spin fix size="large" :spinning="spinShow">
@@ -23,18 +23,23 @@
                         </a-col> -->
                         <!-- 单选/多选/普通多级联动 -->
                         <a-col span="24" v-for="(item,index) in tableValueArr" :key="index">
-                            <a-col span="12">
+                            <a-col span="7">
                                 <a-form-item :label="'码表值排序' + (index + 1)" :required='true' :label-col="{ span: 9 }" :wrapper-col="{ span: 15 }">
                                     <a-input-number style="width:100%;" :min="1" placeholder="码表值排序" v-model="item.sort"></a-input-number>
                                 </a-form-item>
                             </a-col>
-                            <a-col span="12">
-                                <a-col :xxl="21" :lg="19">
-                                    <a-form-item :label="'码表值' + (index + 1)" :required='true' :label-col="{ span: 9 }" :wrapper-col="{ span: 15 }">
-                                        <a-input allowClear placeholder="码表值" v-model="item.codeValue"></a-input>
+                            <a-col span="17">
+                                <a-col :xxl="10" :lg="10">
+                                    <a-form-item :label="'码表Key值' + (index + 1)" :required='true' :label-col="{ span: 9 }" :wrapper-col="{ span: 15 }">
+                                        <a-input allowClear placeholder="码表Key值" v-model="item.codeKey"></a-input>
                                     </a-form-item>
                                 </a-col>
-                                <a-col :xxl="3" :lg="5">
+                                <a-col :xxl="10" :lg="10">
+                                    <a-form-item :label="'码表Value值' + (index + 1)" :required='true' :label-col="{ span: 9 }" :wrapper-col="{ span: 15 }">
+                                        <a-input allowClear placeholder="码表Value值" v-model="item.codeValue"></a-input>
+                                    </a-form-item>
+                                </a-col>
+                                <a-col :xxl="4" :lg="4">
                                     <span @click="addTableValue(index)" class="btnWrap addTableValueBtn">
                                         <a-icon type="plus-circle" title="添加码表值"/>
                                     </span>
