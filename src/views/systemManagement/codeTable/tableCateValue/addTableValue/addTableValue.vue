@@ -53,7 +53,7 @@
                     <!-- 编辑 -->
                     <a-row v-else>
                         <a-col span="24">
-                            <a-form-item label="码表值名称" :required='true' :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
+                            <a-form-item label="码表值" :required='true' :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
                                 <a-input allowClear v-model="editObj.codeValue"></a-input>
                             </a-form-item>
                         </a-col>

@@ -141,7 +141,7 @@ export default {
                 })
             } else {
                 if (!this.editObj.codeValue) {
-                    this.$message.warning('请填写码表值');
+                    this.$message.warning('码表值');
                     return;
                 }
                 if (!this.editObj.sort) {
