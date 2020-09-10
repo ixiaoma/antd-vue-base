@@ -1,55 +1,9 @@
-import { saveGroupField, listLayout, deleteGroupField, fieldDefinedSave, fieldDefinedDelete, saveFieldLayout } from '@/api/setting'
-import { codeTableList  } from '@/api/user'
+
 import FooterToolBar from '@/layouts/FooterToolbar'
 
-const valueTypeList = [
-    {
-        label:'TEXT_SINGLE',
-        value:'单行文本'
-    },{
-        label:'TEXT_MULTI',
-        value:'多行文本'
-    },{
-        label:'RADIO',
-        value:'单选'
-    },{
-        label:'CHECKBOX',
-        value:'多选'
-    },{
-        label:'SELECT',
-        value:'多级联动'
-    },{
-        label:'INTEGER',
-        value:'整数'
-    },{
-        label:'DECIMAL',
-        value:'小数'
-    },{
-        label:'AMOUNT',
-        value:'金额'
-    },{
-        label:'DATETIME',
-        value:'日期'
-    },{
-        label:'PICTURE',
-        value:'图片'
-    },{
-        label:'ATTACHMENT',
-        value:'附件'
-    },{
-        label:'PHONE',
-        value:'电话'
-    },{
-        label:'EMAIL',
-        value:'邮件'
-    },{
-        label:'AUTO_CODE',
-        value:'自动编号'
-    },{
-        label:'COMPUTE',
-        value:'计算字段'
-    }
-]
+import { valueTypeList } from '@/utils/commonCode'
+import { codeTableList  } from '@/api/user'
+import { saveGroupField, listLayout, deleteGroupField, fieldDefinedSave, fieldDefinedDelete, saveFieldLayout } from '@/api/setting'
 
 const layoutList = [
     {
@@ -89,6 +43,7 @@ export default{
             //     }
             // },
             fieldData:null,
+            groupName:null,
             activePanel:[],
             activeKey:'BASIC' , 
             codeList3: [] , // 码表下拉
@@ -184,6 +139,7 @@ export default{
             this.visible = false
         },
         oprationField(groupName,fieldData){//添加字段+编辑字段
+            this.groupName = groupName
             this.fieldVisible = true
             this.fieldForm.resetFields()
             this.valueType = fieldData ?  fieldData.valueType : '' ; 
@@ -193,7 +149,7 @@ export default{
             e.preventDefault();
             this.fieldForm.validateFields((err, values) => {
               if (!err) {
-                const params = { ...values }
+                const params = { ...values,groupName:this.groupName }
                 if(this.fieldData){
                     params.code = this.fieldData.code
                 }
@@ -237,26 +193,26 @@ export default{
             }
         },
         async saveModel(){//保存布局
-            const parameter = {
-                display:this.layoutData.display.map(ele=>{
-                    return {
-                        groupName:ele.groupName,
-                        layoutList:ele.layoutList.map(ele=>{
-                           return {code:ele.code}
-                        })
-                    }
-                }),
-                trash:this.layoutData.trash.map(ele=>{
-                    return {
-                        fieldCode:ele.code,
-                        group:false
-                    }
-                })
-            }
+            // const parameter = {
+            //     display:this.layoutData.display.map(ele=>{
+            //         return {
+            //             groupName:ele.groupName,
+            //             layoutList:ele.layoutList.map(ele=>{
+            //                return {code:ele.code}
+            //             })
+            //         }
+            //     }),
+            //     trash:this.layoutData.trash.map(ele=>{
+            //         return {
+            //             fieldCode:ele.code,
+            //             group:false
+            //         }
+            //     })
+            // }
             const params = {
                 objectDefineCode:this.$route.query.code,
                 layoutType:this.activeKey,
-                parameter
+                parameter:this.layoutData
             }
             const res = await saveFieldLayout(params).catch(err=>{})
         }

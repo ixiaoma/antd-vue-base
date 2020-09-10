@@ -1,9 +1,5 @@
 import { getObjectList } from '@/api/setting'
-import { Icon } from 'ant-design-vue'
 
-const IconFont = Icon.createFromIconfontCN({
-  scriptUrl: '//at.alicdn.com/t/font_1976655_pmtz41pdboo.js'
-})
 export default{
     name:'settingList',
     data(){
@@ -34,7 +30,7 @@ export default{
         }
     },
     components:{
-        IconFont
+        // IconFont
     },
     methods:{
         async getInitData(){

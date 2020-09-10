@@ -20,8 +20,14 @@ import './core/lazy_use'
 import './utils/filter' // global filter
 import './global.less'
 
+import { Icon } from 'ant-design-vue'
+const IconFont = Icon.createFromIconfontCN({
+  scriptUrl: '//at.alicdn.com/t/font_1976655_1e7ikr07z6c.js'
+})
+
 Vue.config.productionTip = false
 
+Vue.component('icon-font', IconFont)
 Vue.component('pro-layout', ProLayout)
 Vue.component('page-header-wrapper', PageHeaderWrapper)
 Vue.component('draggable', draggable)

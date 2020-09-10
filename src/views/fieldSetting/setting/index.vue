@@ -9,7 +9,7 @@
           <a-collapse v-model="activePanel" :bordered='false' class="spacial-collape" v-if='layoutData && layoutData.display'>
             <a-collapse-panel v-for="(item,i) in layoutData.display" :key="`${i}`" :header="item.groupName">
                 <a slot="extra" @click="e=>e.stopPropagation()" >
-                  <a-icon type="plus" v-if='activeKey == "BASIC"' style="margin-right:10px;font-size:16px" title="删除模块" @click="oprationField(item)"/>
+                  <a-icon type="plus" v-if='activeKey == "BASIC"' style="margin-right:10px;font-size:16px" title="添加字段" @click="oprationField(item.groupName)"/>
                   <a-icon type="delete" style="font-size:16px" title="删除模块" @click="deleteBlock(item)"/>
                 </a>
                 <a-row :gutter='56'>
@@ -18,7 +18,7 @@
                       <div class="pre-field">
                         <span>{{childItem.name}}</span>
                         <div v-if='activeKey == "BASIC"'>
-                          <a @click="oprationField(item,childItem)">
+                          <a @click="oprationField(item.groupName,childItem)">
                             <a-icon type="edit" style="font-size:16px;margin-right:10px"/>
                           </a>
                           <a @click="deleteField(childItem.code)"> 
