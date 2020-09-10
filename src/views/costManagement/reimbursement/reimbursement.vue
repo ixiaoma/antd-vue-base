@@ -47,12 +47,16 @@
       :footer="null"
     >
       <div>
-        <a-button type="primary" style="margin-bottom:15px">日常报销</a-button>
+        <a-button 
+          type="primary" 
+          @click="goDaily"
+          style="margin-bottom:15px"
+        >日常报销</a-button>
       </div>
       <div >
         <p>非行政类报销</p>
         <div class="type-box">
-          <a-button 
+          <a-button
           type="primary" 
           v-for="(typeItem , i) in typeList" 
           @click="addReimbursement(typeItem)"

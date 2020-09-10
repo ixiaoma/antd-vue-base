@@ -73,7 +73,9 @@
     <a-modal title="添加字段" :visible="fieldVisible" @cancel="handleFieldCancel">
       <a-form :form="fieldForm">
         <a-form-item>
-          <a-radio-group v-decorator="['valueType', { initialValue: fieldData ? fieldData.valueType : 'TEXT_SINGLE' ,rules: [{ required: true, whitespace:true,message: '请选择字段类型' }] }]">
+          <a-radio-group v-decorator="['valueType', { initialValue: fieldData ? fieldData.valueType : 'TEXT_SINGLE' ,rules: [{ required: true, whitespace:true,message: '请选择字段类型' }] }]"
+            @change="changeValueType"
+          >
             <a-radio v-for="item in valueTypeList" :value="item.label" :key='item.label'>
               {{item.value}}
             </a-radio>
@@ -82,12 +84,23 @@
         <a-form-item label="字段名称" :label-col="{span:6}" :wrapper-col="{span:12}">
           <a-input v-decorator="['name', { initialValue: fieldData ? fieldData.name : '',rules: [{ required: true, whitespace:true,message: '请填写字段名称' }] }]"/>
         </a-form-item>
+        <a-form-item v-if="showCodeField" label="关联码表值" :label-col="{span:6}" :wrapper-col="{span:12}">
+           <a-select
+            v-decorator="['categoryCode', { initialValue: fieldData ? fieldData.categoryCode : undefined ,rules: [{ required: true, whitespace:true,message: '请选择码表值' }] }]"
+          >
+            <a-select-option v-for="item in codeList" :key="item.code" :value="item.code">
+              {{ item.name }}
+            </a-select-option>
+          </a-select>
+        </a-form-item>
         <a-form-item label="是否列表查询" :label-col="{span:6}" :wrapper-col="{span:12}">
           <a-switch v-decorator="['search',{ initialValue: fieldData ? fieldData.search : true, valuePropName: 'checked' }]"/>
         </a-form-item>
         <a-form-item label="是否表头展示" :label-col="{span:6}" :wrapper-col="{span:12}">
           <a-switch v-decorator="['tableHead',{ initialValue: fieldData ? fieldData.tableHead : true, valuePropName: 'checked' }]"/>
         </a-form-item>
+         
+        
       </a-form>
       <template slot="footer">
         <a-button key="back" @click="handleFieldCancel">

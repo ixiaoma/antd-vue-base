@@ -1,3 +1,4 @@
+import moment from "moment";
 export default{
     name:'addFormModal',
     data(){
@@ -20,8 +21,10 @@ export default{
 
 
         handleOk(){
+            let { fieldList } = this ; 
             this.form.validateFields((err, values) => {
                 if (!err) {
+                    fieldList.forEach( item =>item.type =='date' ? values[item.field] = moment(values[item.field]).format(item.format) : null)
                     this.$emit('confirm' , values)
                 }
             });

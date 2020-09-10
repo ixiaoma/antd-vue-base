@@ -220,7 +220,7 @@ export const typeList = [
           { rules :[ { required : true , message:'请输入活动天数' } ] }
         ]
       }
-  ]
+    ]
   },
   { name: '生日费' , type: 2 },
   { name: '培训/考试费' , type: 3 },

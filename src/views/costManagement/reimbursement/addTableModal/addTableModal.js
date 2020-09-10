@@ -29,7 +29,8 @@ export default {
             this.visible = false ; 
         },
         modalShow( data ){
-            this.loadData = [] ; 
+            console.log(  'modalShow'  )
+            this.loadData = [] ;
             this.data = data ; 
             this.visible = true ; 
         },
@@ -41,6 +42,11 @@ export default {
         confirmForm(values){
             console.log(values, 'values') ; 
             this.loadData.push(values) ; 
+            this.$refs.addFormModal.show = false ; 
+        },
+        // 查看 / 修改
+        handleAdd(){
+            
         }
     },
 }

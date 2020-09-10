@@ -1,5 +1,5 @@
 import { saveGroupField, listLayout, deleteGroupField, fieldDefinedSave, fieldDefinedDelete, saveFieldLayout } from '@/api/setting'
-
+import { codeTableList  } from '@/api/user'
 import FooterToolBar from '@/layouts/FooterToolbar'
 
 const valueTypeList = [
@@ -90,13 +90,59 @@ export default{
             // },
             fieldData:null,
             activePanel:[],
-            activeKey:'BASIC'
+            activeKey:'BASIC' , 
+            codeList3: [] , // 码表下拉
+            codeList5: [] , // 码表下拉
+            valueType: '' , 
         }
     },
     components:{
         FooterToolBar
     },
+    computed: {
+        showCodeField(){
+            let arr = [  'RADIO' , 'CHECKBOX' , 'SELECT' ]
+            return this.valueType  && arr.indexOf(this.valueType ) > -1 
+        },
+        codeList(){
+            let { codeList3 ,codeList5  } = this ; 
+            if(  ['RADIO' , 'CHECKBOX'].indexOf(this.valueType) > -1 ){
+                return codeList3 ; 
+            }
+            if( this.valueType == 'SELECT' ) return codeList5
+        }
+    },
+
     methods:{
+        // 修改选择类型
+        changeValueType(e){
+            let { value } = e.target ; 
+            this.valueType = value ; 
+            this.fieldForm.setFieldsValue({'categoryCode': undefined})
+        },
+
+        // 码表列表
+        getCodeList(type){
+            let params = {
+                "pageNo": 1,
+                "pageSize": 1000,
+                "filter": {
+                    "filters": [
+                        {
+                            "field": "type",
+                            "operator": "eq",
+                            "value": type  // 3 单选 多选  5 多级联动
+                        }
+                    ],
+                    "logic": "and"
+                }
+            }
+            codeTableList(params).then(res => {
+                this[`codeList${type}`] = res.records;
+            })
+        },
+
+        
         addModel(){//添加或编辑分割线
             this.visible = true
         },
@@ -140,6 +186,7 @@ export default{
         oprationField(groupName,fieldData){//添加字段+编辑字段
             this.fieldVisible = true
             this.fieldForm.resetFields()
+            this.valueType = fieldData ?  fieldData.valueType : '' ; 
             this.fieldData = fieldData || null
         },
         handleFieldSubmit(e){//保存字段
@@ -216,5 +263,7 @@ export default{
     },
     created(){
         this.getInitLayout()
+        this.getCodeList(3)
+        this.getCodeList(5)
     }
 }

@@ -95,7 +95,7 @@ export default {
     },
  
 
-    handleAdd (data,flag) {
+    goDaily (data,flag) {
       this.$router.push({
         name:'addReimbursement',
         query:{

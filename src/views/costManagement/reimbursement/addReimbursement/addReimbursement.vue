@@ -8,7 +8,13 @@
         <a-card :bordered="false">
             <table-filter :filterList='filterList'/>
             <div class="table-operator">
-                <a-button type="primary" icon="plus" @click="handleAdd(null,1)">新建</a-button>
+                <a-button 
+                    type="primary" 
+                    icon="plus" 
+                    @click="showTableModal(typeItem)"
+                    v-for="(typeItem , typeIndex) in typeList"
+                    :key="'type' + typeIndex"
+                >{{ typeItem.name }}</a-button>
             </div>
 
             <s-table
@@ -29,7 +35,9 @@
                     </template>
                 </span>
             </s-table>
-            </a-card>
+        </a-card>
+         <!-- 表格弹窗 -->
+        <add-table-modal ref="addTableModal"></add-table-modal>
     </div>
 </template>
 
