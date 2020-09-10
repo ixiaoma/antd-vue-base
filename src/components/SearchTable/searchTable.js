@@ -89,7 +89,7 @@ export default{
             this.columns.push({
               title: '操作',
               dataIndex: 'action',
-              width: '120px',
+              width: '130px',
               fixed: 'right',
               scopedSlots: { customRender: 'action' }
             })
