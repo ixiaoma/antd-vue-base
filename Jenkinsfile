@@ -24,9 +24,9 @@ pipeline {
                 
             }
         }
-        stage('Copy Prod') {
+        stage('Copy build') {
             when {
-                environment name: 'profile', value: 'prod'
+                environment name: 'profile', value: 'build'
             }
             steps {
                 sh "sshpass -p'${env.DEST_PASSWORD}' scp -r -P ${env.DEST_PORT} -o \"StrictHostKeyChecking no\" dist/* ${env.DEST_USERNAME}@${env.DEST_HOST}:${env.MODULE_DIR}"
