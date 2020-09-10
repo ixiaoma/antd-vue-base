@@ -469,13 +469,13 @@ export const asyncRouterMap = {
             component: () => import('@/views/myPersonnel/vacationManage/vacationManage.vue'),
             meta: { title: '休假管理', keepAlive: true, permission: [ 'table' ] }
           },
-          {
-            path: '/myPersonnel/abnormalWorkManage/:pageNo([1-9]\\d*)?',
-            name: 'abnormalWorkManage',
-            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
-            component: () => import('@/views/myPersonnel/abnormalWorkManage/abnormalWorkManage.vue'),
-            meta: { title: '考勤异常管理', keepAlive: true, permission: [ 'table' ] }
-          },
+          // {
+          //   path: '/myPersonnel/abnormalWorkManage/:pageNo([1-9]\\d*)?',
+          //   name: 'abnormalWorkManage',
+          //   hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+          //   component: () => import('@/views/myPersonnel/abnormalWorkManage/abnormalWorkManage.vue'),
+          //   meta: { title: '考勤异常管理', keepAlive: true, permission: [ 'table' ] }
+          // },
           {
             path: '/myPersonnel/myAchievements/:pageNo([1-9]\\d*)?',
             name: 'myAchievements',
