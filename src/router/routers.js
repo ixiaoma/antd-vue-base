@@ -677,6 +677,20 @@ export const asyncRouterMap = {
             component: () => import('@/views/staffAttendance/workTravelingApproval/workTravelingApproval.vue'),
             meta: { title: '加班审批', keepAlive: true, permission: [ 'table' ] }
           },
+          {
+            path: '/staffAttendance/rosterList/:pageNo([1-9]\\d*)?',
+            name: 'rosterList',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/staffAttendance/rosterList/rosterList.vue'),
+            meta: { title: '排班列表', keepAlive: true, permission: [ 'table' ] }
+          },
+          {
+            path: '/staffAttendance/rosterDetail/:pageNo([1-9]\\d*)?',
+            name: 'rosterDetail',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/staffAttendance/rosterDetail/rosterDetail.vue'),
+            meta: { title: '排班明细', keepAlive: true, permission: [ 'table' ] }
+          },
         ]
       },
       //费用管理
