@@ -6,27 +6,30 @@
                     <div class="title">培训申请</div>
                     <draggable v-model="layoutList" class="draggable-con">
                         <div v-for="(item,index) in layoutList" :key='index'>
-                            <div class="mutile-com" v-if="item.valueType=='TEXT_MULTI' || item.valueType=='ATTACHMENT' || item.valueType=='PICTURE'">
+                            <div class="mutile-com pre-block" v-if="item.valueType=='TEXT_MULTI' || item.valueType=='ATTACHMENT' || item.valueType=='PICTURE'">
                                 <div class="text-style">
                                     {{item.name}}
                                     <span class="must-down" v-if='item.mustDown'>*</span>
                                 </div>
                                 <div class="placeholder-style second-row">
-                                    <span v-if="item.valueType=='TEXT_MULTI'">{{item.placeholder}}</span>
+                                    <span v-if="item.valueType=='TEXT_MULTI'">{{item.placeholder || '请输入'}}</span>
                                     <div class="file-box" v-else>
                                         <a-icon v-if="item.valueType=='ATTACHMENT'" type="paper-clip" style="font-size:30px"/>
                                         <a-icon v-if="item.valueType=='PICTURE'" type="file-image" style="font-size:30px"/>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row-com" v-else>
+                            <div class="row-com pre-block" v-else>
                                 <span class="text-style">
                                     {{item.name}}
                                     <span class="must-down" v-if='item.mustDown'>*</span>
                                 </span>
-                                <span class="placeholder-style">
-                                    <span>{{item.placeholder}}</span>
-                                    <a-icon v-if="item.valueType == 'RADIO' || item.valueType == 'CHECKBOX' || item.valueType == 'SELECT' || item.valueType == 'DATETIME'" type="right" style="font-size:16px;margin-left:3px"/>
+                                <span class="placeholder-style" v-if="item.valueType == 'RADIO' || item.valueType == 'CHECKBOX' || item.valueType == 'SELECT' || item.valueType == 'DATETIME'">
+                                    <span>{{item.placeholder || '请选择'}}</span>
+                                    <a-icon type="right" style="font-size:16px;margin-left:3px"/>
+                                </span>
+                                <span class="placeholder-style" v-else>
+                                    <span>{{item.placeholder || '请输入'}}</span>
                                 </span>
                             </div>
                         </div>
@@ -51,11 +54,11 @@
             <a-col span='12' v-show="showSetting">
                 <h3>控件设置</h3>
                 <a-form>
-                    <a-form-item label="控件名称" :label-col="{span:6}" :wrapper-col="{span:12}">
-                        <a-input v-model='currentItem.name'/>
+                    <a-form-item label="控件名称" :label-col="{span:6}" :wrapper-col="{span:12}" required :validateStatus='validateStatus'>
+                        <a-input v-model.trim='currentItem.name'/>
                     </a-form-item>
                     <a-form-item label="控件说明" :label-col="{span:6}" :wrapper-col="{span:12}">
-                        <a-textarea v-model="currentItem.placeholder" rows="4" :placeholder="currentItem.valueType == 'RADIO' || currentItem.valueType == 'CHECKBOX' || currentItem.valueType == 'SELECT' || currentItem.valueType == 'DATETIME' ? '请选择' : '请输入'"/>
+                        <a-textarea v-model.trim="currentItem.placeholder" rows="4" :placeholder="currentItem.valueType == 'RADIO' || currentItem.valueType == 'CHECKBOX' || currentItem.valueType == 'SELECT' || currentItem.valueType == 'DATETIME' ? '请选择' : '请输入'"/>
                     </a-form-item>
                     <a-form-item label="其他" :label-col="{span:6}" :wrapper-col="{span:12}">
                         <a-checkbox v-model='currentItem.readonly'>必填</a-checkbox>
@@ -77,24 +80,31 @@ export default {
             valueTypeList,
             visible:false,
             showSetting:false,
+            validateStatus:'success',
             currentItem:{},
             layoutList:[]
         }
     },
     methods:{
         addField(item){
-            this.currentItem = {valueType:item.label,name:item.value,placeholder: item.label == 'RADIO' || item.label == 'CHECKBOX' || item.label == 'SELECT' || item.label == 'DATETIME' ? '请选择' : '请输入'}
+            this.currentItem = {valueType:item.label,name:item.value}
             this.layoutList.push(this.currentItem)
             this.showSetting = true
             this.visible = false
         },
-        commit(){
-            console.log(this.layoutList)
-            // const parameter = {
-            //     id:1,
-            //     params:[]
-            // }
-            // saveForm(parameter)
+        async commit(){
+            for(let i = 0 ; i < this.layoutList.length ; i++){
+                if(!this.layoutList[i].name){
+                    this.$message.warning('控件名称不能为空')
+                    this.validateStatus = 'error'
+                    return;
+                }
+            }
+            const parameter = {
+                id:1,
+                params:this.layoutList
+            }
+            const res = await saveForm(parameter)
         }
     }
 }
@@ -154,7 +164,13 @@ export default {
                 }
             }
         }
-        
+        .pre-block:hover,.pre-block:active{
+            border: 1px dashed #1890FF;
+            cursor: pointer;
+        }
+        .pre-block:visited{
+            border: 1px solid #1890FF;
+        }
     }
     .com-block{
         width: 380px;

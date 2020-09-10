@@ -7,21 +7,41 @@
                         <icon-font :type="item.icon" />
                         <span class="font">{{item.name}}</span>
                     </div>
-                    <a>审批配置</a>
+                    <a>模版配置</a>
+                </div>
+            </a-col>
+            <a-col :lg="8" :xl="6" :xxl="4">
+                <div class="add-block" @click="addFlow">
+                    <a-icon type="plus" style="font-size:30px"/>
                 </div>
             </a-col>
         </a-row>
+        <a-modal v-model="visible" title="添加模版" :bodyStyle='{padding:0}' @ok="commit">
+            <a-form>
+                <a-form-item label="KEY" :label-col="{span:6}" :wrapper-col="{span:12}" required :validateStatus='validateStatus'>
+                    <a-input v-model.trim='saveItem.key'/>
+                </a-form-item>
+                <a-form-item label="模版名称" :label-col="{span:6}" :wrapper-col="{span:12}" required :validateStatus='validateStatus'>
+                    <a-input v-model.trim='saveItem.name'/>
+                </a-form-item>
+                <a-form-item label="模版说明" :label-col="{span:6}" :wrapper-col="{span:12}">
+                    <a-textarea v-model.trim="saveItem.desc" rows="4"/>
+                </a-form-item>
+            </a-form>
+        </a-modal>
     </div>
 </template>
 <script>
-    import { Icon } from 'ant-design-vue'
-
-    const IconFont = Icon.createFromIconfontCN({
-    scriptUrl: '//at.alicdn.com/t/font_1976655_pmtz41pdboo.js'
-    })
+    import { getFlowList,saveFlow } from '@/api/approval'
     export default{
         data(){
             return{
+                visible:false,
+                validateStatus:'success',
+                saveItem:{
+                    name:'',
+                    desc:''
+                },
                 objectList:[
                     {
                         name:'加班',
@@ -30,13 +50,22 @@
                 ]
             }
         },
-        components:{
-            IconFont
-        },
         methods:{
             toSetting(){
                 this.$router.push({name:'approvalSetting',title:'审批设置'})
+            },
+            addFlow(){
+                this.visible = true
+            },
+            async getInitList(){
+                const res = await getFlowList()
+            },
+            async commit(){
+                const res = await saveFlow({params:this.saveItem})
             }
+        },
+        created(){
+            this.getInitList()
         }
     }
 </script>
@@ -64,6 +93,14 @@
                     margin-top: 5px;
                 }
             }
-        }   
+        } 
+        .add-block{
+            height: 100px;
+            border: 1px solid #e9e8e8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }  
     }
 </style>

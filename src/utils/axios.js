@@ -14,10 +14,10 @@ service.interceptors.request.use(config => {
     ...config.headers
   }
 
-  // const access_token = sessionStorage.getItem('access_token')||'396c7164-e7b1-4163-a29e-1bcd2fe2330f'
-  // if (access_token) {
-  //   config.headers.Authorization = `Bearer ${access_token}`
-  // }
+  const access_token = sessionStorage.getItem('ACCESS_TOKEN')||'2812f6c6-7d2c-44b6-a89f-255dade37e04'
+  if (access_token) {
+    config.headers.Authorization = `Bearer ${access_token}`
+  }
   return config
 }, error => {
   return Promise.reject(error)
