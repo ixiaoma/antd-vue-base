@@ -7,7 +7,14 @@ export default{
     data(){
         return {
             pageLoading:true,
-            queryParam:{},//筛选值
+            queryParam:{
+                // "filters": [{
+                //     "field": "jobNumber",
+                //     "operator": "eq",
+                //     "value": "11111"
+                // }],
+                // "logic": "and"
+            },//筛选值
             // 加载数据方法 必须为 Promise 对象
             loadData: parameter => {
                 const params = Object.assign( parameter, {filter:this.queryParam})

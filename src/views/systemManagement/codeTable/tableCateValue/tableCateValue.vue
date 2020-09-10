@@ -2,7 +2,7 @@
     <div class="tableCateValue">
         <a-form class="ant-advanced-search-form" layout="inline">
             <a-row :gutter="24">
-                <a-col :lg='8' :md="12" :sm="24">
+                <!-- <a-col :lg='8' :md="12" :sm="24">
                     <a-form-item label="码表值">
                         <a-input v-model="search.codeValue"/>
                     </a-form-item>
@@ -15,10 +15,10 @@
                             </a-select-option>
                         </a-select>
                     </a-form-item>
-                </a-col>
+                </a-col> -->
                 <a-col :lg='12' :md="18" :sm="24">
-                    <a-button type="primary" icon="search" style="margin-right:10px" @click="noticeDataLoad()">查询</a-button>
-                    <a-button icon="sync" class="middle-btn" style="margin-right:10px" @click="resetFn">重置</a-button>
+                    <!-- <a-button type="primary" icon="search" style="margin-right:10px" @click="noticeDataLoad()">查询</a-button> -->
+                    <!-- <a-button icon="sync" class="middle-btn" style="margin-right:10px" @click="resetFn">重置</a-button> -->
                     <a-button type="primary" icon="plus" @click="addTableValue('add')">新建</a-button>
                 </a-col>
             </a-row>
@@ -33,10 +33,13 @@
                         :data-source="noticeData"      
                         :showPagination="true"
                         :pagination="pagination"
-                        :scroll="{ x: 1200}"
                         :loading="loading"
                         @change="handleTableChange"
                         >
+                        <template slot="defaultStatus" slot-scope="text, record">
+                            <!-- <span>{{record.defaultStatus?"是":"否"}}</span> -->
+                            <a-switch checked-children="是" un-checked-children="否" :checked="record.defaultStatus?true:false" @change="defaultChange(record)"/>
+                        </template>
                         <template slot="action" slot-scope="text, record">         
                         <a @click="addTableValue('edit',record)">修改</a>
                         <a-divider type="vertical" />

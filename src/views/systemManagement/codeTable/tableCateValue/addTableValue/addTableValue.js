@@ -60,15 +60,15 @@ export default {
             }
             this.tableModal = true;
         },
-        loadNextData(flag,item) {//多级联动加载下一级的值
-            if(flag != this.multiArr.length) {//最后一级不请求接口
-                loadNextData(this.multiArr[flag].categoryCode,item.codeKey).then(res => {
-                    if(res.code == 200) {
-                        this.multiArr[flag].codes = res.data;
-                    }
-                })
-            }
-        },
+        // loadNextData(flag,item) {//多级联动加载下一级的值
+        //     if(flag != this.multiArr.length) {//最后一级不请求接口
+        //         loadNextData(this.multiArr[flag].categoryCode,item.codeKey).then(res => {
+        //             if(res.code == 200) {
+        //                 this.multiArr[flag].codes = res.data;
+        //             }
+        //         })
+        //     }
+        // },
         addTableValue(index) {//添加码表值
             let obj = {
                 sort : 1,
@@ -106,22 +106,29 @@ export default {
                     }
                 }
                 this.btnLoading = true;
-                let params = {
-                    codeCategoryId : this.id,
-                }
-                if(this.fieldValueType == 5 && this.multiArr.length) {//多级联动并且不是第一级数据，所需要传的参数
-                    params.parentCodeKey = this.multiArr[this.multiArr.length - 1].fieldValue;
-                }
-                params.codeList = JSON.parse(JSON.stringify(this.tableValueArr));
-                addCodeValue(params).then(res=>{
-                    if(res.code == 200) {
+                // let params = {
+                //     codeCategoryId : this.id,
+                // }
+                // let params={}
+                // if(this.fieldValueType == 5 && this.multiArr.length) {//多级联动并且不是第一级数据，所需要传的参数
+                //     params.parentCodeKey = this.multiArr[this.multiArr.length - 1].fieldValue;
+                // }
+                // params.codeList = JSON.parse(JSON.stringify(this.tableValueArr));
+                let codeList = JSON.parse(JSON.stringify(this.tableValueArr));
+                codeList.forEach(item=>{
+                    item.categoryCode=this.$route.query.categoryCode
+                    item.categoryName=this.$route.query.categoryName         
+                    item.nodeLevel=this.$route.query.nodeLevel
+                })
+                addCodeValue(codeList).then(res=>{
+                    // if(res.code == 200) {
                         this.$message.success('成功');
                         this.tableModal = false;
                         this.$emit('refresh');
                         this.btnLoading = false;
-                    } else {
-                        this.btnLoading = false;
-                    }
+                    // } else {
+                    //     this.btnLoading = false;
+                    // }
                 }).catch(()=>{
                     this.btnLoading = false;
                 })
@@ -141,14 +148,14 @@ export default {
                     id: this.editObj.id
                 }
                 editCodeValue(params).then(res => {
-                    if (res.code == 200) {
+                    // if (res.code == 200) {
                         this.$message.success('成功');
                         this.tableModal = false;
                         this.$emit('refresh');
                         this.btnLoading = false;
-                    } else {
-                        this.btnLoading = false;
-                    }
+                    // } else {
+                    //     this.btnLoading = false;
+                    // }
                 }).catch(() => {
                     this.btnLoading = false;
                 })

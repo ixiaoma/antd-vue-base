@@ -9,9 +9,9 @@
                                 <span class="ant-form-text">{{i.value ? i.value.join(',') : ''}}</span>
                             </a-form-item>
                             <a-form-item :label="i.name" v-else>
-                                <a-input v-if="i.valueType == 'TEXT_SINGLE' || i.valueType == 'PHONE'" :maxLength="i.valueType == 'PHONE' ? 11 : null" v-decorator="decoratorFn(i)" :placeholder="'请填写'+i.name" />
+                                <a-input v-if="i.valueType == 'TEXT_SINGLE' || i.valueType == 'PHONE'||i.valueType == 'RADIO'" :maxLength="i.valueType == 'PHONE' ? 11 : null" v-decorator="decoratorFn(i)" :placeholder="'请填写'+i.name" />
                                 <a-textarea v-else-if="i.valueType == 'TEXT_MULTI'" rows="4" v-decorator="decoratorFn(i)" :placeholder="'请填写'+i.name"/>
-                                <a-select v-else-if="i.valueType == 'RADIO'" v-decorator="decoratorFn(i)" :placeholder="'请选择'+i.name"/>
+                                <!-- <a-select v-else-if="i.valueType == 'RADIO'" v-decorator="decoratorFn(i)" :placeholder="'请选择'+i.name"/> -->
                                 <a-cascader v-else-if="i.valueType == 'SELECT'" v-decorator="decoratorFn(i)" :placeholder="'请选择'+i.name" :options="i.codeList" :load-data="loadData" change-on-select/>
                                 <a-date-picker v-else-if="i.valueType == 'DATETIME'" v-decorator="decoratorFn(i)" style="width:100%" :placeholder="'请选择'+i.name"/>
                                 <div class="clearfix" v-else-if="i.valueType == 'PICTURE'">

@@ -1,4 +1,4 @@
-import { getCateValuePage,delCodeValue } from '@/api/user'
+import { getCateValuePage,delCodeValue,tableCateDefault } from '@/api/user'
 import addTableValue from './addTableValue/addTableValue.vue'
 export default {
     name: 'tableCateValue',
@@ -11,9 +11,9 @@ export default {
                 { title: '类别名称', dataIndex: 'categoryName'},
                 { title: '码表code', dataIndex: 'codeKey'},
                 { title: '码表值', dataIndex: 'codeValue'},
-                { title: '上级码表值', dataIndex: 'fatherCodeValue', scopedSlots: { customRender: 'fatherCodeValueSlots' } },
+                { title: '是否默认', dataIndex: 'defaultStatus', scopedSlots: { customRender: 'defaultStatus' } },
                 { title: '排序', dataIndex: 'sort'},
-                { title: '操作', dataIndex: 'action', scopedSlots: { customRender: 'operationSlots' } },
+                { title: '操作', dataIndex: 'action', scopedSlots: { customRender: 'action' } },
             ],
             pagination: {},
             page: 1,
@@ -44,33 +44,18 @@ export default {
           },
         noticeDataLoad(page) {
             let params={
-                "take": 20,
-                "skip": 0,
-                "page": page ? page : this.page,
+                "pageNo": page ? page : this.page,
                 "pageSize": this.pageSize,
-                "searchFilter": {
-                    "filters": [],
-                    "logic": "and"
-                },
-                "objectType": "202",
-                "conditionId": "",
-                "categoryCode": this.search.categoryCode,
-                "codeValue": this.search.codeValue,
-                "cityLevel": null,
-                "countyLevel": null,
-                "enabled": this.search.enabled,
-                "operationCityLevel": null,
-                "physicalPartition": null,
-                "regin": null
+                filter:{}
             }
             this.loading = true;
-            getCateValuePage(params).then(res => {
+            getCateValuePage(this.$route.query.categoryCode,params).then(res => {
               const pagination = { ...this.pagination };
-              pagination.total = res.data.totalCount;
-              pagination.current = params.page
-              this.page = params.page
+              pagination.total = res.totalCount;
+              pagination.current = params.pageNo
+              this.page = params.pageNo
               this.loading = false;
-              this.noticeData = res.data.records;
+              this.noticeData = res.records;
               this.pagination = pagination;
             })
           },
@@ -108,7 +93,20 @@ export default {
                 },
                 onCancel() { },
             });
-        }
+        },
+        //是否默认
+        defaultChange(record) {
+            record.defaultStatus = !record.defaultStatus
+            console.log(record.defaultStatus)
+            var params = {
+                // id: record.id,
+                // defaultStatus: record.defaultStatus ? 1 : 0
+            }
+            tableCateDefault(record.id,params).then(res => {
+                this.$message.success("更新成功")
+                this.noticeDataLoad();
+            })
+        },
     },
     created() {
         this.search.categoryCode = this.$route.query.categoryCode;

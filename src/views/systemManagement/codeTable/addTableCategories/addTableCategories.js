@@ -5,11 +5,11 @@ export default {
         return {
             tableModal:false,
             formItem: {
-                fieldValueType:'3',
+                type:'3',
                 parentId:'',
-                categoryName:'',
+                name:'',
                 autoCreateCode:'1',
-                categoryCode:''
+                code:''
             },
             autoCreateCodeList:[//码表类别code创建类型
                 {codeKey:'0',codeValue:'自动生成'},
@@ -32,7 +32,7 @@ export default {
             this.pageType = type;
             if(type == 'edit') {
                 this.currentId = data.id;
-                this.formItem.categoryName = data.categoryName;
+                this.formItem.name = data.name;
                 this.modalTitle = '编辑码表类别'
             } else {
                 this.modalTitle = '新建码表类别'
@@ -46,40 +46,42 @@ export default {
         },
         getAllMultilevelData() {//获取所有的多级联动下拉值
             getCategoryList().then(res=>{
-                this.multiArr = res.data;
+                this.multiArr = res;
             })
         },
         saveFn() {//保存
-            if(!this.formItem.categoryName ) {
+            if(!this.formItem.name ) {
                 this.$message.warning('请填写类别名称');
                 return ;
             }
-            if(this.pageType == 'add' && this.formItem.autoCreateCode == '1' && !this.formItem.categoryCode) {
+            if(this.pageType == 'add' && this.formItem.autoCreateCode == '1' && !this.formItem.code) {
                 this.$message.warning('请填写类别编码');
                 return ;
             }
             this.btnLoading = true;
             if(this.pageType == 'add') {
-                this.formItem.parentId = this.formItem.parentId === '' ? '0' : this.formItem.parentId;
+                let params={...this.formItem}
+                delete params.autoCreateCode
+                // this.formItem.parentId = this.formItem.parentId === '' ? '0' : this.formItem.parentId;
                 addCategory(this.formItem).then(res=>{
-                    if(res && res.code == 200) {
+                    // if(res && res.code == 200) {
                         this.$message.success('新建成功');
                         this.$emit('refresh');
-                    }
+                    // }
                     this.tableModal = false;
                 }).catch(()=>{
                     this.btnLoading = false;
                 })
             } else {
                 let params = {
-                    categoryName: this.formItem.categoryName,
+                    name: this.formItem.name,
                     id: this.currentId
                 }
-                editCategory(params).then(res=>{
-                    if(res && res.code == 200) {
+                addCategory(params).then(res=>{
+                    // if(res && res.code == 200) {
                         this.$message.success('新建成功');
                         this.$emit('refresh');
-                    }
+                    // }
                     this.tableModal = false;
                 }).catch(()=>{
                     this.btnLoading = false;
@@ -92,11 +94,11 @@ export default {
         },
         clearFormData() {//清空表单数据
             this.formItem = {
-                fieldValueType:'3',
+                type:'3',
                 parentId:'',
-                categoryName:'',
+                name:'',
                 autoCreateCode:'1',
-                categoryCode:''
+                code:''
             }
             this.btnLoading = false;
         }

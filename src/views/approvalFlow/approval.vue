@@ -1,13 +1,9 @@
 <template>
-  <div class="fd-nav">
-    <div class="fd-nav-left">
-				<div class="fd-nav-back" @click="toReturn"><a-icon type="left"/></div>
-    </div>
-    <div class="fd-nav-right">
-      <a-button ghost class="button-publish"><span>保存</span></a-button>
-      <a-button ghost class="button-publish" @click="saveSet"><span>发 布</span></a-button>
-    </div>
-    <div class="fd-nav-content">
+  <div class="fd-nav-content">
+      <div class="save-btn">
+        <a-button type="primary" class="btn1">保存</a-button>
+        <a-button type="primary" @click="saveSet">发 布</a-button>
+      </div>
 			<section class="dingflow-design">
         <div class="zoom">
 					<div :class="'zoom-out'+ (nowVal==50?' disabled':'')" @click="zoomSize(1)"></div>
@@ -24,7 +20,6 @@
 				</div>
       </section>
 		</div>
-  </div>
 </template>
 
 <script>
@@ -313,3 +308,13 @@
     }
   }
 </script>
+<style lang="less" scoped>
+  .save-btn{
+    position: absolute;
+    right: 20px;
+    z-index: 999;
+    .btn1{
+      margin-right: 20px;
+    }
+  }
+</style>

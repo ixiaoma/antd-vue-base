@@ -25,7 +25,10 @@ export default {
       noticeData: [],
       selectedRowKeys: [],
       selectedRows: [],
-      categoryTypeList: []
+      categoryTypeList: [
+        {codeKey:'3',codeValue:'单选/多选'},
+        {codeKey:'5',codeValue:'多级联动'}
+      ]
     }
   },
   filters: {
@@ -49,29 +52,56 @@ export default {
       this.noticeDataLoad()
     },
     noticeDataLoad(page) {
+      // let params = {
+      //   "take": 20,
+      //   "skip": 0,
+      //   "pageNo": page ? page : this.page,
+      //   "pageSize": this.pageSize,
+      //   "searchFilter": {
+      //     "filters": [],
+      //     "logic": "and"
+      //   },
+      //   "objectType": "201",
+      //   "conditionId": "",
+      //   "categoryCode": this.categoryCode,
+      //   "categoryName": this.categoryName,
+      //   "categoryType": this.categoryType
+      // }
+      // if(this.categoryCode){
+      //   filters: [{
+      //     "field": "jobNumber",
+      //     "operator": "eq",
+      //     "value": "11111"
+      //   }],
+      // logic: "and"
+
+      // }
       let params = {
-        "take": 20,
-        "skip": 0,
-        "page": page ? page : this.page,
-        "pageSize": this.pageSize,
-        "searchFilter": {
-          "filters": [],
-          "logic": "and"
-        },
-        "objectType": "201",
-        "conditionId": "",
-        "categoryCode": this.categoryCode,
-        "categoryName": this.categoryName,
-        "categoryType": this.categoryType
+        pageNo: page ? page : this.page,
+        pageSize: this.pageSize,
+        filter:{
+          filters:[],
+          logic: "and"
+        }
+      }
+      if(this.categoryCode){
+        params.filter.filters.push({"field": "code","operator": "contain","value": this.categoryCode})
+      }
+      if(this.categoryName){
+        params.filter.filters.push({"field": "name","operator": "contain","value": this.categoryName})
+      }
+      if(this.categoryType){
+        params.filter.filters.push({"field": "type","operator": "eq","value": this.categoryType})
       }
       this.loading = true;
       codeTableList(params).then(res => {
-        const pagination = { ...this.pagination };
-        pagination.total = res.data.totalCount;
-        pagination.current = params.page
-        this.page = params.page
+        console.log(res)
+        let pagination = { ...this.pagination };
+        pagination.total = res.totalCount;
+        pagination.current = params.pageNo
+        this.page = params.pageNo
         this.loading = false;
-        this.noticeData = res.data.records;
+        this.noticeData = res.records;
         this.pagination = pagination;
       })
     },
@@ -95,11 +125,11 @@ export default {
         okText: '确认',
         cancelText: '取消',
         onOk() {
-          delCategory(record.id).then(res => {
-            if (res.code == 200) {
+          delCategory([record.id]).then(res => {
+            // if (res.code == 200) {
               _this.$message.success('删除成功');
               _this.noticeDataLoad();
-            }
+            // }
           })
         },
         onCancel() { },
@@ -109,11 +139,12 @@ export default {
       this.$router.push({ 
         name: 'tableCateValue',
         query:{
-            categoryCode:record.categoryCode,
+            categoryName:record.name,
+            categoryCode:record.code,
             codeCategoryId:record.id,
-            fieldValueType:record.fieldValueType,
+            fieldValueType:record.type,
             nodeLevel:record.nodeLevel,
-            title:`${record.categoryName}-管理`
+            title:`${record.name}-管理`
         }
     });
     },
