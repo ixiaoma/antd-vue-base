@@ -7,7 +7,10 @@
                         <icon-font :type="item.icon" />
                         <span class="font">{{item.name}}</span>
                     </div>
-                    <a>模版配置</a>
+                    <div>
+                        <a-icon type="close" class="close" @click="e=>deleteField(e,index)"/>
+                        <a-switch v-model="item.deploy" @click="(check,e)=>e.stopPropagation()" checked-children="启用" un-checked-children="禁用"/>
+                    </div>
                 </div>
             </a-col>
             <a-col :lg="8" :xl="6" :xxl="4">
@@ -17,90 +20,39 @@
             </a-col>
         </a-row>
         <a-modal v-model="visible" title="添加模版" :bodyStyle='{padding:0}' @ok="commit">
-            <a-form>
-                <a-form-item label="KEY" :label-col="{span:6}" :wrapper-col="{span:12}" required :validateStatus='validateStatus'>
-                    <a-input v-model.trim='saveItem.key'/>
+            <a-form :form="form">
+                <a-form-item label="KEY" :label-col="{span:6}" :wrapper-col="{span:12}">
+                    <a-input v-decorator="['defineKey',{rules: [{required: true, whitespace:true, message: '请填写Key' }]}]"/>
                 </a-form-item>
-                <a-form-item label="模版名称" :label-col="{span:6}" :wrapper-col="{span:12}" required :validateStatus='validateStatus'>
-                    <a-input v-model.trim='saveItem.name'/>
+                <a-form-item label="模版名称" :label-col="{span:6}" :wrapper-col="{span:12}">
+                    <a-input v-decorator="['name',{rules: [{required: true, whitespace:true, message: '请填写模板名称' }]}]"/>
+                </a-form-item>
+                <a-form-item label="图标" :label-col="{span:6}" :wrapper-col="{span:12}">
+                    <a-popover trigger="click" v-model="popVisible">
+                        <template slot="content">
+                            <div class="com-block">
+                                <a-row :gutter='12'>
+                                    <a-col span='8' v-for="(item,index) in iconList" :key='index'>
+                                        <div class='pre-field' @click="selectIcon(item)">
+                                            <icon-font :type="item" class="icon-style"/>
+                                        </div>
+                                    </a-col>
+                                </a-row>
+                            </div>
+                        </template>
+                        <div class='pre-field field-icon'>
+                            <icon-font :type="icon" class="icon-style"/>
+                        </div>
+                    </a-popover>
                 </a-form-item>
                 <a-form-item label="模版说明" :label-col="{span:6}" :wrapper-col="{span:12}">
-                    <a-textarea v-model.trim="saveItem.desc" rows="4"/>
+                    <a-textarea rows="4"  v-decorator="['description']"/>
                 </a-form-item>
             </a-form>
         </a-modal>
     </div>
 </template>
-<script>
-    import { getFlowList,saveFlow } from '@/api/approval'
-    export default{
-        data(){
-            return{
-                visible:false,
-                validateStatus:'success',
-                saveItem:{
-                    name:'',
-                    desc:''
-                },
-                objectList:[
-                    {
-                        name:'加班',
-                        icon:'icon-jiaban'
-                    }
-                ]
-            }
-        },
-        methods:{
-            toSetting(){
-                this.$router.push({name:'approvalSetting',title:'审批设置'})
-            },
-            addFlow(){
-                this.visible = true
-            },
-            async getInitList(){
-                const res = await getFlowList()
-            },
-            async commit(){
-                const res = await saveFlow({params:this.saveItem})
-            }
-        },
-        created(){
-            this.getInitList()
-        }
-    }
-</script>
+<script src='./index.js'></script>
 <style lang="less" scoped>
-    .setting-list{
-        background-color: #fff;
-        padding: 20px;
-        height: 100%;
-        .anticon {
-            font-size: 36px;
-        }
-        .pre-block{
-            width: 100%;
-            height: 100px;
-            border: 1px solid #e9e8e8;
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-            cursor: pointer;
-            .left{
-                width: 50%;
-                text-align: center;
-                .font {
-                    display: block;
-                    margin-top: 5px;
-                }
-            }
-        } 
-        .add-block{
-            height: 100px;
-            border: 1px solid #e9e8e8;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }  
-    }
+    @import './index.less';
 </style>

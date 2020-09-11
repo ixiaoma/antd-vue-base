@@ -90,7 +90,6 @@ export default{
             }
             this.fieldForm.setFieldsValue({ 'categoryCode': undefined })
         },
-
         // 码表列表
         getCodeList(type){
             let params = {
@@ -144,7 +143,7 @@ export default{
             }
             this.$confirm({
                 title: '请确认是否要删除此模块?',
-                content: h => <div style="color:red;">删除后此模块下的字段会自动放到其他模块中</div>,
+                content: h => <div style="color:red;">删除后此模块下的字段会自动放到回收站</div>,
                 onOk: async ()=>{
                     const res = await deleteGroupField(params)
                 }

@@ -7,7 +7,7 @@ const settingApi = {
   saveApproval: baseFrame + 'process-define/node/save/',//审批信息保存
   saveForm: baseFrame + 'process-define/form/save/',//审批模板保存
   getFormDetail: baseFrame + 'process-define/form/detail/',//审批模板详情
-  getFlowList: baseFrame + '/process-define/page',//获取审批列表
+  getFlowList: baseFrame + 'process-define/page',//获取审批列表
   saveFlow: baseFrame + 'process-define/save'//保存审批流
 }
 

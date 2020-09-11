@@ -6,8 +6,9 @@
                     <div class="title">培训申请</div>
                     <draggable v-model="layoutList" class="draggable-con">
                         <div v-for="(item,index) in layoutList" :key='index'>
-                            <div class="mutile-com pre-block" v-if="item.valueType=='TEXT_MULTI' || item.valueType=='ATTACHMENT' || item.valueType=='PICTURE'">
+                            <div class="mutile-com pre-block" :class="index == currentIndex ? 'current-border' : ''" @click="editField(item,index)" v-if="item.valueType=='TEXT_MULTI' || item.valueType=='ATTACHMENT' || item.valueType=='PICTURE'">
                                 <div class="text-style">
+                                    <a-icon type="close" class="close" @click="deleteField(index)"/>
                                     {{item.name}}
                                     <span class="must-down" v-if='item.mustDown'>*</span>
                                 </div>
@@ -19,8 +20,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row-com pre-block" v-else>
+                            <div class="row-com pre-block" :class="index == currentIndex ? 'current-border' : ''" @click="editField(item,index)" v-else>
                                 <span class="text-style">
+                                    <a-icon type="close" class="close" @click="deleteField(index)"/>
                                     {{item.name}}
                                     <span class="must-down" v-if='item.mustDown'>*</span>
                                 </span>
@@ -80,6 +82,7 @@ export default {
             valueTypeList,
             visible:false,
             showSetting:false,
+            currentIndex:null,
             validateStatus:'success',
             currentItem:{},
             layoutList:[]
@@ -89,23 +92,47 @@ export default {
         addField(item){
             this.currentItem = {valueType:item.label,name:item.value}
             this.layoutList.push(this.currentItem)
+            this.currentIndex = this.layoutList.length-1
             this.showSetting = true
             this.visible = false
         },
+        editField(item,index){
+            this.showSetting = true
+            this.currentItem = item
+            this.currentIndex = index
+        },
+        deleteField(index){
+            this.layoutList.splice(index,1)
+        },
         async commit(){
-            for(let i = 0 ; i < this.layoutList.length ; i++){
-                if(!this.layoutList[i].name){
-                    this.$message.warning('控件名称不能为空')
-                    this.validateStatus = 'error'
-                    return;
+            if(this.layoutList.length){
+                for(let i = 0 ; i < this.layoutList.length ; i++){
+                    if(!this.layoutList[i].name){
+                        this.$message.warning('控件名称不能为空')
+                        this.validateStatus = 'error'
+                        return;
+                    }
                 }
+                const { id } = this.$route.query
+                const parameter = {
+                    id,
+                    params:this.layoutList
+                }
+                const res = await saveForm(parameter)
+                if(res){
+                    this.$emit('nextStep')
+                }
+            }else{
+                this.$message.warning('请维护控件模板')
             }
-            const parameter = {
-                id:1,
-                params:this.layoutList
-            }
-            const res = await saveForm(parameter)
+        },
+        async getFormDetailList(){
+            const { id } = this.$route.query
+            this.layoutList = await getFormDetail({id})
         }
+    },
+    created(){
+        this.getFormDetailList()
     }
 }
 </script>
@@ -164,30 +191,53 @@ export default {
                 }
             }
         }
+        .pre-block{
+            position: relative;
+            display: block;
+        }
+        .close{
+            display: none;
+            position: absolute;
+            z-index: 999;
+            right: 0;
+            top: 0;
+            color: #fff;
+            font-size: 16px;
+            background-color: #1890FF;
+        }
         .pre-block:hover,.pre-block:active{
             border: 1px dashed #1890FF;
             cursor: pointer;
+            .close{
+                display: block;
+            }
         }
-        .pre-block:visited{
+        .current-border{
+            border: 1px solid #1890FF;
+            .close{
+                display: block;
+            }
+        }
+        .current-border:hover{
             border: 1px solid #1890FF;
         }
     }
     .com-block{
         width: 380px;
-    }
-    .pre-field{
-        height: 80px;
-        margin-top: 12px;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        border: 1px solid #e8e8e8;
-        .icon-style{
-            font-size: 26px;
-            margin-bottom: 10px;
+        .pre-field{
+            height: 80px;
+            margin-top: 12px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 1px solid #e8e8e8;
+            .icon-style{
+                font-size: 26px;
+                margin-bottom: 10px;
+            }
         }
     }
 </style>
