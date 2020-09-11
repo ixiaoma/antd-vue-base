@@ -149,7 +149,7 @@
                     const fn = id ? saveEditLayout : saveLayout
                     const res = await fn(param)
                     if(res){
-                        this.$router.go(-1)
+                        !this.currentForm && this.$router.go(-1)
                         this.$emit('next',res)
                     }
                 }
