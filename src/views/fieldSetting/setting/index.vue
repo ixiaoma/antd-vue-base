@@ -84,15 +84,60 @@
         <a-form-item label="字段名称" :label-col="{span:6}" :wrapper-col="{span:12}">
           <a-input v-decorator="['name', { initialValue: fieldData ? fieldData.name : '',rules: [{ required: true, whitespace:true,message: '请填写字段名称' }] }]"/>
         </a-form-item>
+
         <a-form-item v-if="showCodeField" label="关联码表值" :label-col="{span:6}" :wrapper-col="{span:12}">
            <a-select
             v-decorator="['categoryCode', { initialValue: fieldData ? fieldData.categoryCode : undefined ,rules: [{ required: true, whitespace:true,message: '请选择码表值' }] }]"
-          >
+            >
             <a-select-option v-for="item in codeList" :key="item.code" :value="item.code">
               {{ item.name }}
             </a-select-option>
           </a-select>
         </a-form-item>
+
+        <!-- 多级联动 -->
+        <a-form-item 
+          v-if="valueType== 'SELECT'" 
+          :label="'关联码表值' + (index + 1) " 
+          :label-col="{span:6}" 
+          :wrapper-col="{span:12}"
+          v-for="(k, index) in selectLevel"
+          :key=" 'select' + index " 
+        >
+           <a-select
+            v-decorator="[`categoryCode[${index}]`, { rules: [{ required: true, whitespace:true,message: '请选择码表值' }] }]"
+          >
+            <a-select-option v-for="item in codeList" :key="item.code" :value="item.code">
+              {{ item.name }}
+            </a-select-option>
+          </a-select>
+         
+          <a-button 
+            v-if="selectLevel.length - 1 ==  index"
+            type="dashed" 
+            style="width: 100%;" 
+            @click="addSelect">
+              <a-icon type="plus" /> 
+          </a-button>
+           <a-button 
+            v-else
+            type="dashed" 
+            style="width: 100%;" 
+            @click="minusSelect(index)">
+              <a-icon type="minus" /> 
+          </a-button>
+        </a-form-item>
+        
+
+
+        <a-form-item label="字段描述" :label-col="{span:6}" :wrapper-col="{span:12}">
+          <a-input v-decorator="['descript', { initialValue: fieldData ? fieldData.descript : '',rules: [] }]"/>
+        </a-form-item>
+
+         <a-form-item label="API" :label-col="{span:6}" :wrapper-col="{span:12}">
+          <a-input v-decorator="['api', { initialValue: fieldData ? fieldData.descript : '',rules: [] }]"/>
+        </a-form-item>
+
         <a-form-item label="是否列表查询" :label-col="{span:6}" :wrapper-col="{span:12}">
           <a-switch v-decorator="['search',{ initialValue: fieldData ? fieldData.search : true, valuePropName: 'checked' }]"/>
         </a-form-item>

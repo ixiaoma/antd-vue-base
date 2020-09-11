@@ -49,6 +49,7 @@ export default{
             codeList3: [] , // 码表下拉
             codeList5: [] , // 码表下拉
             valueType: '' , 
+            selectLevel: [ 0 ] , // 多级联动层级
         }
     },
     components:{
@@ -56,7 +57,7 @@ export default{
     },
     computed: {
         showCodeField(){
-            let arr = [  'RADIO' , 'CHECKBOX' , 'SELECT' ]
+            let arr = [  'RADIO' , 'CHECKBOX'  ]
             return this.valueType  && arr.indexOf(this.valueType ) > -1 
         },
         codeList(){
@@ -64,16 +65,30 @@ export default{
             if(  ['RADIO' , 'CHECKBOX'].indexOf(this.valueType) > -1 ){
                 return codeList3 ; 
             }
-            if( this.valueType == 'SELECT' ) return codeList5
+            if( this.valueType == 'SELECT' ) return codeList3
         }
     },
 
     methods:{
+
+        // 添加多级联动层级
+        addSelect(){
+            this.selectLevel.push(1) ; 
+        },
+        minusSelect(i){
+            this.selectLevel.splice(i , 1) ; 
+        },
+
         // 修改选择类型
         changeValueType(e){
             let { value } = e.target ; 
             this.valueType = value ; 
-            this.fieldForm.setFieldsValue({'categoryCode': undefined})
+            if( value == 'SELECT' ){
+                this.fieldForm.setFieldsValue({'categoryCode': []})
+                this.selectLevel = [ 0 ]
+                return 
+            }
+            this.fieldForm.setFieldsValue({ 'categoryCode': undefined })
         },
 
         // 码表列表
@@ -139,11 +154,16 @@ export default{
             this.visible = false
         },
         oprationField(groupName,fieldData){//添加字段+编辑字段
+            console.log(fieldData , 'fieldData')
             this.groupName = groupName
             this.fieldVisible = true
             this.fieldForm.resetFields()
             this.valueType = fieldData ?  fieldData.valueType : '' ; 
             this.fieldData = fieldData || null
+            if(this.valueType == 'SELECT'){
+                this.selectLevel = fieldData.categoryCode ; 
+            }
+           
         },
         handleFieldSubmit(e){//保存字段
             e.preventDefault();
@@ -154,6 +174,7 @@ export default{
                     params.code = this.fieldData.code
                 }
                 this.loading = true
+                console.log(params , 'params') ;
                 fieldDefinedSave(this.$route.query.code,params).then(res=>{
                     this.getInitLayout()
                     this.fieldVisible = false
@@ -221,5 +242,8 @@ export default{
         this.getInitLayout()
         this.getCodeList(3)
         this.getCodeList(5)
-    }
+    },
+    beforeCreate() {
+        
+    },
 }

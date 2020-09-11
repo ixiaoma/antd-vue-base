@@ -43,8 +43,18 @@
         </a-card>
       </a-tab-pane>
     </a-tabs>
-    <a-modal v-model="visible" :title="modalTitle" width='70%' :bodyStyle='{padding:0}'>
-      <base-form v-if='visible' ref='baseForm' :formCode='formCode' @next='nextStep' :showBottom='false'/>
+    <a-modal 
+      @ok="onOk"
+      v-model="visible" 
+      :title="modalTitle" 
+      width='70%' 
+      :bodyStyle='{padding:0}'>
+      <base-form 
+      v-if='visible' 
+      ref='modalForm' 
+      :currentForm='currentForm' 
+      @next='nextStep' 
+      :showBottom='false'/>
     </a-modal>
   </div>
 </template>

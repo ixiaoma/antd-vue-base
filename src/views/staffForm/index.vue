@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-tabs v-model="activeKey" size='small' class="tabs-style">
+    <a-tabs v-model="activeKey" @change="changeActiveKey" size='small' class="tabs-style">
       <a-tab-pane key="1">
         <span slot="tab">
           <span style="color:red">*</span>
@@ -32,10 +32,10 @@
             <span slot="action" slot-scope="text, record, index">
               <template>
                 <a @click="handleEdit(item , record , index)">查看</a>
-                <a-divider type="vertical" v-if='item.tabName != "合同管理"'/>
-                <a @click="handleSub(record)" v-if='item.tabName != "合同管理"'>修改</a>
-                <a-divider type="vertical" v-if='item.tabName == "员工离职" || item.tabName == "奖惩管理"'/>
-                <a @click="handleSub(record)" v-if='item.tabName == "员工离职" || item.tabName == "奖惩管理"'>删除</a>
+                <a-divider type="vertical" />
+                <a @click="handleEdit(record)" >修改</a>
+                <a-divider type="vertical" />
+                <a @click="handleSub(record)" >删除</a>
               </template>
             </span>
           </s-table>
@@ -49,7 +49,7 @@
     <footer-tool-bar>
         <a-button @click="goBack">{{ readonly ? '返回' :"取消" }}</a-button>
         <a-button  style="margin-left: 8px" @click="clickStorage">暂存</a-button>
-        <a-button type="primary" style="margin-left: 8px" html-type="submit" v-if='!readonly'>提交</a-button>
+        <a-button type="primary" style="margin-left: 8px"  @click="saveStorage">提交</a-button>
     </footer-tool-bar>
   </div>
 </template>

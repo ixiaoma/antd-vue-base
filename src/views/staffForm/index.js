@@ -3,16 +3,38 @@ import TableFilter from '@/components/TableFilter/index.vue'
 import BaseForm from '@/components/BaseForm/index.vue'
 import FooterToolBar from '@/layouts/FooterToolbar'
 import moment from 'moment'
-import { saveEditLayout , saveLayout } from '@/api/commonApi'
-import { basicInfoStorage } from "@/api/reimbursement"
-import { getServiceList } from '@/api/user'
-
+import { 
+  basicInfoStorage , 
+  basicInfoSave,
+  socialRelationsSave , 
+  socialRelationsPage , 
+  socialRelationsEdit ,
+  workExperienceSave , 
+  workExperiencePage , 
+  workExperienceEdit ,
+  educationalExperienceSave , 
+  educationalExperiencePage , 
+  educationalExperienceEdit 
+} from "@/api/reimbursement"
+const filterList = [
+  {
+    searchLabel: '员工工号',
+    searchKey: 'staffCode'
+  }
+]
 const baseLists = [
   {
     tabName:'社会关系',
     pageCode:'social_relations',
+    field: 'socialRelations' , 
     nullAble:true , 
     loadData:[],
+    filterList , 
+    api:[ 
+      socialRelationsSave , 
+      socialRelationsPage , 
+      socialRelationsEdit 
+    ],
     columns:[
       {
         title: '序号',
@@ -48,7 +70,13 @@ const baseLists = [
   },{
     tabName:'工作经历',
     pageCode:'work_experience',
+    field:'workExperience' ,
     loadData:[] , 
+    api: [ 
+      workExperienceSave , 
+      workExperiencePage , 
+      workExperienceEdit
+    ] , 
     columns:[
       {
         title: '序号',
@@ -89,7 +117,13 @@ const baseLists = [
     tabName:'教育经历',
     pageCode:'educational_experience',
     nullAble:true,
+    field:'educationalExperience',
     loadData:[],
+    api:[
+      educationalExperienceSave , 
+      educationalExperiencePage , 
+      educationalExperienceEdit 
+    ] , 
     columns:[
       {
         title: '序号',
@@ -153,6 +187,7 @@ export default {
   name: 'StaffForm',
   data(){
     return{
+      filterList,
       tabLists:[],
       activeKey:'1',
       readonly:false,
@@ -161,9 +196,14 @@ export default {
       formCode:'',
       selectedRowKeys: [],
       selectedRows: [],
-      loadData: [
-
-      ],
+      loadData: parameter => {
+        const params = Object.assign({}, parameter, this.queryParam)
+        let api = this.currentTab.api[1] ; 
+        return api(params)
+          .then(res => {
+            return res.result
+          })
+      },
       tableIndex: -1 , // -1 新建 ， >=0 编辑某项
     }
   },
@@ -180,13 +220,71 @@ export default {
         onChange: this.onSelectChange
       }
     },
+    currentTab(){
+      let { activeKey } = this ; 
+      return this.tabLists[activeKey - 2 ] ; 
+    }
   },
   methods: {
     // 暂存
     clickStorage(){
-      let { tabList } = this ; 
+      this.handleParams()
+    }, 
+    // 提交
+    saveStorage(){
+      this.handleParams('save')
     },
 
+    // 参数处理
+    handleParams(type){
+     
+      this.handleFormByTable('baseForm' , values=>{
+          let api = basicInfoStorage  ; 
+          if(type == 'save') api = basicInfoSave ; 
+          let { tabLists } = this ; 
+          let params = { 
+            basicInfo: values , 
+          }
+          tabLists.forEach((item,index)=>{
+            params[item['field']] = item.loadData ; 
+          })
+          if(type == 'save'){ // 判断必填
+            
+          }
+          api(params) ; 
+      })
+      return ; 
+      this.$refs.baseForm.form.validateFields(async (err, values) => {
+        if (!err) {
+          let { tabLists } = this ; 
+          let params = {
+            basicInfo: values , 
+          }
+          tabLists.forEach((item,index)=>{
+            params[item['field']] = item.loadData ; 
+          })
+          console.log(params , 'storage params') ; 
+          api(params) ; 
+        }else{
+          this.$message.error('请填写完整基本信息')
+        }
+      })
+    },
+    
+    // 缓存回填
+    storageFill(){
+      let tabLists = this.tabLists ; 
+      let res = {
+        basicInfo: {},
+        socialRelations: [] , 
+        workExperience: [] ,
+        educationalExperience: []
+      }
+      this.tabLists = tabLists.map((item , index) =>{
+        item.loadData = res[item.field] ; 
+        return item ; 
+      })
+    }, 
 
     handleAdd(item){
       this.tableIndex = -1 ; 
@@ -195,7 +293,6 @@ export default {
       this.visible = true
     },
     handleEdit(item ,record , index){
-      console.log(item , record , 'item record')
       this.tableIndex = index ; 
       this.modalTitle = item.tabName
       this.formCode = item.pageCode
@@ -206,16 +303,11 @@ export default {
         modalForm.layoutList = modalForm.layoutList.map(item =>{
           item.fieldDefineValueList.forEach(ele=>{
             if(ele.code){
-              if(ele.valueType == 'DATETIME'){
-                ele.value =[ moment(record[ele.code] , 'YYYY-MM-DD') ]
-                return ; 
-              }
               ele.value = [record[ele.code]]
             }
           })
           return item ; 
         })
-        console.log(modalForm.layoutList , 'modalForm.layoutList')
       }, 200);
     },
     nextStep(id){
@@ -229,31 +321,54 @@ export default {
     goBack(){
       this.$router.go(-1)
     },
-    onOk(){
-      // 将填写信息存入表格数据中
-        let modalForm = this.$refs.modalForm ; 
-        modalForm.form.validateFields(async (err, values) => {
+
+    // 将form数据格式转成表格格式
+    handleFormByTable(formRef , callback , errCallback = ()=>{}){
+      let form = this.$refs[formRef] ; 
+      form.form.validateFields(async (err, values) => {
           if (!err) {
-              modalForm.layoutList.forEach(item=>{
+            form.layoutList.forEach(item=>{
                   item.fieldDefineValueList.forEach(ele=>{
                       if(values[ele.code]){
-                          let data = values[ele.code]
                           if(ele.valueType == 'DATETIME'){
                             values[ele.code] = moment(values[ele.code]).format('YYYY-MM-DD')
                           }
                       }
                   })
               })
-              let { tableIndex } = this ; 
-              if( tableIndex == -1 ){ // 新增 
-                this.tabLists[this.activeKey - 2].loadData.push(values) ; 
-              }else{ // 编辑
-                this.tabLists[this.activeKey - 2].loadData.splice(tableIndex , 1 , values) ; 
-              }
-              this.visible = false ; 
+              callback(values)
+          }else{
+            errCallback( err )
           }
       })
+    },  
+
+    getList(){
+      return parameter => {
+        const params = Object.assign({}, parameter, this.queryParam)
+        return this.currentTab.api[1](params)
+          .then(res => {
+            return res.result
+          })
+      }
     },
+
+    onOk(){
+      // 将填写信息存入表格数据中
+      this.handleFormByTable('modalForm' , values=>{
+        let { tableIndex } = this ; 
+        if( tableIndex == -1 ){ // 新增 
+          this.tabLists[this.activeKey - 2].loadData.push(values) ; 
+        }else{ // 编辑
+          this.tabLists[this.activeKey - 2].loadData.splice(tableIndex , 1 , values) ; 
+        }
+        this.visible = false ; 
+      })
+    },
+    // tab切换回调
+    changeActiveKey(activeKey){
+
+    }
   },
   created(){
     const { flag } = this.$route.query
@@ -263,5 +378,6 @@ export default {
     }else {
       this.tabLists = [...baseLists]
     }
+    this.storageFill()
   }
 }

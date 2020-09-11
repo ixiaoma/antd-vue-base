@@ -46,6 +46,7 @@ export default {
       visible:false,
       modalTitle:'',
       formCode:'',
+      currentForm:{},
       selectedRowKeys: [],
       selectedRows: [],
       loadData: []
@@ -68,7 +69,8 @@ export default {
   methods: {
     handleAdd(item){
       this.modalTitle = item.tabName
-      this.formCode = item.pageCode
+      // this.formCode = item.pageCode
+      this.currentForm = item ; 
       this.visible = true
     },
     nextStep(id){
@@ -81,6 +83,10 @@ export default {
     },
     goBack(){
       this.$router.go(-1)
+    },
+    // 表单提交  id flag 
+    onOk(){
+      this.$refs.modalForm.handleSubmit()
     }
   },
   created(){

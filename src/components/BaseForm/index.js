@@ -28,6 +28,18 @@
         showBottom:{
             type:Boolean,
             default:true
+        },
+        flag:{
+            type:[String , Number] ,
+            default: ''
+        },
+        id:{
+            type:[String , Number] , 
+            default: ''
+        },
+        currentForm:{
+            type: Object , 
+            default: () => null 
         }
     },
     components:{
@@ -94,14 +106,14 @@
         },
         async getInitData(){
             let res = null
-            const { flag, pageCode, id } = this.$route.query
-            const code = this.formCode ? this.formCode : pageCode
+            let { flag, pageCode, id } = this.currentForm || this.$route.query
+            
             if(flag == 2){
-                res = await getDetailLayout({pageCode:code,id})
+                res = await getDetailLayout({pageCode,id})
             }else if(flag == 3){
-                res = await getEditLayout({pageCode:code,id})
+                res = await getEditLayout({pageCode,id})
             }else{
-                res = await getBaseLayout({pageCode:code})
+                res = await getBaseLayout({pageCode})
             }
             if(pageCode == 'performance_assessment_detail'){
                 res = res.fieldValueLayoutDTOList
@@ -128,7 +140,7 @@
                             }
                         })
                     })
-                    const { pageCode, id } = this.$route.query
+                    const { pageCode, id } = this.currentForm || this.$route.query
                     const param = {
                         pageCode,
                         params:saveData
@@ -152,7 +164,7 @@
         }
     },
     created(){
-        this.readonly = this.$route.query.flag == 2
+        this.readonly = (this.currentForm || this.$route.query).flag == 2
         this.getInitData()
     }
   }
