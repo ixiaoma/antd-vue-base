@@ -173,7 +173,6 @@ export default{
                     params.code = this.fieldData.code
                 }
                 this.loading = true
-                console.log(params , 'params') ;
                 fieldDefinedSave(this.$route.query.code,params).then(res=>{
                     this.getInitLayout()
                     this.fieldVisible = false
