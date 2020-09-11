@@ -48,7 +48,7 @@
     </a-modal>
     <footer-tool-bar>
         <a-button @click="goBack">{{ readonly ? '返回' :"取消" }}</a-button>
-        <a-button  style="margin-left: 8px" >暂存</a-button>
+        <a-button  style="margin-left: 8px" @click="clickStorage">暂存</a-button>
         <a-button type="primary" style="margin-left: 8px" html-type="submit" v-if='!readonly'>提交</a-button>
     </footer-tool-bar>
   </div>

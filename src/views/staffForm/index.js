@@ -4,7 +4,7 @@ import BaseForm from '@/components/BaseForm/index.vue'
 import FooterToolBar from '@/layouts/FooterToolbar'
 import moment from 'moment'
 import { saveEditLayout , saveLayout } from '@/api/commonApi'
-
+import { basicInfoStorage } from "@/api/reimbursement"
 import { getServiceList } from '@/api/user'
 
 const baseLists = [
@@ -182,6 +182,12 @@ export default {
     },
   },
   methods: {
+    // 暂存
+    clickStorage(){
+      let { tabList } = this ; 
+    },
+
+
     handleAdd(item){
       this.tableIndex = -1 ; 
       this.modalTitle = item.tabName

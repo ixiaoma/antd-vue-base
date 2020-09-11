@@ -67,7 +67,8 @@ const api={
   loadNextData: frameAPI+'codes/categorycode/parentcodekey',//多级联动查询
   addCodeValue: frameAPI+'code-item/save',//码表值保存
   editCodeValue: frameAPI+'code-item/edit',//码表值编辑保存
-  tableCateDefault:frameAPI+'code-item/default/'//是否默认
+  tableCateDefault:frameAPI+'code-item/default/',//是否默认
+  
 }
 
 /**

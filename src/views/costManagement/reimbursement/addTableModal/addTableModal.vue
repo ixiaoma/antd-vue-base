@@ -12,10 +12,16 @@
     >
       <a-card :bordered="false">
         <!-- <table-filter :filterList='data.filterList'/> -->
-        <div class="table-operator">
-            <a-button type="primary" icon="plus" @click="addReimbursement">新建</a-button>
+        <div style="margin-bottom:20px">
+            <a-button 
+              type="primary" 
+              icon="plus" 
+              @click="addReimbursement"
+            >新建</a-button>
+            <a-month-picker placeholder="选择报销月份" v-model="month" style="margin-left:20px" />
+            <span style="margin-left:20px">合计: </span>
         </div>
-
+        
         <s-table
             ref="table"
             rowKey="key"

@@ -1,87 +1,4 @@
 
-    export const filterList = [
-        {
-          searchLabel: '员工工号',
-          searchKey: 'staffCode'
-        },
-        {
-          searchLabel: '员工姓名',
-          searchKey: 'staffName'
-        },
-        {
-          searchLabel: '状态',
-          searchKey: 'status',
-          searchType: 'Select',
-          selectList: [
-            {
-              key: '1',
-              value: '在离'
-            },
-            {
-              key: '2',
-              value: '离职'
-            }
-          ]
-        },
-        {
-            searchLabel: '使用时间',
-            searchKey: 'timer',
-            searchType: 'Time'
-        }
-      ]
-    
-      export const columns = [
-        {
-          title: '序号',
-          scopedSlots: { customRender: 'serial' }
-        },
-        {
-          title: '员工工号',
-          dataIndex: 'staffCode'
-        },
-        {
-          title: '员工姓名',
-          dataIndex: 'staffName'
-        },
-        {
-          title: '工作城市',
-          dataIndex: 'description',
-          scopedSlots: { customRender: 'description' }
-        },
-        {
-          title: '报销月份',
-          dataIndex: 'callNo',
-          sorter: true,
-          needTotal: true,
-          customRender: (text) => text + ' 次'
-        },
-        {
-          title: '费用报销合计',
-          dataIndex: 'status',
-          scopedSlots: { customRender: 'status' }
-        },
-        {
-          title: '补贴报销合计',
-          dataIndex: 'updatedAt',
-          sorter: true
-        },
-        {
-          title: '提交时间',
-          dataIndex: 'at',
-          sorter: true
-        },
-        {
-          title: '审批状态',
-          dataIndex: 'a',
-          sorter: true
-        },
-        {
-          title: '操作',
-          dataIndex: 'action',
-          width: '150px',
-          scopedSlots: { customRender: 'action' }
-        }
-      ]
 
       export const result={
         pageNo: 1,
@@ -96,6 +13,7 @@
             agreestatus:'生效中',
             isTrue:'已转正',
             status:0,
+            count: 1
           },
           {
             staffCode:'BM20170823',
@@ -104,7 +22,8 @@
             agreestatus:'生效中',
             isTrue:'已转正',
             status:0,
-          }
+            count: 2
+          },
         ]
       }
 
@@ -222,10 +141,73 @@ export const typeList = [
       }
     ]
   },
-  { name: '生日费' , type: 2 },
+  { name: '生日费' , type: 2 , 
+    
+  },
   { name: '培训/考试费' , type: 3 },
   { name: '会议费' , type: 4 },
-  { name: '其他' , type: 5 },
+  { name: '其他' , type: 5 , 
+    columns:[
+      {
+        title: '日期',
+        dataIndex: 'travelDate'
+      },
+      {
+        title: '金额',
+        dataIndex: 'expenses'
+      },
+      {
+        title: '备注',
+        dataIndex: 'remark'
+      },
+    ],
+    fieldList:[
+      {
+        label: '日期' ,
+        type: 'date' ,
+        field: 'travelDate' , 
+        placeholder:'请选择日期',
+        format: 'YYYY-MM-DD' , 
+        decorator: [
+            'travelDate', 
+            { rules: 
+                [
+                    {
+                        required: true, 
+                        message: '请选择日期' 
+                    }
+                ]
+            }
+        ],
+      },
+      {
+        label: '金额' , 
+        type: 'inputNumber' ,
+        field: 'expenses' ,
+        placeholder:'输入金额',
+        decorator: ['expenses', { rules: [
+                {
+                    required: true, 
+                    message: '请输入金额' 
+                }
+            ]
+        }]
+      },
+      {
+          label: '备注' , 
+          type: 'input' ,
+          field: 'remark' ,
+          placeholder:'输入备注',
+          decorator: ['remark', { rules: [
+                  {
+                      required: true, 
+                      message: '请输入备注' 
+                  }
+              ]
+          }]
+      },
+    ]
+  },
 ]
 
 
