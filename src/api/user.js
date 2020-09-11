@@ -68,7 +68,7 @@ const api={
   addCodeValue: frameAPI+'code-item/save',//码表值保存
   editCodeValue: frameAPI+'code-item/edit',//码表值编辑保存
   tableCateDefault:frameAPI+'code-item/default/',//是否默认
-  
+  getCodeList:frameAPI+'/code-item/listAll/'//获取码表下拉框
 }
 
 /**
@@ -264,6 +264,9 @@ export function getCategoryList(params) {
 }
 export function getCateValuePage(code,params) {
   return axios.post(api.getCateValuePage+code,params)
+}
+export function getCodeList(code) {
+  return axios.post(api.getCodeList+code)
 }
 export function delCodeValue(params) {
   return axios.post(api.delCodeValue,params)

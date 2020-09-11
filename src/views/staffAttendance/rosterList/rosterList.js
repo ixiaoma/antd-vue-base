@@ -2,7 +2,7 @@
 import { SearchTable } from '@/components'
 
 export default {
-  name: 'myAchievementsList',
+  name: 'rosterListList',
   components: {
     SearchTable
   },

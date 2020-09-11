@@ -43,6 +43,8 @@
                     initialValue = currentValue ? moment(currentValue, 'YYYY-MM-DD') : null
                 } else if(i.valueType == 'RADIO'){
                     initialValue = currentValue || undefined
+                }else{
+                    initialValue = currentValue
                 }
             }
             const rules = [
@@ -101,6 +103,9 @@
             }else{
                 res = await getBaseLayout({pageCode:code})
             }
+            if(pageCode == 'performance_assessment_detail'){
+                res = res.fieldValueLayoutDTOList
+            }
             this.layoutList = res
             this.activeKey = res.map((ele,index)=>index)
         },
@@ -129,7 +134,8 @@
                         params:saveData
                     }
                     if(id) param.id = id
-                    const res = await saveLayout(param)
+                    const fn = id ? saveEditLayout : saveLayout
+                    const res = await fn(param)
                     if(res){
                         this.$router.go(-1)
                         this.$emit('next',res)
