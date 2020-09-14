@@ -104,7 +104,7 @@ import md5 from 'md5'
 import TwoStepCaptcha from '@/components/tools/TwoStepCaptcha'
 import { mapActions } from 'vuex'
 // eslint-disable-next-line no-unused-vars
-import { login, get2step } from '@/api/user'
+import { login, get2step , loginToken} from '@/api/user'
 
 export default {
   components: {
@@ -160,16 +160,23 @@ export default {
           const loginParams = { ...values }
           delete loginParams.username
           loginParams[!state.loginType ? 'email' : 'username'] = values.username
-          loginParams.password = md5(values.password)
+          // loginParams.password = md5(values.password)
           // sessionStorage.setItem('ACCESS_TOKEN', '4291d7da9005377ec9aec4a71ea837f')
-          sessionStorage.setItem('ACCESS_TOKEN', 'be337d7c-7540-462d-a378-c0bb1d83c7dc')
-          this.$router.push({ path: '/' })
-          // login(loginParams).then(res => {
-          //   sessionStorage.setItem('ACCESS_TOKEN', res.result.token)
-          //   this.$router.push({ path: '/' })
-          // }).catch(err => {
-          //   state.loginBtn = false
-          // })
+          // sessionStorage.setItem('ACCESS_TOKEN', 'be337d7c-7540-462d-a378-c0bb1d83c7dc')
+          // this.$router.push({ path: '/' })
+          console.log( loginParams , 'loginParams' )
+          loginToken({
+            ...loginParams ,
+            grant_type: 'password',
+            scope: 'server',
+          } ,{
+                'Authorization': 'Basic Y2xvdWR4OmNsb3VkeA=='
+            }).then(res => {
+            sessionStorage.setItem('ACCESS_TOKEN', res.access_token)
+            this.$router.push({ path: '/' })
+          }).catch(err => {
+            state.loginBtn = false
+          })
         } else {
           setTimeout(() => {
             state.loginBtn = false

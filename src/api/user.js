@@ -4,6 +4,7 @@ let systemAPI='auth/system/'
 let configAPI='api/config/v1/'
 const userApi = {
   Login: '/auth/login',
+  LoginToken: `/auth/oauth/token`,
   Logout: '/auth/logout',
   ForgePassword: '/auth/forge-password',
   Register: '/auth/register',
@@ -84,6 +85,10 @@ const api={
  */
 export function login (parameter) {
   return axios.post(userApi.Login, parameter)
+}
+
+export function loginToken (params , headers){
+  return axios.get(userApi.LoginToken , {params , headers} )
 }
 
 // export function getSmsCaptcha (parameter) {

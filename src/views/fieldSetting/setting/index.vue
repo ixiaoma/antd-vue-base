@@ -107,7 +107,7 @@
           :key=" 'select' + index " 
         >
            <a-select
-            v-decorator="[`categoryCodes[${index}]`, { rules: [{ required: true, whitespace:true,message: '请选择码表值' }] }]"
+            v-decorator="[`categoryCodes[${index}]`, { initialValue: fieldData ? fieldData.categoryCodes[index] : undefined , rules: [{ required: true, whitespace:true,message: '请选择码表值' }] }]"
           >
             <a-select-option v-for="item in codeList" :key="item.code" :value="item.code">
               {{ item.name }}

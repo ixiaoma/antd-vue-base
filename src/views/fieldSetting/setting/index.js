@@ -68,7 +68,7 @@ export default{
             if(  ['RADIO' , 'CHECKBOX'].indexOf(this.valueType) > -1 ){
                 return codeList3 ; 
             }
-            if( this.valueType == 'SELECT' ) return codeList3
+            if( this.valueType == 'SELECT' ) return codeList5
         },
         isSelectCode(){
             let arr = [ 'RADIO' , 'CHECKBOX' , 'SELECT' ] ; 
@@ -95,7 +95,8 @@ export default{
                 this.selectLevel = [ 0 ]
                 return 
             }
-            this.fieldForm.setFieldsValue({ 'categoryCodes': undefined })
+            this.fieldData.categoryCodes = []
+            this.fieldForm.setFieldsValue({ 'categoryCodes': [] })
         },
         // 码表列表
         getCodeList(type){
@@ -183,15 +184,17 @@ export default{
         handleCancel(e){//关闭分割线弹框
             this.visible = false
         },
-        oprationField(groupName,fieldData){//添加字段+编辑字段
-            console.log(fieldData , 'fieldData')
+        oprationField(groupName,data){//添加字段+编辑字段
+            let fieldData = data && JSON.parse(JSON.stringify(data))
             this.groupName = groupName
             this.fieldVisible = true
             this.fieldForm.resetFields()
             this.valueType = fieldData ?  fieldData.valueType : '' ; 
             // 关联码表值数组单独处理
             if(this.isSelectCode && fieldData.categoryCodes){
-                fieldData.categoryCodes = fieldData.categoryCodes.map(item=> item.codeCategory)
+                fieldData.categoryCodes = fieldData.categoryCodes.map(item=> {
+                    return item.codeCategory
+                } )
                 if(fieldData.valueType == 'SELECT'){
                     this.selectLevel = fieldData.categoryCodes ; 
                 }

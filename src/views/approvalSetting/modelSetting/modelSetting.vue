@@ -79,6 +79,7 @@
 <script>
 import { valueTypeList } from '@/utils/commonCode'
 import { saveForm, getFormDetail } from '@/api/approval'
+import { codeTableList } from '@/api/user'
 export default {
     data(){
         return {
@@ -88,10 +89,33 @@ export default {
             currentIndex:null,
             validateStatus:'success',
             currentItem:{},
-            layoutList:[]
+            layoutList:[] , 
+            codeList3: [] , // 单选 / 多选 关联码表下拉
         }
     },
     methods:{
+
+        // 码表列表
+        getCodeList(type){
+            let params = {
+                "pageNo": 1,
+                "pageSize": 1000,
+                "filter": {
+                    "filters": [
+                        {
+                            "field": "type",
+                            "operator": "eq",
+                            "value": type  // 3 单选 多选  5 多级联动
+                        }
+                    ],
+                    "logic": "and"
+                }
+            }
+            codeTableList(params).then(res => {
+                this[`codeList${type}`] = res.records;
+            })
+        },
+
         addField(item){
             this.currentItem = {valueType:item.label,name:item.value}
             this.layoutList.push(this.currentItem)
@@ -136,6 +160,7 @@ export default {
     },
     created(){
         this.getFormDetailList()
+        this.getCodeList(3)
     }
 }
 </script>
