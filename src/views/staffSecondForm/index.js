@@ -4,19 +4,162 @@ import BaseForm from '@/components/BaseForm/index.vue'
 import FooterToolBar from '@/layouts/FooterToolbar'
 
 import { getServiceList } from '@/api/user'
-
+import { 
+  basicInfoStorage , 
+  basicInfoSave,
+  socialRelationsSave , 
+  socialRelationsPage , 
+  socialRelationsEdit ,
+  workExperienceSave , 
+  workExperiencePage , 
+  workExperienceEdit ,
+  educationalExperienceSave , 
+  educationalExperiencePage , 
+  educationalExperienceEdit 
+} from "@/api/reimbursement"
+const filterList = []
 const baseLists = [
   {
     tabName:'社会关系',
     pageCode:'social_relations',
-    nullAble:true
+    field: 'socialRelations' , 
+    nullAble:true , 
+    loadData:[],
+    filterList , 
+    api:[ 
+      socialRelationsSave , 
+      socialRelationsPage , 
+      socialRelationsEdit 
+    ],
+    columns:[
+      {
+        title: '序号',
+        scopedSlots: { customRender: 'serial' }
+      },
+      {
+        title: '与本人关系',
+        dataIndex: 'relationshipWithMyself'
+      },
+      {
+        title:'成员姓名',
+        dataIndex: 'memberName'
+      },
+      {
+        title:'出生日期',
+        dataIndex: 'memberDate'
+      },
+      {
+        title:'工作单位及职务',
+        dataIndex:'workUnitAndPosition'
+      },
+      {
+        title:'政治面貌',
+        dataIndex:'politicCountenance'
+      },
+      {
+        title: '操作',
+        dataIndex: 'action',
+        width: '150px',
+        scopedSlots: { customRender: 'action' }
+      }
+    ]
   },{
     tabName:'工作经历',
-    pageCode:'work_experience'
+    pageCode:'work_experience',
+    field:'workExperience' ,
+    loadData:[] , 
+    api: [ 
+      workExperienceSave , 
+      workExperiencePage , 
+      workExperienceEdit
+    ] , 
+    columns:[
+      {
+        title: '序号',
+        scopedSlots: { customRender: 'serial' }
+      },
+      {
+        title: '工作起始时间',
+        dataIndex: 'workStartDate'
+      },
+      {
+        title:'工作结束时间',
+        dataIndex: 'workEndDate'
+      },
+      {
+        title:'所在单位',
+        dataIndex: 'unitBelongs'
+      },
+      {
+        title:'从事工作或担任职务',
+        dataIndex:'workOrDuty'
+      },
+      {
+        title:'工作内容',
+        dataIndex:'jobContent'
+      },
+      {
+        title:'证明人',
+        dataIndex:'witness'
+      },
+      {
+        title: '操作',
+        dataIndex: 'action',
+        width: '150px',
+        scopedSlots: { customRender: 'action' }
+      }
+    ]
   },{
     tabName:'教育经历',
     pageCode:'educational_experience',
-    nullAble:true
+    nullAble:true,
+    field:'educationalExperience',
+    loadData:[],
+    api:[
+      educationalExperienceSave , 
+      educationalExperiencePage , 
+      educationalExperienceEdit 
+    ] , 
+    columns:[
+      {
+        title: '序号',
+        scopedSlots: { customRender: 'serial' }
+      },
+      {
+        title: '学位证书编号',
+        dataIndex: 'degreeCertificateNumber'
+      },
+      {
+        title:'所学专业',
+        dataIndex: 'studySpeciality'
+      },
+      {
+        title:'入学时间',
+        dataIndex: 'studyStartTime'
+      },
+      {
+        title:'学习形式',
+        dataIndex:'studyType'
+      },
+      {
+        title:'学制',
+        dataIndex:'studyPeriod'
+      },
+      {
+        title:'毕业时间',
+        dataIndex:'graduationTime'
+      },
+      {
+        title:'毕业院校',
+        dataIndex:'graduateSchool'
+      },
+      {
+        title: '操作',
+        dataIndex: 'action',
+        width: '150px',
+        scopedSlots: { customRender: 'action' }
+      }
+    ]
   }
 ]
 
@@ -49,7 +192,14 @@ export default {
       currentForm:{},
       selectedRowKeys: [],
       selectedRows: [],
-      loadData: []
+      loadData: parameter => {
+        const params = Object.assign({}, parameter, this.queryParam)
+        let api = this.currentTab.api[1] ; 
+        return api(params)
+          .then(res => {
+            return res.result
+          })
+      },
     }
   },
   components:{
@@ -64,9 +214,17 @@ export default {
         selectedRowKeys: this.selectedRowKeys,
         onChange: this.onSelectChange
       }
+    },
+    currentTab(){
+      let { activeKey } = this ; 
+      return this.tabLists[activeKey - 2 ] ; 
     }
   },
   methods: {
+    // 保存
+    submit(){
+
+    },
     handleAdd(item){
       this.modalTitle = item.tabName
       // this.formCode = item.pageCode
@@ -87,13 +245,17 @@ export default {
     // 表单提交  id flag 
     onOk(){
       this.$refs.modalForm.handleSubmit()
-    }
+    },
+    nextStep(res){
+      this.visible = false ; 
+    },
   },
   created(){
     const { flag } = this.$route.query
     if(flag == 2){
       this.readonly = true
-      this.tabLists = [...baseLists,...tabDetailList]
+      // this.tabLists = [...baseLists,...tabDetailList]
+      this.tabLists = [...baseLists]
     }else {
       this.tabLists = [...baseLists]
     }

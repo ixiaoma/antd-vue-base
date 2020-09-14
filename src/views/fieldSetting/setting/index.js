@@ -2,8 +2,8 @@
 import FooterToolBar from '@/layouts/FooterToolbar'
 
 import { valueTypeList } from '@/utils/commonCode'
-import { codeTableList  } from '@/api/user'
-import { saveGroupField, listLayout, deleteGroupField, fieldDefinedSave, fieldDefinedDelete, saveFieldLayout } from '@/api/setting'
+import { codeTableList , objectTypeList  } from '@/api/user'
+import { saveGroupField, listLayout, deleteGroupField, fieldDefinedSave, fieldDefinedDelete, saveFieldLayout , fieldDefinedList } from '@/api/setting'
 
 const layoutList = [
     {
@@ -50,6 +50,9 @@ export default{
             codeList5: [] , // 码表下拉
             valueType: '' , 
             selectLevel: [ 0 ] , // 多级联动层级
+            objectList: [] , // 引用对象下拉
+            fieldList: [] , // 引用字段下拉
+            setFieldList: [] , // 引用对象赋值字段
         }
     },
     components:{
@@ -61,11 +64,15 @@ export default{
             return this.valueType  && arr.indexOf(this.valueType ) > -1 
         },
         codeList(){
-            let { codeList3 ,codeList5  } = this ; 
+            let { codeList3 ,codeList5 } = this ; 
             if(  ['RADIO' , 'CHECKBOX'].indexOf(this.valueType) > -1 ){
                 return codeList3 ; 
             }
             if( this.valueType == 'SELECT' ) return codeList3
+        },
+        isSelectCode(){
+            let arr = [ 'RADIO' , 'CHECKBOX' , 'SELECT' ] ; 
+            return arr.indexOf(this.valueType) > -1 ; 
         }
     },
 
@@ -84,11 +91,11 @@ export default{
             let { value } = e.target ; 
             this.valueType = value ; 
             if( value == 'SELECT' ){
-                this.fieldForm.setFieldsValue({'categoryCode': []})
+                this.fieldForm.setFieldsValue({'categoryCodes': []})
                 this.selectLevel = [ 0 ]
                 return 
             }
-            this.fieldForm.setFieldsValue({ 'categoryCode': undefined })
+            this.fieldForm.setFieldsValue({ 'categoryCodes': undefined })
         },
 
         // 码表列表
@@ -111,7 +118,31 @@ export default{
                 this[`codeList${type}`] = res.records;
             })
         },
-
+        // 引用对象下拉
+        getObjectList(){
+            objectTypeList({
+                pageSize: 1000 ,
+                pageNo: 1 
+            }).then(res=>{
+                this.objectList = res.records ; 
+            })
+        },
+        // 引用字段下拉
+        getFieldList(objectCode){
+            // referObjectCode
+            fieldDefinedList(objectCode).then(res=>{
+                this.fieldList = res ; 
+            })
+        },
+        changeObject(objectCode){
+            this.getFieldList(objectCode)
+        },
+        // 引用对象赋值字段
+        getSetFieldList(){
+            fieldDefinedList(this.$route.query.code).then(res=>{
+                this.setFieldList = res ; 
+            })
+        },
         
         addModel(){//添加或编辑分割线
             this.visible = true
@@ -159,16 +190,28 @@ export default{
             this.fieldVisible = true
             this.fieldForm.resetFields()
             this.valueType = fieldData ?  fieldData.valueType : '' ; 
-            this.fieldData = fieldData || null
-            if(this.valueType == 'SELECT'){
-                this.selectLevel = fieldData.categoryCode ; 
+            // 关联码表值数组单独处理
+            if(this.isSelectCode && fieldData.categoryCodes){
+                fieldData.categoryCodes = fieldData.categoryCodes.map(item=> item.codeCategory)
+                if(fieldData.valueType == 'SELECT'){
+                    this.selectLevel = fieldData.categoryCodes ; 
+                }
             }
-           
+            this.fieldData = fieldData || null
         },
         handleFieldSubmit(e){//保存字段
             e.preventDefault();
             this.fieldForm.validateFields((err, values) => {
               if (!err) {
+                // 关联码表值 数据处理 
+                if(this.isSelectCode){
+                    values.categoryCodes = values.categoryCodes.map((item,index)=>{
+                        return {
+                            codeCategory : item ,
+                            sort : index + 1 
+                        }
+                    })
+                }
                 const params = { ...values,groupName:this.groupName }
                 if(this.fieldData){
                     params.code = this.fieldData.code
@@ -242,6 +285,8 @@ export default{
         this.getInitLayout()
         this.getCodeList(3)
         this.getCodeList(5)
+        this.getObjectList()
+        this.getSetFieldList()
     },
     beforeCreate() {
         

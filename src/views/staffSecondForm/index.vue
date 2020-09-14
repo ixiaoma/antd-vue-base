@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div style="text-align:right">
+      <a-button type="primary">提交</a-button>
+    </div>
     <a-tabs v-model="activeKey" size='small' class="tabs-style">
       <a-tab-pane key="1">
         <span slot="tab">
@@ -56,6 +59,10 @@
       @next='nextStep' 
       :showBottom='false'/>
     </a-modal>
+    <footer-tool-bar>
+        <a-button @click="goBack">返回</a-button>
+        <a-button type="primary" style="margin-left: 8px"  @click="submit">保存</a-button>
+    </footer-tool-bar>
   </div>
 </template>
 

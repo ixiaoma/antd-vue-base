@@ -161,7 +161,8 @@ export default {
           delete loginParams.username
           loginParams[!state.loginType ? 'email' : 'username'] = values.username
           loginParams.password = md5(values.password)
-          sessionStorage.setItem('ACCESS_TOKEN', '4291d7da9005377ec9aec4a71ea837f')
+          // sessionStorage.setItem('ACCESS_TOKEN', '4291d7da9005377ec9aec4a71ea837f')
+          sessionStorage.setItem('ACCESS_TOKEN', 'be337d7c-7540-462d-a378-c0bb1d83c7dc')
           this.$router.push({ path: '/' })
           // login(loginParams).then(res => {
           //   sessionStorage.setItem('ACCESS_TOKEN', res.result.token)
