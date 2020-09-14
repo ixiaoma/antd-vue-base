@@ -59,6 +59,15 @@
                     <a-form-item label="控件名称" :label-col="{span:6}" :wrapper-col="{span:12}" required :validateStatus='validateStatus'>
                         <a-input v-model.trim='currentItem.name'/>
                     </a-form-item>
+                    <a-form-item v-if="isSelectCode" label="关联码表值" :label-col="{span:6}" :wrapper-col="{span:12}" required :validateStatus='validateCategoryCode'>
+                        <a-select
+                            v-model="currentItem.categoryCode"
+                        >
+                            <a-select-option v-for="item in codeList3" :key="item.code" :value="item.code">
+                            {{ item.name }}
+                            </a-select-option>
+                        </a-select>
+                    </a-form-item>
                     <a-form-item label="控件说明" :label-col="{span:6}" :wrapper-col="{span:12}">
                         <a-textarea v-model.trim="currentItem.description" rows="4" :placeholder="currentItem.valueType == 'RADIO' || currentItem.valueType == 'CHECKBOX' || currentItem.valueType == 'SELECT' || currentItem.valueType == 'DATETIME' ? '请选择' : '请输入'"/>
                     </a-form-item>
@@ -88,12 +97,27 @@ export default {
             showSetting:false,
             currentIndex:null,
             validateStatus:'success',
+            validateCategoryCode:'success',
             currentItem:{},
             layoutList:[] , 
             codeList3: [] , // 单选 / 多选 关联码表下拉
         }
     },
+    computed:{
+        // 是否选择关联码表值
+        isSelectCode(){
+            let { currentItem } = this ; 
+            let arr = ['RADIO','CHECKBOX']
+            return currentItem.valueType && arr.indexOf(currentItem.valueType) > -1 
+        },
+    },
     methods:{
+        // 是否选择关联码表值
+        isSelectCodeMethod(valueType){
+            let { currentItem } = this ; 
+            let arr = ['RADIO','CHECKBOX']
+            return valueType && arr.indexOf(valueType) > -1 
+        },
 
         // 码表列表
         getCodeList(type){
@@ -127,6 +151,7 @@ export default {
             this.showSetting = true
             this.currentItem = item
             this.currentIndex = index
+            console.log(item , 'item ')
         },
         deleteField(index){
             this.layoutList.splice(index,1)
@@ -138,6 +163,11 @@ export default {
                         this.$message.warning('控件名称不能为空')
                         this.validateStatus = 'error'
                         return;
+                    }
+                    if( !this.layoutList[i].categoryCode && this.isSelectCodeMethod(this.layoutList[i].valueType)){
+                        this.$message.warning('请选择关联码表值')
+                        this.validateCategoryCode = 'error'
+                        return 
                     }
                 }
                 const { id } = this.$route.query
