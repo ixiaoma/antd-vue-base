@@ -13,7 +13,7 @@
                                     <span class="must-down" v-if='item.mustDown'>*</span>
                                 </div>
                                 <div class="placeholder-style second-row">
-                                    <span v-if="item.valueType=='TEXT_MULTI'">{{item.placeholder || '请输入'}}</span>
+                                    <span v-if="item.valueType=='TEXT_MULTI'">{{item.description || '请输入'}}</span>
                                     <div class="file-box" v-else>
                                         <a-icon v-if="item.valueType=='ATTACHMENT'" type="paper-clip" style="font-size:30px"/>
                                         <a-icon v-if="item.valueType=='PICTURE'" type="file-image" style="font-size:30px"/>
@@ -27,11 +27,11 @@
                                     <span class="must-down" v-if='item.mustDown'>*</span>
                                 </span>
                                 <span class="placeholder-style" v-if="item.valueType == 'RADIO' || item.valueType == 'CHECKBOX' || item.valueType == 'SELECT' || item.valueType == 'DATETIME'">
-                                    <span>{{item.placeholder || '请选择'}}</span>
+                                    <span>{{item.description || '请选择'}}</span>
                                     <a-icon type="right" style="font-size:16px;margin-left:3px"/>
                                 </span>
                                 <span class="placeholder-style" v-else>
-                                    <span>{{item.placeholder || '请输入'}}</span>
+                                    <span>{{item.description || '请输入'}}</span>
                                 </span>
                             </div>
                         </div>
@@ -60,10 +60,13 @@
                         <a-input v-model.trim='currentItem.name'/>
                     </a-form-item>
                     <a-form-item label="控件说明" :label-col="{span:6}" :wrapper-col="{span:12}">
-                        <a-textarea v-model.trim="currentItem.placeholder" rows="4" :placeholder="currentItem.valueType == 'RADIO' || currentItem.valueType == 'CHECKBOX' || currentItem.valueType == 'SELECT' || currentItem.valueType == 'DATETIME' ? '请选择' : '请输入'"/>
+                        <a-textarea v-model.trim="currentItem.description" rows="4" :placeholder="currentItem.valueType == 'RADIO' || currentItem.valueType == 'CHECKBOX' || currentItem.valueType == 'SELECT' || currentItem.valueType == 'DATETIME' ? '请选择' : '请输入'"/>
                     </a-form-item>
                     <a-form-item label="其他" :label-col="{span:6}" :wrapper-col="{span:12}">
-                        <a-checkbox v-model='currentItem.readonly'>必填</a-checkbox>
+                        <a-checkbox v-model='currentItem.required'>必填</a-checkbox>
+                    </a-form-item>
+                    <a-form-item label="权限字段" :label-col="{span:6}" :wrapper-col="{span:12}">
+                        <a-checkbox v-model='currentItem.conditionField'>启用</a-checkbox>
                     </a-form-item>
                 </a-form>
             </a-col>

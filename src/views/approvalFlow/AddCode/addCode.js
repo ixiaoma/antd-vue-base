@@ -6,56 +6,42 @@ export default {
         }
     },
     methods: {
-        addType(type) {
-            console.log(this.childNodeP)
+        addType(nodeType) {
             this.visible = false;
             let data = null;
-            if (type != 4) {
-                if (type == 1) {
+            if (nodeType != 'EXCLUSIVE') {
+                if (nodeType == 'APPROVE') {
                     data = {
-                        "nodeName": "审核人",
-                        "error": true,
-                        "type": 1,
-                        "settype": 1,
-                        "selectMode": 0,
-                        "selectRange": 0,
-                        "directorLevel": 1,
-                        "replaceByUp": 0,
-                        "examineMode": 1,
-                        "noHanderAction": 1,
-                        "examineEndDirectorLevel": 0,
-                        "childNode": this.childNodeP,
-                        "nodeUserList": []
+                        name: "审核人",
+                        nodeType,
+                        childNode: this.childNodeP,
+                        participantList:[]
                     }
-                } else if (type == 2) {
+                } else if (nodeType == 'CC') {
                     data = {
-                        "nodeName": "抄送人",
-                        "type": 2,
-                        "ccSelfSelectFlag": 1,
+                        name: "抄送人",
+                        nodeType,
                         "childNode": this.childNodeP,
-                        "nodeUserList": []
+                        participantList:[]
                     }
                 }
             } else {
                 data = {
-                    "nodeName": "路由",
-                    "type": 4,
-                    "childNode": null,
-                    "conditionNodes": [{
-                        "nodeName": "条件1",
-                        "error": true,
-                        "type": 3,
-                        "priorityLevel": 1,
-                        "conditionList": [],
-                        "nodeUserList": [],
-                        "childNode": this.childNodeP,
+                    name: "路由",
+                    nodeType,
+                    childNode: null,
+                    conditionList: [{
+                        name: "条件1",
+                        nodeType: 'CONDITION',
+                        priorityLevel: 1,
+                        childNode: this.childNodeP,
+                        participantList:[]
                     }, {
-                        "nodeName": "条件2",
-                        "type": 3,
-                        "priorityLevel": 2,
-                        "conditionList": [],
-                        "nodeUserList": [],
-                        "childNode": null
+                        name: "条件2",
+                        nodeType: 'CONDITION',
+                        priorityLevel: 2,
+                        childNode: null,
+                        participantList:[]
                     }]
                 }
             }

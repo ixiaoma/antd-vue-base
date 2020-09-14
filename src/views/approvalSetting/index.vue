@@ -24,7 +24,8 @@
         },
         methods:{
             toSetting(){
-                this.$router.push({name:'approvalFlow',title:'审批流程设置'})
+                const { id } = this.$route.query
+                this.$router.push({name:'approvalFlow',title:'审批流程设置',query:{id}})
             },
             nextStep(){
                 this.activeKey = '2'

@@ -3,19 +3,19 @@
         <div class="add-node-btn">
             <a-popover v-model="visible" placement="right" trigger="click">
                 <div class="add-node-popover-body" slot="content">
-                    <a class="add-node-popover-item approver" @click="addType(1)">
+                    <a class="add-node-popover-item approver" @click="addType('APPROVE')">
                         <div class="item-wrapper">
                             <a-icon type="user" class="icon-style"/>
                         </div>
                         <p>审批人</p>
                     </a>
-                    <a class="add-node-popover-item notifier" @click="addType(2)">
+                    <a class="add-node-popover-item notifier" @click="addType('CC')">
                         <div class="item-wrapper">
                             <a-icon type="team" class="icon-style"/>
                         </div>
                         <p>抄送人</p>
                     </a>
-                    <a class="add-node-popover-item condition" @click="addType(4)">
+                    <a class="add-node-popover-item condition" @click="addType('EXCLUSIVE')">
                         <div class="item-wrapper">
                             <a-icon type="cluster" class="icon-style"/>
                         </div>

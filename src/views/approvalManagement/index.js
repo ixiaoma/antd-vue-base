@@ -40,6 +40,9 @@ export default{
         deleteField(e,index){
             e.stopPropagation()
         },
+        async changeFn(item){
+            await saveFlow({params:item})
+        },
         async getInitList(){
             const res = await getFlowList()
             this.objectList = res.records

@@ -9,7 +9,7 @@
                     </div>
                     <div>
                         <a-icon type="close" class="close" @click="e=>deleteField(e,index)"/>
-                        <a-switch v-model="item.deploy" @click="(check,e)=>e.stopPropagation()" checked-children="启用" un-checked-children="禁用"/>
+                        <a-switch v-model="item.deploy" @click="(check,e)=>e.stopPropagation(check)" @change='changeFn(item)' checked-children="启用" un-checked-children="禁用"/>
                     </div>
                 </div>
             </a-col>
