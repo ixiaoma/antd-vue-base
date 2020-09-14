@@ -1,9 +1,8 @@
 <template>
     <div class="approval-setting">
-        <!-- v-model="activeKey" -->
-        <a-tabs default-active-key="1" size='small' class="tabs-style">
+        <a-tabs v-model="activeKey" size='small' class="tabs-style">
             <a-tab-pane key="1" tab='模版设置'>
-                <model-setting/>
+                <model-setting @nextStep="nextStep"/>
             </a-tab-pane>
             <a-tab-pane key="2" tab='审批设置'>
                 <a-button type="primary" @click="toSetting">配置</a-button>
@@ -12,30 +11,24 @@
     </div>
 </template>
 <script>
-    import { Icon } from 'ant-design-vue'
     import modelSetting from './modelSetting/modelSetting.vue'
-
-    const IconFont = Icon.createFromIconfontCN({
-    scriptUrl: '//at.alicdn.com/t/font_1976655_pmtz41pdboo.js'
-    })
     export default{
         data(){
             return{
-                objectList:[
-                    {
-                        name:'加班',
-                        icon:'icon-jiaban'
-                    }
-                ]
+                activeKey:'1',
+                objectList:[]
             }
         },
         components:{
-            IconFont,
             modelSetting
         },
         methods:{
             toSetting(){
-                this.$router.push({name:'approvalFlow',title:'审批流程设置'})
+                const { id } = this.$route.query
+                this.$router.push({name:'approvalFlow',title:'审批流程设置',query:{id}})
+            },
+            nextStep(){
+                this.activeKey = '2'
             }
         }
     }

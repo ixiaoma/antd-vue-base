@@ -121,7 +121,7 @@ export default {
             let len = this.nodeConfig.conditionNodes.length + 1
             this.nodeConfig.conditionNodes.push({
                 "nodeName": "条件" + len,
-                "type": 3,
+                "type": 'CONDITION',
                 "priorityLevel": len,
                 "conditionList": [],
                 "nodeUserList": [],
@@ -417,8 +417,8 @@ export default {
             this.copyerDrawer = false;
         },
         copyerStr(nodeConfig) {
-            if (nodeConfig.nodeUserList.length != 0) {
-                return this.arrToStr(nodeConfig.nodeUserList)
+            if (nodeConfig.participantList.length != 0) {
+                return this.arrToStr(nodeConfig.participantList)
             } else {
                 if (nodeConfig.ccSelfSelectFlag == 1) {
                     return "发起人自选"

@@ -22,7 +22,7 @@ import './global.less'
 
 import { Icon } from 'ant-design-vue'
 const IconFont = Icon.createFromIconfontCN({
-  scriptUrl: '//at.alicdn.com/t/font_1976655_1e7ikr07z6c.js'
+  scriptUrl: '//at.alicdn.com/t/font_1976655_t8fnxpuvl0h.js'
 })
 
 Vue.config.productionTip = false

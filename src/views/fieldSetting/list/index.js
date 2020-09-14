@@ -25,7 +25,13 @@ export default{
                 'icon-jiaban',
                 'icon-qingxiujiashenqing',
                 'icon-kaoqin',
-                'icon-mingxi'
+                'icon-mingxi',
+                'icon-RectangleCopy',
+                'icon-yusuanguanli',
+                'icon-paiban',
+                'icon-biaoshilei_paibanrenyuan',
+                'icon-gonggao',
+                'icon-yusuanguanli'
             ]
         }
     },

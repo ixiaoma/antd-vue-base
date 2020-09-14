@@ -24,14 +24,13 @@ service.interceptors.request.use(config => {
 })
 // 响应拦截
 service.interceptors.response.use(res => {
-  // const { data, code, message } = res.data
-  // if (code === 200) {
-  //   return data
-  // } else {
-  //   message && Message.error(message)
-  //   return Promise.reject(data)
-  // }
-  return res.data
+  const { data, status } = res
+  if (status === 200) {
+    return data || true
+  } else {
+    message && Message.error(message)
+    return Promise.reject(data)
+  }
 }, error => {
   if (error.response) {
     const { status } = error.response

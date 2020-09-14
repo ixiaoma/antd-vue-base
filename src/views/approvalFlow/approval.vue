@@ -1,8 +1,8 @@
 <template>
   <div class="fd-nav-content">
       <div class="save-btn">
-        <a-button type="primary" class="btn1">保存</a-button>
-        <a-button type="primary" @click="saveSet">发 布</a-button>
+        <a-button type="primary" class="btn1" @click="saveFlow">保存</a-button>
+        <a-button type="primary" @click="release">发 布</a-button>
       </div>
 			<section class="dingflow-design">
         <div class="zoom">
@@ -239,7 +239,7 @@
           data.childNode = null
         }
       },
-      saveSet() {
+      saveFlow() {
         this.isTried = true;
         this.tipList = [];
         this.reErr(this.nodeConfig);
@@ -249,8 +249,9 @@
         }
         // this.processConfig.flowPermission = this.flowPermission
         // console.log(this.processConfig)
+        const { id } = this.$route.query
         const parameter = {
-          id:1,
+          id,
           params:this.processConfig.nodeConfig
         }
         saveApproval(parameter)
@@ -263,6 +264,9 @@
         //         }, 200)
         //     }
         // })
+      },
+      release(){
+
       },
       zoomSize(type) {
         if (type == 1) {
@@ -278,7 +282,8 @@
         }
       },
       async getInitDate(){
-        const res = await getApprovalDate({id:1})
+        const { id } = this.$route.query
+        const res = await getApprovalDate({id})
         const approvalData = {
           "tableId": 1,
           "workFlowVersionId": "",

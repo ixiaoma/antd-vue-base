@@ -13,11 +13,7 @@
             imgList:[],
             previewImage:'',
             previewVisible: false,
-            readonly:false,
-            config: {
-                initialValue:null,
-                rules: [{type: 'object', required: false, whitespace:true, message: 'Please select time!' }],
-            },
+            readonly:false
         }
     },
     props:{
