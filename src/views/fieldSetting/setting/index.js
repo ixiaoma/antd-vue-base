@@ -95,8 +95,10 @@ export default{
                 this.selectLevel = [ 0 ]
                 return 
             }
-            this.fieldData.categoryCodes = []
-            this.fieldForm.setFieldsValue({ 'categoryCodes': [] })
+            if(this.isSelectCode){
+                this.fieldData ? this.fieldData.categoryCodes = [] : null
+                this.fieldForm.setFieldsValue({ 'categoryCodes': [] })
+            }
         },
         // 码表列表
         getCodeList(type){
