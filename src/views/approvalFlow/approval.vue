@@ -214,19 +214,19 @@
       },
       reErr(data) {
         if (data.childNode) {
-          if (data.childNode.type == 1) {//审批人
+          if (data.childNode.type == 'APPROVE') {//审批人
             if (data.childNode.error) {
               this.tipList.push({ name: data.childNode.nodeName, type: "审核人" })
             }
             this.reErr(data.childNode)
-          } else if (data.childNode.type == 2) {
+          } else if (data.childNode.type == 'CC') {
             if (data.childNode.error) {
               this.tipList.push({ name: data.childNode.nodeName, type: "抄送人" })
             }
             this.reErr(data.childNode)
-          } else if (data.childNode.type == 3) {
+          } else if (data.childNode.type == 'CONDITION') {
             this.reErr(data.childNode.childNode)
-          } else if (data.childNode.type == 4) {
+          } else if (data.childNode.type == 'EXCLUSIVE') {
             this.reErr(data.childNode)
             for (var i = 0; i < data.childNode.conditionNodes.length; i++) {
               if (data.childNode.conditionNodes[i].error) {
@@ -242,7 +242,7 @@
       saveFlow() {
         this.isTried = true;
         this.tipList = [];
-        this.reErr(this.nodeConfig);
+        // this.reErr(this.nodeConfig);
         if (this.tipList.length != 0) {
           this.tipVisible = true;
           return;

@@ -13,6 +13,7 @@ const valueTypeList = [//participantList审批人抄送人；formAuthorityList�
     value:'APPLICANT'
   }
 ]
+import roleModel from './roleModel.vue'
 export default {
     data() {
       return {
@@ -24,9 +25,11 @@ export default {
           height: '36px',
           lineHeight: '36px',
         },
-        valueTypeList
+        valueTypeList,
+        nodeType:null
       };
     },
+    components:{roleModel},
     methods: {
       showDrawer(nodeConfig) {
         console.log(nodeConfig)
@@ -34,6 +37,7 @@ export default {
         if(name != "start_event"){
             this.drawerTitle = name+'设置'
         }
+        this.nodeType = nodeType
         this.visible = true;
       },
       onClose() {

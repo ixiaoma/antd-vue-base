@@ -36,7 +36,7 @@ export default {
             conditionVisible: false,
             conditionConfig: {},
             conditionsConfig: {
-                conditionNodes: [],
+                conditionList: [],
             },
             bPriorityLevel: "",
             conditions: [],
@@ -75,26 +75,26 @@ export default {
         blurEvent(index) {//失焦保存title
             if (index || index === 0) {
                 this.$set(this.isInputList, index, false)
-                this.nodeConfig.conditionNodes[index].nodeName = this.nodeConfig.conditionNodes[index].nodeName ? this.nodeConfig.conditionNodes[index].nodeName : "条件"
+                this.nodeConfig.conditionList[index].nodeName = this.nodeConfig.conditionList[index].nodeName ? this.nodeConfig.conditionList[index].nodeName : "条件"
             } else {
                 this.isInput = false;
                 this.nodeConfig.nodeName = this.nodeConfig.nodeName ? this.nodeConfig.nodeName : this.placeholderList[this.nodeConfig.type]
             }
         },
         conditionStr(item, index) {//条件设置
-            var { conditionList, nodeUserList } = item;
+            var { conditionList, participantList } = item;
             if(!conditionList ){
                 return '请设置条件'
             }else if (conditionList.length == 0) {
-                return (index == this.nodeConfig.conditionNodes.length - 1) && this.nodeConfig.conditionNodes[0].conditionList.length != 0 ? '其他条件进入此流程' : '请设置条件'
+                return (index == this.nodeConfig.conditionList.length - 1) && this.nodeConfig.conditionList[0].conditionList.length != 0 ? '其他条件进入此流程' : '请设置条件'
             } else {
                 let str = ""
                 for (var i = 0; i < conditionList.length; i++) {
                     var { columnId, columnType, showType, showName, optType, zdy1, opt1, zdy2, opt2, fixedDownBoxValue } = conditionList[i];
                     if (columnId == 0) {
-                        if (nodeUserList.length != 0) {
+                        if (participantList.length != 0) {
                             str += '发起人属于：'
-                            str += nodeUserList.map(item => { return item.name }).join("或") + " 并且 "
+                            str += participantList.map(item => { return item.name }).join("或") + " 并且 "
                         }
                     }
                     if (columnType == "String" && showType == "3") {
@@ -118,35 +118,36 @@ export default {
             this.$emit("update:nodeConfig", this.nodeConfig.childNode);
         },
         addTerm() {//添加条件
-            let len = this.nodeConfig.conditionNodes.length + 1
-            this.nodeConfig.conditionNodes.push({
-                "nodeName": "条件" + len,
-                "type": 'CONDITION',
-                "priorityLevel": len,
-                "conditionList": [],
-                "nodeUserList": [],
-                "childNode": null
+            let len = this.nodeConfig.conditionList.length + 1
+            this.nodeConfig.conditionList.push({
+                name: "条件" + len,
+                nodeType: 'CONDITION',
+                priorityLevel: len,
+                conditionList: [],
+                participantList: [],
+                conditionList:[],
+                childNode: null
             });
-            for (var i = 0; i < this.nodeConfig.conditionNodes.length; i++) {
-                this.nodeConfig.conditionNodes[i].error = this.conditionStr(this.nodeConfig.conditionNodes[i], i) == "请设置条件" && i != this.nodeConfig.conditionNodes.length - 1
+            for (var i = 0; i < this.nodeConfig.conditionList.length; i++) {
+                // this.nodeConfig.conditionList[i].error = this.conditionStr(this.nodeConfig.conditionList[i], i) == "请设置条件" && i != this.nodeConfig.conditionList.length - 1
             }
             this.$emit("update:nodeConfig", this.nodeConfig);
         },
         delTerm(index) {//删除条件
-            this.nodeConfig.conditionNodes.splice(index, 1)
-            for (var i = 0; i < this.nodeConfig.conditionNodes.length; i++) {
-                this.nodeConfig.conditionNodes[i].error = this.conditionStr(this.nodeConfig.conditionNodes[i], i) == "请设置条件" && i != this.nodeConfig.conditionNodes.length - 1
+            this.nodeConfig.conditionList.splice(index, 1)
+            for (var i = 0; i < this.nodeConfig.conditionList.length; i++) {
+                // this.nodeConfig.conditionList[i].error = this.conditionStr(this.nodeConfig.conditionList[i], i) == "请设置条件" && i != this.nodeConfig.conditionList.length - 1
             }
             this.$emit("update:nodeConfig", this.nodeConfig);
-            if (this.nodeConfig.conditionNodes.length == 1) {
+            if (this.nodeConfig.conditionList.length == 1) {
                 if (this.nodeConfig.childNode) {
-                    if (this.nodeConfig.conditionNodes[0].childNode) {
-                        this.reData(this.nodeConfig.conditionNodes[0].childNode, this.nodeConfig.childNode)
+                    if (this.nodeConfig.conditionList[0].childNode) {
+                        this.reData(this.nodeConfig.conditionList[0].childNode, this.nodeConfig.childNode)
                     } else {
-                        this.nodeConfig.conditionNodes[0].childNode = this.nodeConfig.childNode
+                        this.nodeConfig.conditionList[0].childNode = this.nodeConfig.childNode
                     }
                 }
-                this.$emit("update:nodeConfig", this.nodeConfig.conditionNodes[0].childNode);
+                this.$emit("update:nodeConfig", this.nodeConfig.conditionList[0].childNode);
             }
         },
         setPerson(priorityLevel) {//设置审批人、抄送人等（点击块的操作）
@@ -167,17 +168,17 @@ export default {
             //     // this.conditionDrawer = true
             //     this.bPriorityLevel = priorityLevel;
             //     this.conditionsConfig = JSON.parse(JSON.stringify(this.nodeConfig))
-            //     this.conditionConfig = this.conditionsConfig.conditionNodes[priorityLevel - 1]
+            //     this.conditionConfig = this.conditionsConfig.conditionList[priorityLevel - 1]
             // }
             this.$refs.drawer.showDrawer(this.nodeConfig)
         },
-        arrTransfer(index, type = 1) {//向左-1,向右1
-            this.nodeConfig.conditionNodes[index] = this.nodeConfig.conditionNodes.splice(index + type, 1, this.nodeConfig.conditionNodes[index])[0];
-            this.nodeConfig.conditionNodes.map((item, index) => {
+        arrTransfer(index, type = 1) {//条件向左-1,向右1
+            this.nodeConfig.conditionList[index] = this.nodeConfig.conditionList.splice(index + type, 1, this.nodeConfig.conditionList[index])[0];
+            this.nodeConfig.conditionList.map((item, index) => {
                 item.priorityLevel = index + 1
             })
-            for (var i = 0; i < this.nodeConfig.conditionNodes.length; i++) {
-                this.nodeConfig.conditionNodes[i].error = this.conditionStr(this.nodeConfig.conditionNodes[i], i) == "请设置条件" && i != this.nodeConfig.conditionNodes.length - 1
+            for (var i = 0; i < this.nodeConfig.conditionList.length; i++) {
+                // this.nodeConfig.conditionList[i].error = this.conditionStr(this.nodeConfig.conditionList[i], i) == "请设置条件" && i != this.nodeConfig.conditionList.length - 1
             }
             this.$emit("update:nodeConfig", this.nodeConfig);
         },
@@ -208,8 +209,8 @@ export default {
             this.conditionDepartmentList = [];
             this.conditionEmployessList = [];
             this.conditionRoleList = [];
-            for (var i = 0; i < this.conditionConfig.nodeUserList.length; i++) {
-                var { type, name, targetId } = this.conditionConfig.nodeUserList[i];
+            for (var i = 0; i < this.conditionConfig.participantList.length; i++) {
+                var { type, name, targetId } = this.conditionConfig.participantList[i];
                 if (type == 1) {
                     this.conditionEmployessList.push({
                         employeeName: name,
@@ -229,23 +230,23 @@ export default {
             }
         },
         sureConditionRole() {
-            this.conditionConfig.nodeUserList = [];
+            this.conditionConfig.participantList = [];
             this.conditionRoleList.map(item => {
-                this.conditionConfig.nodeUserList.push({
+                this.conditionConfig.participantList.push({
                     type: 2,
                     targetId: item.roleId,
                     name: item.roleName
                 })
             });
             this.conditionDepartmentList.map(item => {
-                this.conditionConfig.nodeUserList.push({
+                this.conditionConfig.participantList.push({
                     type: 3,
                     targetId: item.id,
                     name: item.departmentName
                 })
             });
             this.conditionEmployessList.map(item => {
-                this.conditionConfig.nodeUserList.push({
+                this.conditionConfig.participantList.push({
                     type: 1,
                     targetId: item.id,
                     name: item.employeeName
@@ -287,7 +288,7 @@ export default {
                     continue;
                 }
                 if (columnId == 0) {
-                    this.conditionConfig.nodeUserList == [];
+                    this.conditionConfig.participantList == [];
                     this.conditionConfig.conditionList.push({
                         "type": 1,
                         "columnId": columnId,
@@ -333,13 +334,13 @@ export default {
         },
         saveCondition() {
             this.conditionDrawer = false;
-            var a = this.conditionsConfig.conditionNodes.splice(this.bPriorityLevel - 1, 1)//截取旧下标
-            this.conditionsConfig.conditionNodes.splice(this.conditionConfig.priorityLevel - 1, 0, a[0])//填充新下标
-            this.conditionsConfig.conditionNodes.map((item, index) => {
+            var a = this.conditionsConfig.conditionList.splice(this.bPriorityLevel - 1, 1)//截取旧下标
+            this.conditionsConfig.conditionList.splice(this.conditionConfig.priorityLevel - 1, 0, a[0])//填充新下标
+            this.conditionsConfig.conditionList.map((item, index) => {
                 item.priorityLevel = index + 1
             });
-            for (var i = 0; i < this.conditionsConfig.conditionNodes.length; i++) {
-                this.conditionsConfig.conditionNodes[i].error = this.conditionStr(this.conditionsConfig.conditionNodes[i], i) == "请设置条件" && i != this.conditionsConfig.conditionNodes.length - 1
+            for (var i = 0; i < this.conditionsConfig.conditionList.length; i++) {
+                // this.conditionsConfig.conditionList[i].error = this.conditionStr(this.conditionsConfig.conditionList[i], i) == "请设置条件" && i != this.conditionsConfig.conditionList.length - 1
             }
             this.$emit("update:nodeConfig", this.conditionsConfig);
         },
@@ -377,8 +378,8 @@ export default {
             this.getDepartmentList();
             this.copyerEmployessList = [];
             this.copyerRoleList = [];
-            for (var i = 0; i < this.copyerConfig.nodeUserList.length; i++) {
-                var { type, name, targetId } = this.copyerConfig.nodeUserList[i];
+            for (var i = 0; i < this.copyerConfig.participantList.length; i++) {
+                var { type, name, targetId } = this.copyerConfig.participantList[i];
                 if (type == 1) {
                     this.copyerEmployessList.push({
                         employeeName: name,
@@ -393,16 +394,16 @@ export default {
             }
         },
         sureCopyer() {
-            this.copyerConfig.nodeUserList = [];
+            this.copyerConfig.participantList = [];
             this.copyerEmployessList.map(item => {
-                this.copyerConfig.nodeUserList.push({
+                this.copyerConfig.participantList.push({
                     type: 1,
                     targetId: item.id,
                     name: item.employeeName
                 })
             });
             this.copyerRoleList.map(item => {
-                this.copyerConfig.nodeUserList.push({
+                this.copyerConfig.participantList.push({
                     type: 2,
                     targetId: item.roleId,
                     name: item.roleName
@@ -412,7 +413,7 @@ export default {
         },
         saveCopyer() {
             this.copyerConfig.ccSelfSelectFlag = this.ccSelfSelectFlag.length == 0 ? 0 : 1;
-            this.copyerConfig.error = !this.copyerStr(this.copyerConfig);
+            // this.copyerConfig.error = !this.copyerStr(this.copyerConfig);
             this.$emit("update:nodeConfig", this.copyerConfig);
             this.copyerDrawer = false;
         },
@@ -426,10 +427,10 @@ export default {
             }
         },
         changeRange(val) {
-            this.approverConfig.nodeUserList = [];
+            this.approverConfig.participantList = [];
         },
         changeType(val) {
-            this.approverConfig.nodeUserList = [];
+            this.approverConfig.participantList = [];
             this.approverConfig.examineMode = 1;
             this.approverConfig.noHanderAction = 2;
             if (val == 2) {
@@ -446,8 +447,8 @@ export default {
             this.approverSearchName = "";
             this.getDepartmentList();
             this.approverEmplyessList = [];
-            for (var i = 0; i < this.approverConfig.nodeUserList.length; i++) {
-                var { name, targetId } = this.approverConfig.nodeUserList[i];
+            for (var i = 0; i < this.approverConfig.participantList.length; i++) {
+                var { name, targetId } = this.approverConfig.participantList[i];
                 this.approverEmplyessList.push({
                     employeeName: name,
                     id: targetId
@@ -459,8 +460,8 @@ export default {
             this.approverRoleSearchName = "";
             this.getRoleList();
             this.roleList = [];
-            for (var i = 0; i < this.approverConfig.nodeUserList.length; i++) {
-                var { name, targetId } = this.approverConfig.nodeUserList[i];
+            for (var i = 0; i < this.approverConfig.participantList.length; i++) {
+                var { name, targetId } = this.approverConfig.participantList[i];
                 this.roleList.push({
                     roleName: name,
                     roleId: targetId
@@ -468,10 +469,10 @@ export default {
             }
         },
         sureApprover() {
-            this.approverConfig.nodeUserList = [];
+            this.approverConfig.participantList = [];
             if (this.approverConfig.settype == 1 || (this.approverConfig.settype == 4 && this.approverConfig.selectRange == 2)) {
                 this.approverEmplyessList.map(item => {
-                    this.approverConfig.nodeUserList.push({
+                    this.approverConfig.participantList.push({
                         type: 1,
                         targetId: item.id,
                         name: item.employeeName
@@ -480,7 +481,7 @@ export default {
                 this.approverVisible = false;
             } else if (this.approverConfig.settype == 4 && this.approverConfig.selectRange == 3) {
                 this.roleList.map(item => {
-                    this.approverConfig.nodeUserList.push({
+                    this.approverConfig.participantList.push({
                         type: 2,
                         targetId: item.roleId,
                         name: item.roleName
@@ -489,15 +490,15 @@ export default {
                 this.approverRoleVisible = false;
             }
         },
-        setApproverStr(nodeConfig) {
+        setApproverStr(nodeConfig) {//设置错误信息
             if (nodeConfig.settype == 1) {
-                if (nodeConfig.nodeUserList.length == 1) {
-                    return nodeConfig.nodeUserList[0].name
-                } else if (nodeConfig.nodeUserList.length > 1) {
+                if (nodeConfig.participantList.length == 1) {
+                    return nodeConfig.participantList[0].name
+                } else if (nodeConfig.participantList.length > 1) {
                     if (nodeConfig.examineMode == 1) {
-                        return this.arrToStr(nodeConfig.nodeUserList)
+                        return this.arrToStr(nodeConfig.participantList)
                     } else if (nodeConfig.examineMode == 2) {
-                        return nodeConfig.nodeUserList.length + "人会签"
+                        return nodeConfig.participantList.length + "人会签"
                     }
                 }
             } else if (nodeConfig.settype == 2) {
@@ -511,11 +512,11 @@ export default {
                 if (nodeConfig.selectRange == 1) {
                     return "发起人自选"
                 } else {
-                    if (nodeConfig.nodeUserList.length > 0) {
+                    if (nodeConfig.participantList.length > 0) {
                         if (nodeConfig.selectRange == 2) {
                             return "发起人自选"
                         } else {
-                            return '发起人从' + nodeConfig.nodeUserList[0].name + '中自选'
+                            return '发起人从' + nodeConfig.participantList[0].name + '中自选'
                         }
                     } else {
                         return "";
@@ -528,7 +529,7 @@ export default {
             }
         },
         saveApprover() {
-            this.approverConfig.error = !this.setApproverStr(this.approverConfig)
+            // this.approverConfig.error = !this.setApproverStr(this.approverConfig)
             this.$emit("update:nodeConfig", this.approverConfig);
             this.approverDrawer = false;
         },
@@ -633,14 +634,14 @@ export default {
         }
     },
     mounted() {
-        if (this.nodeConfig.nodeType == 'APPROVE') {
-            this.nodeConfig.error = !this.setApproverStr(this.nodeConfig)
-        } else if (this.nodeConfig.nodeType == 2) {
-            this.nodeConfig.error = !this.copyerStr(this.nodeConfig)
-        } else if (this.nodeConfig.nodeType == 4) {
-            for (var i = 0; i < this.nodeConfig.conditionNodes.length; i++) {
-                this.nodeConfig.conditionNodes[i].error = this.conditionStr(this.nodeConfig.conditionNodes[i], i) == "请设置条件" && i != this.nodeConfig.conditionNodes.length - 1
-            }
-        }
+        // if (this.nodeConfig.nodeType == 'APPROVE') {
+        //     this.nodeConfig.error = !this.setApproverStr(this.nodeConfig)
+        // } else if (this.nodeConfig.nodeType == 2) {
+        //     this.nodeConfig.error = !this.copyerStr(this.nodeConfig)
+        // } else if (this.nodeConfig.nodeType == 4) {
+        //     for (var i = 0; i < this.nodeConfig.conditionList.length; i++) {
+        //         this.nodeConfig.conditionList[i].error = this.conditionStr(this.nodeConfig.conditionList[i], i) == "请设置条件" && i != this.nodeConfig.conditionList.length - 1
+        //     }
+        // }
     }
 }

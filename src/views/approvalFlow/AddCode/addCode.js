@@ -15,19 +15,20 @@ export default {
                         name: "审核人",
                         nodeType,
                         childNode: this.childNodeP,
-                        participantList:[]
+                        participantList:[],
+                        conditionList:[]
                     }
                 } else if (nodeType == 'CC') {
                     data = {
                         name: "抄送人",
                         nodeType,
                         "childNode": this.childNodeP,
-                        participantList:[]
+                        participantList:[],
+                        conditionList:[]
                     }
                 }
             } else {
                 data = {
-                    name: "路由",
                     nodeType,
                     childNode: null,
                     conditionList: [{
@@ -35,13 +36,15 @@ export default {
                         nodeType: 'CONDITION',
                         priorityLevel: 1,
                         childNode: this.childNodeP,
-                        participantList:[]
+                        participantList:[],
+                        conditionList:[]
                     }, {
                         name: "条件2",
                         nodeType: 'CONDITION',
                         priorityLevel: 2,
                         childNode: null,
-                        participantList:[]
+                        participantList:[],
+                        conditionList:[]
                     }]
                 }
             }
