@@ -7,7 +7,7 @@
       @cancel="handleCancel"
     >
       <a-transfer
-        :data-source="sourceData"
+        :data-source="roleList"
         show-search
         :list-style="{
             width: '260px',
@@ -24,22 +24,32 @@
 </template>
 <script>
 import { rolesPage } from '@/api/user'
+import { mapGetters } from 'vuex'
 export default {
   data() {
     return {
-      sourceData: [],
       targetKeys: [],
       visible:false
     };
   },
+  computed:{
+    ...mapGetters(['roleList'])
+  },
   methods: {
+    showModel(list){
+      if(!this.roleList.length){
+        this.getRoleList()
+      }
+      this.targetKeys = list.map(ele=>ele.dataId)
+      this.visible = true
+    },
     async getRoleList() {//获取角色列表
         let params = {
             pageSize: 500
         }
         const res =  await rolesPage(params)
-        const roleList = res.records ? res.records : []
-        this.sourceData = roleList.map(ele=>{
+        const list = res.records ? res.records : []
+        this.$store.state.approval.roleList = list.map(ele=>{
             return {
                 key : ele.id,
                 title:ele.name
@@ -56,14 +66,22 @@ export default {
       console.log('search:', dir, value);
     },
     handleOk(){
-
+      const selectList = []
+      this.roleList.forEach(item => {
+        if(this.targetKeys.indexOf(item.key) != -1){
+          selectList.push({
+            dataId : item.key,
+            name: item.title,
+            type:'ROLE'
+          })
+        }
+      })
+      this.$emit('setRoleData',selectList)
+      this.visible = false
     },
     handleCancel(){
         this.visible = false
     }
-  },
-  created() {
-    this.getRoleList();
   }
 };
 </script>
