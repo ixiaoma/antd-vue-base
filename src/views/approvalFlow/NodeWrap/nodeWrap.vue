@@ -1,26 +1,26 @@
 <template>
     <div>
         <div class="node-wrap" v-if="nodeConfig.nodeType!='EXCLUSIVE' && nodeConfig.name != 'end_event'">
-            <div class="node-wrap-box" :class="(nodeConfig.name == 'start_event'?'start-node ':'')+(isTried&&nodeConfig.error?'active error':'')">
+            <div class="end-node" v-if="nodeConfig.name == 'start_event'">
+                <div class="end-node-text">流程开始</div>
+                <div class="end-node-circle"></div>
+            </div>
+            <div v-else class="node-wrap-box" :class="isTried&&nodeConfig.error?'active error':''">
                 <div>
-                    <div class="title" :style="'background: rgb('+ ['87, 106, 149','255, 148, 62','50, 150, 250'][nodeConfig.name == 'start_event' ? 0 : nodeConfig.nodeType == 'APPROVE' ? 1 : 2] +');'">
+                    <div class="title" :style="'background: rgb('+ ['87, 106, 149','255, 148, 62','50, 150, 250'][nodeConfig.nodeType == 'APPROVE' ? 1 : 2] +');'">
                         <a-icon style='margin-right:5px' type="user" v-show="nodeConfig.nodeType=='APPROVE'"/>
                         <a-icon style='margin-right:5px' type="team" v-show="nodeConfig.nodeType=='CC'"/>
-                        <span v-if="nodeConfig.name == 'start_event'">发起人</span>
-                        <input type="text" class="ant-input editable-title-input" v-if="nodeConfig.name != 'start_event' && isInput"
-                            @blur="blurEvent()" @focus="$event.currentTarget.select()"
-                            v-model="nodeConfig.name" :placeholder="placeholderList[nodeConfig.nodeType]">
-                        <span class="editable-title" @click="clickEvent()" v-if="nodeConfig.name != 'start_event' && !isInput">{{nodeConfig.name || '条件'}}</span>
-                        <a-icon type="close" class="close" v-if="nodeConfig.name != 'start_event'" @click="delNode()"/>
+                        <input type="text" class="ant-input editable-title-input" v-if="isInput" @blur="blurEvent()" @focus="$event.currentTarget.select()" v-model="nodeConfig.name">
+                        <span class="editable-title" @click="clickEvent()" v-if="!isInput">{{nodeConfig.name || '条件'}}</span>
+                        <a-icon type="close" class="close" @click="delNode()"/>
                     </div>
                     <div class="content" @click="setPerson">
-                        <div class="text" v-if="nodeConfig.name == 'start_event'">{{arrToStr(flowPermission)?arrToStr(flowPermission):'所有人'}}</div>
                         <div class="text" v-if="nodeConfig.nodeType=='APPROVE'">
-                            <span class="placeholder" v-if="!setApproverStr(nodeConfig)">请选择{{placeholderList[nodeConfig.nodeType]}}</span>
+                            <span class="placeholder" v-if="!setApproverStr(nodeConfig)">请选择</span>
                             {{setApproverStr(nodeConfig)}}
                         </div>
                         <div class="text" v-if="nodeConfig.nodeType=='CC'">
-                            <span class="placeholder" v-if="!copyerStr(nodeConfig)">请选择{{placeholderList[nodeConfig.nodeType]}}</span>
+                            <span class="placeholder" v-if="!copyerStr(nodeConfig)">请选择</span>
                             {{copyerStr(nodeConfig)}}
                         </div>
                         <a-icon type="right" class="arrow"/>

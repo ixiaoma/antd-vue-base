@@ -28,7 +28,7 @@ export default{
     },
     methods:{
         toSetting(item){
-            this.$router.push({name:'approvalSetting',query:{title:'审批设置',id:item.id}})
+            this.$router.push({name:'approvalSetting',query:{title:item.name+'审批设置',id:item.id}})
         },
         addFlow(){
             this.form.resetFields()

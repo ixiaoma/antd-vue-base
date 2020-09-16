@@ -10,21 +10,50 @@
         <a-tab-pane key="1" tab="审批人设置">
           <a-form :form="form" layout="vertical" v-if="nodeType == 'APPROVE'">
             <a-form-item>
-              <a-radio-group>
+              <a-radio-group v-model="selectRadio">
                 <a-radio v-for="item in valueTypeList" :value="item.value" :key='item.value'>
                   {{item.label}}
                 </a-radio>
               </a-radio-group>
             </a-form-item>
-            <a-divider />
-              <div class="title-style"><h3>指定标签</h3><span>将由此标签中所有成员进行审批</span></div>
-              <a-button type="dashed" ghost style="color:#1890ff;border-color:#1890ff" icon="plus" @click="showModel">添加</a-button>
-              <role-model/>
-            <!-- <a-divider />
-            <a-radio-group name="radioGroup" :default-value="1">
-              <a-radio :style="radioStyle" :value="1">或签(一名成员统一即可)</a-radio>
-              <a-radio :style="radioStyle" :value="2">会签(须所有成员同意)</a-radio>
-            </a-radio-group> -->
+            <div v-if='selectRadio && selectRadio != "APPLICANT"'>
+              <a-divider />
+              <div v-show="selectRadio == 'ASSIGN' || selectRadio == 'ROLE'">
+                <div class="title-style"><h3>{{selectRadio == 'ROLE' ? '指定标签' : '指定成员'}}</h3><span>{{selectRadio == 'ROLE' ? '将由此标签中所有成员进行审批' : '将由选中的所有成员进行审批'}}</span></div>
+                <a-button type="dashed" ghost style="color:#1890ff;border-color:#1890ff" icon="plus" @click="showModel">添加</a-button>
+                <div style="margin-top:10px">
+                  <a-tag color="blue" v-for="(item,index) in roleList" :key='item.dataId' closable @close="deleteRole(index)">{{item.name}}</a-tag>
+                </div>
+              </div>
+              <div v-show="selectRadio == 'LEADER'">
+                <div class="title-style"><h3>指定层级</h3></div>
+                <a-select default-value="lucy" style="width: 120px">
+                  <a-select-option value="jack">
+                    Jack
+                  </a-select-option>
+                </a-select>
+                <a-select default-value="lucy" style="width: 120px">
+                  <a-select-option value="jack">
+                    Jack
+                  </a-select-option>
+                </a-select>
+                <div class="title-style" style="margin-top:20px"><h3>当前层级无上级时</h3></div>
+                <a-radio-group v-model="defaultValue">
+                  <a-radio :style="radioStyle" :value="1">
+                    当前层级无上级时，由上一级上级审批
+                  </a-radio>
+                  <a-radio :style="radioStyle" :value="2">
+                    此审批节点为空时直接跳过，不视为异常
+                  </a-radio>
+                </a-radio-group>
+              </div>
+              <!-- <a-divider />
+              <a-radio-group name="radioGroup" :default-value="1">
+                <a-radio :style="radioStyle" :value="1">或签(一名成员统一即可)</a-radio>
+                <a-radio :style="radioStyle" :value="2">会签(须所有成员同意)</a-radio>
+              </a-radio-group> -->
+              <role-model ref='selectModel' @setRoleData='setRoleData'/>
+            </div>
           </a-form>
           <a-form :form="form" layout="vertical" v-if="nodeType == 'CC'">
               <div class="title-style"><h3>指定范围</h3><span>可抄送成员或标签</span></div>
@@ -41,25 +70,25 @@
             <div class="table-row table-header">
               <div class="component-style">控件</div>
               <div class="radio-style">
-                <a-checkbox>隐藏</a-checkbox>
+                <a-checkbox v-model="displayAll" @change="selectAll(displayAll,'display')">隐藏</a-checkbox>
               </div>
               <div class="radio-style">
-                <a-checkbox>仅查看</a-checkbox>
+                <a-checkbox v-model="onlyreadAll" @change="selectAll(onlyreadAll,'onlyread')">仅查看</a-checkbox>
               </div>
               <div class="radio-style">
-                <a-checkbox>可编辑</a-checkbox>
+                <a-checkbox v-model="editAll" @change="selectAll(editAll,'edit')">可编辑</a-checkbox>
               </div>
             </div>
-            <div class="table-row table-body">
-              <div class="component-style">控件</div>
+            <div class="table-row table-body" v-for="(item,index) in fieldList" :key='index'>
+              <div class="component-style">{{item.name}}</div>
               <div class="radio-style">
-                <a-checkbox/>
+                <a-checkbox v-model="item.display" @change="checkSelectAll"/>
               </div>
               <div class="radio-style">
-                <a-checkbox/>
+                <a-checkbox v-model="item.onlyread" @change="checkSelectAll"/>
               </div>
               <div class="radio-style">
-                <a-checkbox/>
+                <a-checkbox v-model="item.edit" @change="checkSelectAll"/>
               </div>
             </div>
           </div>
@@ -81,7 +110,7 @@
         <a-button :style="{ marginRight: '8px' }" @click="onClose">
           取消
         </a-button>
-        <a-button type="primary" @click="onClose">
+        <a-button type="primary" @click="commitDrawer">
           确定
         </a-button>
       </div>

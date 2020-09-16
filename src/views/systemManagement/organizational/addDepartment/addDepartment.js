@@ -52,10 +52,10 @@ export default {
             if(modaltitle=='编辑'){
                 detailDeptTree(batchParentId).then(res=>{
                     this.addfrom.name = res.name?res.name:''
-                    this.addfrom.nameShort = res.nameShort?res.nameShort:''
-                    this.addfrom.dataAuthority = res.dataAuthority?res.dataAuthority:''                
+                    this.addfrom.nameShort = res.nameShort?res.nameShort:''               
                     this.tableDataUser1=res.managerUserList?res.managerUserList:[]//部门负责人      
                     this.tableDataUser2=res.obUsers?res.obUsers:[]//部门工作观察者
+                    this.addfrom.dataAuthority = res.dataAuthority.toString()  
                     setTimeout(() => {
                         this.addfrom.roleIds = res.roleIds?res.roleIds:[]            
                         this.addfrom.manager=res.manager?res.manager:''//部门负责人

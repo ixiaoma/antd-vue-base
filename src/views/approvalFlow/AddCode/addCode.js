@@ -16,7 +16,8 @@ export default {
                         nodeType,
                         childNode: this.childNodeP,
                         participantList:[],
-                        conditionList:[]
+                        conditionList:[],
+                        formAuthorityList:[]
                     }
                 } else if (nodeType == 'CC') {
                     data = {

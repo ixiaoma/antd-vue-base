@@ -2,7 +2,7 @@
   <div class="fd-nav-content">
       <div class="save-btn">
         <a-button type="primary" class="btn1" @click="saveFlow">保存</a-button>
-        <a-button type="primary" @click="release">发 布</a-button>
+        <a-button type="danger" @click="release">发 布</a-button>
       </div>
 			<section class="dingflow-design">
         <div class="zoom">
@@ -301,7 +301,7 @@
           "nodeConfig": {...res}
         }
         this.processConfig = approvalData
-        this.nodeConfig = this.processConfig.nodeConfig;
+        this.nodeConfig = res;
         this.flowPermission = this.processConfig.flowPermission;
         this.directorMaxLevel = this.processConfig.directorMaxLevel;
         this.workFlowDef = this.processConfig.workFlowDef

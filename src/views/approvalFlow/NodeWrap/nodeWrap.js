@@ -5,7 +5,6 @@ export default {
     props: ["nodeConfig", "flowPermission", "directorMaxLevel", "isTried", "tableId"],
     data() {
         return {
-            placeholderList: ["发起人", "审核人", "抄送人"],
             isInputList: [],
             isInput: false,
             promoterVisible: false,
@@ -150,26 +149,7 @@ export default {
                 this.$emit("update:nodeConfig", this.nodeConfig.conditionList[0].childNode);
             }
         },
-        setPerson(priorityLevel) {//设置审批人、抄送人等（点击块的操作）
-            var { nodeType,name } = this.nodeConfig;
-            console.log(nodeType,name)
-            // if (type == 0) {
-            //     // this.promoterDrawer = true;
-            //     this.flowPermission1 = this.flowPermission;
-            // } else if (type == 1) {
-            //     // this.approverDrawer = true;
-            //     this.approverConfig = JSON.parse(JSON.stringify(this.nodeConfig))
-            //     this.approverConfig.settype = this.approverConfig.settype ? this.approverConfig.settype : 1
-            // } else if (type == 2) {
-            //     // this.copyerDrawer = true;
-            //     this.copyerConfig = JSON.parse(JSON.stringify(this.nodeConfig))
-            //     this.ccSelfSelectFlag = this.copyerConfig.ccSelfSelectFlag == 0 ? [] : [this.copyerConfig.ccSelfSelectFlag]
-            // } else {
-            //     // this.conditionDrawer = true
-            //     this.bPriorityLevel = priorityLevel;
-            //     this.conditionsConfig = JSON.parse(JSON.stringify(this.nodeConfig))
-            //     this.conditionConfig = this.conditionsConfig.conditionList[priorityLevel - 1]
-            // }
+        setPerson() {//设置审批人、抄送人等（点击块的操作）
             this.$refs.drawer.showDrawer(this.nodeConfig)
         },
         arrTransfer(index, type = 1) {//条件向左-1,向右1
@@ -490,42 +470,23 @@ export default {
                 this.approverRoleVisible = false;
             }
         },
-        setApproverStr(nodeConfig) {//设置错误信息
-            if (nodeConfig.settype == 1) {
-                if (nodeConfig.participantList.length == 1) {
-                    return nodeConfig.participantList[0].name
-                } else if (nodeConfig.participantList.length > 1) {
-                    if (nodeConfig.examineMode == 1) {
-                        return this.arrToStr(nodeConfig.participantList)
-                    } else if (nodeConfig.examineMode == 2) {
-                        return nodeConfig.participantList.length + "人会签"
+        arrToStr(arr) {//数组转字符
+            if (arr) {
+                return arr.map(item => { return item.name }).toString()
+            }
+        },
+        setApproverStr(nodeConfig) {//设置信息
+            const { participantList, nodeType } = nodeConfig
+            if(nodeType=='APPROVE'){
+                let title = ''
+                let content = ''
+                participantList.forEach(ele=>{
+                    if(!title && ele.type == 'ROLE'){
+                        title = '指定标签:'
                     }
-                }
-            } else if (nodeConfig.settype == 2) {
-                let level = nodeConfig.directorLevel == 1 ? '直接主管' : '第' + nodeConfig.directorLevel + '级主管'
-                if (nodeConfig.examineMode == 1) {
-                    return level
-                } else if (nodeConfig.examineMode == 2) {
-                    return level + "会签"
-                }
-            } else if (nodeConfig.settype == 4) {
-                if (nodeConfig.selectRange == 1) {
-                    return "发起人自选"
-                } else {
-                    if (nodeConfig.participantList.length > 0) {
-                        if (nodeConfig.selectRange == 2) {
-                            return "发起人自选"
-                        } else {
-                            return '发起人从' + nodeConfig.participantList[0].name + '中自选'
-                        }
-                    } else {
-                        return "";
-                    }
-                }
-            } else if (nodeConfig.settype == 5) {
-                return "发起人自己"
-            } else if (nodeConfig.settype == 7) {
-                return '从直接主管到通讯录中级别最高的第' + nodeConfig.examineEndDirectorLevel + '个层级主管'
+                    content += ele.name+'\n'
+                })
+                return title+content
             }
         },
         saveApprover() {
@@ -576,11 +537,7 @@ export default {
             this.$emit("update:flowPermission", this.flowPermission1);
             this.promoterDrawer = false;
         },
-        arrToStr(arr) {
-            if (arr) {
-                return arr.map(item => { return item.name }).toString()
-            }
-        },
+        
         toggleStrClass(item, key) {
             let a = item.zdy1 ? item.zdy1.split(",") : []
             return a.some(item => { return item == key });

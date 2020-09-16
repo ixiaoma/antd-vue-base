@@ -1,17 +1,22 @@
-
-import { SearchTable } from '@/components'
-
+import { getRosterDetails} from '@/api/other'
 export default {
   name: 'rosterDetailList',
   components: {
-    SearchTable
+    
   },
   data () {
     return {
-      showBtnList:[]//按钮权限list
+      
     }
   },
   methods: {
-    
+    getRosterDetailsLoad(id){
+      getRosterDetails(id).then(res=>{
+
+      })
+    }
+  },
+  created() {
+    this.getRosterDetailsLoad(this.$route.query.id)
   }
 }

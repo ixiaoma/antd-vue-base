@@ -43,6 +43,7 @@ const api={
   saveRoleResource:systemAPI+'role/',//角色对应的菜单保存
   roleResource:systemAPI+'roleResource/',//角色对应的菜单选中的id
   menusList:systemAPI+'resource/menu',//'menus/menu',//菜单管理树
+  navMenu:systemAPI+'userRole/menu',//菜单导航
   menusListChild:systemAPI+'resource/menu/',//'menus/menu/',//菜单管理树
   menusDetail:systemAPI+'resource/',//菜单详情
   menusAdd:systemAPI+'resource',//菜单新增
@@ -212,6 +213,9 @@ export function roleResource(id) {
 }
 export function menusList() {
   return axios.get(api.menusList)
+}
+export function navMenu() {
+  return axios.get(api.navMenu)
 }
 export function menusListChild(id) {
   return axios.get(api.menusListChild+id)

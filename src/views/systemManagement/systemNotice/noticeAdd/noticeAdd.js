@@ -103,13 +103,13 @@ export default {
                 enabled: true
             }
             rolesList(params).then(res => {
-                this.roleData = res.data;
+                this.roleData = res;
             })
         },
         gettreedata() {//获取树
             this.treeData = []
             getDeptTreeData().then(res => {            
-                let strAdd = JSON.stringify([res.data]);   
+                let strAdd = JSON.stringify([res]);   
                 strAdd = strAdd.replace(/id/g, "value").replace(/name/g, "title").replace(/subDept/g, "children");
                 this.treeData =  JSON.parse(strAdd);
             })

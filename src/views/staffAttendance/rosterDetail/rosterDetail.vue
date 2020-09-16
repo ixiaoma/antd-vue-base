@@ -3,7 +3,7 @@
 </style>
 <template>
 <div class="rosterDetail">
-    <search-table pageCode='roster_details'/>
+    
   </div>
 </template>
 
