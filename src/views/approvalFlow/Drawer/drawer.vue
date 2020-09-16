@@ -6,9 +6,9 @@
       :visible="visible"
       @close="onClose"
     >
-      <a-tabs default-active-key="1">
+      <a-tabs default-active-key="1" v-if="nodeType == 'APPROVE'">
         <a-tab-pane key="1" tab="审批人设置">
-          <a-form :form="form" layout="vertical" v-if="nodeType == 'APPROVE'">
+          <a-form :form="form" layout="vertical">
             <a-form-item>
               <a-radio-group v-model="selectRadio">
                 <a-radio v-for="item in valueTypeList" :value="item.value" :key='item.value'>
@@ -52,17 +52,7 @@
                 <a-radio :style="radioStyle" :value="1">或签(一名成员统一即可)</a-radio>
                 <a-radio :style="radioStyle" :value="2">会签(须所有成员同意)</a-radio>
               </a-radio-group> -->
-              <role-model ref='selectModel' @setRoleData='setRoleData'/>
             </div>
-          </a-form>
-          <a-form :form="form" layout="vertical" v-if="nodeType == 'CC'">
-              <div class="title-style"><h3>指定范围</h3><span>可抄送成员或标签</span></div>
-              <a-button type="dashed" ghost style="color:#1890ff;border-color:#1890ff" icon="plus" @click="showModel">添加</a-button>
-              <a-divider />
-              <div class="title-style"><h3>指定上级</h3><span>可抄送指定层级上级</span></div>
-              <a-divider />
-              <div class="title-style"><h3>申请人本人</h3></div>
-              <a-checkbox>抄送给申请人本人</a-checkbox>
           </a-form>
         </a-tab-pane>
         <a-tab-pane key="2" tab="权限设置">
@@ -94,8 +84,23 @@
           </div>
         </a-tab-pane>
       </a-tabs>
-      <div
-        :style="{
+      <a-form :form="form" layout="vertical" v-if="nodeType == 'CC'">
+          <div class="title-style"><h3>指定成员</h3><span>将由选中的所有成员进行审批</span></div>
+          <a-button type="dashed" ghost style="color:#1890ff;border-color:#1890ff" icon="plus" @click="showModel">添加</a-button>
+          <a-divider />
+          <div class="title-style"><h3>指定标签</h3><span>将由此标签中所有成员进行审批</span></div>
+          <a-button type="dashed" ghost style="color:#1890ff;border-color:#1890ff" icon="plus" @click="showModel">添加</a-button>
+          <div style="margin-top:10px">
+            <a-tag color="blue" v-for="(item,index) in roleList" :key='item.dataId' closable @close="deleteRole(index)">{{item.name}}</a-tag>
+          </div>
+          <a-divider />
+          <div class="title-style"><h3>指定上级</h3><span>可抄送指定层级上级</span></div>
+          <a-divider />
+          <div class="title-style"><h3>申请人本人</h3></div>
+          <a-checkbox v-model="ownerChecked">抄送给申请人本人</a-checkbox>
+      </a-form>
+      <role-model ref='selectModel' @setRoleData='setRoleData'/>
+      <div :style="{
           position: 'absolute',
           right: 0,
           bottom: 0,
@@ -104,9 +109,7 @@
           padding: '10px 16px',
           background: '#fff',
           textAlign: 'right',
-          zIndex: 1,
-        }"
-      >
+          zIndex: 1}">
         <a-button :style="{ marginRight: '8px' }" @click="onClose">
           取消
         </a-button>

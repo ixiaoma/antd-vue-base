@@ -7,17 +7,10 @@ export default{
     data(){
         return {
             pageLoading:true,
-            queryParam:{
-                // "filters": [{
-                //     "field": "jobNumber",
-                //     "operator": "eq",
-                //     "value": "11111"
-                // }],
-                // "logic": "and"
-            },//筛选值
+            queryParam:[],//筛选值
             // 加载数据方法 必须为 Promise 对象
             loadData: parameter => {
-                const params = Object.assign( parameter, {filter:this.queryParam})
+                const params = Object.assign( parameter, {filter:{logic: "and",filters:this.queryParam}})
                 return getBasePage({pageCode:this.pageCode,params})
                 .then(res => {
                     return res
@@ -83,6 +76,7 @@ export default{
             this.columns = headerRes.map(ele=>{
               return {
                 title: ele.name,
+                sorter: true,
                 dataIndex: ele.code
               }
             })

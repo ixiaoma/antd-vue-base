@@ -16,10 +16,10 @@
         rowKey="id"
         :columns="columns"
         :data="loadData"
-        :scroll='{x:true}'
-        :rowSelection="rowSelection">
+        :scroll='{x:true}'>
             <span slot="action" slot-scope="text, record">
                 <template>
+        <!-- :rowSelection="rowSelection" -->
                     <!-- v-if="showBtnList.includes('detail')" -->
                     <a @click="handleAdd(record,2)" style="margin:0 3px">查看</a>
                     <a @click="handleAdd(record,3)" style="margin:0 3px">修改</a>

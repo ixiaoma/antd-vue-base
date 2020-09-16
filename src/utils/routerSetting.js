@@ -56,12 +56,13 @@ export const routerObj = {
 
 export function getRouterData(list){
     const routerList = list.map(ele=>{
+        const icon = ele.icon ? ele.icon : null 
         if(ele.childList && ele.childList.length){
             return {
-              path:'/'+ele.url,
+              path:ele.url == 'index' ? '/' : '/'+ele.url,
               name:ele.url,
               component: ele.url == 'index' ? BasicLayout : RouteView,
-              meta: { title: ele.name,icon:ele.icon},
+              meta: { title: ele.name,icon:icon},
               redirect: '/'+ele.childList[0].url,
               children:getRouterData(ele.childList)
             }
@@ -70,7 +71,7 @@ export function getRouterData(list){
                 path:'/'+ele.url,
                 name:ele.url,
                 component: routerObj[ele.url],
-                meta: { title: ele.name,icon:ele.icon}
+                meta: { title: ele.name,icon:icon}
             }
         }
     })

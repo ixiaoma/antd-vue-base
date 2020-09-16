@@ -60,7 +60,7 @@
             const rules = [
                 {
                     type : i.valueType == 'DATETIME' ? 'object' : 'string',
-                    required: i.enabled == 1 ? true : false,
+                    required: i.notNull,
                     whitespace:true,
                     message: `${i.name}必填`
                 }

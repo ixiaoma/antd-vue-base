@@ -14,7 +14,7 @@
                 </a>
                 <a-row :gutter='56'>
                   <draggable v-model="item.layoutList" :options="{group:'filed1'}">
-                    <a-col :span='12' v-for="(childItem,childIndex) in item.layoutList" :key='childIndex'>
+                    <a-col :md='24' :lg ='18' :xl='12' v-for="(childItem,childIndex) in item.layoutList" :key='childIndex'>
                       <div class="pre-field">
                         <span>{{childItem.name}}</span>
                         <div v-if='activeKey == "BASIC"'>
@@ -27,7 +27,8 @@
                         </div>
                         <div v-else>
                           <a-switch v-model="childItem.notNull" checked-children="必填"  un-checked-children="非必填" style="margin-right:10px"/>
-                          <a-switch v-model="childItem.readOnly" checked-children="只读" un-checked-children="非只读"/>
+                          <a-switch v-model="childItem.readOnly" checked-children="只读" un-checked-children="非只读" style="margin-right:10px"/>
+                          <a-switch checked-children="展示" un-checked-children="隐藏"/>
                         </div>
                       </div>
                     </a-col>
@@ -99,7 +100,7 @@
 
         <!-- 多级联动 -->
         <a-form-item 
-          v-if="valueType== 'SELECT'" 
+          v-if="valueType == 'SELECT'" 
           :label="'关联码表值' + (index + 1) " 
           :label-col="{span:6}" 
           :wrapper-col="{span:12}"

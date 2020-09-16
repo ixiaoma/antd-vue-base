@@ -35,7 +35,8 @@ export default {
         nodeConfig:null,
         selectRadio:null,
         roleList:[],
-        defaultValue:1
+        defaultValue:1,
+        ownerChecked:false
       };
     },
     components:{roleModel},
@@ -43,11 +44,10 @@ export default {
       async showDrawer(nodeConfig) {
         this.nodeConfig = nodeConfig
         var { nodeType, name, formAuthorityList, participantList } = nodeConfig
-        if(name != "start_event"){
-            this.drawerTitle = name+'设置'
-        }
+        this.drawerTitle = name+'设置'
+        this.nodeType = nodeType
         if(nodeType == 'APPROVE'){
-          if(!formAuthorityList.length){
+          if(!formAuthorityList || !formAuthorityList.length){
             this.fieldList = await this.getFormDetailList()
           }else{
             this.fieldList = formAuthorityList.map(ele=>{
@@ -55,17 +55,21 @@ export default {
             })
           }
           this.checkSelectAll()
-        }
-        if(participantList && participantList.length){
-          const type = participantList[0].type
-          this.selectRadio = type
-          if(type == 'ROLE'){
-            this.roleList = participantList.map(ele=>{
-              return {...ele}
-            })
+          if(participantList && participantList.length){
+            const type = participantList[0].type
+            this.selectRadio = type
+            if(type == 'ROLE'){
+              this.roleList = participantList.map(ele=>{
+                return {...ele}
+              })
+            }
+          }
+        }else{
+          if(participantList && participantList.length){
+            this.roleList = participantList.filter(ele=>ele.type == 'ROLE')
+            this.ownerChecked = participantList.filter(ele=>ele.type == 'APPLICANT').length > 0
           }
         }
-        this.nodeType = nodeType
         this.visible = true;
       },
       onClose() {
@@ -130,7 +134,17 @@ export default {
               {type:'APPLICANT',name:'申请人本人'}
             ]
           }
+        }else if(nodeType == 'CC'){
+          let arr = []
+          if(this.roleList.length){
+            arr = [...this.roleList]
+          }
+          if(this.ownerChecked){
+            arr.push({type:'APPLICANT',name:'申请人本人'})
+          }
+          this.nodeConfig.participantList = arr
         }
+        console.log(this.roleList,this.nodeConfig)
         this.$emit("update:nodeConfig", this.nodeConfig);
         this.visible = false;
       }

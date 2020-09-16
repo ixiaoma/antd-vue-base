@@ -129,6 +129,7 @@ export default {
      * @param {Object} sorter 排序条件
      */
     loadData (pagination, filters, sorter) {
+      console.log(sorter)
       this.localLoading = true
       const parameter = Object.assign({
         pageNo: (pagination && pagination.current) ||
@@ -136,15 +137,23 @@ export default {
         pageSize: (pagination && pagination.pageSize) ||
           this.showPagination && this.localPagination.pageSize || this.pageSize
       },
-      (sorter && sorter.field && {
-        sortField: sorter.field
-      }) || {},
-      (sorter && sorter.order && {
-        sortOrder: sorter.order
-      }) || {}, {
-        ...filters
-      }
+      // (sorter && sorter.field && {
+      //   sortField: sorter.field
+      // }) || {},
+      // (sorter && sorter.order && {
+      //   sortOrder: sorter.order
+      // }) || {}, {
+      //   ...filters
+      // }
       )
+      if(sorter){
+        parameter.searchSort = {
+          orders:[{
+            property:sorter.field,
+            direction:sorter.order == "ascend" ? 'ASC' : 'DESC'
+          }]
+        }
+      }
       if(typeof this.data === 'function'){
         const result = this.data(parameter)
         // 对接自己的通用数据接口需要修改下方代码中的 r.pageNo, r.totalCount, r.records
