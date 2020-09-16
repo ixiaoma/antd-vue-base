@@ -103,7 +103,6 @@
         async getInitData(){
             let res = null
             let { flag, pageCode, id } = this.currentForm || this.$route.query
-            
             if(flag == 2){
                 res = await getDetailLayout({pageCode,id})
             }else if(flag == 3){
@@ -118,7 +117,7 @@
             this.activeKey = res.map((ele,index)=>index)
         },
         handleSubmit (e) {
-            e.preventDefault()
+            e && e.preventDefault()
             this.form.validateFields(async (err, values) => {
                 if (!err) {
                     let saveData = []

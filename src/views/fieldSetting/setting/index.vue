@@ -89,7 +89,7 @@
 
         <a-form-item v-if="showCodeField" label="关联码表值" :label-col="{span:6}" :wrapper-col="{span:12}">
            <a-select
-            v-decorator="[`categoryCodes[0]`, { initialValue: fieldData ? fieldData.categoryCodes : undefined ,rules: [{ required: true, whitespace:true,message: '请选择码表值' }] }]"
+            v-decorator="[`categoryCodes[0]`, { initialValue: fieldData ? fieldData.categoryCodes[0] : undefined ,rules: [{ required: true, whitespace:true,message: '请选择码表值' }] }]"
             >
             <a-select-option v-for="item in codeList" :key="item.code" :value="item.code">
               {{ item.name }}

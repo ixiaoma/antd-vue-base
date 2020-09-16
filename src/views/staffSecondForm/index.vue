@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="text-align:right">
-      <a-button type="primary">提交</a-button>
+      <!-- <a-button type="primary">提交</a-button> -->
     </div>
     <a-tabs v-model="activeKey" size='small' class="tabs-style">
       <a-tab-pane key="1">
@@ -9,7 +9,12 @@
           <span style="color:red">*</span>
           员工信息
         </span>
-          <base-form ref='baseForm' @next='nextStep' :showBottom='false'/>
+          <base-form 
+            ref='baseForm' 
+            @next='nextStep' 
+            :showBottom='false'
+            :currentForm="basicForm"
+          />
       </a-tab-pane>
       <a-tab-pane v-for="(item,index) in tabLists" :key="`${index+2}`" force-render>
         <span slot="tab">
@@ -61,7 +66,8 @@
     </a-modal>
     <footer-tool-bar>
         <a-button @click="goBack">返回</a-button>
-        <a-button type="primary" style="margin-left: 8px"  @click="submit">保存</a-button>
+        <a-button  style="margin-left: 8px" @click="clickStorage">暂存</a-button>
+        <a-button type="primary" style="margin-left: 8px"  @click="save">保存</a-button>
     </footer-tool-bar>
   </div>
 </template>

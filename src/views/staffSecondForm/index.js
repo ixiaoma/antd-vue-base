@@ -218,12 +218,48 @@ export default {
     currentTab(){
       let { activeKey } = this ; 
       return this.tabLists[activeKey - 2 ] ; 
+    },
+    basicForm(){
+      return {
+        ...this.$route.query
+      }
     }
   },
   methods: {
     // 保存
+    save(){
+      this.$refs.baseForm.handleSubmit()
+    },
+    // 提交
     submit(){
-
+      this.$refs.baseForm.handleSubmit()
+    },
+    // 暂存
+    clickStorage(){
+      this.$refs.baseForm.form.validateFields(async (err, values) => {
+                if (!err) {
+                    let saveData = []
+                    this.$refs.baseForm.layoutList.forEach(item=>{
+                        item.fieldDefineValueList.forEach(ele=>{
+                            if(values[ele.code]){
+                                let data = values[ele.code]
+                                if(ele.valueType == 'DATETIME'){
+                                    data = moment(values[ele.code]).format('YYYY-MM-DD HH:mm:ss')
+                                }
+                                saveData.push({
+                                    code:ele.code,
+                                    value:[data]
+                                })
+                            }
+                        })
+                    })
+                  // const param = {
+                  //     pageCode:'basic_info',
+                  //     params:saveData
+                  // }
+                  await basicInfoStorage(saveData)
+                }
+            })
     },
     handleAdd(item){
       this.modalTitle = item.tabName
@@ -232,6 +268,7 @@ export default {
       this.visible = true
     },
     nextStep(id){
+      console.log('nextStep')
       this.$router.push({query:{...this.$route.query,id,flag:3}})
       this.activeKey = '2'
     },
@@ -246,9 +283,10 @@ export default {
     onOk(){
       this.$refs.modalForm.handleSubmit()
     },
-    nextStep(res){
-      this.visible = false ; 
-    },
+    // nextStep(res){
+    //   this.visible = false ; 
+    // },
+    
   },
   created(){
     const { flag } = this.$route.query
