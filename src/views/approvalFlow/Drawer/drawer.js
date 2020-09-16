@@ -56,7 +56,7 @@ export default {
           }
           this.checkSelectAll()
         }
-        if(participantList.length){
+        if(participantList && participantList.length){
           const type = participantList[0].type
           this.selectRadio = type
           if(type == 'ROLE'){

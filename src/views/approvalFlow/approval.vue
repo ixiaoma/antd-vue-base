@@ -2,7 +2,6 @@
   <div class="fd-nav-content">
       <div class="save-btn">
         <a-button type="primary" class="btn1" @click="saveFlow">保存</a-button>
-        <a-button type="danger" @click="release">发 布</a-button>
       </div>
 			<section class="dingflow-design">
         <div class="zoom">
@@ -264,9 +263,6 @@
         //         }, 200)
         //     }
         // })
-      },
-      release(){
-
       },
       zoomSize(type) {
         if (type == 1) {

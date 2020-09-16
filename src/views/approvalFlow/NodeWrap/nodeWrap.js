@@ -398,7 +398,7 @@ export default {
             this.copyerDrawer = false;
         },
         copyerStr(nodeConfig) {
-            if (nodeConfig.participantList.length != 0) {
+            if (nodeConfig.participantList && nodeConfig.participantList.length != 0) {
                 return this.arrToStr(nodeConfig.participantList)
             } else {
                 if (nodeConfig.ccSelfSelectFlag == 1) {
@@ -480,7 +480,7 @@ export default {
             if(nodeType=='APPROVE'){
                 let title = ''
                 let content = ''
-                participantList.forEach(ele=>{
+                participantList && participantList.forEach(ele=>{
                     if(!title && ele.type == 'ROLE'){
                         title = '指定标签:'
                     }

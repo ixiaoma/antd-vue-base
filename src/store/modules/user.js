@@ -1,7 +1,6 @@
 import { login, getInfo, logout,navMenu } from '@/api/user'
 import { getRouterData } from '@/utils/routerSetting'
 import { welcome } from '@/utils/util'
-import router from '../../router'
 
 const user = {
   state: {
