@@ -106,7 +106,7 @@
             let res = null
             let { flag, pageCode, id } = this.currentForm || this.$route.query
             if(flag == 2){
-                res = await getDetailLayout({pageCode,id})
+                res = await getDetailLayout({pageCode,id})  
             }else if(flag == 3){
                 res = await getEditLayout({pageCode,id})
             }else{
@@ -117,6 +117,9 @@
             }
             this.layoutList = res
             this.activeKey = res.map((ele,index)=>index)
+            if(this.$route.query.pageCode=="performance_assessment_detail"&&res.assessmentContentDetails&&res.assessmentContentDetails.length){
+                this.$refs.staffAchievements.tableValueArr=res.assessmentContentDetails
+            }
         },
         handleSubmit (e) {
             e && e.preventDefault()
@@ -157,7 +160,7 @@
                             return false
                         }
                         param.params={
-                            fieldDefineValueList:this.layoutList,
+                            fieldValueDTOList:saveData,
                             assessmentContentDetails:this.$refs.staffAchievements.tableValueArr
                         }
                     }
