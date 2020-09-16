@@ -28,7 +28,7 @@
                         <div v-else>
                           <a-switch v-model="childItem.notNull" checked-children="必填"  un-checked-children="非必填" style="margin-right:10px"/>
                           <a-switch v-model="childItem.readOnly" checked-children="只读" un-checked-children="非只读" style="margin-right:10px"/>
-                          <a-switch checked-children="展示" un-checked-children="隐藏"/>
+                          <a-switch v-model="childItem.display" checked-children="展示" un-checked-children="隐藏"/>
                         </div>
                       </div>
                     </a-col>
@@ -177,6 +177,9 @@
         </a-form-item>
         <a-form-item label="是否表头展示" :label-col="{span:6}" :wrapper-col="{span:12}">
           <a-switch v-decorator="['tableHead',{ initialValue: fieldData ? fieldData.tableHead : true, valuePropName: 'checked' }]"/>
+        </a-form-item>
+        <a-form-item label="是否数据展示" :label-col="{span:6}" :wrapper-col="{span:12}">
+          <a-switch v-decorator="['display',{ initialValue: fieldData ? fieldData.display : true, valuePropName: 'checked' }]"/>
         </a-form-item>
          
         

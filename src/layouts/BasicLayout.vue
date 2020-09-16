@@ -2,7 +2,7 @@
 <!-- :menus="menus" -->
   <pro-layout
     :title="title"
-    :menus="menus"
+    :menus="menuList"
     :collapsed="collapsed"
     :mediaQuery="query"
     :isMobile="isMobile"

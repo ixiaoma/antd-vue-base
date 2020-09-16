@@ -238,7 +238,7 @@
           data.childNode = null
         }
       },
-      saveFlow() {
+      async saveFlow() {
         this.isTried = true;
         this.tipList = [];
         // this.reErr(this.nodeConfig);
@@ -253,7 +253,8 @@
           id,
           params:this.processConfig.nodeConfig
         }
-        saveApproval(parameter)
+        await saveApproval(parameter)
+        this.$message.success("设置成功");
         // console.log(JSON.stringify(this.processConfig))
         // this.$axios.post("", this.processConfig).then(res => {
         //     if (res.code == 200) {

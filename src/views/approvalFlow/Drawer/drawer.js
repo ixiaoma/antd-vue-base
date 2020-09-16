@@ -15,6 +15,7 @@ const valueTypeList = [//participantList审批人抄送人；formAuthorityList�
 ]
 import roleModel from './roleModel.vue'
 import { getFormDetail } from '@/api/approval'
+import { levelList } from '@/utils/commonCode'
 export default {
     data() {
       return {
@@ -36,7 +37,10 @@ export default {
         selectRadio:null,
         roleList:[],
         defaultValue:1,
-        ownerChecked:false
+        ownerChecked:false,
+        levelData:'1',
+        levelSelect:'1',
+        levelList
       };
     },
     components:{roleModel},
