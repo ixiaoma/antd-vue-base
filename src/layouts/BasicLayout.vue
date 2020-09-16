@@ -2,7 +2,7 @@
 <!-- :menus="menus" -->
   <pro-layout
     :title="title"
-    :menus="menuList"
+    :menus="menus"
     :collapsed="collapsed"
     :mediaQuery="query"
     :isMobile="isMobile"
@@ -74,8 +74,7 @@ export default {
   computed: {
     ...mapState({
       // 动态主路由
-      mainMenu: state => state.permission.addRouters,
-      menuList:state=>state.user.menuList   
+      menuList:state=>state.user.menuList  
       // menuList:state=>asyncRouterMap.children=state.user.menuList   
     })
   },
@@ -118,9 +117,6 @@ export default {
     }
   },
   created () {
-    this.$store.dispatch('menuListLoad')
-    // const routes = this.mainMenu.find(item => item.path === '/')
-    // this.menus = (routes && routes.children) || []
     // 处理侧栏收起状态
     this.$watch('collapsed', () => {
       this.$store.commit(SIDEBAR_TYPE, this.collapsed)

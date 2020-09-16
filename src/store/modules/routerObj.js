@@ -1,10 +1,15 @@
-import { UserLayout, BasicLayout, BlankLayout } from '@/layouts'
-import { bxAnaalyse } from '@/core/icons'
-
 export const RouteView = {
   name: 'RouteView',
   render: (h) => h('router-view')
 }
+
+const routerObj = {
+  Analysis : () => import('@/views/dashboard/Analysis'),
+  Workplace : () => import('@/views/dashboard/Workplace'),
+  approvalManagement: () => import('@/views/approvalManagement/index.vue')
+}
+
+
 
 export const navRouterArr = {
     // 'dashboard':{

@@ -1,6 +1,7 @@
 import { login, getInfo, logout,navMenu } from '@/api/user'
-import { navRouterArr,RouteView } from './routerObj.js'
+import { getRouterData } from '@/utils/routerSetting'
 import { welcome } from '@/utils/util'
+import router from '../../router'
 
 const user = {
   state: {
@@ -92,63 +93,14 @@ const user = {
 
     //系统菜单
     menuListLoad ({ commit }, userInfo) {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve) => {
         navMenu().then(response => {
-          const result = response
-
-
-          let menuList=[]
-          let List=response[0]['childList']
-          List && List.length && List.forEach(item => {
-            let obj = {};
-            let sub = {};
-            let subList = [];
-            if (item['childList'].length == 0) {
-              obj = {
-                path: navRouterArr[item.url].path,
-                name: item.url,
-                meta: { title: item.name, icon: item.icon || 'table' },
-                component: navRouterArr[item.url].component,
-                children: []
-              };
-              navRouterArr[item.url].path && menuList.push(obj);
-            } else {
-              let _child = item['childList'];
-              for (var ii = 0; ii < _child.length; ii++) {
-                sub = {
-                  path: navRouterArr[_child[ii].url].path,
-                  meta: { title: _child[ii].name },
-                  name: _child[ii].url,
-                  component: navRouterArr[_child[ii].url].component
-                }
-                if (_child[ii].url) {
-                  subList.push(sub);
-                }
-              }
-              obj = {
-                path: '/' + item.url,
-                name: item.url,
-                meta: { title: item.name, icon: item.icon || 'table' },
-                component: RouteView,
-                children: subList
-              };
-              item.url && menuList.push(obj);
-            }
-          })
-
-
-
-
-
-
-          commit('SET_MENU', menuList)
-          resolve(response)
-        }).catch(error => {
-          reject(error)
+          const menu = getRouterData(response)
+          commit('SET_MENU', menu[0].children)
+          resolve(menu)
         })
       })
-    },
-
+    }
   }
 }
 
