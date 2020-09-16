@@ -2,7 +2,12 @@
   @import "./rosterDetail.less";
 </style>
 <template>
-<div class="rosterDetail">
+<div class="rosterDetail"> 
+    <div>
+      <h1>部门：<span style="font-weight:400">{{$route.query.deptName}}</span></h1> <h1>月份：<span style="font-weight:400">{{$route.query.rosterMonth}}</span></h1>
+      <span class="pink remark">工作日</span>
+      <span class="yellow remark">周末</span>
+    </div>
     <table border="1">
       <tr >
         <th style="width:60px" class="pink"></th>
