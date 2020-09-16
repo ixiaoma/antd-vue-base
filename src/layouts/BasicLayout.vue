@@ -75,7 +75,8 @@ export default {
     ...mapState({
       // 动态主路由
       mainMenu: state => state.permission.addRouters,
-      menuList:state=>asyncRouterMap.children=state.user.menuList   
+      menuList:state=>state.user.menuList   
+      // menuList:state=>asyncRouterMap.children=state.user.menuList   
     })
   },
   methods: {
