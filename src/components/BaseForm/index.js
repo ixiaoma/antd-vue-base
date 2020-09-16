@@ -2,6 +2,7 @@
   import { getBaseLayout, getDetailLayout, saveLayout, getEditLayout, saveEditLayout } from '@/api/commonApi'
   
   import FooterToolBar from '@/layouts/FooterToolbar'
+  import staffAchievements from '../staffAchievements/staffAchievements.vue'
   import TreeSelect from './tree.vue'
   export default {
     name:'BaseFormLayout',
@@ -40,7 +41,8 @@
     },
     components:{
         FooterToolBar,
-        TreeSelect
+        TreeSelect,
+        staffAchievements
     },
     methods:{
         decoratorFn(i){
@@ -142,6 +144,23 @@
                     }
                     if(id) param.id = id
                     const fn = id ? saveEditLayout : saveLayout
+                    if(this.$route.query.pageCode=="performance_assessment_detail"){
+                        let arr=this.$refs.staffAchievements.tableValueArr
+                        let isflag=false
+                        arr.forEach(item=>{
+                            if(!item.targetText||!item.weight){
+                                isflag=true
+                            }
+                        })
+                        if(isflag){
+                            this.$message.warning('请把目标权重填写完整');
+                            return false
+                        }
+                        param.params={
+                            fieldDefineValueList:this.layoutList,
+                            assessmentContentDetails:this.$refs.staffAchievements.tableValueArr
+                        }
+                    }
                     const res = await fn(param)
                     if(res){
                         !this.currentForm && this.$router.go(-1)

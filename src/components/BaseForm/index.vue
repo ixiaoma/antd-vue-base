@@ -50,9 +50,11 @@
             </a-collapse>
             <footer-tool-bar v-if='showBottom'>
                 <a-button @click="goBack">{{ readonly ? '返回' :"取消" }}</a-button>
-                <a-button type="primary" style="margin-left: 8px" html-type="submit" v-if='!readonly'>提交</a-button>
+                <a-button type="primary" style="margin-left: 8px" html-type="submit" v-if='!readonly'>{{$route.query.pageCode=="performance_assessment_detail"?'提交审批':'提交'}}</a-button>
             </footer-tool-bar>
         </a-form>
+        <!-- 员工绩效 -->
+        <staffAchievements :readonly="readonly" v-if="$route.query.pageCode=='performance_assessment_detail'" ref="staffAchievements"></staffAchievements>
     </a-card>
 </template>
 <script src='./index.js'></script>

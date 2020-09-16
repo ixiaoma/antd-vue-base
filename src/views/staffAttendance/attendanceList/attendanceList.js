@@ -1,6 +1,6 @@
 
 import { SearchTable } from '@/components'
-import { attendanceImport,uploadLoad} from '@/api/uploaddown'
+import { attendanceImport,uploadLoad,attendanceDown} from '@/api/uploaddown'
 
 export default {
   name: 'attendanceListList',
@@ -26,7 +26,7 @@ export default {
     },
     monthLoad(e){},
     downLoad(){
-      window.location.href=""
+      window.location.href=attendanceDown
     },
     handleRemove(file) {
       const index = this.fileList.indexOf(file);

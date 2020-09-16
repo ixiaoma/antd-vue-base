@@ -56,7 +56,7 @@ export default{
             const title = `${meta.title}${flag == 1 ? '新增' : flag == 2 ? '详情' : '修改'}`
             this.$router.push({
                 name:name == 'staffList' ? 'staffForm' : name == 'rosterList' ?'rosterDetail':'baseForm',
-                query:{ title, flag, pageCode: this.pageCode, id: data ? data.id : null }
+                query:{ title, flag, pageCode: this.pageCode, id: data ? data.id : null,rosterMonth:data?data.rosterMonth:'' }
             })
         },
         async deleteData(id){

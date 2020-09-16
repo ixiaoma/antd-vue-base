@@ -1,6 +1,6 @@
 
 import { SearchTable } from '@/components'
-import { rosterImport,uploadLoad} from '@/api/uploaddown'
+import { rosterImport,uploadLoad,rosterDown} from '@/api/uploaddown'
 import { getDeptTreeData } from '@/api/user'
 // import { axios } from '@/utils/axios'
 import moment from 'moment';
@@ -33,7 +33,7 @@ export default {
     },
     monthLoad(e){},
     downLoad(){
-      window.location.href=""
+      window.location.href=rosterDown
     },
     handleRemove(file) {
       const index = this.fileList.indexOf(file);
