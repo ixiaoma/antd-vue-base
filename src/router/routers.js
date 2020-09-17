@@ -854,5 +854,12 @@ export const hideInMenuRouterMap = {
       component: () => import('@/views/staffAttendance/rosterDetail/rosterDetail.vue'),
       meta: { title: '排班明细'}
     },
+    {
+      path: '/hidemenu/vacationBalanceDetail',
+      name: 'vacationBalanceDetail',
+      component: () => import('@/views/systemManagement/vacationSet/vacationBalanceDetail/vacationBalanceDetail.vue'),
+      meta: { title: '假期余额详情'}
+    },
+    
   ]
 }

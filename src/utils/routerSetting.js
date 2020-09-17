@@ -16,6 +16,7 @@ export const routerObj = {
     codeTable: () => import('@/views/systemManagement/codeTable/index.vue'),
     systemNotice: () => import('@/views/systemManagement/systemNotice/systemNotice.vue'),
     rulesManage: () => import('@/views/systemManagement/rulesManage/rulesManage.vue'),
+    vacationSet:() => import('@/views/systemManagement/vacationSet/vacationSet.vue'),
     staffList: () => import('@/views/personnelFiles/staffList/staffList.vue'),
     staffApprovalList: () => import('@/views/personnelFiles/staffApprovalList/staffApprovalList.vue'),
     staffEditList: () => import('@/views/personnelDeployment/staffEditList/staffEditList.vue'),

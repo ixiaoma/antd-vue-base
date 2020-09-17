@@ -1,11 +1,11 @@
-import { addCodeValue,editCodeValue,queryParentList,loadNextData } from '@/api/user'
+import { addCodeValue,editCodeValue,queryParentList,loadNextData,codeCategoryItems } from '@/api/user'
 export default {
     name: 'addTableValue',
     data() {
         return {
             fieldValueType:'',//(3:单选/多选  5:多级联动)
             id:'',//码表类别的id
-            nodeLevel:'',//多级联动的层级
+            nodeLevel:1,//多级联动的层级
             categoryCode:'',
             tableModal:false,
             multiArr:[],
@@ -18,7 +18,9 @@ export default {
             spinShow:false,
             pageType:'add',
             modalTit:'新建码表值',
-            editObj:null
+            editObj:null,
+            codeCategoryItemsList:[],
+            parentCodeKey:''
         }
     },
     methods: {
@@ -29,31 +31,32 @@ export default {
                 this.modalTit = '新建码表值'
                 this.fieldValueType = this.$route.query.fieldValueType;
                 this.id = this.$route.query.codeCategoryId;
-                this.nodeLevel = this.$route.query.nodeLevel;
+                this.nodeLevel = Number(this.$route.query.nodeLevel);
                 this.categoryCode = this.$route.query.categoryCode;
                 if(this.fieldValueType == 5 && this.nodeLevel > 1) {//如果是多级联动则去加载所有层级
-                    this.spinShow = true;
-                    queryParentList(this.id).then(res=>{
-                        if(res.code == 200) {
-                            var arr = [];
-                            Object.keys(res.data).forEach((ele,index)=>{//设置该层级以上所有层级的数据
-                                let obj = {
-                                    name: ele,
-                                    codes: index == 0 ? res.data[ele] : [],
-                                    fieldValue: '',
-                                    categoryCode: res.data[ele][0].categoryCode
-                                }
-                                arr.push(obj);
-                            })
-                            this.multiArr = arr;
-                        } else {
-                            this.spinShow = false;
-                        }
-                    }).then(res=>{
-                        this.spinShow = false;
-                    }).catch(()=>{
-                        this.spinShow = false;
-                    })
+                    this.codeCategoryItemsLoad()
+                    // this.spinShow = true;
+                    // queryParentList(this.id).then(res=>{
+                    //     if(res.code == 200) {
+                    //         var arr = [];
+                    //         Object.keys(res.data).forEach((ele,index)=>{//设置该层级以上所有层级的数据
+                    //             let obj = {
+                    //                 name: ele,
+                    //                 codes: index == 0 ? res.data[ele] : [],
+                    //                 fieldValue: '',
+                    //                 categoryCode: res.data[ele][0].categoryCode
+                    //             }
+                    //             arr.push(obj);
+                    //         })
+                    //         this.multiArr = arr;
+                    //     } else {
+                    //         this.spinShow = false;
+                    //     }
+                    // }).then(res=>{
+                    //     this.spinShow = false;
+                    // }).catch(()=>{
+                    //     this.spinShow = false;
+                    // })
                 }
             } else {
                 this.modalTit = '编辑码表值'
@@ -70,6 +73,12 @@ export default {
         //         })
         //     }
         // },
+        codeCategoryItemsLoad(){
+            // categoryName=二级节点&categoryCode=secondNode&codeCategoryId=1305429110125760514&fieldValueType=5&nodeLevel=2&title=二级节点-管理
+            codeCategoryItems(this.$route.query.categoryCode).then(res=>{
+                this.codeCategoryItemsList=res
+            })
+        },
         addTableValue(index) {//添加码表值
             let obj = {
                 sort : 1,
@@ -97,6 +106,10 @@ export default {
                         return ;
                     }
                 } 
+                if(Number(this.$route.query.nodeLevel)>1&&!this.parentCodeKey){
+                    this.$message.warning('请选择上级节点')
+                    return ;
+                }
                 //单选/多选/普通多级联动的参数验证
                 for(let i = 0;i < this.tableValueArr.length;i ++) {
                     if(!this.tableValueArr[i].sort) {//判断是否填写了码表值编码
@@ -122,12 +135,18 @@ export default {
                 // }
                 // params.codeList = JSON.parse(JSON.stringify(this.tableValueArr));
                 let codeList = JSON.parse(JSON.stringify(this.tableValueArr));
-                codeList.forEach(item=>{
-                    item.categoryCode=this.$route.query.categoryCode
-                    item.categoryName=this.$route.query.categoryName         
-                    item.nodeLevel=this.$route.query.nodeLevel
-                })
-                addCodeValue(codeList).then(res=>{
+                // codeList.forEach(item=>{
+                //     item.categoryCode=this.$route.query.categoryCode
+                //     item.categoryName=this.$route.query.categoryName         
+                //     item.nodeLevel=this.$route.query.nodeLevel
+                // })
+                let params={
+                    "categoryCode": this.$route.query.categoryCode,
+                    "categoryName": this.$route.query.categoryName,
+                    "parentCodeKey": this.parentCodeKey||null,
+                    "items": codeList
+                }
+                addCodeValue(params).then(res=>{
                     // if(res.code == 200) {
                         this.$message.success('成功');
                         this.tableModal = false;

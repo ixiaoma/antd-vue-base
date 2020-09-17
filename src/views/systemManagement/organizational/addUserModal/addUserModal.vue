@@ -136,8 +136,8 @@
                                 @change="treeDataChange"
                                 :showSearch='true'
                                 treeNodeFilterProp="title"
-                                :placeholder="modaldisabled?'':'请选择员主属部门'" 
-                                :disabled="modaldisabled"
+                                :placeholder="modaldisabled?'':'请选择主属部门'" 
+                                :disabled="modaldisabled||isEdit"
                                 :getPopupContainer="triggerNode => triggerNode.parentElement"
                             />                
                         </a-form-item>

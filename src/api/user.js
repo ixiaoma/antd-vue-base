@@ -1,5 +1,6 @@
 import { axios } from '@/utils/axios'
 let frameAPI='frame/'//'api/frame/v1/'
+let authAPI='auth/'
 let systemAPI='auth/system/'
 let configAPI='api/config/v1/'
 const userApi = {
@@ -70,7 +71,15 @@ const api={
   addCodeValue: frameAPI+'code-item/save',//码表值保存
   editCodeValue: frameAPI+'code-item/edit',//码表值编辑保存
   tableCateDefault:frameAPI+'code-item/default/',//是否默认
-  getCodeList:frameAPI+'/code-item/listAll/'//获取码表下拉框
+  getCodeList:frameAPI+'/code-item/listAll/',//获取码表下拉框
+  codeCategoryItems:frameAPI+'code-category/items/',//二级三级新建码表值调用的接口
+  vacationTypePage:authAPI+'vacationType/page',//假期设置-请假类型
+  vacationTypeSave:authAPI+'vacationType/save',//假期设置-请假类型新增编辑
+  vacationTypeDel:authAPI+'vacationType/delete/',//假期设置-请假类型删除
+  userVacationColumn:authAPI+'userVacation/page/tablehead',//假期设置-假期余额表头
+  userVacationPage:authAPI+'userVacation/page',////假期设置-假期余额分页
+  userVacationDetail:authAPI+'userVacation/',////假期设置-假期余额分页
+  userVacationEdit:authAPI+'userVacation/edit',////假期设置-假期余额分页
 }
 
 /**
@@ -277,6 +286,9 @@ export function getCateValuePage(code,params) {
 export function getCodeList(code) {
   return axios.post(api.getCodeList+code)
 }
+export function codeCategoryItems(code) {
+  return axios.post(api.codeCategoryItems+code)
+}
 export function delCodeValue(params) {
   return axios.post(api.delCodeValue,params)
 }
@@ -295,6 +307,29 @@ export function editCodeValue(params) {
 export function tableCateDefault(id,params) {
   return axios.post(api.tableCateDefault+id,params)
 }
+export function vacationTypePage(params) {
+  return axios.post(api.vacationTypePage,params)
+}
+export function vacationTypeSave(params) {
+  return axios.post(api.vacationTypeSave,params)
+}
+export function vacationTypeDel(params) {
+  return axios.post(api.vacationTypeDel+params)
+}
+export function userVacationColumn(params) {
+  return axios.get(api.userVacationColumn,params)
+}
+export function userVacationPage(params) {
+  return axios.post(api.userVacationPage,params)
+}
+export function userVacationDetail(params) {
+  return axios.get(api.userVacationDetail+params)
+}
+export function userVacationEdit(params) {
+  return axios.post(api.userVacationEdit,params)
+}
+
+
 
 
 

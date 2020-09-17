@@ -21,6 +21,13 @@
                                 </a-select>
                             </a-form-item>
                         </a-col> -->
+                        <a-col span="21" v-if="nodeLevel>1">
+                            <a-form-item label="上级节点" :required='true' :label-col="{ span: 3 }" :wrapper-col="{ span: 9 }">
+                                <a-select filterOption v-model="parentCodeKey" >
+                                    <a-select-option v-for="(ele,index) in codeCategoryItemsList" :value="ele.codeKey" :key="ele.codeKey">{{ele.codeValue}}</a-select-option>
+                                </a-select>
+                            </a-form-item>
+                        </a-col>
                         <!-- 单选/多选/普通多级联动 -->
                         <a-col span="24" v-for="(item,index) in tableValueArr" :key="index">
                             <a-col span="7">
