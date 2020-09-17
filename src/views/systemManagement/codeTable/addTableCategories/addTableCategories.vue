@@ -28,7 +28,7 @@
                     </a-col>
                     <a-col :span="12" v-if="pageType == 'add'">
                         <a-form-item :label-col="{ span: 9 }" :wrapper-col="{ span: 15 }" :required='true' label="类别编码生成方式">
-                            <a-select :getPopupContainer='triggerNode => triggerNode.parentNode' mode="default" v-model="formItem.autoCreateCode">
+                            <a-select :getPopupContainer='triggerNode => triggerNode.parentNode' mode="default" v-model="formItem.autoCreateCode" @change="selectAutoCode">
                                 <a-select-option v-for="item in autoCreateCodeList" :value="item.codeKey" :key="item.codeKey">{{item.codeValue}}</a-select-option>
                             </a-select>
                         </a-form-item>

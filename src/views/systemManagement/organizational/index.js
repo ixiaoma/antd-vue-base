@@ -31,7 +31,8 @@ export default {
             selectedRows: [],
             username: '',
             titleBatch: '',
-            batchParentId: ''
+            batchParentId: '',
+            isChildren:false
         }
     },
     methods: {
@@ -152,9 +153,11 @@ export default {
             if (keys.length == 0) {
                 this.titleBatch = ''
                 this.batchParentId = ''
+                this.isChildren=false
             } else {
                 this.titleBatch = node.node.title
                 this.batchParentId = node.node.dataRef.key
+                this.isChildren=node.node.dataRef.children&&node.node.dataRef.children.length>0?true:false
             }
             if (node.node.dataRef.parentId == -1 || node.node.dataRef.parentId == 0) {
                 this.queryParam = {
@@ -185,6 +188,18 @@ export default {
             if (this.titleBatch == '全公司') {
                 this.$message.warning("根节点不能删除");
                 return false
+            }
+            if(this.isChildren){
+                this.$message.warning("此节点存在子节点不能删除");
+                return false
+            }
+            if (this.userData.length) {
+                for(let i=0;i<this.userData.length;i++){
+                    if(this.userData[i].enabled){
+                        this.$message.warning("此节点下有用户不可删除");
+                        return false
+                    }
+                }
             }
             let _this = this;
             this.$confirm({

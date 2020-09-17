@@ -75,7 +75,7 @@
           :to="{ name: 'recover', params: { user: 'aaa'} }"
           class="forge-password"
           style="float: right;"
-        >忘记密码</router-link>
+        >重置密码</router-link>
       </a-form-item>
 
       <a-form-item style="margin-top:24px">

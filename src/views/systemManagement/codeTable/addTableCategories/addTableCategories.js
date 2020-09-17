@@ -39,6 +39,10 @@ export default {
             }
             this.tableModal = true;
         },
+        selectAutoCode(){
+            this.formItem.code=''
+            this.formItem.name=''
+        },
         selectFieldValueType(e) {//选择数据类型如果是多级联动类型 => 调接口获取所有的多级联动下拉值
             if(e == 5) {
                 this.getAllMultilevelData();
