@@ -39,14 +39,16 @@ export default {
                         priorityLevel: 1,
                         childNode: this.childNodeP,
                         participantList:[],
-                        conditionList:[]
+                        conditionList:[],
+                        expressionList:[]
                     }, {
                         name: "条件2",
                         nodeType: 'CONDITION',
                         priorityLevel: 2,
                         childNode: null,
                         participantList:[],
-                        conditionList:[]
+                        conditionList:[],
+                        expressionList:[]
                     }]
                 }
             }

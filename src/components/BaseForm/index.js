@@ -160,6 +160,13 @@
                                     code:ele.code,
                                     value:[data]
                                 })
+                            }else{
+                                // if(ele.value || ele.value == 0){
+                                    saveData.push({
+                                        code:ele.code,
+                                        value:[ele.value]
+                                    })
+                                // }
                             }
                         })
                     })
@@ -206,10 +213,8 @@
                         })
                     }
                     const res = await fn(param)
-                    if(res){
-                        !this.currentForm && this.$router.go(-1)
-                        this.$emit('next',res)
-                    }
+                    !this.currentForm && this.$router.go(-1)
+                    this.$emit('next',res)
                 }
             })
         },
