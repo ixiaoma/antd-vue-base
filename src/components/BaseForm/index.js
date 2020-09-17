@@ -162,10 +162,12 @@
                                 })
                             }else{
                                 // if(ele.value || ele.value == 0){
+                                if(ele.value){
                                     saveData.push({
                                         code:ele.code,
-                                        value:[ele.value]
+                                        value:ele.value
                                     })
+                                }
                                 // }
                             }
                         })

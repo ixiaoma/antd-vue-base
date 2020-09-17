@@ -197,9 +197,9 @@ export default {
         let api = this.currentTab.api[1] ; 
         params["filter"] = 
         {
-            filters:{
-              field: "basicInfoId", fieldType: "TEXT_MULTI", operator: "eq", value: this.basicInfoId
-            },
+            filters:[
+              {field: "basicInfoId", fieldType: "TEXT_MULTI", operator: "eq", value: this.basicInfoId}
+            ],
             logic: "and"
         }
         
@@ -253,13 +253,7 @@ export default {
             let saveData = []
             this.$refs.baseForm.layoutList.forEach(item=>{
                 item.fieldDefineValueList.forEach(ele=>{
-                  if(ele.readonly){
-                    saveData.push({
-                      code: ele.code ,
-                      value: ele.value
-                    })
-                    return 
-                  }
+                  console.log(values[ele.code] , 'values[ele.code]')
                     if(values[ele.code]){
                         let data = values[ele.code]
                         if(ele.valueType == 'DATETIME'){
@@ -269,7 +263,14 @@ export default {
                             code:ele.code,
                             value:[data]
                         })
-                    }
+                    }else{
+                      if(ele.value){
+                          saveData.push({
+                            code:ele.code,
+                            value:ele.value
+                        })
+                      }
+                  }
                 })
             })
           basicInfoCommit(this.basicInfoId , saveData).then(res=>{
