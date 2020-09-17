@@ -30,7 +30,7 @@ export default {
         valueTypeList,
         fieldList:[],
         nodeType:null,
-        slectAllData:onlyread,
+        slectAllData:'onlyread',
         nodeConfig:null,
         selectRadio:null,
         roleList:[],

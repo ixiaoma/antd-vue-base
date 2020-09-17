@@ -42,12 +42,12 @@
                                         <input type="text" class="ant-input editable-title-input" v-if="isInputList[index]"
                                         @blur="blurEvent(index)" @focus="$event.currentTarget.select()" v-focus v-model="item.name">
                                         <span class="editable-title" @click="clickEvent(index)" v-if="!isInputList[index]">{{item.name}}</span>
-                                        <span class="priority-title" @click="setCondition(item)">优先级{{item.priorityLevel}}</span>
+                                        <span class="priority-title" @click="setCondition(item,index)">优先级{{item.priorityLevel}}</span>
                                         <a-icon type="close" class="close" @click="delTerm(index)"/>
                                     </div>
                                     <div class="sort-right" v-if="index!=nodeConfig.conditionList.length-1"
                                         @click="arrTransfer(index)">&gt;</div>
-                                    <div class="content" @click="setCondition(item)">{{conditionStr(item,index)}}</div>
+                                    <div class="content" @click="setCondition(item,index)">{{conditionStr(item,index)}}</div>
                                     <div class="error_tip" v-if="isTried&&item.error">
                                         <i class="anticon anticon-exclamation-circle" style="color: rgb(242, 86, 67);"></i>
                                     </div>

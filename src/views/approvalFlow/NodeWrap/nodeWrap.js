@@ -45,6 +45,7 @@ export default {
             conditionDepartmentList: [],
             conditionEmployessList: [],
             conditionRoleList: [],
+            currentCondition:null
         }
     },
     components:{
@@ -82,7 +83,7 @@ export default {
         conditionStr(item, index) {//条件设置
             var { expressionList, participantList } = item;
             let str = ''
-            expressionList.forEach(ele=>{
+            expressionList && expressionList.forEach(ele=>{
                 str += ele.code + '=' + ele.value
             })
             return str || '请设置条件'
@@ -157,15 +158,16 @@ export default {
         setPerson() {//设置审批人、抄送人等（点击块的操作）
             this.$refs.drawer.showDrawer(this.nodeConfig)
         },
-        setCondition(condition){//设置条件
+        setCondition(condition,index){//设置条件
             // console.log(condition)
             this.$refs.drawer.showDrawer(condition)
             this.bPriorityLevel = condition.priorityLevel;
+            this.currentCondition = index
             // this.conditionsConfig = JSON.parse(JSON.stringify(this.nodeConfig))
             // this.conditionConfig = this.conditionsConfig.conditionNodes[priorityLevel - 1]
         },
         backCondition(list){
-            this.nodeConfig.conditionList[this.bPriorityLevel -1].expressionList = list
+            this.nodeConfig.conditionList[this.currentCondition].expressionList = list
             this.$emit("update:nodeConfig", this.nodeConfig);
         },
         arrTransfer(index, type = 1) {//条件向左-1,向右1
