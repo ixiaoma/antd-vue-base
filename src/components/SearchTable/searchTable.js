@@ -18,17 +18,14 @@ export default{
             },
             columns:[],
             selectedRowKeys: [],
-            selectedRows: []
+            selectedRows: [],
+            buttonList:[]
         }
     },
     props:{
         pageCode:{//页面唯一编码
             type: String,
             default: 'example'
-        },
-        showBtnList:{//按钮权限
-            type: Array,
-            default: ()=>[]
         }
     },
     components: {
@@ -80,17 +77,20 @@ export default{
                 dataIndex: ele.code
               }
             })
-            this.columns.push({
-              title: '操作',
-              dataIndex: 'action',
-              width: '130px',
-              fixed: 'right',
-              scopedSlots: { customRender: 'action' }
-            })
+            if(this.buttonList.includes('detail') || this.buttonList.includes('edit') || this.buttonList.includes('delete')){
+                this.columns.push({
+                    title: '操作',
+                    dataIndex: 'action',
+                    width: '130px',
+                    fixed: 'right',
+                    scopedSlots: { customRender: 'action' }
+                })
+            }
             this.pageLoading = false
         }
     },
     created(){
         this.getInitData()
+        this.buttonList = this.$route.meta.buttonList
     }
 }

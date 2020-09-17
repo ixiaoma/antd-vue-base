@@ -53,13 +53,15 @@
                     initialValue = currentValue ? moment(currentValue, 'YYYY-MM-DD') : null
                 } else if(i.valueType == 'RADIO'){
                     initialValue = currentValue || undefined
+                } else if(i.valueType == 'INTEGER' || i.valueType == 'DECIMAL'){
+                    initialValue = currentValue ? Number(currentValue) : null
                 }else{
                     initialValue = currentValue
                 }
             }
             const rules = [
                 {
-                    type : i.valueType == 'DATETIME' ? 'object' : 'string',
+                    type : i.valueType == 'DATETIME' ? 'object' : i.valueType == 'INTEGER' || i.valueType == 'DECIMAL' ? 'number' : 'string',
                     required: i.notNull,
                     whitespace:true,
                     message: `${i.name}必填`
@@ -78,6 +80,18 @@
             }
             return [i.code,config]
         },
+
+        // methods 正则替换小数点
+        limitNumber(value) {
+            if (typeof value === 'string') {
+            return !isNaN(Number(value)) ? value.replace(/\./g, '') : 0
+            } else if (typeof value === 'number') {
+            return !isNaN(value) ? String(value).replace(/\./g, '') : 0
+            } else {
+            return 0
+            }
+        },
+  
         loadData(selectedOptions){
             const targetOption = selectedOptions[selectedOptions.length - 1]
             targetOption.children = [

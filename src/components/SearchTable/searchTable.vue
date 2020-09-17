@@ -4,10 +4,10 @@
     <a-card :bordered="false" v-if='!pageLoading'>
         <table-filter :filterList='filterList' @refresh='searchRefresh'/> 
         <div class="table-operator">
-            <a-button type="primary" icon="plus" @click="handleAdd(null,1)">新建</a-button>
+            <a-button type="primary" icon="plus" v-if="buttonList.includes('add')" @click="handleAdd(null,1)">新建</a-button>
             <div>
                 <slot></slot>
-                <a-button type="default" icon="download" style="margin-left:10px">导出</a-button>
+                <a-button type="default" icon="download" v-if="buttonList.includes('output')" style="margin-left:10px">导出</a-button>
             </div>
         </div>
 
@@ -19,11 +19,9 @@
         :scroll='{x:true}'>
             <span slot="action" slot-scope="text, record">
                 <template>
-        <!-- :rowSelection="rowSelection" -->
-                    <!-- v-if="showBtnList.includes('detail')" -->
-                    <a @click="handleAdd(record,2)" style="margin:0 3px">查看</a>
-                    <a @click="handleAdd(record,3)" style="margin:0 3px">修改</a>
-                    <a @click="deleteData(record.id)" style="margin:0 3px">删除</a>
+                    <a v-if="buttonList.includes('detail')" @click="handleAdd(record,2)" style="margin:0 3px">查看</a>
+                    <a v-if="buttonList.includes('edit')" @click="handleAdd(record,3)" style="margin:0 3px">修改</a>
+                    <a v-if="buttonList.includes('delete')" @click="deleteData(record.id)" style="margin:0 3px">删除</a>
                 </template>
             </span>
         </s-table>

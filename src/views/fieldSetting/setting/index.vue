@@ -14,7 +14,7 @@
                 </a>
                 <a-row :gutter='56'>
                   <draggable v-model="item.layoutList" :options="{group:'filed1'}">
-                    <a-col :md='24' :lg ='18' :xl='12' v-for="(childItem,childIndex) in item.layoutList" :key='childIndex'>
+                    <a-col :sm='24' :md ='18' :lg='12' v-for="(childItem,childIndex) in item.layoutList" :key='childIndex'>
                       <div class="pre-field">
                         <span>{{childItem.name}}</span>
                         <div v-if='activeKey == "BASIC"'>

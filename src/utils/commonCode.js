@@ -102,31 +102,31 @@ export const levelList = [
             title:'最高上级'
         },{
             label:'2',
-            title:'第二层上级上级'
+            title:'第二层上级'
         },{
             label:'3',
-            title:'第三层上级上级'
+            title:'第三层上级'
         },{
             label:'4',
-            title:'第四层上级上级'
+            title:'第四层上级'
         },{
             label:'5',
-            title:'第五层上级上级'
+            title:'第五层上级'
         },{
             label:'6',
-            title:'第六层上级上级'
+            title:'第六层上级'
         },{
             label:'7',
-            title:'第七层上级上级'
+            title:'第七层上级'
         },{
             label:'8',
-            title:'第八层上级上级'
+            title:'第八层上级'
         },{
             label:'9',
-            title:'第九层上级上级'
+            title:'第九层上级'
         },{
             label:'10',
-            title:'第十层上级上级'
+            title:'第十层上级'
         }
     ]
 ]

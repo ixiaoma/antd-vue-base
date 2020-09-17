@@ -5,7 +5,7 @@
             <a-collapse v-model="activeKey" :bordered="false" class="spacial-collape" expand-icon-position='right'>
                 <a-collapse-panel v-for="(item,index) in layoutList" :key="String(index)" :header="item.groupName">
                     <a-row :gutter="56">
-                        <a-col v-for="(i,d) in item.fieldDefineValueList" :key="d" :md='24' :lg ='18' :xl="i.valueType == 'TEXT_MULTI' || i.valueType == 'PICTURE' || i.valueType == 'ATTACHMENT' ? 20 : 12" >
+                        <a-col v-for="(i,d) in item.fieldDefineValueList" :key="d" :sm='24' :md ='18' :lg="i.valueType == 'TEXT_MULTI' || i.valueType == 'PICTURE' || i.valueType == 'ATTACHMENT' ? 20 : 12" >
                             <a-form-item :label="i.name" v-if='readonly || i.readOnly' class="readonly-row">
                                 <span class="ant-form-text" :title="i.value ? i.value.join(',') : ''">  {{i.value ? i.value.join(',') : ''}} </span>
                             </a-form-item>
@@ -13,6 +13,8 @@
                                 <a-row :gutter="8">
                                     <a-col :span="22">
                                         <a-textarea v-if="i.valueType == 'TEXT_MULTI'" rows="3" v-decorator="decoratorFn(i)" :placeholder="'请填写'+i.name"/>
+                                        <a-input-number v-else-if="i.valueType == 'INTEGER'" :formatter="limitNumber" :parser="limitNumber"  :precision='0' v-decorator="decoratorFn(i)" :placeholder="'请输入'+i.name" style="width:100%"/>
+                                        <a-input-number v-else-if="i.valueType == 'DECIMAL'" :precision='0' v-decorator="decoratorFn(i)" :placeholder="'请输入'+i.name" style="width:100%"/>
                                         <a-select v-else-if="i.valueType == 'RADIO'" v-decorator="decoratorFn(i)" :placeholder="'请选择'+i.name" allowClear showSearch>
                                             <a-select-option :value="item.codeKey" v-for="(item,index) in i.codeItems" :key='index'>{{item.codeValue}}</a-select-option>
                                         </a-select>
@@ -89,5 +91,11 @@
             line-height: 33px;
         }
     }
-    
+    .table-page-search-wrapper{
+        .ant-form-inline {
+            .ant-form-item,.ant-form-item-with-help{
+                margin-bottom: 0px;
+            }
+        }
+    } 
 </style>

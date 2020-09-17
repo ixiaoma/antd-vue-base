@@ -52,7 +52,7 @@ export default {
       },
       handleReset () {
         this.form.resetFields()
-        this.$emit('refresh',{})
+        this.$emit('refresh',[])
       },
       toggle () {
         this.expand = !this.expand

@@ -66,6 +66,8 @@ export default {
               this.roleList = participantList.map(ele=>{
                 return {...ele}
               })
+            }else{
+              this.roleList = []
             }
           }
         }else{

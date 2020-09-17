@@ -22,7 +22,7 @@
           {{item.tabName}}
         </span>
         <a-card v-if='activeKey == index+2'>
-          <table-filter v-if='item.filterList' :filterList='item.filterList'/>
+          <!-- <table-filter v-if='item.filterList' :filterList='item.filterList'/>
           <div class="table-operator" v-if='item.tabName != "合同管理"'>
             <a-button type="primary" icon="plus" @click="handleAdd(item)">新建</a-button>
             <a-button type="default" icon="download" v-if='item.tabName == "员工离职" || item.tabName == "奖惩管理"'>批量导出</a-button>
@@ -46,12 +46,12 @@
                 <a @click="handleSub(record)" v-if='item.tabName == "员工离职" || item.tabName == "奖惩管理"'>删除</a>
               </template>
             </span>
-          </s-table>
-          <!-- <search-table :pageCode='item.pageCode'/> -->
+          </s-table> -->
+          <search-table :pageCode='item.pageCode'/>
         </a-card>
       </a-tab-pane>
     </a-tabs>
-    <a-modal 
+    <!-- <a-modal 
       @ok="onOk"
       v-model="visible" 
       :title="modalTitle" 
@@ -63,7 +63,7 @@
       :currentForm='currentForm' 
       @next='nextStep' 
       :showBottom='false'/>
-    </a-modal>
+    </a-modal> -->
     <footer-tool-bar>
         <a-button @click="goBack">返回</a-button>
         <a-button  style="margin-left: 8px" @click="clickStorage">暂存</a-button>
