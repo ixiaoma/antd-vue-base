@@ -18,6 +18,7 @@
         <td v-for="(item3,ind) in item.rosterType" :key="ind" :class="weekList.indexOf((ind+1).toString())>=0?'yellow':'pink'">{{item3}}</td>
       </tr>
     </table>
+    <img src="./roster.png" style="width:800px;margin-top:20px;"/>
   </div>
 </template>
 
