@@ -40,13 +40,13 @@ export default {
         ownerChecked:false,
         levelData:'1',
         levelSelect:'1',
-        levelList
+        levelList,
+        expressionList:[]
       };
     },
     components:{roleModel},
     methods: {
       async showDrawer(nodeConfig) {
-        console.log(nodeConfig)
         this.nodeConfig = nodeConfig
         var { nodeType, name, formAuthorityList, participantList } = nodeConfig
         this.drawerTitle = name+'设置'
@@ -71,11 +71,14 @@ export default {
               this.roleList = []
             }
           }
-        }else{
+        }else if(nodeType == 'CC'){
           if(participantList && participantList.length){
             this.roleList = participantList.filter(ele=>ele.type == 'ROLE')
             this.ownerChecked = participantList.filter(ele=>ele.type == 'APPLICANT').length > 0
           }
+        }else{
+          this.fieldList = await this.getFormDetailList()
+          this.expressionList = nodeConfig.expressionList || []
         }
         this.visible = true;
       },
@@ -110,7 +113,7 @@ export default {
           ele[field] = checked
         })
       },
-      async getFormDetailList(){
+      async getFormDetailList(){//权限字段
         const { id } = this.$route.query
         this.layoutList = await getFormDetail({id})
         const fieldList = this.layoutList.map(ele=>{
@@ -124,11 +127,24 @@ export default {
         })
         return fieldList
       },
-      setRoleData(list){
+      setRoleData(list){//已选角色
         this.roleList = list
       },
       deleteRole(index){//删除角色
         this.roleList.splice(index,1)
+      },
+      disabledSelect(code){//已选条件禁用
+        return this.expressionList.filter(ele=>ele.code == code).length > 0
+      },
+      addCondition(){//添加条件
+        this.expressionList.push({
+          code:null,
+          operator:'eq',
+          value:''
+        })
+      },
+      deleteCondition(index){//删除条件
+        this.expressionList.splice(index,1)
       },
       commitDrawer(){
         let { nodeType} = this.nodeConfig
@@ -151,7 +167,12 @@ export default {
           }
           this.nodeConfig.participantList = arr
         }
-        this.$emit("update:nodeConfig", this.nodeConfig);
+        if(nodeType == 'CONDITION'){
+          const list = this.expressionList.filter(ele=> ele.code && (ele.value || ele.value == 0))
+          this.$emit('backCondition',list)
+        }else{  
+          this.$emit("update:nodeConfig", this.nodeConfig);
+        }
         this.visible = false;
       }
     },

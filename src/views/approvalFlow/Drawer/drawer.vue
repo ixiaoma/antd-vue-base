@@ -104,6 +104,24 @@
           <div class="title-style"><h3>申请人本人</h3></div>
           <a-checkbox v-model="ownerChecked">抄送给申请人本人</a-checkbox>
       </a-form>
+      <a-form :form="form" layout="vertical" v-if="nodeType == 'CONDITION'">
+          <div class="title-style"><h3>同时满足以下条件</h3></div>
+          <a-row :gutter='10' v-for="(item,index) in expressionList" :key='index' style="margin-top:20px">
+            <a-col :span='8'>
+              <a-select placeholder="请选择" style="width: 160px"  v-model="item.code">
+                <a-select-option :value="item.code" :disabled='disabledSelect(item.code)' v-for='(item,index) in fieldList' :key='index'>
+                  {{item.name}}
+                </a-select-option>
+              </a-select>
+            </a-col>
+            <a-col :span='4'>=</a-col>
+            <a-col :span='8'>
+              <a-input v-model="item.value" style="width:100%"/>
+            </a-col>
+            <a-icon type="close-circle" style="font-size:20px;float:right;margin-top:6px" @click="deleteCondition(index)"/>
+          </a-row>
+          <a-button type="dashed" ghost style="color:#1890ff;border-color:#1890ff;margin-top:20px" icon="plus" @click="addCondition">添加条件</a-button>
+      </a-form>
       <role-model ref='selectModel' @setRoleData='setRoleData'/>
       <div :style="{
           position: 'absolute',
