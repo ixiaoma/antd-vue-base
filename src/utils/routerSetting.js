@@ -67,11 +67,15 @@ export function getRouterData(list){
               children:getRouterData(ele.childList)
             }
         }else{
+            let buttonList = []
+            if(ele.buttonList && ele.buttonList.length){
+                buttonList = ele.buttonList.map(ele=>ele.code)
+            }
             return{
                 path:'/'+ele.url,
                 name:ele.url,
                 component: routerObj[ele.url],
-                meta: { title: ele.name,icon:icon}
+                meta: { title: ele.name,icon:icon,buttonList}
             }
         }
     })

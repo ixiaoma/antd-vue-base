@@ -842,5 +842,17 @@ export const hideInMenuRouterMap = {
       component: () => import(/* webpackChunkName: "fail" */ '@/views/approvalFlow/approval.vue'),
       meta: { title: '审批流程设置' }
     },
+    {
+      path: '/hidemenu/attendanceDetailList',
+      name: 'attendanceDetailList',
+      component: () => import('@/views/staffAttendance/attendanceDetailList/attendanceDetailList.vue'),
+      meta: { title: '考勤明细' }
+    },
+    {
+      path: '/hidemenu/rosterDetail',
+      name: 'rosterDetail',
+      component: () => import('@/views/staffAttendance/rosterDetail/rosterDetail.vue'),
+      meta: { title: '排班明细'}
+    },
   ]
 }

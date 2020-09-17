@@ -4,8 +4,8 @@
 <template>
   <div class="rosterList">
     <search-table pageCode='roster'>
-      <a-button type="primary" icon="upload" @click="showModal">提交排班计划</a-button>
-      <a-button type="primary" icon="upload" @click="showModal" style="margin-left:10px">更改排班计划</a-button>
+      <a-button v-if="buttonList.includes('rosterUpload')" type="primary" icon="upload" @click="showModal">提交排班计划</a-button>
+      <a-button v-if="buttonList.includes('rosterEditUpload')" type="primary" icon="upload" @click="showModal" style="margin-left:10px">更改排班计划</a-button>
     </search-table>
     <a-modal v-model="visible" title="提交排班计划" :bodyStyle='{padding:0}' @ok="handleUpload" ok-text="提交" cancel-text="取消">
           <a-form :form="form">

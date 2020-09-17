@@ -16,8 +16,18 @@
                             </a-col>
                             <a-col :xxl="readonly?12:8" :lg="readonly?12:8">
                                 <a-form-item :label="'权重' + (index + 1)" :required='!readonly' :label-col="{ span: 9 }" :wrapper-col="{ span: 15 }">
-                                    <span v-if="readonly">{{item.weight}}</span>
-                                    <a-input v-else allowClear placeholder="权重" v-model="item.weight"></a-input>
+                                    <span v-if="readonly">{{item.weight}}%</span>
+                                    <!-- <a-input v-else allowClear placeholder="权重" v-model="item.weight"></a-input> -->
+                                    <a-input-number
+                                        style="width:100%"
+                                        :default-value="100"
+                                        v-model="item.weight"
+                                        :min="0"
+                                        :max="100"
+                                        :precision='0'
+                                        :formatter="value => `${value}%`"
+                                        :parser="value => value.replace('%', '')"
+                                    />
                                 </a-form-item>
                             </a-col>
                             <a-col :xxl="4" :lg="4" v-if="!readonly">

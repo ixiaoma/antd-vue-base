@@ -11,8 +11,7 @@
                         v-else
                         :treeData="treeData"
                         @select="selectNode"
-                        @expand="expand"
-                        :defaultExpandedKeys=defaultExpandedKeys>
+                        @expand="expand">
                     </a-tree>
                 </a-card>
             </a-col>
@@ -91,7 +90,7 @@
                 </a-card>
             </a-col>
         </a-row>
-        <addMenu ref="addMenu" @refresh="getFirstNodeData"></addMenu>
+        <addMenu ref="addMenu" @refresh="refresh"></addMenu>
     </div>
 </template>
 

@@ -1,6 +1,7 @@
 <template>
   <div>
     <a-drawer
+      :maskClosable="false"
       :title="drawerTitle"
       :width="560"
       :visible="visible"
@@ -94,6 +95,11 @@
           </div>
           <a-divider />
           <div class="title-style"><h3>指定上级</h3><span>可抄送指定层级上级</span></div>
+          <a-select mode="multiple" style="width: 360px">
+            <a-select-option :value="item.label" v-for='(item,index) in levelList[1]' :key='index'>
+              {{item.title}}
+            </a-select-option>
+          </a-select>
           <a-divider />
           <div class="title-style"><h3>申请人本人</h3></div>
           <a-checkbox v-model="ownerChecked">抄送给申请人本人</a-checkbox>

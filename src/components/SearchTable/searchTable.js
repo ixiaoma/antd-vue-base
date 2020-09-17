@@ -18,7 +18,8 @@ export default{
             },
             columns:[],
             selectedRowKeys: [],
-            selectedRows: []
+            selectedRows: [],
+            buttonList:[]
         }
     },
     props:{
@@ -34,6 +35,7 @@ export default{
             type: Boolean , 
             default: false 
         },
+
     },
     components: {
         STable,
@@ -84,17 +86,20 @@ export default{
                 dataIndex: ele.code
               }
             })
-            this.columns.push({
-              title: '操作',
-              dataIndex: 'action',
-              width: '130px',
-              fixed: 'right',
-              scopedSlots: { customRender: 'action' }
-            })
+            if(this.buttonList.includes('detail') || this.buttonList.includes('edit') || this.buttonList.includes('delete')){
+                this.columns.push({
+                    title: '操作',
+                    dataIndex: 'action',
+                    width: '130px',
+                    fixed: 'right',
+                    scopedSlots: { customRender: 'action' }
+                })
+            }
             this.pageLoading = false
         }
     },
     created(){
         this.getInitData()
+        this.buttonList = this.$route.meta.buttonList
     }
 }

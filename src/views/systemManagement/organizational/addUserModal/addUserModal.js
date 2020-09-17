@@ -1,4 +1,4 @@
-import {userSave,userUpdate,userDeatil} from '@/api/user'
+import {userSave,userUpdate,userDeatil,getCodeList} from '@/api/user'
 import moment from 'moment'
 import { TreeSelect } from 'ant-design-vue'
 export default {
@@ -31,17 +31,16 @@ export default {
                 },
             ],
             modaldisabled:false,
+            isEdit:false,
             confirmLoading: false,
             salesStatus: [{ codeValue: '在职', codeKey: 1 }, { codeValue: '离职', codeKey: 0 }],
-            userTypeList:[{ codeValue: '联想员工', codeKey: 1 }, { codeValue: '外部员工', codeKey: 0 }],
+            // userTypeList:[{ codeValue: '联想员工', codeKey: 1 }, { codeValue: '外部员工', codeKey: 0 }],
             sexRadios: [{ label: '男', value: 0 }, { label: '女', value: 1 }],
             isWonder: [{ label: '是', value: 1 }, { label: '否', value: 0 }],
-            customerList:[
-                {
-                    codeKey: '码表维护',
-                    codeValue: '码表维护'
-                  }
-            ],
+            isWonderAdmin:[{ label: '是', value: 1 }, { label: '否', value: 0 }],
+            customerList:[],
+            labelList:[],
+            positoinList:[],
             treeData: [],
             validates:{
                 realName:{rules: [{ required: true, message: '请填写姓名' }]},
@@ -51,16 +50,20 @@ export default {
                 email:{rules: [{ required: false, message: '请填写邮箱' },{type: 'email',message: '请填写正确的邮箱'}]},
                 workCity:{rules: [{ required: true, message: '请选择办公地址' }]},
                 sex:{initialValue:0},
-                userType:{rules: [{ required: true, message: '请选择用户类型' }]}, 
+                // userType:{rules: [{ required: true, message: '请选择用户类型' }]}, 
                 customerName:{rules: [{ required: true, message: '请选择所属公司' }]},
                 isWonder:{initialValue:0},
+                isWonderAdmin:{initialValue:0},
+                position:{rules: [{ required: true, message: '请选择岗位' }]},
+                label:{rules: [{ required: true, message: '请选择标签' }]},
+                totalCredit:{rules: [{ required: false, message: '请填写电话额度' }]},
                 status:{rules: [{ required: true, message: '请填写员工状态' }]},  
                 // deptId:{rules: [{ required: true, message: '请选择主属部门' }]},
                 dept: {rules:[{ type: 'object',required: true,message:'请选择主属部门'}]},
                 idCard:{rules: [{ required: false,message:''}]},  
-                wechat:{rules: [{ required: false,message:''}]},       
-                qq:{rules: [{ required: false,message:''}]},       
-                weibo:{rules: [{ required: false,message:''}]},           
+                // wechat:{rules: [{ required: false,message:''}]},       
+                // qq:{rules: [{ required: false,message:''}]},       
+                // weibo:{rules: [{ required: false,message:''}]},           
                 birthday: {rules:[{ type: 'object',required: false,message:''}]},
                 employmentDate: {rules:[{ type: 'object',required: false,message:''}]},
             },
@@ -83,6 +86,7 @@ export default {
             this.id = id
             this.modaltitle = type == 'add' ? '新建账户' : type == 'edit' ? '编辑账户' : '查看账户';
             this.modaldisabled=type=='detail'?true:false
+            this.isEdit=type=='edit'?true:false
             if(type=='detail'){
                 this.fromCalidates(false)
             }else{
@@ -97,11 +101,12 @@ export default {
                     this.deptName=res.deptName
                     fromdata.sex=parseInt(res.sex)
                     fromdata.isWonder=parseInt(res.isWonder)
+                    fromdata.isWonderAdmin=parseInt(res.isWonderAdmin)
                     fromdata.birthday=res.birthday?moment(new Date(res.birthday)):null
                     fromdata.employmentDate=res.employmentDate?moment(new Date(res.employmentDate)):null
                     this.$nextTick(()=>{
-                        let { realName,username,cellphone,email,workCity,sex,userType,customerName,isWonder,status,idCard,wechat,qq,weibo,birthday,employmentDate } = { ...fromdata };
-                        this.formField.setFieldsValue({realName,username,cellphone,email,workCity,sex,userType,customerName,isWonder,status,idCard,wechat,qq,weibo,birthday,employmentDate})
+                        let { realName,username,cellphone,email,workCity,sex,customerName,isWonder,isWonderAdmin,position,label,totalCredit,status,idCard,birthday,employmentDate } = { ...fromdata };
+                        this.formField.setFieldsValue({realName,username,cellphone,email,workCity,sex,customerName,isWonder,isWonderAdmin,position,label,totalCredit,status,idCard,birthday,employmentDate})
                         this.formField.setFieldsValue({
                             dept:{
                                 value:res.deptId,
@@ -169,19 +174,38 @@ export default {
                 email:{rules: [{ required: false, message: '请填写邮箱' },{type: 'email',message: '请填写正确的邮箱'}]},
                 workCity:{rules: [{ required: value, message: '请选择办公地址' }]},
                 sex:{initialValue:0},
-                userType:{rules: [{ required: true, message: '请选择用户类型' }]},
+                // userType:{rules: [{ required: true, message: '请选择用户类型' }]},
                 customerName:{rules: [{ required: true, message: '请选择所属公司' }]},
                 isWonder:{initialValue:0},
+                isWonderAdmin:{initialValue:0},
+                position:{rules: [{ required: true, message: '请选择岗位' }]},
+                label:{rules: [{ required: true, message: '请选择标签' }]},
+                totalCredit:{rules: [{ required: false, message: '请填写电话额度' }]},
                 status:{rules: [{ required: true, message: '请填写员工状态' }]},  
                 // deptId:{rules: [{ required: value, message: '请选择主属部门' }]},
                 dept: {rules:[{ type: 'object',required: value,message:'请选择主属部门'}]},
                 idCard:{rules: [{ required: false,message:''}]},  
-                wechat:{rules: [{ required: false,message:''}]},       
-                qq:{rules: [{ required: false,message:''}]},       
-                weibo:{rules: [{ required: false,message:''}]},           
+                // wechat:{rules: [{ required: false,message:''}]},       
+                // qq:{rules: [{ required: false,message:''}]},       
+                // weibo:{rules: [{ required: false,message:''}]},           
                 birthday: {rules:[{ type: 'object',required: false,message:''}]},
                 employmentDate: {rules:[{ type: 'object',required: false,message:''}]},
             }
+        },
+        codeLoad(){
+            getCodeList('所属公司').then(res=>{
+                this.customerList=res
+            })
+            getCodeList('人员标签').then(res=>{
+                this.labelList=res
+            })
+            getCodeList('positoin').then(res=>{
+                this.positoinList=res
+            })
+            
         }
+    },
+    created() { 
+        this.codeLoad()
     }
 }

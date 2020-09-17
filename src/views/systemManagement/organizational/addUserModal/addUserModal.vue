@@ -15,7 +15,7 @@
                     </a-col>
                     <a-col :span="12">
                         <a-form-item label="员工工号" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
-                            <a-input  v-decorator="['staffNo',validates.staffNo]" :placeholder="modaldisabled?'':'系统自动生成'" disabled/>
+                            <a-input  v-decorator="['staffNo',validates.staffNo]" :placeholder="modaldisabled?'':'员工工号'" disabled/>
                         </a-form-item>
                     </a-col>
                     <a-col :span="12">
@@ -46,12 +46,8 @@
                             </a-select>
                         </a-form-item>
                     </a-col>
-                    <a-col :span="12">
-                        <a-form-item label="性别" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
-                            <a-radio-group :options="sexRadios"  v-decorator="['sex',validates.sex]" :disabled="modaldisabled"/>
-                        </a-form-item>
-                    </a-col>
-                    <a-col :span="12">
+                    
+                    <!-- <a-col :span="12">
                         <a-form-item label="用户类型" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
                             <a-select :getPopupContainer='triggerNode => triggerNode.parentNode' mode="default" v-decorator="['userType',validates.userType]" :placeholder="modaldisabled?'':'请选择用户类型'" style="width: 100%" :disabled="modaldisabled" allowClear>
                                 <a-select-option v-for="k in userTypeList" :key="k.codeKey" :value="k.codeKey">
@@ -59,7 +55,17 @@
                                 </a-select-option>
                             </a-select>
                         </a-form-item>
-                    </a-col>
+                    </a-col> -->
+                    <a-col :span="12">
+                        <a-form-item label="标签" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
+                             <!-- <a-input v-decorator="['label',validates.label]" :placeholder="modaldisabled?'':'请填写标签'" :disabled="modaldisabled"/> -->
+                            <a-select :getPopupContainer='triggerNode => triggerNode.parentNode' mode="default" v-decorator="['label',validates.label]" :placeholder="modaldisabled?'':'请选择标签'" style="width: 100%" :disabled="modaldisabled" allowClear>
+                                <a-select-option v-for="k in labelList" :key="k.codeKey" :value="k.codeKey">
+                                {{ k.codeValue }}
+                                </a-select-option>
+                            </a-select>
+                        </a-form-item>
+                    </a-col> 
                     <a-col :span="12">
                         <a-form-item label="所属公司" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
                             <a-select :getPopupContainer='triggerNode => triggerNode.parentNode' mode="default" v-decorator="['customerName',validates.customerName]" :placeholder="modaldisabled?'':'请选择所属公司'" style="width: 100%" :disabled="modaldisabled" allowClear>
@@ -70,10 +76,31 @@
                         </a-form-item>
                     </a-col>
                      <a-col :span="12">
-                        <a-form-item label="是否wonder" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
+                        <a-form-item label="是否vonder" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
                             <a-radio-group :options="isWonder"  v-decorator="['isWonder',validates.isWonder]" :disabled="modaldisabled"/>
                         </a-form-item>
                     </a-col>
+                    <a-col :span="12">
+                        <a-form-item label="是否vonder负责人：" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
+                            <a-radio-group :options="isWonderAdmin"  v-decorator="['isWonderAdmin',validates.isWonderAdmin]" :disabled="modaldisabled"/>
+                        </a-form-item>
+                    </a-col>
+                    
+                    <a-col :span="12">
+                        <a-form-item label="岗位" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
+                             <!-- <a-input v-decorator="['position',validates.position]" :placeholder="modaldisabled?'':'请填写岗位'" :disabled="modaldisabled"/> -->
+                             <a-select :getPopupContainer='triggerNode => triggerNode.parentNode' mode="default" v-decorator="['position',validates.position]" :placeholder="modaldisabled?'':'请选择岗位'" style="width: 100%" :disabled="modaldisabled" allowClear>
+                                <a-select-option v-for="k in positoinList" :key="k.codeKey" :value="k.codeKey">
+                                {{ k.codeValue }}
+                                </a-select-option>
+                            </a-select>
+                        </a-form-item>
+                    </a-col> 
+                    <a-col :span="12">
+                        <a-form-item label="电话额度" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
+                            <a-input-number style="width:100%" v-decorator="['totalCredit',validates.totalCredit]" :placeholder="modaldisabled?'':'请填写电话额度'" :disabled="modaldisabled" :min="0" :max="10" :precision='2'/>
+                        </a-form-item>
+                    </a-col> 
                     
                     <a-col :span="12">
                         <a-form-item label="员工状态" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
@@ -121,6 +148,11 @@
                         </a-form-item>
                     </a-col>
                     <a-col :span="12">
+                        <a-form-item label="性别" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
+                            <a-radio-group :options="sexRadios"  v-decorator="['sex',validates.sex]" :disabled="modaldisabled"/>
+                        </a-form-item>
+                    </a-col>
+                    <!-- <a-col :span="12">
                         <a-form-item label="微信号" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
                             <a-input v-decorator="['wechat',validates.wechat]" :placeholder="modaldisabled?'':'请填写微信号'" :disabled="modaldisabled"/>
                         </a-form-item>
@@ -134,7 +166,7 @@
                         <a-form-item label="微博" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
                             <a-input v-decorator="['weibo',validates.weibo]" :placeholder="modaldisabled?'':'请填写微博号'" :disabled="modaldisabled"/>
                         </a-form-item>
-                    </a-col>   
+                    </a-col>    -->
                     <a-col :span="12">
                         <a-form-item label="出生日期" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
                             <a-date-picker
@@ -155,7 +187,7 @@
                             format="YYYY-MM-DD"
                             style="width:100%"
                             :placeholder="modaldisabled?'':'请选择入职日期'"
-                            :disabled="modaldisabled"
+                            :disabled="modaldisabled||isEdit"
                             />
                         </a-form-item>
                     </a-col>

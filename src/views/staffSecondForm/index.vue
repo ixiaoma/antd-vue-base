@@ -58,7 +58,7 @@
               </template>
             </span>
           </s-table>
-          <!-- <search-table :pageCode='item.pageCode'/> -->
+          <search-table :pageCode='item.pageCode'/>
         </a-card>
       </a-tab-pane>
     </a-tabs>
@@ -76,6 +76,7 @@
       :showBottom='false'/>
     </a-modal>
    
+
   </div>
 </template>
 
