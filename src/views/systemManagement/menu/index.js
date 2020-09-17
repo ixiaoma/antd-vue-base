@@ -74,12 +74,9 @@ export default {
                     cancelText: '取消',
                     onOk() {
                         menusDel(that.currentId).then(res=>{
-                            // if(res.code == 200) {
                                 that.$message.success('删除成功');
-                                that.getFirstNodeData();
-                            // }else{
-                            //     that.$message.warning(res.message);   
-                            // }
+                                // that.getFirstNodeData();
+                                this.expand('',{key: this.currentNode.parentId})
                         })
                     },
                     onCancel() { },
@@ -105,6 +102,7 @@ export default {
         //     this.defaultExpandedKeys = keys;
         // },
         expand(keys,node){//获取子节点
+            this.defaultExpandedKeys = keys;
             let id=node.key?node.key:node.node.eventKey
             menusListChild(id).then(res=>{
                 // if(res.code == 200){
@@ -150,6 +148,9 @@ export default {
                 this.roleData = res;
             })
         },
+        refresh(value){
+            this.expand('',{key:value==1?this.currentNode.parentId:this.currentId})
+        }
     },
     created() {
         this.getFirstNodeData();

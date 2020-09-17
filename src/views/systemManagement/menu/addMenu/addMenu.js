@@ -87,7 +87,7 @@ export default {
                     menusAdd(obj).then(res=>{
                         // if(res.code == 200) {
                             that.$message.success('新建成功');
-                            that.$emit('refresh');
+                            that.$emit('refresh',0);
                             that.showModal = false;
                         // }
                         that.confirmLoading = false;
@@ -108,7 +108,7 @@ export default {
                     menusEdit(that.currentId,nodeData).then(res=>{
                         // if(res.code == 200) {
                             that.$message.success('编辑成功');
-                            that.$emit('refresh');
+                            that.$emit('refresh',1);
                             that.showModal = false;
                         // }
                         that.confirmLoading = false;

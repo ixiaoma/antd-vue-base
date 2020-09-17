@@ -164,13 +164,19 @@
                     if(this.$route.query.pageCode=="performance_assessment_detail"){
                         let arr=this.$refs.staffAchievements.tableValueArr
                         let isflag=false
+                        let num=0
                         arr.forEach(item=>{
                             if(!item.targetText||!item.weight){
                                 isflag=true
                             }
+                            num=num+item.weight
                         })
                         if(isflag){
                             this.$message.warning('请把目标权重填写完整');
+                            return false
+                        }
+                        if(num!=100){
+                            this.$message.warning('请把权重和必须相加为100%');
                             return false
                         }
                         param.params={

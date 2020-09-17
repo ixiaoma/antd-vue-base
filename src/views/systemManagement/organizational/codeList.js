@@ -4,8 +4,8 @@ export const columns=[
         dataIndex: 'realName',
     },
     {
-        title: '昵称',
-        dataIndex: 'username'
+        title: '工号',
+        dataIndex: 'code'
     },
     {
         title: '公司',
