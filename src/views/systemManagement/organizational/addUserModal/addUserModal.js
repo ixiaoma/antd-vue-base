@@ -193,10 +193,10 @@ export default {
             }
         },
         codeLoad(){
-            getCodeList('所属公司').then(res=>{
+            getCodeList('apply_company').then(res=>{
                 this.customerList=res
             })
-            getCodeList('人员标签').then(res=>{
+            getCodeList('personnel_label').then(res=>{
                 this.labelList=res
             })
             getCodeList('positoin').then(res=>{
