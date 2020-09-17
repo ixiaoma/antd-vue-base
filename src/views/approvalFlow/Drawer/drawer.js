@@ -30,9 +30,7 @@ export default {
         valueTypeList,
         fieldList:[],
         nodeType:null,
-        displayAll:false,
-        onlyreadAll:false,
-        editAll:false,
+        slectAllData:onlyread,
         nodeConfig:null,
         selectRadio:null,
         roleList:[],
@@ -52,13 +50,19 @@ export default {
         this.drawerTitle = name+'设置'
         this.nodeType = nodeType
         if(nodeType == 'APPROVE'){
+          let list = []
           if(!formAuthorityList || !formAuthorityList.length){
-            this.fieldList = await this.getFormDetailList()
+            list = await this.getFormDetailList()
           }else{
-            this.fieldList = formAuthorityList.map(ele=>{
-              return {...ele}
-            })
+            list = formAuthorityList
           }
+          this.fieldList = list.map(ele=>{
+            return {
+              code:ele.code,
+              name:ele.name,
+              selectData:ele.onlyread ? 'onlyread' : ele.display ? 'display' : 'edit'
+            }
+          })
           this.checkSelectAll()
           if(participantList && participantList.length){
             const type = participantList[0].type
@@ -93,24 +97,21 @@ export default {
         let onlyreadAll = true
         let editAll = true
         this.fieldList.forEach(ele=>{
-          if(!ele.display){
+          if(ele.slectData != 'display'){
             displayAll = false
           }
-          if(!ele.onlyread){
+          if(ele.slectData != 'onlyread'){
             onlyreadAll = false
           }
-          if(!ele.edit){
+          if(ele.slectData != 'edit'){
             editAll = false
           }
         })
-        this.displayAll = displayAll
-        this.onlyreadAll = onlyreadAll
-        this.editAll = editAll
+        this.slectAllData = displayAll ? 'display' : onlyreadAll ? 'onlyread' : 'edit'
       },
-      selectAll(checked,field){
-        console.log(checked)
+      selectAll(field){
         this.fieldList.forEach(ele=>{
-          ele[field] = checked
+          ele.slectData = field
         })
       },
       async getFormDetailList(){//权限字段
@@ -120,9 +121,7 @@ export default {
             return {
                 code:ele.code,
                 name:ele.name,
-                display:false,
-                edit:false,
-                onlyread:true
+                slectData:'onlyread'
             }
         })
         return fieldList

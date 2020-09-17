@@ -1,25 +1,13 @@
 <template>
-  <a-tree-select
-    show-search
-    style="width: 100%"
-    v-model="value"
-    :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
-    placeholder="请选择"
-    :tree-data="treeData"
-    allow-clear
-    :multiple='multipleTree'
-    :tree-checkable='multipleTree'
-    
-    :labelInValue="false"
-    tree-default-expand-all
-    
-    :replaceFields="{title:'name',children:'subDept',value:'id',key:'id'}"
-  >
-  <!-- treeCheckStrictly
-  @change="onChange"
-    @search="onSearch"
-    @select="onSelect" -->
-  </a-tree-select>
+    <a-tree-select show-search allow-clear style="width: 100%" :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
+      v-model="treeList"
+      :tree-data="treeData"
+      :multiple='multipleTree'
+      :tree-checkable='multipleTree'
+      treeCheckStrictly
+      tree-default-expand-all
+      @change="onChange"
+      :replaceFields="{title:'name',children:'subDept',value:'id',key:'id'}"/>
 </template>
 
 <script>
@@ -27,7 +15,7 @@ import { getDeptTreeData } from '@/api/user'
 export default {
   data() {
     return {
-      value: [],
+      treeList: [],
       treeData:[]
     };
   },
@@ -35,6 +23,10 @@ export default {
     multipleTree:{
         type:Boolean,
         default:true
+    },
+    selectList:{
+      type:Array,
+      default:()=>[]
     }
   },
   methods: {
@@ -42,18 +34,33 @@ export default {
       this.treeData = [await getDeptTreeData()]
     },
     onChange(value) {
-      console.log(value);
-      this.value = value;
+      const list = value.map(ele=>ele.value)
+      this.$emit('selectTree',list)
     },
-    onSearch() {
-      console.log(...arguments);
+    async getInitData(){
+      await this.getTreeList()
+      this.treeList = []
+      if(this.selectList && this.selectList.length){
+        this.getTreeData(this.selectList,this.treeData)
+      }
     },
-    onSelect() {
-      console.log(...arguments);
-    },
+    getTreeData(ids,list){
+      for(let i = 0 ; i < list.length ; i++){
+        if(ids.includes(list[i].id)){
+          this.treeList.push({
+            label:list[i].name,
+            value:list[i].id
+          })
+        }else{
+          if(list[i].subDept && list[i].subDept.length){
+            this.getTreeData(ids,list[i].subDept)
+          }
+        }
+      }
+    }
   },
   created(){
-    this.getTreeList()
+    this.getInitData()
   }
 };
 </script>

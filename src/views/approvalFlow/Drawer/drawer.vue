@@ -59,7 +59,12 @@
           <div class="table-style">
             <div class="table-row table-header">
               <div class="component-style">控件</div>
-              <div class="radio-style">
+              <a-radio-group v-model="slectAllData" @change="selectAll">
+                  <a-radio value="display">隐藏</a-radio>
+                  <a-radio value="onlyread">仅查看</a-radio>
+                  <a-radio value="edit">可编辑</a-radio>
+              </a-radio-group>
+              <!-- <div class="radio-style">
                 <a-checkbox v-model="displayAll" @change="selectAll(displayAll,'display')">隐藏</a-checkbox>
               </div>
               <div class="radio-style">
@@ -67,11 +72,16 @@
               </div>
               <div class="radio-style">
                 <a-checkbox v-model="editAll" @change="selectAll(editAll,'edit')">可编辑</a-checkbox>
-              </div>
+              </div> -->
             </div>
             <div class="table-row table-body" v-for="(item,index) in fieldList" :key='index'>
               <div class="component-style">{{item.name}}</div>
-              <div class="radio-style">
+              <a-radio-group v-model="item.slectData" @change="checkSelectAll">
+                  <a-radio value="display"></a-radio>
+                  <a-radio value="onlyread"></a-radio>
+                  <a-radio value="edit"></a-radio>
+              </a-radio-group>
+              <!-- <div class="radio-style">
                 <a-checkbox v-model="item.display" @change="checkSelectAll"/>
               </div>
               <div class="radio-style">
@@ -79,7 +89,7 @@
               </div>
               <div class="radio-style">
                 <a-checkbox v-model="item.edit" @change="checkSelectAll"/>
-              </div>
+              </div> -->
             </div>
           </div>
         </a-tab-pane>

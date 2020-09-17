@@ -68,7 +68,7 @@
             }
             const rules = [
                 {
-                    type : i.valueType == 'SELECT' ? 'array' : i.valueType == 'DATETIME' ? 'object' : i.valueType == 'INTEGER' || i.valueType == 'DECIMAL' ? 'number' : 'string',
+                    type : i.valueType == 'SELECT' || i.valueType == 'ORG_TREE' || i.valueType == 'CHECKBOX' ? 'array' : i.valueType == 'DATETIME' ? 'object' : i.valueType == 'INTEGER' || i.valueType == 'DECIMAL' ? 'number' : 'string',
                     required: i.notNull,
                     whitespace:true,
                     message: `${i.name}必填`
@@ -91,14 +91,16 @@
         // methods 正则替换小数点
         limitNumber(value) {
             if (typeof value === 'string') {
-            return !isNaN(Number(value)) ? value.replace(/\./g, '') : 0
+                return !isNaN(Number(value)) ? value.replace(/\./g, '') : 0
             } else if (typeof value === 'number') {
-            return !isNaN(value) ? String(value).replace(/\./g, '') : 0
+                return !isNaN(value) ? String(value).replace(/\./g, '') : 0
             } else {
-            return 0
+                return 0
             }
         },
-  
+        selectTree(list,code){
+            this.form.setFieldsValue({[code]:list})
+        },
         loadData(selectedOptions,categoryCodes){
             const targetOption = selectedOptions[selectedOptions.length - 1]
             console.log(selectedOptions,item,targetOption)
