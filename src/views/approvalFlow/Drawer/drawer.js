@@ -46,6 +46,7 @@ export default {
     components:{roleModel},
     methods: {
       async showDrawer(nodeConfig) {
+        console.log(nodeConfig)
         this.nodeConfig = nodeConfig
         var { nodeType, name, formAuthorityList, participantList } = nodeConfig
         this.drawerTitle = name+'设置'
@@ -150,7 +151,6 @@ export default {
           }
           this.nodeConfig.participantList = arr
         }
-        console.log(this.roleList,this.nodeConfig)
         this.$emit("update:nodeConfig", this.nodeConfig);
         this.visible = false;
       }

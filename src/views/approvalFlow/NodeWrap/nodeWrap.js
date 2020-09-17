@@ -58,7 +58,6 @@ export default {
                 case 'APPROVE' :
                     number  = 1
                 break;
-                // case ''
                 default:
                     number = 0
             }

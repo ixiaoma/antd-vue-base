@@ -10,7 +10,6 @@
                 <a-button type="default" icon="download" v-if="buttonList.includes('output')" style="margin-left:10px">导出</a-button>
             </div>
         </div>
-
         <s-table
         ref="table"
         rowKey="id"

@@ -7,6 +7,7 @@ export default {
     },
     methods: {
         addType(nodeType) {
+            console.log(nodeType)
             this.visible = false;
             let data = null;
             if (nodeType != 'EXCLUSIVE') {
@@ -23,7 +24,7 @@ export default {
                     data = {
                         name: "抄送人",
                         nodeType,
-                        "childNode": this.childNodeP,
+                        childNode: this.childNodeP,
                         participantList:[],
                         conditionList:[]
                     }

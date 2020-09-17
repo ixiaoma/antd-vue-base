@@ -58,10 +58,17 @@
                 }else{
                     initialValue = currentValue
                 }
+            }else{
+                initialValue = []
+            }
+            if(i.valueType == 'SELECT'){//多级联动，强制处理数据
+                i.codeItems.forEach(ele=>{
+                    ele.isLeaf = false
+                })
             }
             const rules = [
                 {
-                    type : i.valueType == 'DATETIME' ? 'object' : i.valueType == 'INTEGER' || i.valueType == 'DECIMAL' ? 'number' : 'string',
+                    type : i.valueType == 'SELECT' ? 'array' : i.valueType == 'DATETIME' ? 'object' : i.valueType == 'INTEGER' || i.valueType == 'DECIMAL' ? 'number' : 'string',
                     required: i.notNull,
                     whitespace:true,
                     message: `${i.name}必填`
@@ -92,19 +99,21 @@
             }
         },
   
-        loadData(selectedOptions){
+        loadData(selectedOptions,categoryCodes){
             const targetOption = selectedOptions[selectedOptions.length - 1]
-            targetOption.children = [
-                {
-                    value:'北京',
-                    label:'北京',
-                    isLeaf: selectedOptions.length == 2 ? true : false
-                },{
-                    value:'上海',
-                    label:'上海',
-                    isLeaf: selectedOptions.length == 2 ? true : false
-                }
-            ]
+            console.log(selectedOptions,item,targetOption)
+            
+            // targetOption.children = [
+            //     {
+            //         value:'北京',
+            //         label:'北京',
+            //         isLeaf: selectedOptions.length == 2 ? true : false
+            //     },{
+            //         value:'上海',
+            //         label:'上海',
+            //         isLeaf: selectedOptions.length == 2 ? true : false
+            //     }
+            // ]
         },
         async handlePreview(file) {
             this.previewImage = file.thumbUrl;
