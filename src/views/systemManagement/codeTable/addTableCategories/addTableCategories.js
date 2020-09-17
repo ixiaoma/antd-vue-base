@@ -54,7 +54,7 @@ export default {
             })
         },
         saveFn() {//保存
-            // var box = /^[\u4e00-\u9fa5]$/;//汉字正则
+            // var codetest = /^[\u4e00-\u9fa5]$/;//汉字正则
             if(!this.formItem.name ) {
                 this.$message.warning('请填写类别名称');
                 return ;
