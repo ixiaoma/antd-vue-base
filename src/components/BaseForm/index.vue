@@ -5,7 +5,7 @@
             <a-collapse v-model="activeKey" :bordered="false" class="spacial-collape" expand-icon-position='right'>
                 <a-collapse-panel v-for="(item,index) in layoutList" :key="String(index)" :header="item.groupName">
                     <a-row :gutter="56">
-                        <a-col v-for="(i,d) in item.fieldDefineValueList" :key="d" :sm='24' :md ='18' :lg="i.valueType == 'TEXT_MULTI' || i.valueType == 'PICTURE' || i.valueType == 'ATTACHMENT' ? 20 : 12" >
+                        <a-col v-for="(i,d) in item.fieldDefineValueList" v-if='i.display' :key="d" :sm='24' :md ='18' :lg="i.valueType == 'TEXT_MULTI' || i.valueType == 'PICTURE' || i.valueType == 'ATTACHMENT' ? 20 : 12" >
                             <a-form-item :label="i.name" v-if='readonly || i.readOnly' class="readonly-row">
                                 <span class="ant-form-text" :title="i.value ? i.value.join(',') : ''">  {{i.value ? i.value.join(',') : ''}} </span>
                             </a-form-item>
@@ -45,9 +45,9 @@
                                                 <a-button> <a-icon type="upload" /> 上传附件</a-button>
                                             </a-upload>
                                         </div>
+                                         <!-- v-else-if="i.valueType == 'ORG_TREE'" -->
+                                        <!-- <tree-select v-else v-decorator="decoratorFn(i)"/> -->
                                         <a-input v-else :maxLength="i.valueType == 'PHONE' ? 11 : null" v-decorator="decoratorFn(i)" :placeholder="'请填写'+i.name" />
-                                        <!-- <tree-select v-else-if="i.valueType == 'ATTACHMENT'"/> -->
-                                        <!-- <span v-else class="ant-form-text">{{i.value}}</span> -->
                                     </a-col>
                                     <a-col :span="2">
                                         <a-popover v-if="i.description">
@@ -85,8 +85,6 @@
         .ant-form-text{
             color: #101010;
         }   
-        // #ecf6ff
-        
     }
     .readonly-row{
         /deep/.ant-form-item-control{

@@ -2,37 +2,33 @@
   <a-tree-select
     show-search
     style="width: 100%"
-    :value="value"
+    v-model="value"
     :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
-    placeholder="Please select"
+    placeholder="请选择"
+    :tree-data="treeData"
     allow-clear
     :multiple='multipleTree'
     :tree-checkable='multipleTree'
-    treeCheckStrictly
+    
+    :labelInValue="false"
     tree-default-expand-all
-    @change="onChange"
-    @search="onSearch"
-    @select="onSelect"
+    
+    :replaceFields="{title:'name',children:'subDept',value:'id',key:'id'}"
   >
-    <a-tree-select-node key="0-1" value="parent 1" title="parent 1">
-      <a-tree-select-node key="0-1-1" value="parent 1-0" title="parent 1-0">
-        <a-tree-select-node key="random" value="leaf1" title="my leaf" />
-        <a-tree-select-node key="random1" value="leaf2" title="your leaf" />
-      </a-tree-select-node>
-      <a-tree-select-node key="random2" value="parent 1-1" title="parent 1-1">
-        <a-tree-select-node key="random3" value="sss">
-          <b slot="title" style="color: #08c">sss</b>
-        </a-tree-select-node>
-      </a-tree-select-node>
-    </a-tree-select-node>
+  <!-- treeCheckStrictly
+  @change="onChange"
+    @search="onSearch"
+    @select="onSelect" -->
   </a-tree-select>
 </template>
 
 <script>
+import { getDeptTreeData } from '@/api/user'
 export default {
   data() {
     return {
-      value: undefined
+      value: [],
+      treeData:[]
     };
   },
   props:{
@@ -42,6 +38,9 @@ export default {
     }
   },
   methods: {
+    async getTreeList(){
+      this.treeData = [await getDeptTreeData()]
+    },
     onChange(value) {
       console.log(value);
       this.value = value;
@@ -53,5 +52,8 @@ export default {
       console.log(...arguments);
     },
   },
+  created(){
+    this.getTreeList()
+  }
 };
 </script>
