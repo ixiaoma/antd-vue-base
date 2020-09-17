@@ -19,7 +19,7 @@ export default {
             checkedKeys: [],
             treeData: [],
             checkedNodes: [],
-            InitializingRoles: [],//初始化角色（不可禁用、编辑、删除）
+            InitializingRoles: ['1'],//初始化角色（不可禁用、编辑、删除）
         }
     },
     methods: {

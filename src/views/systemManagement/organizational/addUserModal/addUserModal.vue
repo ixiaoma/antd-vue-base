@@ -76,12 +76,12 @@
                         </a-form-item>
                     </a-col>
                      <a-col :span="12">
-                        <a-form-item label="是否wonder" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
+                        <a-form-item label="是否vonder" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
                             <a-radio-group :options="isWonder"  v-decorator="['isWonder',validates.isWonder]" :disabled="modaldisabled"/>
                         </a-form-item>
                     </a-col>
                     <a-col :span="12">
-                        <a-form-item label="是否wonder负责人：" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
+                        <a-form-item label="是否vonder负责人：" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
                             <a-radio-group :options="isWonderAdmin"  v-decorator="['isWonderAdmin',validates.isWonderAdmin]" :disabled="modaldisabled"/>
                         </a-form-item>
                     </a-col>

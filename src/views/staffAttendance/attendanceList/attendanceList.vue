@@ -4,7 +4,7 @@
 <template>
 <div class="attendanceList">
     <search-table pageCode='recording'>
-      <a-button type="primary" icon="upload" @click="showModal">考勤导入</a-button>
+      <a-button v-if="buttonList.includes('AtteUpload')" type="primary" icon="upload" @click="showModal">考勤导入</a-button>
     </search-table>
     <a-modal v-model="visible" title="考勤导入" :bodyStyle='{padding:0}' @ok="handleUpload" ok-text="提交" cancel-text="取消">
           <a-form :form="form">

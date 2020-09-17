@@ -18,6 +18,7 @@ export default {
         rosterDate: { rules: [{ type: 'object', required: true, message: '请选择月份' }] }
       },
       form: this.$form.createForm(this),
+      buttonList:[]
     }
   },
   methods: {
@@ -58,5 +59,8 @@ export default {
         })
       })
     },
-  }
+  },
+  created() {
+    this.buttonList = this.$route.meta.buttonList
+  },
 }
