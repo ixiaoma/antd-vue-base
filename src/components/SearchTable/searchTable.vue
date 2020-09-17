@@ -15,6 +15,7 @@
         ref="table"
         rowKey="id"
         :columns="columns"
+        :rowSelection="showSelect?rowSelection:null"
         :data="loadData"
         :scroll='{x:true}'>
             <span slot="action" slot-scope="text, record">

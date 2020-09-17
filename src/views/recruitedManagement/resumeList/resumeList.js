@@ -4,6 +4,7 @@ import TableFilter from '@/components/TableFilter/index.vue'
 import { STable, Ellipsis } from '@/components'
 import { getServiceList } from '@/api/user'
 import {columns,filterList,result} from './codeList.js'
+import { resumeUpdateStatus } from "@/api/reimbursement"
 
 const statusMap = {
   0: {
@@ -55,7 +56,8 @@ export default {
           })
       },
       selectedRowKeys: [],
-      selectedRows: []
+      selectedRows: [] , 
+      updateVisible: false , // 更新简历弹窗
     }
   },
   filters: {
@@ -75,6 +77,7 @@ export default {
     }
   },
   methods: {
+    
     handleAdd (data,flag) {
       this.$router.push({
         name:'baseForm',

@@ -29,7 +29,11 @@ export default{
         showBtnList:{//按钮权限
             type: Array,
             default: ()=>[]
-        }
+        },
+        showSelect:{ // 数据选择
+            type: Boolean , 
+            default: false 
+        },
     },
     components: {
         STable,

@@ -1,9 +1,11 @@
 <template>
   <div>
     <div style="text-align:right">
-      <!-- <a-button type="primary">提交</a-button> -->
+      <a-button type="primary">提交</a-button>
     </div>
-    <a-tabs v-model="activeKey" size='small' class="tabs-style">
+    <a-tabs 
+     @change="changeTabs"
+     size='small' class="tabs-style">
       <a-tab-pane key="1">
         <span slot="tab">
           <span style="color:red">*</span>
@@ -15,8 +17,17 @@
             :showBottom='false'
             :currentForm="basicForm"
           />
+           <footer-tool-bar>
+        <a-button @click="goBack">返回</a-button>
+        <!-- <a-button  style="margin-left: 8px" @click="clickStorage">暂存</a-button> -->
+        <a-button type="primary" style="margin-left: 8px"  @click="save">保存</a-button>
+    </footer-tool-bar>
       </a-tab-pane>
-      <a-tab-pane v-for="(item,index) in tabLists" :key="`${index+2}`" force-render>
+      <a-tab-pane 
+      v-if="basicInfoId"
+      v-for="(item,index) in tabLists" 
+      :key="`${index+2}`" 
+      force-render>
         <span slot="tab">
           <span v-if='item.nullAble' style="color:red">*</span>
           {{item.tabName}}
@@ -39,11 +50,11 @@
             </span>
             <span slot="action" slot-scope="text, record">
               <template>
-                <a @click="handleEdit(record)">查看</a>
-                <a-divider type="vertical" v-if='item.tabName != "合同管理"'/>
-                <a @click="handleSub(record)" v-if='item.tabName != "合同管理"'>修改</a>
-                <a-divider type="vertical" v-if='item.tabName == "员工离职" || item.tabName == "奖惩管理"'/>
-                <a @click="handleSub(record)" v-if='item.tabName == "员工离职" || item.tabName == "奖惩管理"'>删除</a>
+                <a @click="handleFind(record , item)">查看</a>
+                <a-divider type="vertical" />
+                <a @click="handleEdit(record , item)" >修改</a>
+                <a-divider type="vertical"/>
+                <a @click="handleSub(record)" >删除</a>
               </template>
             </span>
           </s-table>
@@ -64,11 +75,7 @@
       @next='nextStep' 
       :showBottom='false'/>
     </a-modal>
-    <footer-tool-bar>
-        <a-button @click="goBack">返回</a-button>
-        <a-button  style="margin-left: 8px" @click="clickStorage">暂存</a-button>
-        <a-button type="primary" style="margin-left: 8px"  @click="save">保存</a-button>
-    </footer-tool-bar>
+   
   </div>
 </template>
 

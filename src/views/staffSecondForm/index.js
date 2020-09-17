@@ -188,16 +188,18 @@ export default {
       readonly:false,
       visible:false,
       modalTitle:'',
-      formCode:'',
       currentForm:{},
       selectedRowKeys: [],
       selectedRows: [],
       loadData: parameter => {
         const params = Object.assign({}, parameter, this.queryParam)
         let api = this.currentTab.api[1] ; 
+        params["filter"] = {
+          // "field": "applyDeptName", "fieldType": "TEXT_SINGLE", "operator": "eq", "value": "部门"
+        }
         return api(params)
           .then(res => {
-            return res.result
+            return res
           })
       },
     }
@@ -223,9 +225,17 @@ export default {
       return {
         ...this.$route.query
       }
-    }
+    },
+    basicInfoId(){
+      return this.$route.query.id
+    },
   },
   methods: {
+    // tab切换
+    changeTabs(e){
+      this.activeKey = e ; 
+    },
+
     // 保存
     save(){
       this.$refs.baseForm.handleSubmit()
@@ -263,12 +273,37 @@ export default {
     },
     handleAdd(item){
       this.modalTitle = item.tabName
-      // this.formCode = item.pageCode
-      this.currentForm = item ; 
+      this.currentForm = { 
+        pageCode : item.pageCode , 
+        flag: 1 
+       } ; 
       this.visible = true
     },
+    // 表格编辑
+    handleEdit( data , item ){
+      this.modalTitle = item.tabName
+      this.currentForm = { 
+        pageCode : item.pageCode , 
+        flag: 3 ,
+        id:data.id
+       } ; 
+      this.visible = true
+    },
+    handleFind( data , item ){
+      this.modalTitle = item.tabName
+      this.currentForm = { 
+        pageCode : item.pageCode , 
+        flag: 2 ,
+        id:data.id
+       } ; 
+      this.visible = true
+    },
+    
     nextStep(id){
-      console.log('nextStep')
+      this.$message.success('保存成功'); 
+      if(this.activeKey > 1){
+        return this.visible = false ; 
+      }
       this.$router.push({query:{...this.$route.query,id,flag:3}})
       this.activeKey = '2'
     },

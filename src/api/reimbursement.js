@@ -19,6 +19,10 @@ export function basicInfoStorage (params) {// 暂存
 export function basicInfoSave (params) { // 提交
     return axios.post(`${baseBusiness}basic_info/save`,params)
 }
+export function basicInfoCommit (params) { // 提交
+    return axios.post(`${baseBusiness}basic_info/commit`,params)
+}
+
 
 // 教育经历
 export function educationalExperienceSave (params) {// 新增
@@ -50,4 +54,9 @@ export function socialRelationsPage (params) {// 列表
 }
 export function socialRelationsEdit (id , params) {// 编辑
     return axios.post(`${baseBusiness}social_relations/save/${id}`,params)
+}
+
+// 更新简历状态 
+export function resumeUpdateStatus (id , params) {// 编辑
+    return axios.post(`${baseBusiness}resume/update/status/${id}`,params)
 }

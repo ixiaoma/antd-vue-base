@@ -164,6 +164,18 @@
                             assessmentContentDetails:this.$refs.staffAchievements.tableValueArr
                         }
                     }
+                    // 员工档案加参数
+                    let basicCodeArr = [ 
+                        'social_relations', 
+                        'work_experience',
+                        'educational_experience'
+                     ]
+                    if(basicCodeArr.indexOf(pageCode) > -1 ){
+                        param.params.push({
+                            code : 'basicInfoId',
+                            value : [this.$route.query.id]
+                        })
+                    }
                     const res = await fn(param)
                     if(res){
                         !this.currentForm && this.$router.go(-1)
