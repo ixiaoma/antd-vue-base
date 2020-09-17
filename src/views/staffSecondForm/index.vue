@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="text-align:right">
-      <a-button type="primary">提交</a-button>
+      <a-button type="primary" @click="submit">提交</a-button>
     </div>
     <a-tabs 
      @change="changeTabs"
@@ -24,7 +24,7 @@
     </footer-tool-bar>
       </a-tab-pane>
       <a-tab-pane 
-      v-if="basicInfoId"
+      :disabled="!basicInfoId"
       v-for="(item,index) in tabLists" 
       :key="`${index+2}`" 
       force-render>
@@ -58,7 +58,7 @@
               </template>
             </span>
           </s-table>
-          <search-table :pageCode='item.pageCode'/>
+          <!-- <search-table :pageCode='item.pageCode'/> -->
         </a-card>
       </a-tab-pane>
     </a-tabs>

@@ -2,11 +2,12 @@ import { STable } from '@/components'
 import TableFilter from '@/components/TableFilter/index.vue'
 import BaseForm from '@/components/BaseForm/index.vue'
 import FooterToolBar from '@/layouts/FooterToolbar'
-
+import moment from "moment"
 import { getServiceList } from '@/api/user'
 import { 
   basicInfoStorage , 
   basicInfoSave,
+  basicInfoCommit,
   socialRelationsSave , 
   socialRelationsPage , 
   socialRelationsEdit ,
@@ -194,9 +195,14 @@ export default {
       loadData: parameter => {
         const params = Object.assign({}, parameter, this.queryParam)
         let api = this.currentTab.api[1] ; 
-        params["filter"] = {
-          // "field": "applyDeptName", "fieldType": "TEXT_SINGLE", "operator": "eq", "value": "部门"
+        params["filter"] = 
+        {
+            filters:{
+              field: "basicInfoId", fieldType: "TEXT_MULTI", operator: "eq", value: this.basicInfoId
+            },
+            logic: "and"
         }
+        
         return api(params)
           .then(res => {
             return res
@@ -242,7 +248,37 @@ export default {
     },
     // 提交
     submit(){
-      this.$refs.baseForm.handleSubmit()
+      this.$refs.baseForm.form.validateFields(async (err, values) => {
+        if (!err) {
+            let saveData = []
+            this.$refs.baseForm.layoutList.forEach(item=>{
+                item.fieldDefineValueList.forEach(ele=>{
+                  if(ele.readonly){
+                    saveData.push({
+                      code: ele.code ,
+                      value: ele.value
+                    })
+                    return 
+                  }
+                    if(values[ele.code]){
+                        let data = values[ele.code]
+                        if(ele.valueType == 'DATETIME'){
+                            data = moment(values[ele.code]).format('YYYY-MM-DD HH:mm:ss')
+                        }
+                        saveData.push({
+                            code:ele.code,
+                            value:[data]
+                        })
+                    }
+                })
+            })
+          basicInfoCommit(this.basicInfoId , saveData).then(res=>{
+            this.$message.success('提交成功')
+            this.$router.go(-1)
+          })
+        }
+    })
+     
     },
     // 暂存
     clickStorage(){

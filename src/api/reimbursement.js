@@ -19,8 +19,8 @@ export function basicInfoStorage (params) {// 暂存
 export function basicInfoSave (params) { // 提交
     return axios.post(`${baseBusiness}basic_info/save`,params)
 }
-export function basicInfoCommit (params) { // 提交
-    return axios.post(`${baseBusiness}basic_info/commit`,params)
+export function basicInfoCommit (id , params) { // 提交
+    return axios.post(`${baseBusiness}basic_info/commit/${id}`,params)
 }
 
 
