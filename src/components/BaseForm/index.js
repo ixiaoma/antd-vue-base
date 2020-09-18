@@ -47,7 +47,7 @@
     methods:{
         decoratorFn(i){
             let initialValue = ''
-            if(i.valueType != 'SELECT' && i.valueType != 'CHECKBOX' && i.valueType != 'ORG_TREE'){
+            if(i.valueType != 'SELECT' && i.valueType != 'CHECKBOX' && i.valueType != 'ORG_TREE_MULTI'){
                 const currentValue = i.value && i.value.length ? i.value.join(',') : ''
                 if(i.valueType == 'DATETIME'){
                     initialValue = currentValue ? moment(currentValue, 'YYYY-MM-DD') : null
@@ -68,7 +68,7 @@
             }
             const rules = [
                 {
-                    type : i.valueType == 'SELECT' || i.valueType == 'ORG_TREE' || i.valueType == 'CHECKBOX' ? 'array' : i.valueType == 'DATETIME' ? 'object' : i.valueType == 'INTEGER' || i.valueType == 'DECIMAL' ? 'number' : 'string',
+                    type : i.valueType == 'SELECT' || i.valueType == 'ORG_TREE_MULTI' || i.valueType == 'CHECKBOX' ? 'array' : i.valueType == 'DATETIME' ? 'object' : i.valueType == 'INTEGER' || i.valueType == 'DECIMAL' ? 'number' : 'string',
                     required: i.notNull,
                     whitespace:true,
                     message: `${i.name}必填`
@@ -155,7 +155,7 @@
                                 }
                                 saveData.push({
                                     code:ele.code,
-                                    value:typeof(data) == 'string' ? [data] : data
+                                    value:typeof(data) != 'object' ? [data] : data
                                 })
                             }else{
                                 if(ele.value){

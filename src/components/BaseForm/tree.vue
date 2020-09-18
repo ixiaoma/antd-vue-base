@@ -15,18 +15,17 @@ import { getDeptTreeData } from '@/api/user'
 export default {
   data() {
     return {
-      treeList: [],
+      treeList: null,
       treeData:[]
     };
   },
   props:{
     multipleTree:{
         type:Boolean,
-        default:true
+        default:false
     },
     selectList:{
-      type:Array,
-      default:()=>[]
+      type:[Array,String,Number]
     }
   },
   methods: {
@@ -34,13 +33,13 @@ export default {
       this.treeData = [await getDeptTreeData()]
     },
     onChange(value) {
-      const list = value.map(ele=>ele.value)
-      this.$emit('selectTree',list)
+      const data = this.multipleTree ? value.map(ele=>ele.value) : value
+      this.$emit('selectTree',data)
     },
     async getInitData(){
       await this.getTreeList()
-      this.treeList = []
-      if(this.selectList && this.selectList.length){
+      this.treeList = this.multipleTree ? [] : ''
+      if(this.multipleTree && this.selectList && this.selectList.length){
         this.getTreeData(this.selectList,this.treeData)
       }
     },
