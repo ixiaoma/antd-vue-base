@@ -20,7 +20,7 @@
                <div class="table-operator">
                     <a-input v-model="username" placeholder="请输入用户名" style="width:200px;margin-right:10px"/>
                     <a-button type="primary" icon="search" @click="searchLoad">搜索</a-button>
-                    <a-button style="float:right" type="default" icon="download" @click="exportLoad">导出</a-button>
+                    <!-- <a-button style="float:right" type="default" icon="download" @click="exportLoad">导出</a-button> -->
                     <a-button style="float:right" type="primary" icon="plus" @click="handleAdd">新建</a-button>      
                 </div>   
                 <a-table 
