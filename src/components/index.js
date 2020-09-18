@@ -15,7 +15,6 @@ import TagCloud from '@/components/Charts/TagCloud'
 import AvatarList from '@/components/AvatarList'
 import Ellipsis from '@/components/Ellipsis'
 import NumberInfo from '@/components/NumberInfo'
-import Tree from '@/components/Tree/Tree'
 import Trend from '@/components/Trend'
 import STable from '@/components/Table'
 import MultiTab from '@/components/MultiTab'
@@ -43,7 +42,6 @@ export {
   Trend,
   Ellipsis,
   NumberInfo,
-  Tree,
   STable,
   MultiTab,
   IconSelector,

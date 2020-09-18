@@ -1,4 +1,6 @@
-import moment from 'moment'
+import fieldHandle from '@/mixins/fieldHandle'
+
+import TreeSelect from '../Tree/tree.vue'
 export default {
     name:'TableFilter',
     data () {
@@ -7,11 +9,15 @@ export default {
         form: this.$form.createForm(this, { name: 'advanced_search' })
       }
     },
+    mixins:[fieldHandle],
     props: {
         filterList: {
             type: Array,
             default: null
         }
+    },
+    components:{
+      TreeSelect
     },
     computed: {
       count () {
@@ -19,6 +25,9 @@ export default {
       }
     },
     methods: {
+      selectTree(list,code){//下拉树回填值
+        this.form.setFieldsValue({[code]:list})
+      },
       handleSearch () {
         this.form.validateFields((_err, values) => {
           const searchArr = []

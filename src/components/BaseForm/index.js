@@ -1,9 +1,10 @@
   import moment from 'moment'
-  import { getBaseLayout, getDetailLayout, saveLayout, getEditLayout, saveEditLayout, getCascaderList } from '@/api/commonApi'
+  import { getBaseLayout, getDetailLayout, saveLayout, getEditLayout, saveEditLayout } from '@/api/commonApi'
+  import fieldHandle from '@/mixins/fieldHandle'
   
   import FooterToolBar from '@/layouts/FooterToolbar'
   import staffAchievements from '../staffAchievements/staffAchievements.vue'
-  import TreeSelect from './tree.vue'
+  import TreeSelect from '../Tree/tree.vue'
   export default {
     name:'BaseFormLayout',
     data () {
@@ -17,6 +18,7 @@
             readonly:false
         }
     },
+    mixins:[fieldHandle],
     props:{
         formCode:{
             type:String,
@@ -49,8 +51,8 @@
             let initialValue = ''
             if(i.valueType != 'SELECT' && i.valueType != 'CHECKBOX' && i.valueType != 'ORG_TREE_MULTI'){
                 const currentValue = i.value && i.value.length ? i.value.join(',') : ''
-                if(i.valueType == 'DATETIME'){
-                    initialValue = currentValue ? moment(currentValue, 'YYYY-MM-DD') : null
+                if(i.valueType == 'DATETIME' || i.validateFields == 'DATE'){
+                    initialValue = currentValue ? moment(currentValue).format(i.validateFields == 'DATE' ? 'YYYY-MM-DD' : 'YYYY-MM-DD HH:mm:ss') : null
                 } else if(i.valueType == 'RADIO'){
                     initialValue = currentValue || undefined
                 } else if(i.valueType == 'INTEGER' || i.valueType == 'DECIMAL'){
@@ -87,30 +89,8 @@
             }
             return [i.code,config]
         },
-        limitNumber(value) {//正则替换小数点
-            if (typeof value === 'string') {
-                return !isNaN(Number(value)) ? value.replace(/\./g, '') : 0
-            } else if (typeof value === 'number') {
-                return !isNaN(value) ? String(value).replace(/\./g, '') : 0
-            } else {
-                return 0
-            }
-        },
         selectTree(list,code){//下拉树回填值
             this.form.setFieldsValue({[code]:list})
-        },
-        async loadData(selectedOptions,i){//多级联动加载下级数据
-            const targetOption = selectedOptions[selectedOptions.length - 1]
-            targetOption.loading = true;
-            const list  = await getCascaderList({parentCode:targetOption.codeKey})
-            targetOption.children = list.map(ele=>{
-                return {
-                    ...ele,
-                    isLeaf:selectedOptions.length == i.categoryCodes.length
-                }
-            })
-            i.codeItems = [...i.codeItems]
-            targetOption.loading = false;
         },
         async handlePreview(file) {
             this.previewImage = file.thumbUrl;
@@ -150,8 +130,8 @@
                         item.fieldDefineValueList.forEach(ele=>{
                             if(values[ele.code]){
                                 let data = values[ele.code]
-                                if(ele.valueType == 'DATETIME'){
-                                    data = moment(values[ele.code]).format('YYYY-MM-DD HH:mm:ss')
+                                if(ele.valueType == 'DATETIME' || ele.valueType == 'DATE'){
+                                    data = moment(values[ele.code]).format(ele.valueType == 'DATE' ? 'YYYY-MM-DD' : 'YYYY-MM-DD HH:mm:ss')
                                 }
                                 saveData.push({
                                     code:ele.code,

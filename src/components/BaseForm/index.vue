@@ -15,12 +15,12 @@
                                             <a-textarea v-if="i.valueType == 'TEXT_MULTI'" rows="3" v-decorator="decoratorFn(i)" :placeholder="'请填写'+i.name"/>
                                             <a-input-number v-else-if="i.valueType == 'INTEGER'" :formatter="limitNumber" :parser="limitNumber"  :precision='0' v-decorator="decoratorFn(i)" :placeholder="'请输入'+i.name" style="width:100%"/>
                                             <a-input-number v-else-if="i.valueType == 'DECIMAL'" :precision='0' v-decorator="decoratorFn(i)" :placeholder="'请输入'+i.name" style="width:100%"/>
-                                            <a-select v-else-if="i.valueType == 'RADIO'" v-decorator="decoratorFn(i)" :placeholder="'请选择'+i.name" allowClear showSearch>
+                                            <a-select v-else-if="i.valueType == 'RADIO' || i.valueType == 'CHECKBOX'" :mode="i.valueType == 'CHECKBOX' ? 'multiple' : 'default'" v-decorator="decoratorFn(i)" :placeholder="'请选择'+i.name" allowClear showSearch>
                                                 <a-select-option :value="item.codeKey" v-for="(item,index) in i.codeItems" :key='index'>{{item.codeValue}}</a-select-option>
                                             </a-select>
                                             <a-cascader v-else-if="i.valueType == 'SELECT'" v-decorator="decoratorFn(i)" :placeholder="'请选择'+i.name"
                                             :field-names="{ label: 'codeValue', value: 'codeKey',children:'children'}" :options="i.codeItems" :load-data="(selectedOptions)=>{loadData(selectedOptions,i)}" change-on-select/>
-                                            <a-date-picker v-else-if="i.valueType == 'DATETIME'" v-decorator="decoratorFn(i)" style="width:100%" :placeholder="'请选择'+i.name"/>
+                                            <a-date-picker :show-time="i.valueType == 'DATETIME'" v-else-if="i.valueType == 'DATETIME' || i.valueType == 'DATE'" v-decorator="decoratorFn(i)" style="width:100%" :placeholder="'请选择'+i.name"/>
                                             <div class="clearfix" v-else-if="i.valueType == 'PICTURE'">
                                                 <a-upload
                                                 action="https://www.mocky.io/v2/5cc8019d300000980a055e76"

@@ -9,10 +9,15 @@
           :style="{ display: index < count ? 'block' : 'none' }"
         >
           <a-form-item :label="item.name">
-            <a-select v-if="item.valueType == 'RADIO'" v-decorator="[item.code]" :placeholder="'请选择'+item.name"/>
-            <a-cascader v-else-if="item.valueType == 'SELECT'" v-decorator="[item.code]" :placeholder="'请选择'+item.name" :options="item.codeList" :load-data="loadData" change-on-select/>
-            <a-date-picker v-else-if="item.valueType == 'DATETIME'" v-decorator="[item.code]" style="width:100%" :placeholder="'请选择'+item.name"/>
-            <!-- <a-input-number v-if="k.searchType==&quot;Number&quot;" v-decorator="[k.searchKey]" style="width:100%" :placeholder="k.searchLabel"/> -->
+            <a-select v-if="item.valueType == 'RADIO' || item.valueType == 'CHECKBOX'" :mode="item.valueType == 'CHECKBOX' ? 'multiple' : 'default'" v-decorator="[item.code]" :placeholder="'请选择'+item.name" allowClear showSearch>
+                <a-select-option v-for="(child,index) in item.codeItems" :value="child.codeKey" :key='index'>{{child.codeValue}}</a-select-option>
+            </a-select>
+            <a-cascader v-else-if="item.valueType == 'SELECT'" v-decorator="[item.code]" :placeholder="'请选择'+item.name"
+            :field-names="{ label: 'codeValue', value: 'codeKey',children:'children'}" :options="item.codeItems" :load-data="(selectedOptions)=>{loadData(selectedOptions,item)}" change-on-select/>
+            <tree-select v-else-if="item.valueType == 'ORG_TREE_SINGLE' || item.valueType == 'ORG_TREE_MULTI'" :multipleTree="item.valueType == 'ORG_TREE_MULTI'" v-decorator="[item.code]" @selectTree='(list)=>{selectTree(list,item.code)}'/>
+            <a-date-picker :show-time="item.valueType == 'DATETIME'" v-else-if="item.valueType == 'DATETIME' || item.valueType == 'DATE'" v-decorator="[item.code]" style="width:100%" :placeholder="'请选择'+item.name"/>
+            <a-input-number v-else-if="item.valueType == 'INTEGER'" :formatter="limitNumber" :parser="limitNumber"  :precision='0' v-decorator="[item.code]" :placeholder="'请输入'+item.name" style="width:100%"/>
+            <a-input-number v-else-if="item.valueType == 'DECIMAL'" :precision='0' v-decorator="[item.code]" :placeholder="'请输入'+item.name" style="width:100%"/>
             <a-input v-else v-decorator="[item.code]" :placeholder="'请填写'+item.name" />
           </a-form-item>
         </a-col>

@@ -75,7 +75,7 @@
     :width="700"
     @cancel="handleFieldCancel">
       <a-form :form="fieldForm" v-if="fieldVisible">
-        <a-form-item v-show='fieldData.valueType != "ORG_TREE_SINGLE" && fieldData.valueType != "ORG_TREE_MULT"'>
+        <a-form-item v-show='noHidden'>
           <a-radio-group v-decorator="['valueType', { initialValue: fieldData ? fieldData.valueType : 'TEXT_SINGLE' ,rules: [{ required: true, whitespace:true,message: '请选择字段类型' }] }]"
             @change="changeValueType"
           >
@@ -87,7 +87,7 @@
         <a-form-item label="字段名称" :label-col="{span:6}" :wrapper-col="{span:12}">
           <a-input v-decorator="['name', { initialValue: fieldData ? fieldData.name : '',rules: [{ required: true, whitespace:true,message: '请填写字段名称' }] }]"/>
         </a-form-item>
-        <div v-show='fieldData.valueType != "ORG_TREE_SINGLE" && fieldData.valueType != "ORG_TREE_MULT"'>
+        <div v-show='noHidden'>
           <a-form-item v-if="showCodeField" label="关联码表值" :label-col="{span:6}" :wrapper-col="{span:12}">
             <a-select
               v-decorator="[`categoryCodes[0]`, { initialValue: fieldData ? fieldData.categoryCodes[0] : undefined ,rules: [{ required: true, whitespace:true,message: '请选择码表值' }] }]"

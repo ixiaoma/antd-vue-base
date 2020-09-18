@@ -53,6 +53,7 @@ export default{
             objectList: [] , // 引用对象下拉
             fieldList: [] , // 引用字段下拉
             setFieldList: [] , // 引用对象赋值字段
+            noHidden:true
         }
     },
     components:{
@@ -191,7 +192,8 @@ export default{
             this.groupName = groupName
             this.fieldVisible = true
             this.fieldForm.resetFields()
-            this.valueType = fieldData ?  fieldData.valueType : '' ; 
+            this.valueType = fieldData ? fieldData.valueType : '' ; 
+            this.noHidden = this.valueType != "ORG_TREE_SINGLE" && this.valueType != "ORG_TREE_MULT"
             // 关联码表值数组单独处理
             if(this.isSelectCode && fieldData.categoryCodes){
                 fieldData.categoryCodes = fieldData.categoryCodes.map(item=> {

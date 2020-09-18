@@ -100,7 +100,7 @@
           <div class="title-style"><h3>同时满足以下条件</h3></div>
           <a-row :gutter='10' v-for="(item,index) in expressionList" :key='index' style="margin-top:20px">
             <a-col :span='8'>
-              <a-select placeholder="请选择" style="width: 160px"  v-model="item.code">
+              <a-select style="width: 100%" placeholder="请选择" v-model="item.code">
                 <a-select-option :value="item.code" :disabled='disabledSelect(item.code)' v-for='(item,index) in fieldList' :key='index'>
                   {{item.name}}
                 </a-select-option>

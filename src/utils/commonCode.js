@@ -33,6 +33,10 @@ export const valueTypeList = [
         icon:'icon-jine'
     },{
         label:'DATETIME',
+        value:'日期+时间',
+        icon:'icon-riqi'
+    },{
+        label:'DATE',
         value:'日期',
         icon:'icon-riqi'
     },{
