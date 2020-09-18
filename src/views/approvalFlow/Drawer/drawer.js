@@ -97,21 +97,22 @@ export default {
         let onlyreadAll = true
         let editAll = true
         this.fieldList.forEach(ele=>{
-          if(ele.slectData != 'display'){
+          console.log(ele.selectData)
+          if(ele.selectData != 'display'){
             displayAll = false
           }
-          if(ele.slectData != 'onlyread'){
+          if(ele.selectData != 'onlyread'){
             onlyreadAll = false
           }
-          if(ele.slectData != 'edit'){
+          if(ele.selectData != 'edit'){
             editAll = false
           }
         })
-        this.slectAllData = displayAll ? 'display' : onlyreadAll ? 'onlyread' : 'edit'
+        this.slectAllData = displayAll ? 'display' : onlyreadAll ? 'onlyread' : editAll ? 'edit' : null
       },
-      selectAll(field){
+      selectAll(){
         this.fieldList.forEach(ele=>{
-          ele.slectData = field
+          ele.selectData = this.slectAllData
         })
       },
       async getFormDetailList(){//权限字段

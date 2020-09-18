@@ -76,10 +76,10 @@
             </div>
             <div class="table-row table-body" v-for="(item,index) in fieldList" :key='index'>
               <div class="component-style">{{item.name}}</div>
-              <a-radio-group v-model="item.slectData" @change="checkSelectAll">
-                  <a-radio value="display"></a-radio>
-                  <a-radio value="onlyread"></a-radio>
-                  <a-radio value="edit"></a-radio>
+              <a-radio-group v-model="item.selectData" @change="checkSelectAll" name='radio-style'>
+                  <a-radio value="display">隐藏</a-radio>
+                  <a-radio value="onlyread">仅查看</a-radio>
+                  <a-radio value="edit">可编辑</a-radio>
               </a-radio-group>
               <!-- <div class="radio-style">
                 <a-checkbox v-model="item.display" @change="checkSelectAll"/>
