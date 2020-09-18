@@ -12,11 +12,24 @@ export default {
         this.fetchUser = debounce(this.fetchUser, 800);
         return {
             editid:'',
+            typeList:[
+                {codeKey:'公告',codeValue:'公告'},
+                {codeKey:'规章制度',codeValue:'规章制度'}
+            ],
             customerTypeList: [
                 {codeKey:'日常通知',codeValue:'日常通知'},
                 {codeKey:'节假日通知',codeValue:'节假日通知'},
                 {codeKey:'排班通知',codeValue:'排班通知'},
                 {codeKey:'其他通知',codeValue:'其他通知'},
+            ],
+            rulesList:[
+                {codeKey:'离职规范',codeValue:'离职规范'},
+                {codeKey:'入职规范',codeValue:'入职规范'}
+            ],
+            companyList:[
+                {codeKey:'联想',codeValue:'联想'},
+                {codeKey:'外包1',codeValue:'外包1'},
+                {codeKey:'外包2',codeValue:'外包2'}
             ],
             roleData:[],
             treeData:[],
@@ -24,13 +37,16 @@ export default {
             form: this.$form.createForm(this),
             validates: {
                 title: { rules: [{ required: true, message: '请填写主题' }] },
+                type: { rules: [{ required: true, message: '请选择类型' }] },
+                rules: { rules: [{ required: true, message: '请选择类型' }] },
                 customerType: { rules: [{ required: true, message: '请选择公告类型' }] },
+                compony:{rules: [{ type: 'array', required: true, message: '请选择所属公司' }]},
                 bulletinperson: { initialValue: 'all' },
                 roleIds:{rules: [{ type: 'array', required: true, message: '请选择角色' }]},
                 dept: {rules:[{ type: 'array',required: true,message:'请选择部门'}]},
                 users: {rules:[{ type: 'array',required: true,message:'请选择发布人'}]},
-                publishDate: { rules: [{ type: 'object', required: true, message: '请选择发布时间' }] },
-                expiryDate: { rules: [{ type: 'object', required: true, message: '请选择失效时间' }] }
+                publishDate: { rules: [{ type: 'object', required: false, message: '请选择发布时间' }] },
+                expiryDate: { rules: [{ type: 'object', required: false, message: '请选择失效时间' }] }
             },
             SHOW_PARENT,
             value: [],

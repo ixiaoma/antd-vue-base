@@ -1,6 +1,7 @@
 import { axios } from '@/utils/axios'
 
 const baseBusiness = 'business/'
+const authAPI='auth/'
 
 //提交排班计划
 export const rosterImport=process.env.VUE_APP_API_BASE_URL+baseBusiness+'roster/import'
@@ -10,6 +11,12 @@ export const attendanceImport=process.env.VUE_APP_API_BASE_URL+baseBusiness+'rec
 export const rosterDown=process.env.VUE_APP_API_BASE_URL+baseBusiness+'roster/downloadTpl'
 // 考勤模板下载
 export const attendanceDown=process.env.VUE_APP_API_BASE_URL+baseBusiness+'recording/downloadTpl'
+//假期设置-假期余额导入
+export const userVacationImport=process.env.VUE_APP_API_BASE_URL+authAPI+'userVacation/importExcel'
+//假期设置-假期余额导出
+export const userVacationExport=process.env.VUE_APP_API_BASE_URL+authAPI+'userVacation/exportExcel'
+//假期设置-假期余额导入
+export const userVacationDown=process.env.VUE_APP_API_BASE_URL+authAPI+'userVacation/download/template'
 
 export function uploadLoad(url,file,obj) {
     let formData = new FormData();   

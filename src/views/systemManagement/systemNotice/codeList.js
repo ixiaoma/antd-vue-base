@@ -3,15 +3,23 @@ export const filterList = []
 
 export const columns = [
   {
-    title: '公告编号',
+    title: '编号',
     dataIndex: 'code'
   },
   {
-    title: '公告标题',
+    title: '标题',
     dataIndex: 'title'
   },
   {
-    title: '公告类型',
+    title: '所属公司',
+    dataIndex: 'title'
+  },
+  {
+    title: '类型',
+    dataIndex: 'title'
+  },
+  {
+    title: '公告/规章制度类型',
     dataIndex: 'customerTypeName'
   },
   {

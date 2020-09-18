@@ -98,7 +98,7 @@
                     </a-col> 
                     <a-col :span="12">
                         <a-form-item label="电话额度" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
-                            <a-input-number style="width:100%" v-decorator="['totalCredit',validates.totalCredit]" :placeholder="modaldisabled?'':'请填写电话额度'" :disabled="modaldisabled" :min="0" :max="10" :precision='2'/>
+                            <a-input-number style="width:100%" v-decorator="['totalCredit',validates.totalCredit]" :placeholder="modaldisabled?'':'请填写电话额度'" :disabled="modaldisabled" :min="0" :precision='2'/>
                         </a-form-item>
                     </a-col> 
                     

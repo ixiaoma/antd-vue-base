@@ -52,7 +52,8 @@ export const routerObj = {
     budgetApproval: () => import('@/views/costManagement/budgetApproval/budgetApproval.vue'),
     reimbursement: () => import('@/views/costManagement/reimbursement/reimbursement.vue'),
     reimbursementApproval: () => import('@/views/costManagement/reimbursementApproval/reimbursementApproval.vue'),
-    reimbursementAdjust: () => import('@/views/costManagement/reimbursementAdjust/reimbursementAdjust.vue')
+    reimbursementAdjust: () => import('@/views/costManagement/reimbursementAdjust/reimbursementAdjust.vue'),
+    budgetSetting: () => import('@/views/costManagement/budgetSetting/budgetSetting.vue')
 }
 
 export function getRouterData(list){

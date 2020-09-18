@@ -6,7 +6,7 @@
                     <a-col :span="22">
                         <a-col span="20">
                         <a-form-item :label="username+'的年假余额修改为(天)'" :label-col="{ span: 14 }" :wrapper-col="{ span: 10 }">
-                           <a-input-number style="width:100%" v-model="leaveBalance" :min="0" :max="5" :precision='0'/>
+                           <a-input-number style="width:100%" v-model="leaveBalance" :min="0" :precision='0'/>
                         </a-form-item>
                         </a-col>
                         <a-col span="2"><p style="line-height:45px;margin-left:5px">天</p></a-col>

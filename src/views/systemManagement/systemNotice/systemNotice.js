@@ -89,7 +89,7 @@ export default {
       this.pagination = pager;
       this.page = pagination.current
       this.pageSize = pagination.pageSize
-      this.noticeDataLoad()
+      // this.noticeDataLoad()
     },
     noticeDataLoad(page) {
       let params = {
@@ -150,7 +150,7 @@ export default {
     }
   },
   created() {
-    this.noticeDataLoad()
+    // this.noticeDataLoad()
   },
 }
 

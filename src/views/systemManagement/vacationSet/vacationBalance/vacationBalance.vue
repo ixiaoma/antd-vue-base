@@ -27,6 +27,10 @@
                 </a-col>
                 <a-button type="primary" style="margin:0 10px" icon="search" @click="searchRefresh()">查询</a-button>
             </a-row>
+            <a-row type="flex" justify="end">
+                <a-button type="primary" style="margin-right:5px" icon="download" @click="uploadLoad">导入余额</a-button>
+                <a-button type="primary" style="margin-right:5px" icon="upload" @click="exportLoad">导出余额</a-button>
+            </a-row>
         </a-form>
    <s-table
         ref="table"
@@ -40,6 +44,19 @@
                 </template>
             </span>
         </s-table>
+        <a-modal v-model="visible" title="提交排班计划" :bodyStyle='{padding:0}'  :footer="null">
+            <a-row style="padding:20px 20px 50px">
+                <a-button @click="downLoad" style="margin-right:50px"> <a-icon type="download"/> 下载模板 </a-button>  
+                <a-upload name="file"
+                    :action="userVacationImport"
+                    :headers="headers"
+                    @change="handleChange"
+                    :show-upload-list="false"
+                    >
+                    <a-button type="primary"> <a-icon type="upload" /> 选择文件 </a-button>
+                </a-upload>
+            </a-row>   
+      </a-modal>
   </div>
 </template>
 <script src="./vacationBalance.js"></script>

@@ -1,5 +1,8 @@
 import { STable } from '@/components'
-import { userVacationPage,getDeptTreeData,userVacationColumn,userVacationDetail,userVacationEdit } from '@/api/user'
+import { userVacationPage,getDeptTreeData,userVacationColumn,userVacationExport } from '@/api/user'
+import { userVacationImport,userVacationDown } from '@/api/uploaddown'
+const access_token = sessionStorage.getItem('ACCESS_TOKEN')
+
 export default {
     name: 'vacationBalance',
     title: 'vacationBalance',
@@ -18,7 +21,13 @@ export default {
                 .then(res => {
                     return res
                 })
-            }
+            },
+            visible:false,
+            userVacationImport:userVacationImport,
+            headers: {
+                Authorization: `Bearer ${access_token}`,
+            },
+            fileList:[]
         };
     },
     components: {
@@ -72,6 +81,46 @@ export default {
                 this.treeData =  JSON.parse(strAdd);
             })
         },
+        //导出余额
+        exportLoad(){
+            let params={
+                "pageNo": 1,
+                "pageSize": 10,
+                "filter": {
+                    "logic": "and",
+                    "filters": []
+                }
+            }
+            if(this.username){
+                params.filter.filters.push({"field": "username","operator": "contain","value": this.username})
+            }
+            if(this.deptId){
+                params.filter.filters.push({"field": "deptId","operator": "eq","value": this.deptId})
+            }
+            userVacationExport(params).then(res=>{
+                var fileDownload = require('js-file-download')
+                let fileName = "余额导出.xlsx";
+                fileDownload(res.data,fileName);
+            })
+        },
+        uploadLoad(){
+            this.visible=true
+        },
+        handleChange(info) {
+            if (info.file.status !== 'uploading') {
+                console.log(info.file, info.fileList);
+            }
+            if (info.file.status === 'done') {
+                this.$message.success('上传成功');
+                this.visible=false
+            } else if (info.file.status === 'error') {  
+                this.$message.error('上传失败');
+                this.visible=false
+            }
+        },
+        downLoad(){
+            window.location.href=userVacationDown+'?access_token='+sessionStorage.getItem('ACCESS_TOKEN')
+        }
     },
     created() {
         this.userVacationColumnLoad()

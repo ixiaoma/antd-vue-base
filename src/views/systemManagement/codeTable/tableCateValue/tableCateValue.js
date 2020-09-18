@@ -84,11 +84,9 @@ export default {
                 okType: 'danger',
                 cancelText: '取消',
                 onOk() {
-                    delCodeValue(params).then(res => {
-                        if (res.code == 200) {
-                            that.$message.success('删除成功');
-                            that.noticeDataLoad();;
-                        }
+                    delCodeValue(params).then(res => {    
+                        that.$message.success('删除成功');
+                        that.noticeDataLoad();;
                     })
                 },
                 onCancel() { },

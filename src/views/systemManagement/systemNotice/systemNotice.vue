@@ -25,7 +25,7 @@
                   :data-source="noticeData"      
                   :showPagination="true"
                   :pagination="pagination"
-                  :scroll="{ x: 1200}"
+                  :scroll="{ x: 1600}"
                   :loading="loading"
                   @change="handleTableChange"
                 >

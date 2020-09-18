@@ -1,6 +1,7 @@
 import { axios } from '@/utils/axios'
 let frameAPI='frame/'//'api/frame/v1/'
 let authAPI='auth/'
+let baseBusiness = 'business/'
 let systemAPI='auth/system/'
 let configAPI='api/config/v1/'
 const userApi = {
@@ -80,7 +81,16 @@ const api={
   userVacationPage:authAPI+'userVacation/page',////假期设置-假期余额分页
   userVacationDetail:authAPI+'userVacation/',////假期设置-假期余额分页
   userVacationEdit:authAPI+'userVacation/edit',////假期设置-假期余额分页
+  userVacationImport:authAPI+'userVacation/importExcel',//假期设置-假期余额导入
+  userVacationExport:authAPI+'userVacation/exportExcel',//假期设置-假期余额导入
+  userVacationDown:authAPI+'userVacation/download/template',//假期设置-假期余额导入
+  budgetGetAmount:baseBusiness+'budget/get/config/amount', //费用管理-预算设置-查看预算金额
+  budgetEditAmount:baseBusiness+'budget/edit/config/amount', //费用管理-预算设置-修改预算金额
+  budgetEditLatitude:baseBusiness+'budget/edit/config/latitude', //费用管理-预算设置-修改预算范围
+  budgetGetLatitude:baseBusiness+'budget/get/config/latitude', //费用管理-预算设置-查看预算范围
 }
+
+
 
 /**
  * login func
@@ -327,6 +337,21 @@ export function userVacationDetail(params) {
 }
 export function userVacationEdit(params) {
   return axios.post(api.userVacationEdit,params)
+}
+export function userVacationExport(params) {
+  return axios.post(api.userVacationExport,params,{responseType: 'arraybuffer'})
+}
+export function budgetEditAmount(params) {
+  return axios.post(api.budgetEditAmount,params)
+}
+export function budgetGetAmount(params) {
+  return axios.post(api.budgetGetAmount,params)
+}
+export function budgetEditLatitude(params) {
+  return axios.post(api.budgetEditLatitude,params)
+}
+export function budgetGetLatitude(params) {
+  return axios.post(api.budgetGetLatitude,params)
 }
 
 
