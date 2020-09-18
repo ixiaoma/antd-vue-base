@@ -149,7 +149,15 @@ export default {
       commitDrawer(){
         let { nodeType} = this.nodeConfig
         if(nodeType == 'APPROVE'){
-          this.nodeConfig.formAuthorityList = this.fieldList
+          this.nodeConfig.formAuthorityList = this.fieldList.map(ele=>{
+            return {
+              name:ele.name,
+              code:ele.code,
+              display:ele.selectData == 'display',
+              onlyread:ele.selectData == 'onlyread',
+              edit:ele.selectData == 'edit'
+            }
+          })
           if(this.selectRadio == 'ROLE'){
             this.nodeConfig.participantList = this.roleList
           }else if(this.selectRadio == 'APPLICANT'){

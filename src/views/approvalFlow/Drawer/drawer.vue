@@ -64,15 +64,6 @@
                   <a-radio value="onlyread">仅查看</a-radio>
                   <a-radio value="edit">可编辑</a-radio>
               </a-radio-group>
-              <!-- <div class="radio-style">
-                <a-checkbox v-model="displayAll" @change="selectAll(displayAll,'display')">隐藏</a-checkbox>
-              </div>
-              <div class="radio-style">
-                <a-checkbox v-model="onlyreadAll" @change="selectAll(onlyreadAll,'onlyread')">仅查看</a-checkbox>
-              </div>
-              <div class="radio-style">
-                <a-checkbox v-model="editAll" @change="selectAll(editAll,'edit')">可编辑</a-checkbox>
-              </div> -->
             </div>
             <div class="table-row table-body" v-for="(item,index) in fieldList" :key='index'>
               <div class="component-style">{{item.name}}</div>
@@ -81,15 +72,6 @@
                   <a-radio value="onlyread">仅查看</a-radio>
                   <a-radio value="edit">可编辑</a-radio>
               </a-radio-group>
-              <!-- <div class="radio-style">
-                <a-checkbox v-model="item.display" @change="checkSelectAll"/>
-              </div>
-              <div class="radio-style">
-                <a-checkbox v-model="item.onlyread" @change="checkSelectAll"/>
-              </div>
-              <div class="radio-style">
-                <a-checkbox v-model="item.edit" @change="checkSelectAll"/>
-              </div> -->
             </div>
           </div>
         </a-tab-pane>
