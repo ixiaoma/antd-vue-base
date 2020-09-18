@@ -1,3 +1,4 @@
+import moment from 'moment'
 import fieldHandle from '@/mixins/fieldHandle'
 
 import TreeSelect from '../Tree/tree.vue'
@@ -29,26 +30,29 @@ export default {
         this.form.setFieldsValue({[code]:list})
       },
       handleSearch () {
-        this.form.validateFields((_err, values) => {
+        this.form.validateFields((err, values) => {
           const searchArr = []
           this.filterList.forEach(ele => {
             let value = values[ele.code]
-            if (value || value === 0) {
-              let operator = ele.valueType === 'CHECKBOX' ? 'contain' : 'eq'
-              // if (ele.type === 'Time' || ele.type === 'NotShowTime') {
-              //     const time = moment(value).format('YYYY-MM-DD')
-              //     operator = ele.type === 'NotShowTime' ? 'between' : 'gte'
-              //     if (ele.type === 'Time') {
-              //       value = `${time} 00:00:00`
-              //       searchArr.push({ field: ele.code, operator: 'lte', value: `${time} 23:59:59` })
-              //     } else {
-              //       value = `${time} 00:00:00,${time} 23:59:59`
-              //     }
-              // } else if (ele.type === 'DateTime') {
-              //     operator = ele.operator
-              //     value = moment(value).format('YYYY-MM-DD HH:mm:ss')
-              // }
-              searchArr.push({ field: ele.code, fieldType: ele.valueType, operator, value })
+            if (value || value == 0) {
+              // let operator = ele.valueType === 'CHECKBOX' ? 'contain' : 'eq'
+              if(ele.valueType == 'ORG_TREE_MULTI' || ele.valueType == 'CHECKBOX'){
+                searchArr.push({
+                  filters:values.map(pre=>{
+                    return {
+                      field:ele.code,
+                      operator:'eq',
+                      value:pre
+                    }
+                  }),
+                  logic: "or"
+                })
+              }else{
+                if(ele.valueType == 'DATETIME' || ele.valueType == 'DATE'){
+                  value = moment(value).format(ele.valueType == 'DATE' ? 'YYYY-MM-DD' : 'YYYY-MM-DD HH:mm:ss')
+                }
+                searchArr.push({ field: ele.code, fieldType: ele.valueType, operator:'eq', value })
+              }
             }
           })
           this.$emit('refresh',searchArr)

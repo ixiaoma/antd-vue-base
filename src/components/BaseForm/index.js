@@ -1,11 +1,11 @@
-  import moment from 'moment'
-  import { getBaseLayout, getDetailLayout, saveLayout, getEditLayout, saveEditLayout } from '@/api/commonApi'
-  import fieldHandle from '@/mixins/fieldHandle'
-  
-  import FooterToolBar from '@/layouts/FooterToolbar'
-  import staffAchievements from '../staffAchievements/staffAchievements.vue'
-  import TreeSelect from '../Tree/tree.vue'
-  export default {
+import moment from 'moment'
+import { getBaseLayout, getDetailLayout, saveLayout, getEditLayout, saveEditLayout } from '@/api/commonApi'
+import fieldHandle from '@/mixins/fieldHandle'
+
+import FooterToolBar from '@/layouts/FooterToolbar'
+import staffAchievements from '../staffAchievements/staffAchievements.vue'
+import TreeSelect from '../Tree/tree.vue'
+export default {
     name:'BaseFormLayout',
     data () {
         return {
@@ -182,7 +182,7 @@
                         'social_relations', 
                         'work_experience',
                         'educational_experience'
-                     ]
+                        ]
                     if(basicCodeArr.indexOf(pageCode) > -1 ){
                         param.params.push({
                             code : 'basicInfoId',
@@ -207,4 +207,4 @@
         this.readonly = (this.currentForm || this.$route.query).flag == 2
         this.getInitData()
     }
-  }
+}
