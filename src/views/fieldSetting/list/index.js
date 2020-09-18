@@ -31,7 +31,9 @@ export default{
                 'icon-paiban',
                 'icon-biaoshilei_paibanrenyuan',
                 'icon-gonggao',
-                'icon-yusuanguanli'
+                'icon-yusuanguanli',
+                'icon-buqian',
+                'icon-qingxiujiashenqing'
             ]
         }
     },
