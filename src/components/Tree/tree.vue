@@ -7,6 +7,7 @@
       treeCheckStrictly
       tree-default-expand-all
       @change="onChange"
+      allowClear
       :replaceFields="{title:'name',children:'subDept',value:'id',key:'id'}"/>
 </template>
 

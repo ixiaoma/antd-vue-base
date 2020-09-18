@@ -12,15 +12,15 @@
                                 <a-form-item :label="i.name" v-else :class="i.valueType == 'TEXT_MULTI' || i.valueType == 'PICTURE' || i.valueType == 'ATTACHMENT' ? '' : 'pre-row'">
                                     <a-row :gutter="8">
                                         <a-col :span="22">
-                                            <a-textarea v-if="i.valueType == 'TEXT_MULTI'" rows="3" v-decorator="decoratorFn(i)" :placeholder="'请填写'+i.name"/>
-                                            <a-input-number v-else-if="i.valueType == 'INTEGER'" :formatter="limitNumber" :parser="limitNumber"  :precision='0' v-decorator="decoratorFn(i)" :placeholder="'请输入'+i.name" style="width:100%"/>
-                                            <a-input-number v-else-if="i.valueType == 'DECIMAL'" :precision='0' v-decorator="decoratorFn(i)" :placeholder="'请输入'+i.name" style="width:100%"/>
+                                            <a-textarea allowClear v-if="i.valueType == 'TEXT_MULTI'" rows="3" v-decorator="decoratorFn(i)" :placeholder="'请填写'+i.name"/>
+                                            <a-input-number allowClear v-else-if="i.valueType == 'INTEGER'" :formatter="limitNumber" :parser="limitNumber"  :precision='0' v-decorator="decoratorFn(i)" :placeholder="'请输入'+i.name" style="width:100%"/>
+                                            <a-input-number allowClear v-else-if="i.valueType == 'DECIMAL'" :precision='0' v-decorator="decoratorFn(i)" :placeholder="'请输入'+i.name" style="width:100%"/>
                                             <a-select v-else-if="i.valueType == 'RADIO' || i.valueType == 'CHECKBOX'" :mode="i.valueType == 'CHECKBOX' ? 'multiple' : 'default'" v-decorator="decoratorFn(i)" :placeholder="'请选择'+i.name" allowClear showSearch>
                                                 <a-select-option :value="item.codeKey" v-for="(item,index) in i.codeItems" :key='index'>{{item.codeValue}}</a-select-option>
                                             </a-select>
-                                            <a-cascader v-else-if="i.valueType == 'SELECT'" v-decorator="decoratorFn(i)" :placeholder="'请选择'+i.name"
+                                            <a-cascader allowClear v-else-if="i.valueType == 'SELECT'" v-decorator="decoratorFn(i)" :placeholder="'请选择'+i.name"
                                             :field-names="{ label: 'codeValue', value: 'codeKey',children:'children'}" :options="i.codeItems" :load-data="(selectedOptions)=>{loadData(selectedOptions,i)}" change-on-select/>
-                                            <a-date-picker :show-time="i.valueType == 'DATETIME'" v-else-if="i.valueType == 'DATETIME' || i.valueType == 'DATE'" v-decorator="decoratorFn(i)" style="width:100%" :placeholder="'请选择'+i.name"/>
+                                            <a-date-picker allowClear :show-time="i.valueType == 'DATETIME'" v-else-if="i.valueType == 'DATETIME' || i.valueType == 'DATE'" v-decorator="decoratorFn(i)" style="width:100%" :placeholder="'请选择'+i.name"/>
                                             <div class="clearfix" v-else-if="i.valueType == 'PICTURE'">
                                                 <a-upload
                                                 action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
@@ -46,7 +46,7 @@
                                                 </a-upload>
                                             </div>
                                             <tree-select v-else-if="i.valueType == 'ORG_TREE_SINGLE' || i.valueType == 'ORG_TREE_MULTI'" :multipleTree="i.valueType == 'ORG_TREE_MULTI'" v-decorator="decoratorFn(i)" :selectList='i.value' @selectTree='(list)=>{selectTree(list,i.code)}'/>
-                                            <a-input v-else :maxLength="i.valueType == 'PHONE' ? 11 : null" v-decorator="decoratorFn(i)" :placeholder="'请填写'+i.name" />
+                                            <a-input allowClear v-else :maxLength="i.valueType == 'PHONE' ? 11 : null" v-decorator="decoratorFn(i)" :placeholder="'请填写'+i.name" />
                                         </a-col>
                                         <a-col :span="2">
                                             <a-popover v-if="i.description">

@@ -35,24 +35,24 @@ export default {
           this.filterList.forEach(ele => {
             let value = values[ele.code]
             if (value || value == 0) {
-              // let operator = ele.valueType === 'CHECKBOX' ? 'contain' : 'eq'
-              if(ele.valueType == 'ORG_TREE_MULTI' || ele.valueType == 'CHECKBOX'){
-                searchArr.push({
-                  filters:values.map(pre=>{
-                    return {
-                      field:ele.code,
-                      operator:'eq',
-                      value:pre
-                    }
-                  }),
-                  logic: "or"
-                })
-              }else{
+              let operator = ele.valueType === 'CHECKBOX' || ele.valueType == 'ORG_TREE_MULTI' || ele.valueType == 'SELECT' ? 'contain' : 'eq'
+              // if(ele.valueType == 'ORG_TREE_MULTI' || ele.valueType == 'CHECKBOX'){
+              //   searchArr.push({
+              //     filters:values.map(pre=>{
+              //       return {
+              //         field:ele.code,
+              //         operator:'eq',
+              //         value:pre
+              //       }
+              //     }),
+              //     logic: "or"
+              //   })
+              // }else{
                 if(ele.valueType == 'DATETIME' || ele.valueType == 'DATE'){
                   value = moment(value).format(ele.valueType == 'DATE' ? 'YYYY-MM-DD' : 'YYYY-MM-DD HH:mm:ss')
                 }
-                searchArr.push({ field: ele.code, fieldType: ele.valueType, operator:'eq', value })
-              }
+                searchArr.push({ field: ele.code, fieldType: ele.valueType, operator, value })
+              // }
             }
           })
           this.$emit('refresh',searchArr)

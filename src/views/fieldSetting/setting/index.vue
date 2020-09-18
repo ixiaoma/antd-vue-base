@@ -85,11 +85,12 @@
           </a-radio-group>
         </a-form-item>
         <a-form-item label="字段名称" :label-col="{span:6}" :wrapper-col="{span:12}">
-          <a-input v-decorator="['name', { initialValue: fieldData ? fieldData.name : '',rules: [{ required: true, whitespace:true,message: '请填写字段名称' }] }]"/>
+          <a-input allowClear v-decorator="['name', { initialValue: fieldData ? fieldData.name : '',rules: [{ required: true, whitespace:true,message: '请填写字段名称' }] }]"/>
         </a-form-item>
         <div v-show='noHidden'>
           <a-form-item v-if="showCodeField" label="关联码表值" :label-col="{span:6}" :wrapper-col="{span:12}">
             <a-select
+              allowClear
               v-decorator="[`categoryCodes[0]`, { initialValue: fieldData ? fieldData.categoryCodes[0] : undefined ,rules: [{ required: true, whitespace:true,message: '请选择码表值' }] }]"
               >
               <a-select-option v-for="item in codeList" :key="item.code" :value="item.code">
@@ -133,6 +134,7 @@
 
           <a-form-item label="引用对象" :label-col="{span:6}" :wrapper-col="{span:12}">
             <a-select
+              allowClear
               @change="changeObject"
               v-decorator="['referObjectCode', { initialValue: fieldData ? fieldData.referObjectCode : undefined  }]"
               >
@@ -144,6 +146,7 @@
 
           <a-form-item label="引用字段" :label-col="{span:6}" :wrapper-col="{span:12}">
             <a-select
+              allowClear
               v-decorator="['referObjectField', { initialValue: fieldData ? fieldData.referObjectField : undefined  }]"
               >
               <a-select-option v-for="item in fieldList" :key="item.code" :value="item.code">
@@ -154,6 +157,7 @@
 
           <a-form-item label="引用对象赋值字段" :label-col="{span:6}" :wrapper-col="{span:12}">
             <a-select
+              allowClear
               v-decorator="['referObjectSetField', { initialValue: fieldData ? fieldData.referObjectSetField : undefined  }]"
               >
               <a-select-option v-for="item in setFieldList" :key="item.code" :value="item.code">
@@ -163,11 +167,11 @@
           </a-form-item>
 
           <a-form-item label="字段描述" :label-col="{span:6}" :wrapper-col="{span:12}">
-            <a-input v-decorator="['description', { initialValue: fieldData ? fieldData.description : '',rules: [] }]"/>
+            <a-input allowClear v-decorator="['description', { initialValue: fieldData ? fieldData.description : '',rules: [] }]"/>
           </a-form-item>
 
           <a-form-item label="API" :label-col="{span:6}" :wrapper-col="{span:12}">
-            <a-input v-decorator="['serverApi', { initialValue: fieldData ? fieldData.serverApi : '',rules: [] }]"/>
+            <a-input allowClear v-decorator="['serverApi', { initialValue: fieldData ? fieldData.serverApi : '',rules: [] }]"/>
           </a-form-item>
 
           <a-form-item label="是否列表查询" :label-col="{span:6}" :wrapper-col="{span:12}">

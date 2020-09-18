@@ -54,14 +54,20 @@ export default {
                 if(i.valueType == 'DATETIME' || i.validateFields == 'DATE'){
                     initialValue = currentValue ? moment(currentValue).format(i.validateFields == 'DATE' ? 'YYYY-MM-DD' : 'YYYY-MM-DD HH:mm:ss') : null
                 } else if(i.valueType == 'RADIO'){
-                    initialValue = currentValue || undefined
+                    const defaultValue = i.codeItems.filter(ele=>ele.defaultStatus)
+                    initialValue = currentValue || defaultValue.length ? defaultValue[0].codeKey : undefined
                 } else if(i.valueType == 'INTEGER' || i.valueType == 'DECIMAL'){
                     initialValue = currentValue ? Number(currentValue) : null
                 }else{
                     initialValue = currentValue
                 }
             }else{
-                initialValue = i.value || []
+                if(i.valueType != 'CHECKBOX'){
+                    const defaultValue = i.codeItems.filter(ele=>ele.defaultStatus)
+                    initialValue = i.value || defaultValue.length ? defaultValue.map(ele=>ele.codeKey) : undefined
+                }else{
+                    initialValue = i.value || []
+                }
             }
             if(i.valueType == 'SELECT'){//多级联动，强制处理数据
                 i.codeItems.forEach(ele=>{
