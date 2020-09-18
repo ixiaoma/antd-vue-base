@@ -19,6 +19,7 @@
                                     <span v-if="readonly">{{item.weight}}%</span>
                                     <!-- <a-input v-else allowClear placeholder="权重" v-model="item.weight"></a-input> -->
                                     <a-input-number
+                                        v-else
                                         style="width:100%"
                                         :default-value="100"
                                         v-model="item.weight"
