@@ -29,11 +29,16 @@
               <div v-show="selectRadio == 'LEADER'">
                 <div class="title-style"><h3>指定层级</h3></div>
                 <a-select v-model='levelData' style="width: 120px">
-                  <a-select-option value="1">从下至上</a-select-option>
-                  <a-select-option value="2">从上至下</a-select-option>
+                  <a-select-option value="ASSIGN">选择层级</a-select-option>
+                  <a-select-option value="BOTTOM">当前层级</a-select-option>
+                </a-select>
+                <a-select v-if="levelData == 'ASSIGN'" v-model='firstSelect' style="width: 160px;margin-left:10px">
+                  <a-select-option :value="item.label" v-for='(item,index) in levelList' :key='index'>
+                    {{item.title}}
+                  </a-select-option>
                 </a-select>
                 <a-select v-model='levelSelect' style="width: 160px;margin-left:10px">
-                  <a-select-option :value="item.label" v-for='(item,index) in levelList[levelData == 1 ? 0 : 1]' :key='index'>
+                  <a-select-option :value="item.label" v-for='(item,index) in levelList' :key='index' :disabled="selectDisable(item.label)">
                     {{item.title}}
                   </a-select-option>
                 </a-select>

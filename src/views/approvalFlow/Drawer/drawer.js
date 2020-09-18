@@ -11,6 +11,9 @@ const valueTypeList = [//participantList审批人抄送人；formAuthorityList�
   },{
     label:'申请人本人',
     value:'APPLICANT'
+  },{
+    label:'VONDER',
+    value:'VONDER'
   }
 ]
 import roleModel from './roleModel.vue'
@@ -36,8 +39,9 @@ export default {
         roleList:[],
         defaultValue:1,
         ownerChecked:false,
-        levelData:'1',
+        levelData:'ASSIGN',
         levelSelect:'1',
+        firstSelect:undefined,
         levelList,
         expressionList:[]
       };
@@ -85,6 +89,9 @@ export default {
           this.expressionList = nodeConfig.expressionList || []
         }
         this.visible = true;
+      },
+      selectDisable(level){
+        return level >= this.firstSelect
       },
       onClose() {
         this.visible = false;
@@ -160,9 +167,13 @@ export default {
           })
           if(this.selectRadio == 'ROLE'){
             this.nodeConfig.participantList = this.roleList
-          }else if(this.selectRadio == 'APPLICANT'){
+          }else if(this.selectRadio == 'LEADER'){
             this.nodeConfig.participantList = [
-              {type:'APPLICANT',name:'申请人本人'}
+              {hierarchyType : this.levelData,type:this.selectRadio,name:'指定上级',dataId:this.levelData == 'ASSIGN' ? `${this.firstSelect},${this.levelSelect}` : this.levelSelect}
+            ]
+          }else{
+            this.nodeConfig.participantList = [
+              {type:this.selectRadio,name:this.selectRadio == 'APPLICANT' ? '申请人本人' : 'VONDER'}
             ]
           }
         }else if(nodeType == 'CC'){

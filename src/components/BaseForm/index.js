@@ -201,6 +201,14 @@ export default {
                 }
             })
         },
+        relativeFn(i){
+            console.log(i)
+        },
+        clearRleative(e,i){//清空关联值
+            if(i.referObjectCode){
+
+            }
+        },
         goBack(){
             if(this.$route.name == 'staffForm'){
                 this.$router.push({name:'staffList'})
