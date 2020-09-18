@@ -1,5 +1,5 @@
   import moment from 'moment'
-  import { getBaseLayout, getDetailLayout, saveLayout, getEditLayout, saveEditLayout } from '@/api/commonApi'
+  import { getBaseLayout, getDetailLayout, saveLayout, getEditLayout, saveEditLayout, getCascaderList } from '@/api/commonApi'
   
   import FooterToolBar from '@/layouts/FooterToolbar'
   import staffAchievements from '../staffAchievements/staffAchievements.vue'
@@ -47,7 +47,7 @@
     methods:{
         decoratorFn(i){
             let initialValue = ''
-            if(i.valueType != 'SELECT' && i.valueType != 'CHECKBOX'){
+            if(i.valueType != 'SELECT' && i.valueType != 'CHECKBOX' && i.valueType != 'ORG_TREE'){
                 const currentValue = i.value && i.value.length ? i.value.join(',') : ''
                 if(i.valueType == 'DATETIME'){
                     initialValue = currentValue ? moment(currentValue, 'YYYY-MM-DD') : null
@@ -59,7 +59,7 @@
                     initialValue = currentValue
                 }
             }else{
-                initialValue = []
+                initialValue = i.value || []
             }
             if(i.valueType == 'SELECT'){//多级联动，强制处理数据
                 i.codeItems.forEach(ele=>{
@@ -87,9 +87,7 @@
             }
             return [i.code,config]
         },
-
-        // methods 正则替换小数点
-        limitNumber(value) {
+        limitNumber(value) {//正则替换小数点
             if (typeof value === 'string') {
                 return !isNaN(Number(value)) ? value.replace(/\./g, '') : 0
             } else if (typeof value === 'number') {
@@ -98,24 +96,21 @@
                 return 0
             }
         },
-        selectTree(list,code){
+        selectTree(list,code){//下拉树回填值
             this.form.setFieldsValue({[code]:list})
         },
-        loadData(selectedOptions,categoryCodes){
+        async loadData(selectedOptions,i){//多级联动加载下级数据
             const targetOption = selectedOptions[selectedOptions.length - 1]
-            console.log(selectedOptions,item,targetOption)
-            
-            // targetOption.children = [
-            //     {
-            //         value:'北京',
-            //         label:'北京',
-            //         isLeaf: selectedOptions.length == 2 ? true : false
-            //     },{
-            //         value:'上海',
-            //         label:'上海',
-            //         isLeaf: selectedOptions.length == 2 ? true : false
-            //     }
-            // ]
+            targetOption.loading = true;
+            const list  = await getCascaderList({parentCode:targetOption.codeKey})
+            targetOption.children = list.map(ele=>{
+                return {
+                    ...ele,
+                    isLeaf:selectedOptions.length == i.categoryCodes.length
+                }
+            })
+            i.codeItems = [...i.codeItems]
+            targetOption.loading = false;
         },
         async handlePreview(file) {
             this.previewImage = file.thumbUrl;
@@ -160,17 +155,15 @@
                                 }
                                 saveData.push({
                                     code:ele.code,
-                                    value:[data]
+                                    value:typeof(data) == 'string' ? [data] : data
                                 })
                             }else{
-                                // if(ele.value || ele.value == 0){
                                 if(ele.value){
                                     saveData.push({
                                         code:ele.code,
                                         value:ele.value
                                     })
                                 }
-                                // }
                             }
                         })
                     })
