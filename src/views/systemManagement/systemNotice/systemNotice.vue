@@ -32,7 +32,11 @@
                 <template slot="action" slot-scope="text, record">         
                   <a @click="handleSub(record)">查看</a>
                   <a-divider type="vertical" />
+                  <a @click="handleTop(record)">置顶</a>
+                  <a-divider type="vertical" />
                   <a @click="handleAdd(record,3)">修改</a>
+                  <a-divider type="vertical" />
+                  <a @click="handleDel(record)">删除</a>
                 </template>
       </a-table>
       <!-- <s-table

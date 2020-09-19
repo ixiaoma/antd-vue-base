@@ -11,7 +11,7 @@ const router = new Router({
   // mode: 'history'
 })
 let flag = false
-const whiteList = ['login', 'register']// 白名单列表
+const whiteList = ['login', 'register','resetPass']// 白名单列表
 
 router.beforeEach(async(to, from, next) => {
   NProgress.start()

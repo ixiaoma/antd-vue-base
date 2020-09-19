@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import moment from 'moment'
-import { rolesList,getDeptTreeData,getUserLike,noticeAdd,noticeEdit,noticeDetail } from '@/api/user'
+import { rolesList,getDeptTreeData,getUserLike,noticeAdd,noticeEdit,noticeDetail,getCodeList } from '@/api/user'
+import {getCascaderList} from '@/api/commonApi'
 import { TreeSelect } from 'ant-design-vue'
 import debounce from 'lodash/debounce';
 let Base64 = require('js-base64').Base64;
@@ -12,34 +13,19 @@ export default {
         this.fetchUser = debounce(this.fetchUser, 800);
         return {
             editid:'',
-            typeList:[
-                {codeKey:'公告',codeValue:'公告'},
-                {codeKey:'规章制度',codeValue:'规章制度'}
-            ],
-            customerTypeList: [
-                {codeKey:'日常通知',codeValue:'日常通知'},
-                {codeKey:'节假日通知',codeValue:'节假日通知'},
-                {codeKey:'排班通知',codeValue:'排班通知'},
-                {codeKey:'其他通知',codeValue:'其他通知'},
-            ],
-            rulesList:[
-                {codeKey:'离职规范',codeValue:'离职规范'},
-                {codeKey:'入职规范',codeValue:'入职规范'}
-            ],
-            companyList:[
-                {codeKey:'联想',codeValue:'联想'},
-                {codeKey:'外包1',codeValue:'外包1'},
-                {codeKey:'外包2',codeValue:'外包2'}
-            ],
+            typeList:[],
+            customerTypeList: [],
+            rulesList:[],
+            companyList:[],
             roleData:[],
             treeData:[],
             userData:[],
             form: this.$form.createForm(this),
             validates: {
                 title: { rules: [{ required: true, message: '请填写主题' }] },
-                type: { rules: [{ required: true, message: '请选择类型' }] },
+                basicType: { rules: [{ required: true, message: '请选择类型' }] },
                 rules: { rules: [{ required: true, message: '请选择类型' }] },
-                customerType: { rules: [{ required: true, message: '请选择公告类型' }] },
+                type: { rules: [{ required: true, message: '请选择公告类型' }] },
                 compony:{rules: [{ type: 'array', required: true, message: '请选择所属公司' }]},
                 bulletinperson: { initialValue: 'all' },
                 roleIds:{rules: [{ type: 'array', required: true, message: '请选择角色' }]},
@@ -68,20 +54,30 @@ export default {
             e.preventDefault()
             this.form.validateFields((err, values) => {
                 if (err) return;  
-                values['publishDate']=values['publishDate']?values['publishDate'].format('YYYY-MM-DD HH:mm:ss'):null
-                values['expiryDate']=values['expiryDate']?values['expiryDate'].format('YYYY-MM-DD HH:mm:ss'):null
-                if (values['publishDate'] >= values['expiryDate']) {
+                // .format('YYYY-MM-DD HH:mm:ss'):null
+                values['publishDate']=values['publishDate']?values['publishDate'].format('YYYY-MM-DD'):null
+                values['expiryDate']=values['expiryDate']?values['expiryDate'].format('YYYY-MM-DD'):null
+                if (new Date(values['publishDate']).getTime() <= new Date().getTime()) {
+                    this.$message.warning("发布时间应大于当前时间")
+                    return false
+                }
+                if (new Date(values['publishDate']).getTime() >= new Date(values['expiryDate']).getTime()) {
                     this.$message.warning("失效时间应大于发布时间")
                     return false
                 }
-                
                 let params = {
                     title: values['title'],//公告标题
-                    customerType: values['customerType'],//公告类型
+                    basicType: values['basicType'],//类型
+                    type: values['type'],//公告类型
                     customerType: values['bulletinperson'],//发布人
                     publishDate: values['publishDate'],//公告时间  
                     expiryDate: values['expiryDate'],//失效时间             
                     content: Base64.encode(this.bulletinconcent),//公告内容              
+                }
+                if(values['basicType']=='规章制度'){
+                    params.rules=values['rules']
+                    params.compony=values['compony']
+                    params.filedList=[]
                 }
                 if (values['bulletinperson'] == "role") {
                     params.customerIds = values['roleIds']                                    
@@ -166,9 +162,9 @@ export default {
                     fromdata.publishDate=res.data.publishDate?moment(new Date(res.data.publishDate)):null
                     fromdata.expiryDate=res.data.expiryDate?moment(new Date(res.data.expiryDate)):null
                     this.$nextTick(()=>{
-                        let { title,publishDate,expiryDate,customerType,customerIds} = { ...fromdata };
+                        let { title,basicType,publishDate,expiryDate,type,customerType,customerIds} = { ...fromdata };
                         this.form.setFieldsValue({
-                            title,publishDate,expiryDate,bulletinperson:customerType,customerType
+                            title,basicType,publishDate,expiryDate,bulletinperson:type,customerType
                         })
                         setTimeout(()=>{
                             if (this.form.getFieldValue('bulletinperson') == "role") {
@@ -195,9 +191,26 @@ export default {
                     this.editor.txt.html(this.bulletinconcent)            
                 }
             })
+        },
+        typeListLoad(){
+            getCodeList('notice_rules_type').then(res=>{
+                this.typeList=res
+            })
+            getCodeList('apply_company').then(res=>{
+                this.companyList=res
+            })
+        },
+        nextCodeList(value){
+            value=='规章制度'&&getCascaderList({parentCode:value}).then(res=>{
+                this.rulesList=res
+            })
+            value=='公告'&&getCascaderList({parentCode:value}).then(res=>{
+                this.customerTypeList=res
+            })
         }
     },
     created() {
+        this.typeListLoad()
         this.getRoleData()
         this.gettreedata()
     },

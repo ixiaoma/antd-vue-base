@@ -2,7 +2,7 @@
 import moment from 'moment'
 import TableFilter from '@/components/TableFilter/index.vue'
 import { STable, Ellipsis } from '@/components'
-import { getServiceList, noticePage, noticeDel } from '@/api/user'
+import { getServiceList, noticePage, noticeDel,noticeTop } from '@/api/user'
 import { columns, filterList, result } from './codeList.js'
 
 const statusMap = {
@@ -51,19 +51,16 @@ export default {
       page: 1,
       pageSize: 10,
       loading: false,
-      // 加载数据方法 必须为 Promise 对象
-      // loadData: parameter => {
-      //   const requestParameters = Object.assign({}, parameter, this.queryParam)
-      //   console.log('loadData request parameters:', requestParameters)
-      //   return noticePage(requestParameters)
-      //     .then(res => {
-      //       // return res.result
-      //       return result
-      //     })
-      // },
       noticeData: [],
       selectedRowKeys: [],
-      selectedRows: []
+      selectedRows: [],
+      tabActiveList:{
+        0:'全部',
+        1:'日常通知',
+        2:'节假日通知',
+        3:'排班通知',
+        4:'其他通知',
+      }
     }
   },
   filters: {
@@ -89,33 +86,34 @@ export default {
       this.pagination = pager;
       this.page = pagination.current
       this.pageSize = pagination.pageSize
-      // this.noticeDataLoad()
+      this.noticeDataLoad()
     },
     noticeDataLoad(page) {
       let params = {
-        "take": 20,
-        "skip": 0,
-        "page": page ? page : this.page,
-        "pageSize": this.pageSize,
-        "searchFilter": {
-          "filters": [],
-          "logic": "and"
-        },
-        "objectType": "3001",
-        "conditionId": "",
-        "title": "",
-        "customerType": this.tabActive==0?'':this.tabActive,
-        "spublishDate": "",
-        "epublishDate": ""
+        // "take": 20,
+        // "skip": 0,
+        page: page ? page : this.page,
+        pageSize: this.pageSize,
+        type:this.tabActiveList[this.tabActive]
+        // "searchFilter": {
+        //   "filters": [],
+        //   "logic": "and"
+        // },
+        // "objectType": "3001",
+        // "conditionId": "",
+        // "title": "",
+        // "customerType": this.tabActive==0?'':this.tabActive,
+        // "spublishDate": "",
+        // "epublishDate": ""
       }
       this.loading = true;
       noticePage(params).then(res => {
         const pagination = { ...this.pagination };
-        pagination.total = res.data.totalCount;
+        pagination.total = res.totalCount;
         pagination.current = params.page
         this.page = params.page
         this.loading = false;
-        this.noticeData = res.data.records;
+        this.noticeData = res.records;
         this.pagination = pagination;
       })
     },
@@ -147,10 +145,46 @@ export default {
     onSelectChange(selectedRowKeys, selectedRows) {
       this.selectedRowKeys = selectedRowKeys
       this.selectedRows = selectedRows
+    },
+    handleTop(record){
+      let _this = this;
+      let params={
+        id:record.id
+      }
+      this.$confirm({
+          title: '温馨提示',
+          content: '确认置顶？',
+          okText: '确认',
+          cancelText: '取消',
+          onOk() {
+            noticeTop(params).then(res => {
+                  _this.$message.success('置顶成功');
+                  _this.noticeDataLoad()       
+              })
+          },
+          onCancel() { },
+      });
+      
+    },
+    handleDel(record){
+      let _this = this;
+      this.$confirm({
+          title: '温馨提示',
+          content: '确认删除？',
+          okText: '确认',
+          cancelText: '取消',
+          onOk() {
+            noticeDel([record.id]).then(res => {
+                  _this.$message.success('删除成功');
+                  _this.noticeDataLoad()       
+              })
+          },
+          onCancel() { },
+      });
     }
   },
   created() {
-    // this.noticeDataLoad()
+    this.noticeDataLoad()
   },
 }
 

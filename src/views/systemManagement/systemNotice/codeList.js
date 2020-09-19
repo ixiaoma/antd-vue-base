@@ -12,15 +12,15 @@ export const columns = [
   },
   {
     title: '所属公司',
-    dataIndex: 'title'
+    dataIndex: 'company'
   },
   {
     title: '类型',
-    dataIndex: 'title'
+    dataIndex: 'basicType'
   },
   {
     title: '公告/规章制度类型',
-    dataIndex: 'customerTypeName'
+    dataIndex: 'type'
   },
   {
     title: '发布时间',
@@ -34,18 +34,18 @@ export const columns = [
   },
   {
     title: '创建人',
-    dataIndex: 'createdBy'
+    dataIndex: 'createName'
   },
   {
     title: '创建时间',
-    dataIndex: 'createdDate',
+    dataIndex: 'createDate',
     sorter: true
   },
   {
     title: '操作',
     dataIndex: 'action',
     fixed: 'right',
-    width: '150px',
+    width: '180px',
     scopedSlots: { customRender: 'action' }
   }
 ]

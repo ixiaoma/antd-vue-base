@@ -15,7 +15,7 @@
                     </a-col>
                     <a-col :span="12">
                         <a-form-item label="员工工号" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
-                            <a-input  v-decorator="['staffNo',validates.staffNo]" :placeholder="modaldisabled?'':'员工工号'" disabled/>
+                            <a-input  v-decorator="['code',validates.code]" :placeholder="modaldisabled?'':'员工工号'" disabled/>
                         </a-form-item>
                     </a-col>
                     <a-col :span="12">

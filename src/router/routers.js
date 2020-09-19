@@ -774,7 +774,12 @@ export const constantRouterMap = {
         path: 'recover',
         name: 'recover',
         component: undefined
-      }
+      },
+      {
+        path: '/user/resetPass',
+        name: 'resetPass',
+        component: () => import(/* webpackChunkName: "user" */ '@/views/user/resetPass.vue')
+      },
     ]
 }
 
@@ -784,6 +789,12 @@ export const hideInMenuRouterMap = {
   redirect: '/hidemenu/baseForm',
   hidden: true,
   children:[
+    {
+      path: '/hidemenu/userCenter',
+      name: 'userCenter',
+      component: () => import('@/views/account/userCenter/userCenter.vue'),
+      meta: { title: '个人中心'}
+    },
     {
       path: '/hidemenu/baseForm',
       name: 'baseForm',

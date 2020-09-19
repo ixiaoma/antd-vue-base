@@ -19,6 +19,8 @@ const userApi = {
   Service: '/service'
 }
 const api={
+  resetPass:systemAPI+'user/update_pw',//重置密码
+  homeUserCenter:systemAPI+'user/home',//个人中心
   getUserList:systemAPI+'user/condition/page',//用户列表
   getUserLike: systemAPI+'user/getUsersByNickname',//用户模糊查询
   userEnable: systemAPI+'user/isenableduser/update',//用户禁用启用
@@ -50,14 +52,14 @@ const api={
   menusDetail:systemAPI+'resource/',//菜单详情
   menusAdd:systemAPI+'resource',//菜单新增
   objectTypeList:frameAPI+'object-define/page',//object
-  noticePage: frameAPI+'notice/queryPage',//系统公告列表
-  noticeAdd: frameAPI+'notice/add',//系统公告新增
-  noticeEdit: frameAPI+'notice/edit',//系统公告编辑
-  noticeTop: frameAPI+'notice/stick',//系统公告置顶
-  noticeDetail: frameAPI+'notice/getById',//系统公告详情
-  noticeDel: frameAPI+'notice/deletebyids',//系统公告删除
-  noticeRead: frameAPI+'notice/read/',//系统公告已读
-  noticeHome: frameAPI+'notice/getByItcode',//系统公告首页
+  noticePage: systemAPI+'sys-notice/page',//系统公告列表
+  noticeAdd: systemAPI+'sys-notice/save',//系统公告新增
+  noticeEdit: systemAPI+'sys-notice/edit',//系统公告编辑
+  noticeTop: systemAPI+'sys-notice/stick',//系统公告置顶
+  noticeDetail: systemAPI+'sys-notice/show',//系统公告详情
+  noticeDel: systemAPI+'sys-notice/delete',//系统公告删除
+  noticeRead: systemAPI+'notice/read/',//系统公告已读
+  noticeHome: systemAPI+'notice/getByItcode',//系统公告首页
   fileUpload:frameAPI+'file/upload',//文件上传
   codeTableList:frameAPI+'code-category/page',//码表管理列表
   addCategory:frameAPI+'code-category/save',//码表管理列表新增
@@ -146,6 +148,13 @@ export function getServiceList (parameter) {
   return axios.get(userApi.Service, { params: parameter })
 }
 
+
+export function resetPass(parameter) {
+  return axios.post(api.resetPass, parameter)
+}
+export function homeUserCenter(parameter) {
+  return axios.get(api.homeUserCenter, parameter)
+}
 export function getUserList(parameter) {
   return axios.post(api.getUserList, parameter)
 }
@@ -264,7 +273,7 @@ export function noticeEdit(params) {
   return axios.post(api.noticeEdit,params)
 }
 export function noticeDetail(params) {
-  return axios.get(api.noticeDetail,{params:params})
+  return axios.post(api.noticeDetail,params)
 }
 export function noticeDel(params) {
   return axios.post(api.noticeDel,params)
@@ -272,8 +281,10 @@ export function noticeDel(params) {
 export function noticeRead(params) {
   return axios.post(api.noticeRead+params)
 }
+export function noticeTop(params) {
+  return axios.get(api.noticeTop,{params:params})
+}
 export const fileUpload=process.env.VUE_APP_API_BASE_URL+api.fileUpload
-// noticeTop: 'notice/stick',//系统公告置顶
 // noticeHome: 'notice/getByItcode',//系统公告首页
 export function codeTableList(params) {
   return axios.post(api.codeTableList,params)

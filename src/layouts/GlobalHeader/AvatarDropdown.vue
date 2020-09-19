@@ -44,7 +44,7 @@ export default {
   },
   methods: {
     handleToCenter () {
-      this.$router.push({ path: '/account/center' })
+      this.$router.push({ name: 'userCenter',query:{title:'个人中心'} })
     },
     handleToSettings () {
       this.$router.push({ path: '/account/settings' })

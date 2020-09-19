@@ -45,7 +45,7 @@ export default {
             validates:{
                 realName:{rules: [{ required: true, message: '请填写姓名' }]},
                 username:{rules: [{ required: true, message: '请填写登录名' }]},
-                staffNo:{rules: [{ required: false, message: '员工工号系统自动生成' }]},
+                code:{rules: [{ required: false, message: '员工工号系统自动生成' }]},
                 cellphone:{rules: [{ required: true, message: '请填写手机号' },{pattern:/^1\d{10}$/, message: '请填写正确的手机号' }]},
                 email:{rules: [{ required: false, message: '请填写邮箱' },{type: 'email',message: '请填写正确的邮箱'}]},
                 workCity:{rules: [{ required: true, message: '请选择办公地址' }]},
@@ -105,8 +105,8 @@ export default {
                     fromdata.birthday=res.birthday?moment(new Date(res.birthday)):null
                     fromdata.employmentDate=res.employmentDate?moment(new Date(res.employmentDate)):null
                     this.$nextTick(()=>{
-                        let { realName,username,cellphone,email,workCity,sex,customerName,isWonder,isWonderAdmin,position,label,totalCredit,status,idCard,birthday,employmentDate } = { ...fromdata };
-                        this.formField.setFieldsValue({realName,username,cellphone,email,workCity,sex,customerName,isWonder,isWonderAdmin,position,label,totalCredit,status,idCard,birthday,employmentDate})
+                        let { realName,username,code,cellphone,email,workCity,sex,customerName,isWonder,isWonderAdmin,position,label,totalCredit,status,idCard,birthday,employmentDate } = { ...fromdata };
+                        this.formField.setFieldsValue({realName,username,code,cellphone,email,workCity,sex,customerName,isWonder,isWonderAdmin,position,label,totalCredit,status,idCard,birthday,employmentDate})
                         this.formField.setFieldsValue({
                             dept:{
                                 value:res.deptId,
@@ -169,7 +169,7 @@ export default {
             this.validates={
                 realName:{rules: [{ required: value, message: '请填写姓名' }]},
                 username:{rules: [{ required: value, message: '请填写登录名' }]},
-                staffNo:{rules: [{ required: false, message: '员工工号系统自动生成' }]},
+                code:{rules: [{ required: false, message: '' }]},
                 cellphone:{rules: [{ required: value, message: '请填写手机号' },{pattern:/^1\d{10}$/, message: '请填写正确的手机号' }]},
                 email:{rules: [{ required: false, message: '请填写邮箱' },{type: 'email',message: '请填写正确的邮箱'}]},
                 workCity:{rules: [{ required: value, message: '请选择办公地址' }]},

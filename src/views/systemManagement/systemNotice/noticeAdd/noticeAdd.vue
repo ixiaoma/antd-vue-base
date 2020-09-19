@@ -9,34 +9,34 @@
         </a-col>
         <a-col :span="12">
           <a-form-item label="类型:">
-            <a-select :getPopupContainer="triggerNode => triggerNode.parentNode" mode="default" v-decorator="['type',validates.type]" placeholder="请选择">
+            <a-select :disabled="$route.query.title=='系统公告修改'" :getPopupContainer="triggerNode => triggerNode.parentNode" mode="default" v-decorator="['basicType',validates.basicType]" placeholder="请选择" @change="nextCodeList">
               <a-select-option v-for="k in typeList" :key="k.codeKey" :value="k.codeKey">{{ k.codeValue }}</a-select-option>
             </a-select>
           </a-form-item>
         </a-col>
-        <a-col :span="12" v-if="form.getFieldValue('type') == '规章制度'">
+        <a-col :span="12" v-if="form.getFieldValue('basicType') == '规章制度'">
           <a-form-item label="规章制度类型:">
             <a-select :getPopupContainer="triggerNode => triggerNode.parentNode" mode="default" v-decorator="['rules',validates.rules]" placeholder="请选择">
               <a-select-option v-for="k in rulesList" :key="k.codeKey" :value="k.codeKey">{{ k.codeValue }}</a-select-option>
             </a-select>
           </a-form-item>
         </a-col>
-        <a-col :span="12" v-if="form.getFieldValue('type') == '规章制度'">
+        <a-col :span="12" v-if="form.getFieldValue('basicType') == '规章制度'">
           <a-form-item label="所属公司:">
             <a-select :getPopupContainer="triggerNode => triggerNode.parentNode" mode="multiple" v-decorator="['compony',validates.compony]" placeholder="请选择">
               <a-select-option v-for="k in companyList" :key="k.codeKey" :value="k.codeKey">{{ k.codeValue }}</a-select-option>
             </a-select>
           </a-form-item>
         </a-col>
-        <a-col :span="12" v-if="form.getFieldValue('type') == '公告'">
+        <a-col :span="12" v-if="form.getFieldValue('basicType') == '公告'">
           <a-form-item label="公告类型">
-            <a-select :getPopupContainer="triggerNode => triggerNode.parentNode" mode="default" v-decorator="['customerType',validates.customerType]" placeholder="请选择">
+            <a-select :getPopupContainer="triggerNode => triggerNode.parentNode" mode="default" v-decorator="['type',validates.type]" placeholder="请选择">
               <a-select-option v-for="k in customerTypeList" :key="k.codeKey" :value="k.codeKey">{{ k.codeValue }}</a-select-option>
             </a-select>
           </a-form-item>
         </a-col>
         <a-col :span="12">
-          <a-form-item :label="form.getFieldValue('type') == '公告'?'发布提及人':'可见范围'">
+          <a-form-item :label="form.getFieldValue('basicType') == '公告'?'发布提及人':'可见范围'">
             <a-radio-group v-decorator="['bulletinperson',validates.bulletinperson]">
               <a-radio value="all">所有</a-radio>
               <a-radio value="role">角色</a-radio>
@@ -99,7 +99,7 @@
           <a-date-picker style="width:100%" v-decorator="['expiryDate',validates.expiryDate]" show-time format="YYYY-MM-DD HH:mm:ss"/>
         </a-form-item>
       </a-col>
-      <a-col :span="24" v-if="form.getFieldValue('type') == '规章制度'">
+      <a-col :span="24" v-if="form.getFieldValue('basicType') == '规章制度'">
           <a-form-item label="上传附件:">
             <a-button>上传附件</a-button>
           </a-form-item>
