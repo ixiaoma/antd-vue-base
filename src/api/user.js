@@ -273,7 +273,7 @@ export function noticeEdit(params) {
   return axios.post(api.noticeEdit,params)
 }
 export function noticeDetail(params) {
-  return axios.post(api.noticeDetail,params)
+  return axios.get(api.noticeDetail+params)
 }
 export function noticeDel(params) {
   return axios.post(api.noticeDel,params)
@@ -282,7 +282,7 @@ export function noticeRead(params) {
   return axios.post(api.noticeRead+params)
 }
 export function noticeTop(params) {
-  return axios.get(api.noticeTop,{params:params})
+  return axios.get(api.noticeTop+params)
 }
 export const fileUpload=process.env.VUE_APP_API_BASE_URL+api.fileUpload
 // noticeHome: 'notice/getByItcode',//系统公告首页

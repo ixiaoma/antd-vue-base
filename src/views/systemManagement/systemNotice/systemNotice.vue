@@ -11,6 +11,7 @@
         <a-tab-pane key="2" tab="节假日通知"></a-tab-pane>
         <a-tab-pane key="3" tab="排班通知"></a-tab-pane>
         <a-tab-pane key="4" tab="其他通知"></a-tab-pane>
+        <a-tab-pane key="5" tab="规章制度"></a-tab-pane>
       </a-tabs>
       <!-- <table-filter :filterList='filterList'/> -->
       <div class="table-operator">

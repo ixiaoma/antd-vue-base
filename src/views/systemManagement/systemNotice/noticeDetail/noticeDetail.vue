@@ -48,10 +48,7 @@ export default {
     },
     //编辑
     editbulletin() {
-      let params = {
-        id: this.editid
-      }
-      noticeDetail(params).then(res => {
+      noticeDetail(this.editid).then(res => {
         if (res.code == 200) {
           this.fromdata = res.data
           this.$refs.bulletinContent.innerHTML = Base64.decode(res.data.content)

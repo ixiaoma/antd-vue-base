@@ -60,6 +60,7 @@ export default {
         2:'节假日通知',
         3:'排班通知',
         4:'其他通知',
+        5:'规章制度'
       }
     }
   },
@@ -148,16 +149,13 @@ export default {
     },
     handleTop(record){
       let _this = this;
-      let params={
-        id:record.id
-      }
       this.$confirm({
           title: '温馨提示',
           content: '确认置顶？',
           okText: '确认',
           cancelText: '取消',
           onOk() {
-            noticeTop(params).then(res => {
+            noticeTop(record.id).then(res => {
                   _this.$message.success('置顶成功');
                   _this.noticeDataLoad()       
               })

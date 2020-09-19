@@ -72,7 +72,7 @@ export default {
                     customerType: values['bulletinperson'],//发布人
                     publishDate: values['publishDate'],//公告时间  
                     expiryDate: values['expiryDate'],//失效时间             
-                    content: Base64.encode(this.bulletinconcent),//公告内容              
+                    content: Base64.encode(this.bulletinconcent)//公告内容          
                 }
                 if(values['basicType']=='规章制度'){
                     params.rules=values['rules']
@@ -90,18 +90,14 @@ export default {
                 }
                 if (!this.editid) {
                     noticeAdd(params).then(res=>{
-                        if(res.code==200){
-                            this.$message.success("新建成功")
-                            this.$router.go(-1)
-                        }
+                        this.$message.success("新建成功")
+                        this.$router.go(-1)
                     })
                 } else {
                     params.id = this.editid
                     noticeEdit(params).then(res=>{
-                        if(res.code==200){
-                            this.$message.success("编辑成功")
-                            this.$router.go(-1)
-                        }
+                        this.$message.success("编辑成功")
+                        this.$router.go(-1)
                     })
                 }       
                 console.log(values)
@@ -152,11 +148,8 @@ export default {
             });
           },
           //编辑       
-        editbulletin() {
-            let params = {
-                id: this.editid
-            }           
-            noticeDetail(params).then(res => {
+        editbulletin() {         
+            noticeDetail(this.editid).then(res => {
                 if (res.code == 200) {                 
                     let fromdata=res.data
                     fromdata.publishDate=res.data.publishDate?moment(new Date(res.data.publishDate)):null
