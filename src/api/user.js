@@ -55,8 +55,8 @@ const api={
   noticePage: systemAPI+'sys-notice/page',//系统公告列表
   noticeAdd: systemAPI+'sys-notice/save',//系统公告新增
   noticeEdit: systemAPI+'sys-notice/edit',//系统公告编辑
-  noticeTop: systemAPI+'sys-notice/stick',//系统公告置顶
-  noticeDetail: systemAPI+'sys-notice/show',//系统公告详情
+  noticeTop: systemAPI+'sys-notice/stick/',//系统公告置顶
+  noticeDetail: systemAPI+'sys-notice/show/',//系统公告详情
   noticeDel: systemAPI+'sys-notice/delete',//系统公告删除
   noticeRead: systemAPI+'notice/read/',//系统公告已读
   noticeHome: systemAPI+'notice/getByItcode',//系统公告首页

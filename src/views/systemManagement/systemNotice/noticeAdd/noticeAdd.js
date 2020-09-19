@@ -150,16 +150,18 @@ export default {
           //编辑       
         editbulletin() {         
             noticeDetail(this.editid).then(res => {
-                if (res.code == 200) {                 
-                    let fromdata=res.data
-                    fromdata.publishDate=res.data.publishDate?moment(new Date(res.data.publishDate)):null
-                    fromdata.expiryDate=res.data.expiryDate?moment(new Date(res.data.expiryDate)):null
+                // if (res.code == 200) {                 
+                    let fromdata=res
+                    this.nextCodeList(res.basicType)
+                    fromdata.publishDate=res.publishDate?moment(new Date(res.publishDate)):null
+                    fromdata.expiryDate=res.expiryDate?moment(new Date(res.expiryDate)):null
                     this.$nextTick(()=>{
                         let { title,basicType,publishDate,expiryDate,type,customerType,customerIds} = { ...fromdata };
                         this.form.setFieldsValue({
-                            title,basicType,publishDate,expiryDate,bulletinperson:type,customerType
+                            title,basicType,publishDate,expiryDate,bulletinperson,customerType
                         })
                         setTimeout(()=>{
+                            this.form.setFieldsValue({type:type})
                             if (this.form.getFieldValue('bulletinperson') == "role") {
                                 this.form.setFieldsValue({
                                     roleIds:customerIds
@@ -180,9 +182,9 @@ export default {
                             }
                         },200)           
                     })             
-                    this.bulletinconcent= Base64.decode(res.data.content);
+                    this.bulletinconcent= Base64.decode(res.content);
                     this.editor.txt.html(this.bulletinconcent)            
-                }
+                // }
             })
         },
         typeListLoad(){

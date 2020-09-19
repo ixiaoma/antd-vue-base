@@ -6,12 +6,12 @@
     <a-row type="flex" style="border-bottom:1px dashed #efefef;margin-top:20px;">
       <a-col span="12" class="color_999">
         <span style="font-weight:700;">创建时间：</span>
-        {{fromdata.createdDate}}
+        {{fromdata.createDate}}
       </a-col>
       <a-col span="12" class="color_999">
         <div style="float:right">
           <span style="font-weight:700">创建人：</span>
-          {{fromdata.createdBy}}
+          {{fromdata.createName}}
         </div>
       </a-col>
     </a-row>
@@ -49,11 +49,11 @@ export default {
     //编辑
     editbulletin() {
       noticeDetail(this.editid).then(res => {
-        if (res.code == 200) {
-          this.fromdata = res.data
-          this.$refs.bulletinContent.innerHTML = Base64.decode(res.data.content)
+        // if (res.code == 200) {
+          this.fromdata = res
+          this.$refs.bulletinContent.innerHTML = Base64.decode(res.content)
           this.noticeReadLoad(this.editid)
-        }
+        // }
       })
     },
     //已读
