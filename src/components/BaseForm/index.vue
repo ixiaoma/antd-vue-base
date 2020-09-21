@@ -42,7 +42,7 @@
                                             </div>
                                             <div class="clearfix" v-else-if="i.valueType == 'ATTACHMENT'">
                                                 <a-upload action="https://www.mocky.io/v2/5cc8019d300000980a055e76">
-                                                    <a-button> <a-icon type="upload" /> 上传附件</a-button>
+                                                    <a-button> <a-icon type="upload" />上传附件</a-button>
                                                 </a-upload>
                                             </div>
                                             <tree-select v-else-if="i.valueType == 'ORG_TREE_SINGLE' || i.valueType == 'ORG_TREE_MULTI'" :multipleTree="i.valueType == 'ORG_TREE_MULTI'" v-decorator="decoratorFn(i)" :selectList='i.value' @selectTree='(list)=>{selectTree(list,i.code)}'/>

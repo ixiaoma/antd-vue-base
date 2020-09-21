@@ -55,10 +55,11 @@ export default {
             if(i.valueType != 'SELECT' && i.valueType != 'CHECKBOX' && i.valueType != 'ORG_TREE_MULTI'){
                 const currentValue = i.value && i.value.length ? i.value.join(',') : ''
                 if(i.valueType == 'DATETIME' || i.validateFields == 'DATE'){
-                    initialValue = currentValue ? moment(currentValue).format(i.validateFields == 'DATE' ? 'YYYY-MM-DD' : 'YYYY-MM-DD HH:mm:ss') : null
+                    initialValue = currentValue ? moment(currentValue,i.validateFields == 'DATE' ? 'YYYY-MM-DD' : 'YYYY-MM-DD HH:mm:ss') : null
+                    console.log(initialValue)
                 } else if(i.valueType == 'RADIO'){
                     const defaultValue = i.codeItems.filter(ele=>ele.defaultStatus)
-                    initialValue = currentValue || defaultValue.length ? defaultValue[0].codeKey : undefined
+                    initialValue = currentValue || (defaultValue.length > 0 ? defaultValue[0].codeKey : undefined)
                 } else if(i.valueType == 'INTEGER' || i.valueType == 'DECIMAL'){
                     initialValue = currentValue ? Number(currentValue) : null
                 }else{
