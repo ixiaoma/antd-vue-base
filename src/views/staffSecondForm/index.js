@@ -200,7 +200,7 @@ export default {
         params["filter"] = 
         {
             filters:[
-              {field: "basicInfoId", fieldType: "TEXT_MULTI", operator: "eq", value: this.basicInfoId}
+              {field: "basicInfoId", fieldType: "TEXT_SINGLE", operator: "eq", value: this.basicInfoId}
             ],
             logic: "and"
         }
@@ -269,7 +269,7 @@ export default {
                         }
                         saveData.push({
                             code:ele.code,
-                            value:[data]
+                            value:typeof(data) != 'object' ? [data] : data
                         })
                     }else{
                       if(ele.value){
@@ -344,12 +344,14 @@ export default {
       this.visible = true
     },
     
-    nextStep(id){
+    nextStep(res){
       this.$message.success('保存成功'); 
+      
       if(this.activeKey > 1){
+        this.$refs.table[0].refresh()
         return this.visible = false ; 
       }
-      this.$router.push({query:{...this.$route.query,id,flag:3}})
+      this.$router.push({query:{...this.$route.query,id:res.id,flag:3}})
       this.activeKey = '2'
     },
     onSelectChange (selectedRowKeys, selectedRows) {
