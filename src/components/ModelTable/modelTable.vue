@@ -2,6 +2,7 @@
 <template>
   <div class="modelTable">
     <a-modal
+      width='80%'
       title="请选择"
       :visible="visible"
     >
@@ -11,8 +12,8 @@
                 ref="table"
                 rowKey="id"
                 :columns="columns"
-                :rowSelection="showSelect?rowSelection:null"
                 :data="loadData"
+                :customRow="(record)=>{customRowFn(record)}"
                 :scroll='{x:true}'/>
         </a-card>
     </a-modal>

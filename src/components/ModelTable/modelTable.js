@@ -1,13 +1,14 @@
 import TableFilter from '../TableFilter/index.vue'
 import STable from '../Table'
 
-import { getBasePage, getTableSearch, getTableHeader, deletePageList } from '@/components/ModelTable/@/api/commonApi'
+import { getBasePage, getTableSearch, getTableHeader } from '@/api/commonApi'
 
 export default{
     data(){
         return {
             visible:false,
             pageLoading:true,
+            pageCode:null,
             queryParam:[],//筛选值
             // 加载数据方法 必须为 Promise 对象
             loadData: parameter => {
@@ -19,24 +20,8 @@ export default{
             },
             columns:[],
             selectedRowKeys: [],
-            selectedRows: [],
-            buttonList:[]
+            selectedRows: []
         }
-    },
-    props:{
-        pageCode:{//页面唯一编码
-            type: String,
-            default: 'example'
-        },
-        showBtnList:{//按钮权限
-            type: Array,
-            default: ()=>[]
-        },
-        showSelect:{ // 数据选择
-            type: Boolean , 
-            default: false 
-        },
-
     },
     components: {
         STable,
@@ -51,6 +36,27 @@ export default{
         }
     },
     methods:{
+        showModel(pageCode){
+            this.pageCode = pageCode
+            this.getInitData()
+            this.visible = true
+        },
+        customRowFn(record){
+            console.log(record)
+            return {
+                on: { // 事件
+                    click: (event) => {
+                        console.log(event)
+                    },       // 点击行
+                    dblclick: (event) => {
+                        console.log(event)
+                    },
+                    contextmenu: (event) => {},
+                    mouseenter: (event) => {},  // 鼠标移入行
+                    mouseleave: (event) => {}
+                }
+            }
+        },
         searchRefresh(filterQuery){
             this.queryParam = filterQuery
             this.$refs.table.refresh()
@@ -71,9 +77,5 @@ export default{
             })
             this.pageLoading = false
         }
-    },
-    created(){
-        this.getInitData()
-        this.buttonList = this.$route.meta.buttonList
     }
 }

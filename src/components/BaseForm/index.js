@@ -5,6 +5,7 @@ import fieldHandle from '@/mixins/fieldHandle'
 import FooterToolBar from '@/layouts/FooterToolbar'
 import staffAchievements from '../staffAchievements/staffAchievements.vue'
 import TreeSelect from '../Tree/tree.vue'
+import ModelTable from '../ModelTable/modelTable.vue'
 export default {
     name:'BaseFormLayout',
     data () {
@@ -44,7 +45,8 @@ export default {
     components:{
         FooterToolBar,
         TreeSelect,
-        staffAchievements
+        staffAchievements,
+        ModelTable
     },
     methods:{
         decoratorFn(i){
@@ -203,6 +205,7 @@ export default {
         },
         relativeFn(i){
             console.log(i)
+            this.$refs.modelTable.showModel(i.referObjectCode)
         },
         clearRleative(e,i){//清空关联值
             if(i.referObjectCode){

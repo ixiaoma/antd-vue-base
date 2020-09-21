@@ -71,6 +71,7 @@
                 <a-button type="primary" style="margin-left: 8px" html-type="submit" v-if='!readonly'>{{$route.query.pageCode=="performance_assessment_detail"?'提交审批':'提交'}}</a-button>
             </footer-tool-bar>
         </a-form>
+        <model-table ref='modelTable'/>
         <!-- 员工绩效 -->
         <staffAchievements :readonly="readonly" v-if="$route.query.pageCode=='performance_assessment_detail'" ref="staffAchievements"></staffAchievements>
     </a-card>

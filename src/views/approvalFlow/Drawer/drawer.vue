@@ -42,7 +42,7 @@
                     {{item.title}}
                   </a-select-option>
                 </a-select>
-                <div class="title-style" style="margin-top:20px"><h3>当前层级无上级时</h3></div>
+                <!-- <div class="title-style" style="margin-top:20px"><h3>当前层级无上级时</h3></div>
                 <a-radio-group v-model="defaultValue">
                   <a-radio :style="radioStyle" :value="1">
                     当前层级无上级时，由上一级上级审批
@@ -50,7 +50,7 @@
                   <a-radio :style="radioStyle" :value="2">
                     此审批节点为空时直接跳过，不视为异常
                   </a-radio>
-                </a-radio-group>
+                </a-radio-group> -->
               </div>
               <!-- <a-divider />
               <a-radio-group name="radioGroup" :default-value="1">
@@ -64,7 +64,7 @@
           <div class="table-style">
             <div class="table-row table-header">
               <div class="component-style">控件</div>
-              <a-radio-group v-model="slectAllData" @change="selectAll">
+              <a-radio-group v-model="slectAllData" @change="selectAll" class='radio-style'>
                   <a-radio value="display">隐藏</a-radio>
                   <a-radio value="onlyread">仅查看</a-radio>
                   <a-radio value="edit">可编辑</a-radio>
@@ -72,13 +72,19 @@
             </div>
             <div class="table-row table-body" v-for="(item,index) in fieldList" :key='index'>
               <div class="component-style">{{item.name}}</div>
-              <a-radio-group v-model="item.selectData" @change="checkSelectAll" name='radio-style'>
+              <a-radio-group v-model="item.selectData" @change="checkSelectAll" class='radio-style'>
                   <a-radio value="display">隐藏</a-radio>
                   <a-radio value="onlyread">仅查看</a-radio>
                   <a-radio value="edit">可编辑</a-radio>
               </a-radio-group>
             </div>
           </div>
+        </a-tab-pane>
+        <a-tab-pane key="3" tab="回退类型">
+              <a-radio-group v-model="backType">
+                <a-radio value="FROM">FROM</a-radio>
+                <a-radio value="TO">TO</a-radio>
+              </a-radio-group>
         </a-tab-pane>
       </a-tabs>
       <a-form :form="form" layout="vertical" v-if="nodeType == 'CC'">
@@ -155,8 +161,7 @@
         width: 226px;
       }
       .radio-style{
-        width: 90px;
-        padding-left: 10px;
+        margin-top: 10px;
       }
     }
     .table-header{
@@ -164,7 +169,7 @@
       height: 36px;
       line-height: 36px;
       .radio-style{
-        border-left: 1px solid #e8e8e8;
+        margin-top: 6px;
       }
     }
     .table-body{

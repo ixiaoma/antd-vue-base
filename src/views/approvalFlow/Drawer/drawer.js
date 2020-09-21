@@ -41,16 +41,17 @@ export default {
         ownerChecked:false,
         levelData:'ASSIGN',
         levelSelect:'1',
-        firstSelect:undefined,
+        firstSelect:'3',
         levelList,
-        expressionList:[]
+        expressionList:[],
+        backType:null
       };
     },
     components:{roleModel},
     methods: {
       async showDrawer(nodeConfig) {
         this.nodeConfig = nodeConfig
-        var { nodeType, name, formAuthorityList, participantList } = nodeConfig
+        var { nodeType, name, formAuthorityList, participantList,backType } = nodeConfig
         this.drawerTitle = name+'设置'
         this.nodeType = nodeType
         if(nodeType == 'APPROVE'){
@@ -75,10 +76,20 @@ export default {
               this.roleList = participantList.map(ele=>{
                 return {...ele}
               })
+            }else if(type == 'LEADER'){
+              this.levelData = participantList[0].hierarchyType
+              if(this.levelData == 'ASSIGN'){
+                const dataList = participantList[0].dataId.split[',']
+                this.firstSelect = dataList[0]
+                this.levelSelect = dataList[1]
+              }else{
+                this.levelSelect = participantList[0].dataId
+              }
             }else{
               this.roleList = []
             }
           }
+          this.backType = backType || null
         }else if(nodeType == 'CC'){
           if(participantList && participantList.length){
             this.roleList = participantList.filter(ele=>ele.type == 'ROLE')
@@ -104,7 +115,6 @@ export default {
         let onlyreadAll = true
         let editAll = true
         this.fieldList.forEach(ele=>{
-          console.log(ele.selectData)
           if(ele.selectData != 'display'){
             displayAll = false
           }
@@ -165,6 +175,7 @@ export default {
               edit:ele.selectData == 'edit'
             }
           })
+          this.nodeConfig.backType = this.backType
           if(this.selectRadio == 'ROLE'){
             this.nodeConfig.participantList = this.roleList
           }else if(this.selectRadio == 'LEADER'){
