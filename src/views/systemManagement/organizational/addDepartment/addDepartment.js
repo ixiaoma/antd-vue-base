@@ -57,9 +57,9 @@ export default {
                     this.tableDataUser2=res.obUsers?res.obUsers:[]//部门工作观察者
                     this.addfrom.dataAuthority = res.dataAuthority.toString()  
                     setTimeout(() => {
-                        this.addfrom.roleIds = res.roleIds?res.roleIds:[]            
-                        this.addfrom.manager=res.manager?res.manager:''//部门负责人
-                        this.addfrom.userIds = res.userIds?res.userIds:[]//部门工作观察者
+                        this.addfrom.roleIds = res.roleIds?res.roleIds.map(item=>item.toString()):[]            
+                        this.addfrom.manager=res.manager?res.manager.toString():''//部门负责人
+                        this.addfrom.userIds = res.userIds?res.userIds.map(item=>item.toString()):[]//部门工作观察者
                         this.addDepvisible=true
                     }, 300);
                 })

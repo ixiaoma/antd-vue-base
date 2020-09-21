@@ -135,7 +135,7 @@ export default {
                 if (fetchId !== this.lastFetchId) {
                     return;
                   }
-                  this.userData = res.data;
+                  this.userData = res;
                   this.fetching = false;
             })
           },
@@ -158,25 +158,26 @@ export default {
                     this.$nextTick(()=>{
                         let { title,basicType,publishDate,expiryDate,type,customerType,customerIds} = { ...fromdata };
                         this.form.setFieldsValue({
-                            title,basicType,publishDate,expiryDate,bulletinperson,customerType
+                            title,basicType,publishDate,expiryDate,bulletinperson,bulletinperson:customerType
                         })
                         setTimeout(()=>{
                             this.form.setFieldsValue({type:type})
                             if (this.form.getFieldValue('bulletinperson') == "role") {
                                 this.form.setFieldsValue({
-                                    roleIds:customerIds
+                                    roleIds:customerIds.map(item=>item.toString())
                                 })     
                                 // this.form.getFieldDecorator('roleIds', { initialValue:customerIds })                          
                             } 
                             if (this.form.getFieldValue('bulletinperson') == "department") {
                                 this.form.setFieldsValue({
-                                    dept:customerIds
+                                    dept:customerIds.map(item=>item.toString())
                                 }) 
                                 // this.form.getFieldDecorator('dept', { initialValue:customerIds })    
                             } 
                             if (this.form.getFieldValue('bulletinperson') == "people") {
+                                this.userData = res.userList
                                 this.form.setFieldsValue({
-                                    users:customerIds
+                                    users:customerIds.map(item=>item.toString())
                                 }) 
                                 // this.form.getFieldDecorator('users', { initialValue:customerIds })    
                             }

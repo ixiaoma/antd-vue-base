@@ -83,8 +83,8 @@
                 @change="userChange"
             >
                 <a-spin v-if="fetching" slot="notFoundContent" size="small" />
-                <a-select-option v-for="d in userData" :key="d.nickname">
-                {{ d.nickname }}
+                <a-select-option v-for="d in userData" :key="d.id">
+                {{ d.username }}
                 </a-select-option>
             </a-select>
           </a-form-item>

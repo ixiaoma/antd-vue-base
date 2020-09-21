@@ -1,12 +1,16 @@
+<template>
+<div class="workTimeList">
+    <search-table pageCode='recording'/>
+  </div>
+</template>
+<script>
 
 import { SearchTable } from '@/components'
-import staffwork from './staffwork.vue'
 
 export default {
-  name: 'workTimeListList',
+  name: 'rulesList',
   components: {
-    SearchTable,
-    staffwork
+    SearchTable
   },
   data () {
     return {
@@ -17,3 +21,5 @@ export default {
     
   }
 }
+
+</script>

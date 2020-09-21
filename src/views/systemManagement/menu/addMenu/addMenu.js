@@ -55,7 +55,9 @@ export default {
                 let listDisplay = nodeData.listDisplay=='1'?true:false
                 let detailsDisplay = nodeData.detailsDisplay=='1'?true:false
                 this.form.setFieldsValue({type: type});
-                const { title, url, code, icon, sort, description,objectCode,roleIds,enabledBool,leafBool } = { ...nodeData };
+                const { title, url, code, icon, sort, description,objectCode,enabledBool,leafBool } = { ...nodeData };
+                const roleIds=nodeData.roleIds&&nodeData.roleIds.length?nodeData.roleIds.map(item=>item.toString()):[]
+                console.log(roleIds)
                 type == '1' ? setTimeout(() => {
                     this.form.setFieldsValue({ type, title, url, objectCode,icon, sort, enabledBool,leafBool,roleIds, description})
                 },10) : setTimeout(() => {
