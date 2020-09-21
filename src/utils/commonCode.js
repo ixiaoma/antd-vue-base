@@ -68,13 +68,13 @@ export const valueTypeList = [
 
 export const levelList = [
     {
-        label:'1',
+        label:'4',
         title:'最高上级'
     },{
         label:'2',
         title:'第二层上级'
     },{
-        label:'3',
+        label:'1',
         title:'第三层上级'
     }
 ]

@@ -30,6 +30,7 @@ export default{
     computed: {
         rowSelection () {
           return {
+            type:'radio',
             selectedRowKeys: this.selectedRowKeys,
             onChange: this.onSelectChange
           }
@@ -42,7 +43,6 @@ export default{
             this.visible = true
         },
         customRowFn(record){
-            console.log(record)
             return {
                 on: { // 事件
                     click: (event) => {
@@ -52,7 +52,9 @@ export default{
                         console.log(event)
                     },
                     contextmenu: (event) => {},
-                    mouseenter: (event) => {},  // 鼠标移入行
+                    mouseenter: (event) => {
+                        console.log(event)
+                    },  // 鼠标移入行
                     mouseleave: (event) => {}
                 }
             }
@@ -63,7 +65,7 @@ export default{
         },
         onSelectChange (selectedRowKeys, selectedRows) {
             this.selectedRowKeys = selectedRowKeys
-            this.selectedRows = selectedRows
+            this.selectedRows = selectedRows[0]
         },
         async getInitData(){
             this.filterList = await getTableSearch({pageCode:this.pageCode})
@@ -76,6 +78,13 @@ export default{
               }
             })
             this.pageLoading = false
+        },
+        handleOk(){
+            this.$emit('selectData',this.selectedRows)
+            this.visible = false
+        },
+        handleCancel(){
+            this.visible = false
         }
     }
 }

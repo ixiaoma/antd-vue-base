@@ -16,7 +16,8 @@ export default {
             imgList:[],
             previewImage:'',
             previewVisible: false,
-            readonly:false
+            readonly:false,
+            referObjectCode:null//关联字段标识
         }
     },
     mixins:[fieldHandle],
@@ -204,13 +205,26 @@ export default {
             })
         },
         relativeFn(i){
-            console.log(i)
+            this.referObjectCode = i.referObjectCode
             this.$refs.modelTable.showModel(i.referObjectCode)
         },
-        clearRleative(e,i){//清空关联值
-            if(i.referObjectCode){
-
-            }
+        clearRleative(i){//清空关联值
+            this.layoutList.forEach(ele=>{
+                ele.fieldDefineValueList.forEach(pre=>{
+                    if(pre.referObjectCode == i.referObjectCode){
+                        this.form.setFieldsValue({[pre.code]:i.valueType == 'SELECT' || i.valueType == 'ORG_TREE_MULTI' || i.valueType == 'CHECKBOX' ? [] : i.valueType == 'DATETIME' || i.valueType == 'INTEGER' || i.valueType == 'DECIMAL' ? null : ''})
+                    }
+                })
+            })
+        },
+        selectData(data){
+            this.layoutList.forEach(ele=>{
+                ele.fieldDefineValueList.forEach(pre=>{
+                    if(pre.referObjectCode == this.referObjectCode){
+                        this.form.setFieldsValue({[pre.code]:data[pre.referObjectField]})
+                    }
+                })
+            })
         },
         goBack(){
             if(this.$route.name == 'staffForm'){

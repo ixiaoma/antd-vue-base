@@ -46,8 +46,8 @@
                                                 </a-upload>
                                             </div>
                                             <tree-select v-else-if="i.valueType == 'ORG_TREE_SINGLE' || i.valueType == 'ORG_TREE_MULTI'" :multipleTree="i.valueType == 'ORG_TREE_MULTI'" v-decorator="decoratorFn(i)" :selectList='i.value' @selectTree='(list)=>{selectTree(list,i.code)}'/>
-                                            <a-input allowClear :disabled='i.referObjectCode ? true : false' v-else :maxLength="i.valueType == 'PHONE' ? 11 : null" v-decorator="decoratorFn(i)" :placeholder="'请填写'+i.name">
-                                                <span slot="addonAfter" v-if='i.referObjectCode'>
+                                            <a-input allowClear :disabled='i.serverApi ? true : false' v-else :maxLength="i.valueType == 'PHONE' ? 11 : null" v-decorator="decoratorFn(i)" :placeholder="'请填写'+i.name">
+                                                <span slot="addonAfter" v-if='i.serverApi'>
                                                     <a-icon type="close" v-if='form.getFieldValue(i.code)' @click="clearRleative(i)"/>
                                                     <a-icon type="plus" v-else @click="relativeFn(i)"/>
                                                 </span>
@@ -71,7 +71,7 @@
                 <a-button type="primary" style="margin-left: 8px" html-type="submit" v-if='!readonly'>{{$route.query.pageCode=="performance_assessment_detail"?'提交审批':'提交'}}</a-button>
             </footer-tool-bar>
         </a-form>
-        <model-table ref='modelTable'/>
+        <model-table ref='modelTable' @selectData='selectData'/>
         <!-- 员工绩效 -->
         <staffAchievements :readonly="readonly" v-if="$route.query.pageCode=='performance_assessment_detail'" ref="staffAchievements"></staffAchievements>
     </a-card>

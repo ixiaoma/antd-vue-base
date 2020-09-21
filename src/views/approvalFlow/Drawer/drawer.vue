@@ -81,10 +81,11 @@
           </div>
         </a-tab-pane>
         <a-tab-pane key="3" tab="回退类型">
-              <a-radio-group v-model="backType">
-                <a-radio value="FROM">FROM</a-radio>
-                <a-radio value="TO">TO</a-radio>
-              </a-radio-group>
+          <a-radio-group v-model="backType">
+            <a-radio value="FROM">FROM</a-radio>
+            <a-radio value="TO">TO</a-radio>
+          </a-radio-group>
+          <a-button type="primary" @click="backType = null"> 取消 </a-button>
         </a-tab-pane>
       </a-tabs>
       <a-form :form="form" layout="vertical" v-if="nodeType == 'CC'">
@@ -99,7 +100,7 @@
           <a-divider />
           <div class="title-style"><h3>指定上级</h3><span>可抄送指定层级上级</span></div>
           <a-select mode="multiple" style="width: 360px">
-            <a-select-option :value="item.label" v-for='(item,index) in levelList[1]' :key='index'>
+            <a-select-option :value="item.label" v-for='(item,index) in levelList' :key='index'>
               {{item.title}}
             </a-select-option>
           </a-select>
