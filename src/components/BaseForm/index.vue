@@ -46,7 +46,7 @@
                                                 </a-upload>
                                             </div>
                                             <tree-select v-else-if="i.valueType == 'ORG_TREE_SINGLE' || i.valueType == 'ORG_TREE_MULTI'" :multipleTree="i.valueType == 'ORG_TREE_MULTI'" v-decorator="decoratorFn(i)" :selectList='i.value' @selectTree='(list)=>{selectTree(list,i.code)}'/>
-                                            <a-input allowClear :disabled='i.serverApi ? true : false' v-else :maxLength="i.valueType == 'PHONE' ? 11 : null" v-decorator="decoratorFn(i)" :placeholder="'请填写'+i.name">
+                                            <a-input allowClear :disabled='i.referObjectCode ? true : false' v-else :maxLength="i.valueType == 'PHONE' ? 11 : null" v-decorator="decoratorFn(i)" :placeholder="'请填写'+i.name">
                                                 <span slot="addonAfter" v-if='i.serverApi'>
                                                     <a-icon type="close" v-if='form.getFieldValue(i.code)' @click="clearRleative(i)"/>
                                                     <a-icon type="plus" v-else @click="relativeFn(i)"/>

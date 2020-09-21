@@ -871,12 +871,6 @@ export const hideInMenuRouterMap = {
       component: () => import('@/views/systemManagement/vacationSet/vacationBalanceDetail/vacationBalanceDetail.vue'),
       meta: { title: '假期余额详情'}
     },
-    {
-      path: '/hidemenu/vacationBalanceDetail',
-      name: 'vacationBalanceDetail',
-      component: () => import('@/views/systemManagement/vacationSet/vacationBalanceDetail/vacationBalanceDetail.vue'),
-      meta: { title: '假期余额详情'}
-    },
     // {
     //   path: '/hidemenu/agreeRemind',
     //   name: 'agreeRemind',
@@ -889,5 +883,11 @@ export const hideInMenuRouterMap = {
     //   component: () => import('@/views/homeToPage/probationRemind.vue'),
     //   meta: { title: '提醒-试用期'}
     // },
+    {
+      path: '/hidemenu/taskApproval',
+      name: 'taskApproval',
+      component: () => import('@/views/taskApproval/index.vue'),
+      meta: { title: '审批'}
+    }
   ]
 }

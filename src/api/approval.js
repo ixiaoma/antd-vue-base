@@ -9,9 +9,8 @@ const settingApi = {
   getFormDetail: baseFrame + 'process-define/form/detail/',//审批模板详情
   getFlowList: baseFrame + 'process-define/page',//获取审批列表
   saveFlow: baseFrame + 'process-define/save',//保存审批流
-  processDetail: 'process-define/form/detail/definekey/',//获取审批详情
-  taskList: 'business/task/page',//审批列表
-  commitTask: 'business/task/{taskId}/complete'//提交审批
+  processHeader: baseFrame + 'process-define/form/detail/definekey/',//获取审批详情
+  taskList: baseFrame + 'business/task/page',//审批列表
 }
 
 export function getApprovalDate ({id}) {
@@ -38,14 +37,14 @@ export function getFlowList () {
   return axios.post(settingApi.getFlowList)
 }
 
-export function processDetail({definekey}) {
-  return axios.get(settingApi.processDetail+definekey)
+export function getProcessHeader({definekey}) {
+  return axios.get(settingApi.processHeader+definekey)
 }
 
 export function taskList ({params}) {
   return axios.post(settingApi.taskList,params)
 }
 
-export function commitTask ({taskId}) {
-  return axios.post(`business/task/${taskId}/complete`)
+export function commitTask ({taskId,params}) {//提交审批
+  return axios.post(`${baseFrame}business/task/${taskId}/complete`,params)
 }
