@@ -75,7 +75,7 @@
                 <a-divider type="vertical" />
                 <a @click="handleEdit(record , item)" >修改</a>
                 <a-divider type="vertical"/>
-                <a @click="handleSub(record)" >删除</a>
+                <a @click="handleSub(record,item)" >删除</a>
               </template>
             </span>
           </s-table>

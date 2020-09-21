@@ -37,6 +37,7 @@ export const routerObj = {
     agreeManagement: () => import('@/views/agreeManagement/agreeList/agreeList.vue'),
     mlrpApply: () => import('@/views/recruitedManagement/mlrpApply/mlrpApply.vue'),
     resumeList: () => import('@/views/recruitedManagement/resumeList/resumeList.vue'),
+    resumeCommon: () => import('@/views/recruitedManagement/resumeCommon/resumeCommon.vue'),
     staffAchievements: () => import('@/views/KPI/staffAchievements/staffAchievements.vue'),
     templateManagement: () => import('@/views/KPI/templateManagement/templateManagement.vue'),
     rewardsPunishments: () => import('@/views/KPI/rewardsPunishments/rewardsPunishments.vue'),

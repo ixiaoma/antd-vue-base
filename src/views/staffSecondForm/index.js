@@ -13,12 +13,15 @@ import {
   socialRelationsSave , 
   socialRelationsPage , 
   socialRelationsEdit ,
+  socialRelationsDel,
   workExperienceSave , 
   workExperiencePage , 
   workExperienceEdit ,
+  workExperienceDel ,
   educationalExperienceSave , 
   educationalExperiencePage , 
-  educationalExperienceEdit 
+  educationalExperienceEdit,
+  educationalExperienceDel,
 } from "@/api/reimbursement"
 const filterList = []
 const baseLists = [
@@ -32,7 +35,8 @@ const baseLists = [
     api:[ 
       socialRelationsSave , 
       socialRelationsPage , 
-      socialRelationsEdit 
+      socialRelationsEdit,
+      socialRelationsDel
     ],
     columns:[
       {
@@ -74,7 +78,8 @@ const baseLists = [
     api: [ 
       workExperienceSave , 
       workExperiencePage , 
-      workExperienceEdit
+      workExperienceEdit,
+      workExperienceDel
     ] , 
     columns:[
       {
@@ -121,7 +126,8 @@ const baseLists = [
     api:[
       educationalExperienceSave , 
       educationalExperiencePage , 
-      educationalExperienceEdit 
+      educationalExperienceEdit ,
+      educationalExperienceDel
     ] , 
     columns:[
       {
@@ -343,16 +349,31 @@ export default {
        } ; 
       this.visible = true
     },
+    handleSub(data, item){
+      let _this = this;
+      this.$confirm({
+          title: '温馨提示',
+          content: '确认删除？',
+          okText: '确认',
+          cancelText: '取消',
+          onOk() {
+              item.api[3](data.id).then(res => {
+                  _this.$message.success('删除成功');
+                  setTimeout(()=>{_this.$refs.table[0].refresh()},500)       
+              })
+          },
+          onCancel() { },
+      });
+    },
     
     nextStep(res){
-      this.$message.success('保存成功'); 
-      
+      this.$message.success('保存成功');
       if(this.activeKey > 1){
-        this.$refs.table[0].refresh()
         return this.visible = false ; 
       }
       this.$router.push({query:{...this.$route.query,id:res.id,flag:3}})
       this.activeKey = '2'
+      setTimeout(()=>{this.$refs.table[0].refresh()},200) 
     },
     onSelectChange (selectedRowKeys, selectedRows) {
       this.selectedRowKeys = selectedRowKeys

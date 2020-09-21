@@ -37,6 +37,9 @@ export function educationalExperiencePage (params) {// 列表
 export function educationalExperienceEdit (id , params) {// 编辑
     return axios.post(`${baseBusiness}educational_experience/save/${id}`,params)
 }
+export function educationalExperienceDel (id , params) {// 编辑
+    return axios.post(`${baseBusiness}educational_experience/delete/${id}`,params)
+}
 
 // 工作经历
 export function workExperienceSave (params) {// 新增
@@ -48,6 +51,9 @@ export function workExperiencePage (params) {// 列表
 export function workExperienceEdit (id , params) {// 编辑
     return axios.post(`${baseBusiness}work_experience/save/${id}`,params)
 }
+export function workExperienceDel (id , params) {// 编辑
+    return axios.post(`${baseBusiness}work_experience/delete/${id}`,params)
+}
 // 社会关系
 export function socialRelationsSave (params) {// 新增
     return axios.post(`${baseBusiness}social_relations/save`,params)
@@ -57,6 +63,9 @@ export function socialRelationsPage (params) {// 列表
 }
 export function socialRelationsEdit (id , params) {// 编辑
     return axios.post(`${baseBusiness}social_relations/save/${id}`,params)
+}
+export function socialRelationsDel (id , params) {// 编辑
+    return axios.post(`${baseBusiness}social_relations/delete/${id}`,params)
 }
 
 // 更新简历状态 
