@@ -1,6 +1,20 @@
 <template>
-<div class="workTimeList">
-    <search-table pageCode='recording'/>
+<div class="rulesList">
+    <a-table 
+                  ref="table"
+                  size="small"
+                  :bordered="true"
+                  :rowKey="(record) =>  record.id"
+                  :columns="columns" 
+                  :data-source="noticeData"      
+                  :showPagination="true"
+                  :pagination="pagination"
+                  :scroll="{ x: 1600}"
+                  :loading="loading"
+                  @change="handleTableChange"
+                >
+
+      </a-table>
   </div>
 </template>
 <script>

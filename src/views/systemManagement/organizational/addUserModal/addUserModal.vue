@@ -30,32 +30,38 @@
                     </a-col>          
                     <!-- <a-col :span="12">
                         <a-form-item label="办公地址" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
-                            <a-select :getPopupContainer='triggerNode => triggerNode.parentNode' mode="default" v-decorator="['theilCity',validates.theilCity]" :placeholder="modaldisabled?'':'请选择办公地址'" style="width: 100%" :disabled="modaldisabled" allowClear>
-                                <a-select-option v-for="k in theilCityList" :key="k.codeKey" :value="k.codeKey">
-                                {{ k.codeValue }}
-                                </a-select-option>
-                            </a-select>
-                        </a-form-item>
-                    </a-col> -->
-                    <a-col :span="12">
-                        <a-form-item label="办公地址" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
                             <a-select :getPopupContainer='triggerNode => triggerNode.parentNode' mode="default" v-decorator="['workCity',validates.workCity]" :placeholder="modaldisabled?'':'请选择办公地址'" style="width: 100%" :disabled="modaldisabled" allowClear>
                                 <a-select-option v-for="k in theilCityList" :key="k.codeKey" :value="k.codeKey">
                                 {{ k.codeValue }}
                                 </a-select-option>
                             </a-select>
                         </a-form-item>
-                    </a-col>
-                    
-                    <!-- <a-col :span="12">
-                        <a-form-item label="用户类型" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
-                            <a-select :getPopupContainer='triggerNode => triggerNode.parentNode' mode="default" v-decorator="['userType',validates.userType]" :placeholder="modaldisabled?'':'请选择用户类型'" style="width: 100%" :disabled="modaldisabled" allowClear>
-                                <a-select-option v-for="k in userTypeList" :key="k.codeKey" :value="k.codeKey">
-                                {{ k.codeValue }}
-                                </a-select-option>
-                            </a-select>
-                        </a-form-item>
                     </a-col> -->
+                     <a-col :span="12">
+                        <a-form-item label="办公地址" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
+                            <a-col :span="8">
+                                <a-select @change="nextCodeCityList" :getPopupContainer='triggerNode => triggerNode.parentNode' mode="default" v-decorator="['province',validates.province]" :placeholder="modaldisabled?'':'请选择办公地址'" style="width: 100%" :disabled="modaldisabled" allowClear>
+                                    <a-select-option v-for="k in provinceList" :key="k.codeKey" :value="k.codeKey">
+                                    {{ k.codeValue }}
+                                    </a-select-option>
+                                </a-select>
+                            </a-col>
+                            <a-col :span="8">
+                                <a-select @change="nextCodeCountyList" :getPopupContainer='triggerNode => triggerNode.parentNode' mode="default" v-decorator="['city',validates.city]" :placeholder="modaldisabled?'':'请选择办公地址'" style="width: 100%" :disabled="modaldisabled" allowClear>
+                                    <a-select-option v-for="k in cityList" :key="k.codeKey" :value="k.codeKey">
+                                    {{ k.codeValue }}
+                                    </a-select-option>
+                                </a-select>
+                            </a-col>
+                            <a-col :span="8">
+                                <a-select :getPopupContainer='triggerNode => triggerNode.parentNode' mode="default" v-decorator="['county',validates.county]" :placeholder="modaldisabled?'':'请选择办公地址'" style="width: 100%" :disabled="modaldisabled" allowClear>
+                                    <a-select-option v-for="k in areaList" :key="k.codeKey" :value="k.codeKey">
+                                    {{ k.codeValue }}
+                                    </a-select-option>
+                                </a-select>
+                            </a-col>
+                        </a-form-item>
+                    </a-col>
                     <a-col :span="12">
                         <a-form-item label="标签" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
                              <!-- <a-input v-decorator="['label',validates.label]" :placeholder="modaldisabled?'':'请填写标签'" :disabled="modaldisabled"/> -->

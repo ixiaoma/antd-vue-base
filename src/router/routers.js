@@ -871,6 +871,23 @@ export const hideInMenuRouterMap = {
       component: () => import('@/views/systemManagement/vacationSet/vacationBalanceDetail/vacationBalanceDetail.vue'),
       meta: { title: '假期余额详情'}
     },
-    
+    {
+      path: '/hidemenu/vacationBalanceDetail',
+      name: 'vacationBalanceDetail',
+      component: () => import('@/views/systemManagement/vacationSet/vacationBalanceDetail/vacationBalanceDetail.vue'),
+      meta: { title: '假期余额详情'}
+    },
+    // {
+    //   path: '/hidemenu/agreeRemind',
+    //   name: 'agreeRemind',
+    //   component: () => import('@/views/homeToPage/agreeRemind.vue'),
+    //   meta: { title: '提醒-合同'}
+    // },
+    // {
+    //   path: '/hidemenu/probationRemind',
+    //   name: 'probationRemind',
+    //   component: () => import('@/views/homeToPage/probationRemind.vue'),
+    //   meta: { title: '提醒-试用期'}
+    // },
   ]
 }

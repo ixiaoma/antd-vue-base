@@ -3,7 +3,9 @@ import TableFilter from '@/components/TableFilter/index.vue'
 import BaseForm from '@/components/BaseForm/index.vue'
 import FooterToolBar from '@/layouts/FooterToolbar'
 import moment from "moment"
-import { getServiceList } from '@/api/user'
+import { getServiceList,getCodeList } from '@/api/user'
+import { basicInfoApproval } from '@/api/reimbursement'
+
 import { 
   basicInfoStorage , 
   basicInfoSave,
@@ -208,6 +210,12 @@ export default {
             return res
           })
       },
+      approvalStatusList:[],
+      formField : this.$form.createForm(this, { name: 'staff-approval' }),
+      validates:{
+        approvalResult:{rules: [{ required: true, message: '请输入审批结果' }]},
+        approvalRemark:{rules: [{ required: true, message: '请输入审批备注' }]}
+    },
     }
   },
   components:{
@@ -358,6 +366,29 @@ export default {
     // nextStep(res){
     //   this.visible = false ; 
     // },
+    approvalSave(){
+      this.formField.validateFields((err, values) => {  
+        if (err) return;
+        let params={
+          basicInfoId:this.$route.query.id,
+          approvalResult:values['approvalResult'],
+          approvalRemark:values['approvalRemark']
+        }
+        basicInfoApproval(params).then(res=>{
+          this.$message.success('审批成功')
+          this.$router.go(-1)
+        })
+      })
+    },
+    // ApprovalStatus
+    codeLoad(){
+      if(this.readonly&&this.$route.query.title=='员工档案审批详情'){
+        getCodeList('approval_status').then(res=>{
+          this.approvalStatusList=res.filter(item=>item.codeKey!='待审批')
+          // this.approvalStatusList=res
+        })
+      } 
+    }
     
   },
   created(){
@@ -366,6 +397,7 @@ export default {
       this.readonly = true
       // this.tabLists = [...baseLists,...tabDetailList]
       this.tabLists = [...baseLists]
+      this.codeLoad()
     }else {
       this.tabLists = [...baseLists]
     }

@@ -59,6 +59,7 @@ export default {
       status: undefined , // 状态
       codeList1: [] ,  // 待定
       codeList2: [] ,  // 推荐
+      codeList3:[]
     }
   },
   computed:{
@@ -75,6 +76,10 @@ export default {
     getCodeList('resume_status_update_two').then(res=>{
       this.codeList2 = res ; 
     })
+    getCodeList('resume_status_update_three').then(res=>{
+      this.codeList3 = res ; 
+    })
+    
   },
   methods:{
     handleOk(){
@@ -102,9 +107,11 @@ export default {
       this.reason = '' ; 
       this.status = selectedRows[0].resumeStatus
       if(this.status == '待定'){
-        this.updateList = this.codeList1 ; 
+        this.updateList = this.codeList1; 
       }else if(this.status == '推荐' ){
-        this.updateList = this.codeList2 ; 
+        this.updateList = this.codeList2; 
+      }else if(this.status == '未读' ){
+        this.updateList = this.codeList3; 
       }else{
         return  this.$message.warning(`${selectedRows[0].resumeStatus}状态不能修改`)
       }

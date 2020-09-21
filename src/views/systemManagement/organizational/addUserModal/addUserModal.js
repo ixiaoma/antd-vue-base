@@ -1,4 +1,5 @@
 import {userSave,userUpdate,userDeatil,getCodeList} from '@/api/user'
+import {getCascaderList} from '@/api/commonApi'
 import moment from 'moment'
 import { TreeSelect } from 'ant-design-vue'
 export default {
@@ -42,13 +43,19 @@ export default {
             labelList:[],
             positoinList:[],
             treeData: [],
+            provinceList:[],
+            cityList:[],
+            areaList:[],
             validates:{
                 realName:{rules: [{ required: true, message: '请填写姓名' }]},
                 username:{rules: [{ required: true, message: '请填写登录名' }]},
                 code:{rules: [{ required: false, message: '员工工号系统自动生成' }]},
                 cellphone:{rules: [{ required: true, message: '请填写手机号' },{pattern:/^1\d{10}$/, message: '请填写正确的手机号' }]},
                 email:{rules: [{ required: false, message: '请填写邮箱' },{type: 'email',message: '请填写正确的邮箱'}]},
-                workCity:{rules: [{ required: true, message: '请选择办公地址' }]},
+                // workCity:{rules: [{ required: true, message: '请选择办公地址' }]},
+                province:{rules: [{ required: true, message: '请选择办公地址' }]},
+                city:{rules: [{ required: false, message: '请选择办公地址' }]},
+                county:{rules: [{ required: false, message: '请选择办公地址' }]},
                 sex:{initialValue:0},
                 // userType:{rules: [{ required: true, message: '请选择用户类型' }]}, 
                 customerName:{rules: [{ required: true, message: '请选择所属公司' }]},
@@ -104,9 +111,11 @@ export default {
                     fromdata.isWonderAdmin=parseInt(res.isWonderAdmin)
                     fromdata.birthday=res.birthday?moment(new Date(res.birthday)):null
                     fromdata.employmentDate=res.employmentDate?moment(new Date(res.employmentDate)):null
+                    this.nextCodeCityList(res.province)
+                    this.nextCodeCountyList(res.city)
                     this.$nextTick(()=>{
-                        let { realName,username,code,cellphone,email,workCity,sex,customerName,isWonder,isWonderAdmin,position,label,totalCredit,status,idCard,birthday,employmentDate } = { ...fromdata };
-                        this.formField.setFieldsValue({realName,username,code,cellphone,email,workCity,sex,customerName,isWonder,isWonderAdmin,position,label,totalCredit,status,idCard,birthday,employmentDate})
+                        let { realName,username,code,cellphone,email,province,city,county,sex,customerName,isWonder,isWonderAdmin,position,label,totalCredit,status,idCard,birthday,employmentDate } = { ...fromdata };
+                        this.formField.setFieldsValue({realName,username,code,cellphone,email,province,city,county,sex,customerName,isWonder,isWonderAdmin,position,label,totalCredit,status,idCard,birthday,employmentDate})
                         this.formField.setFieldsValue({
                             dept:{
                                 value:res.deptId,
@@ -172,7 +181,10 @@ export default {
                 code:{rules: [{ required: false, message: '' }]},
                 cellphone:{rules: [{ required: value, message: '请填写手机号' },{pattern:/^1\d{10}$/, message: '请填写正确的手机号' }]},
                 email:{rules: [{ required: false, message: '请填写邮箱' },{type: 'email',message: '请填写正确的邮箱'}]},
-                workCity:{rules: [{ required: value, message: '请选择办公地址' }]},
+                // workCity:{rules: [{ required: value, message: '请选择办公地址' }]},
+                province:{rules: [{ required: true, message: '请选择办公地址' }]},
+                city:{rules: [{ required: false, message: '请选择办公地址' }]},
+                county:{rules: [{ required: false, message: '请选择办公地址' }]},
                 sex:{initialValue:0},
                 // userType:{rules: [{ required: true, message: '请选择用户类型' }]},
                 customerName:{rules: [{ required: true, message: '请选择所属公司' }]},
@@ -202,7 +214,23 @@ export default {
             getCodeList('positoin').then(res=>{
                 this.positoinList=res
             })
-            
+            getCodeList('province').then(res=>{
+                this.provinceList=res
+            })   
+        },
+        nextCodeCityList(value){
+            this.formField.setFieldsValue({city:''})
+            this.cityList=[]
+            value&&getCascaderList({parentCode:value}).then(res=>{
+                this.cityList=res
+            })
+        },
+        nextCodeCountyList(value){
+            this.formField.setFieldsValue({county:''})
+            this.areaList=[]
+            value&&getCascaderList({parentCode:value}).then(res=>{
+                this.areaList=res
+            })
         }
     },
     created() { 

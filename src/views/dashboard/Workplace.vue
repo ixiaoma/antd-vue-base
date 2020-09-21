@@ -25,7 +25,16 @@
           <a-statistic title="本月驳回" :value="8" />
         </div>
       </div>
+      <div class="extra-content">
+        <div class="stat-item" @click="toPage('agreeRemind')">
+          <h1 style="margin-top: 16px;font-weight:bold">提醒-合同</h1>
+        </div>
+        <div class="stat-item" @click="toPage('probationRemind')">
+          <h1 style="margin-top: 16px;font-weight:bold">提醒-试用期</h1>
+        </div>
     </div>
+    </div>
+    
   </a-card>
 </template>
 
@@ -36,6 +45,11 @@ export default {
   data () {
     return {
 
+    }
+  },
+  methods:{
+    toPage(value){
+      this.$router.push({name:value})
     }
   }
 }

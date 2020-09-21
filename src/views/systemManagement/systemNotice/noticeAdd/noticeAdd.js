@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import moment from 'moment'
 import { rolesList,getDeptTreeData,getUserLike,noticeAdd,noticeEdit,noticeDetail,getCodeList } from '@/api/user'
+// import { noticeUpload } from '@/api/uploaddown'
 import {getCascaderList} from '@/api/commonApi'
 import { TreeSelect } from 'ant-design-vue'
 import debounce from 'lodash/debounce';
@@ -39,7 +40,11 @@ export default {
             fetching: false,
             clear2: '',
             editor:null,
-            bulletinconcent:''
+            bulletinconcent:'',
+            noticeUpload:noticeUpload,
+            defaultFileList:[],
+            fileList:[],
+            noticeUpload:''
         }
     },
     components:{
@@ -48,6 +53,23 @@ export default {
     methods: {
         //时间转换方法
         moment,
+        handleChange(info) {
+            if (info.file.status !== 'uploading') {
+                console.log(info.file, info.fileList);
+            }
+            if (info.file.status === 'done') {
+                this.fileList.push(info.fileList)
+                this.$message.success(`${info.file.name} 上传成功`);        
+            } else if (info.file.status === 'error') {
+                this.$message.error(`${info.file.name} 上传失败`);
+            }
+        },
+        handleRemove(file) {
+            const index = this.fileList.indexOf(file);
+            const newFileList = this.fileList.slice();
+            newFileList.splice(index, 1);
+            this.fileList = newFileList;
+        },
         handleSubmit(e) {
             console.log(this.bulletinconcent)
             console.log(Base64.encode(this.bulletinconcent))

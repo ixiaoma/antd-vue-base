@@ -101,7 +101,15 @@
       </a-col>
       <a-col :span="24" v-if="form.getFieldValue('basicType') == '规章制度'">
           <a-form-item label="上传附件:">
-            <a-button>上传附件</a-button>
+            <a-upload
+              :action="noticeUpload"
+              :default-file-list="defaultFileList"
+              :file-list="fileList" 
+              :remove="handleRemove" 
+              :before-upload="beforeUpload"
+            >
+              <a-button> <a-icon type="upload" /> 上传附件 </a-button>
+            </a-upload>
           </a-form-item>
         </a-col>
       <a-col :span="24">

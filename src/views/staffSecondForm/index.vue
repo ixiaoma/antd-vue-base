@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="text-align:right">
-      <a-button type="primary" @click="submit">提交</a-button>
+      <a-button type="primary" @click="submit" v-if="!readonly">提交</a-button>
     </div>
     <a-tabs 
      @change="changeTabs"
@@ -17,11 +17,32 @@
             :showBottom='false'
             :currentForm="basicForm"
           />
+          <a-form :form="formField" style="padding:0 20px" v-if="readonly&&$route.query.title=='员工档案审批详情'&&$route.query.approvalResult=='待审批'">
+            <a-collapse v-model="activeKey" :bordered="false" class="spacial-collape" expand-icon-position='right'>
+                <a-collapse-panel key="1" header="审批">
+                <a-col :sm='24' :md ='18' :lg="12">
+                    <a-form-item label="审批结果" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
+                        <a-select :getPopupContainer='triggerNode => triggerNode.parentNode' mode="default" v-decorator="['approvalResult',validates.approvalResult]" :placeholder="'请选择审批结果'">
+                            <a-select-option v-for="k in approvalStatusList" :key="k.codeKey" :value="k.codeKey">
+                            {{ k.codeValue }}
+                            </a-select-option>
+                        </a-select>
+                    </a-form-item>
+                </a-col>
+                <a-col :sm='24' :md ='18' :lg="12">
+                    <a-form-item label="审批备注" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
+                        <a-textarea  v-decorator="['approvalRemark',validates.approvalRemark]" :placeholder="'请填写审批备注'" :auto-size="{ minRows: 2, maxRows: 6 }"/>
+                    </a-form-item>
+                </a-col>
+                </a-collapse-panel>
+              </a-collapse>
+            </a-form>
            <footer-tool-bar>
-        <a-button @click="goBack">返回</a-button>
-        <!-- <a-button  style="margin-left: 8px" @click="clickStorage">暂存</a-button> -->
-        <a-button type="primary" style="margin-left: 8px"  @click="save">保存</a-button>
-    </footer-tool-bar>
+              <a-button @click="goBack">返回</a-button>
+              <!-- <a-button  style="margin-left: 8px" @click="clickStorage">暂存</a-button> -->
+              <a-button v-if="!readonly" type="primary" style="margin-left: 8px"  @click="save">保存</a-button>
+              <a-button v-if="readonly&&$route.query.title=='员工档案审批详情'&&$route.query.approvalResult=='待审批'" type="primary" style="margin-left: 8px"  @click="approvalSave">审批</a-button>
+          </footer-tool-bar>
       </a-tab-pane>
       <a-tab-pane 
       :disabled="!basicInfoId"

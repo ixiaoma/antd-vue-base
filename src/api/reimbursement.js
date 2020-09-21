@@ -22,6 +22,9 @@ export function basicInfoSave (params) { // 提交
 export function basicInfoCommit (id , params) { // 提交
     return axios.post(`${baseBusiness}basic_info/commit/${id}`,params)
 }
+export function basicInfoApproval (params) { // 提交
+    return axios.post(`${baseBusiness}basic_info/callback`,params)
+}
 
 
 // 教育经历
