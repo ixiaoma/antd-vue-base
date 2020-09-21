@@ -47,7 +47,7 @@
                                     </div>
                                     <div class="sort-right" v-if="index!=nodeConfig.conditionList.length-1"
                                         @click="arrTransfer(index)">&gt;</div>
-                                    <div class="content" @click="setCondition(item,index)">{{conditionStr(item,index)}}</div>
+                                    <div class="content" @click="setCondition(item,index)" :title='conditionStr(item,index)'>{{conditionStr(item,index)}}</div>
                                     <div class="error_tip" v-if="isTried&&item.error">
                                         <i class="anticon anticon-exclamation-circle" style="color: rgb(242, 86, 67);"></i>
                                     </div>

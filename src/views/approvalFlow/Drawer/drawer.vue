@@ -124,7 +124,7 @@
             </a-col>
             <a-icon type="close-circle" style="font-size:20px;float:right;margin-top:6px" @click="deleteCondition(index)"/>
           </a-row>
-          <a-button type="dashed" ghost style="color:#1890ff;border-color:#1890ff;margin-top:20px" icon="plus" @click="addCondition">添加条件</a-button>
+          <a-button type="dashed" v-show='fieldList.length != expressionList.length' ghost style="color:#1890ff;border-color:#1890ff;margin-top:20px" icon="plus" @click="addCondition">添加条件</a-button>
       </a-form>
       <role-model ref='selectModel' @setRoleData='setRoleData'/>
       <div :style="{
