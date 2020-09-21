@@ -56,12 +56,9 @@ export const routerObj = {
     reimbursementApproval: () => import('@/views/costManagement/reimbursementApproval/reimbursementApproval.vue'),
     reimbursementAdjust: () => import('@/views/costManagement/reimbursementAdjust/reimbursementAdjust.vue'),
     budgetSetting: () => import('@/views/costManagement/budgetSetting/budgetSetting.vue'),
-<<<<<<< HEAD
     agreeRemind: () => import('@/views/homeToPage/agreeRemind.vue'),
-    probationRemind: () => import('@/views/homeToPage/probationRemind.vue')
-=======
+    probationRemind: () => import('@/views/homeToPage/probationRemind.vue'),
     taskPage: () => import('@/views/taskPage/index.vue')
->>>>>>> 代办
 }
 
 export function getRouterData(list){
