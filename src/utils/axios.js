@@ -29,13 +29,14 @@ service.interceptors.response.use(res => {
   if (status === 200) {
     return data || true
   } else {
+    const { message } = data
     message && Message.error(message)
     return Promise.reject(data)
   }
 }, error => {
   if (error.response) {
-    const { status } = error.response
-    const { message } = error.response.data
+    const { status,data } = error.response
+    const { message } = data
     if (status === 401) {
       sessionStorage.removeItem('access_token')
       // if (token) {

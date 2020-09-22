@@ -2,12 +2,14 @@ import { getTaskDetail,commitTask } from '@/api/approval'
 export default{
     data(){
         return{
-            result:'APPROVE'
+            result:'APPROVE',
+            fieldList:[]
         }
     },
     methods:{
         async getInitDetail(){
-            const res = await getTaskDetail({taskId: this.$route.query.id})
+            this.fieldList = await getTaskDetail({taskId: this.$route.query.id})
+            // this.fieldList = res
         },
         async commitApproval(){
             const parameter = {
