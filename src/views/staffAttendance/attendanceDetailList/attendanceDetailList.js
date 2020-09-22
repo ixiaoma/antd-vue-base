@@ -3,12 +3,14 @@
 import TableFilter from '@/components/TableFilter/index.vue'
 import { STable } from '@/components'
 import { getBasePage, getTableSearch, getTableHeader, deletePageList } from '@/api/commonApi'
+import replaceCard from './replaceCard.vue'
 export default {
   name: 'attendanceDetailListList',
   components: {
     // SearchTable
     STable,
-    TableFilter
+    TableFilter,
+    replaceCard
   },
   computed: {
     rowSelection () {
@@ -63,8 +65,12 @@ export default {
       })
       this.pageLoading = false
     },
-    replaceCardLoad(record) {
-
+    replaceCardLoad() {
+      this.$refs.replaceCard.selectedRows=this.selectedRows
+      this.$refs.replaceCard.showModalLoad()
+    },
+    refresh(){
+      this.$refs.table.refresh()
     }
   },
   created() {

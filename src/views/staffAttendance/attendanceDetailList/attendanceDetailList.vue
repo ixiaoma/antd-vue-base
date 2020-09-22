@@ -2,10 +2,10 @@
   @import "./attendanceDetailList.less";
 </style>
 <template>
-<div class="attendanceDetailList" v-if='!pageLoading'>
+<a-card class="table-page-search-wrapper" v-if="!pageLoading">
   <table-filter :filterList='filterList' @refresh='searchRefresh'/> 
         <div class="table-operator">
-            <a-button type="primary"  @click="handleUpdate(null,1)">批量更新考勤状态</a-button>
+            <a-button type="primary"  @click="replaceCardLoad()">批量更新考勤状态</a-button>
         </div>
     <s-table
         ref="table"
@@ -15,7 +15,8 @@
         :data="loadData"
         :scroll='{x:true}'>
         </s-table>
-  </div>
+        <replaceCard ref="replaceCard" @refelsh="refresh"></replaceCard>
+  </a-card>
 </template>
 
 

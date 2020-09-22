@@ -85,6 +85,14 @@ export default {
       })
       this.pageLoading = false
     },
+    handleAdd (data,flag) {
+          const { name, meta } = this.$route
+          const title = `${meta.title}${flag == 1 ? '新增' : flag == 2 ? '详情' : '修改'}`
+          this.$router.push({
+              name:name == 'staffList'||name == 'staffApprovalList' ? 'staffForm' : name == 'rosterList' ?'rosterDetail':name=='attendanceList'?'attendanceDetailList':name=='workTimeList'?'workTimeDetail':'baseForm',
+              query:{ title, flag, pageCode: this.pageCode, id: data ? data.id : null,rosterMonth:data?data.rosterMonth:'',deptName:data?data.deptName:'',approvalResult:data?data.approvalResult:'' }
+          })
+      },
     replaceCardLoad(record) {}
   },
   created() {

@@ -36,6 +36,7 @@ const api={
   detailDeptTree:systemAPI+'dept/',//部门详情
   delDeptTree:systemAPI+'dept/',//部门删除
   rolesList:systemAPI+'role/list',//用户分配角色
+  userToManager:systemAPI+'user/manager/',//根据工号获取上级经理
   rolesPage:systemAPI+'role',//角色管理中的角色
   rolesUpdate:systemAPI+'role/update',//角色编辑
   rolesCopy: systemAPI+'role/copy/',//角色复制
@@ -197,6 +198,9 @@ export function delDeptTree(parameter) {
 }
 export function rolesList(parameter) {
   return axios.get(api.rolesList,{params:parameter})
+}
+export function userToManager(parameter) {
+  return axios.get(api.userToManager+parameter)
 }
 export function rolesAssignUser(parameter,params) {
   return axios.post(api.userDeatil+parameter,params)

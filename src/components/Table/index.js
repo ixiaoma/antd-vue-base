@@ -145,7 +145,7 @@ export default {
       //   ...filters
       // }
       )
-      if(sorter){
+      if(sorter&&sorter.column){
         parameter.searchSort = {
           orders:[{
             property:sorter.field,

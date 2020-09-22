@@ -860,6 +860,12 @@ export const hideInMenuRouterMap = {
       meta: { title: '考勤明细' }
     },
     {
+      path: '/hidemenu/workTimeDetail',
+      name: 'workTimeDetail',
+      component: () => import('@/views/myPersonnel/workTimeList/workTimeDetail.vue'),
+      meta: { title: '考勤明细' }
+    },
+    {
       path: '/hidemenu/rosterDetail',
       name: 'rosterDetail',
       component: () => import('@/views/staffAttendance/rosterDetail/rosterDetail.vue'),

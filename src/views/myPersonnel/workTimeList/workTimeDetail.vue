@@ -1,4 +1,5 @@
 <template>
+<a-card class="table-page-search-wrapper" v-if="!pageLoading">
     <s-table
         ref="table"
         rowKey="id"
@@ -12,17 +13,21 @@
                 </template>
             </span>
         </s-table>
+        <replaceCard ref="replaceCard" @refelsh="refresh"></replaceCard>
+</a-card>
 </template>
 <script>
 
 // import { SearchTable } from '@/components'
 import { STable } from '@/components'
 import { getBasePage, getTableSearch, getTableHeader, deletePageList } from '@/api/commonApi'
+import replaceCard from './replaceCard.vue'
 export default {
   name: 'attendanceDetailListList',
   components: {
     // SearchTable
-    STable
+    STable,
+    replaceCard
   },
   data() {
     return {
@@ -31,7 +36,7 @@ export default {
       pageCode: 'details',
       rowSelection: false,
       showBtnList: [],//按钮权限list
-      queryParam: [{ field: "recordingId", fieldType: "TEXT_SINGLE", operator: "eq", value: this.$route.query.id }],//筛选值
+      queryParam: [{ field: "recordingId", fieldType: "TEXT_SINGLE", operator: "eq", value: this.$route.query.recordingId }],//筛选值
       // 加载数据方法 必须为 Promise 对象
       loadData: parameter => {
         const params = Object.assign(parameter, { filter: { logic: "and", filters: this.queryParam } })
@@ -60,14 +65,17 @@ export default {
       this.columns.push({
         title: '操作',
         dataIndex: 'action',
-        width: '100px',
+        width: '120px',
         fixed: 'right',
         scopedSlots: { customRender: 'action' }
       })
       this.pageLoading = false
     },
     replaceCardLoad(record) {
-      
+      this.$refs.replaceCard.showModalLoad(record)
+    },
+    refresh(){
+      this.$refs.table.refresh()
     }
   },
   created() {

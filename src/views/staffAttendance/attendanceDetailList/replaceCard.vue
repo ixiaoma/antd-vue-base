@@ -1,19 +1,9 @@
 <template>
     <div>
-        <a-modal title="申请补卡" :visible="showModal" :width="1000" @cancel="handleCancel">
+        <a-modal title="申请补卡" :visible="showModal" @cancel="handleCancel">
             <a-form :form="formField">
                 <a-row type="flex">
-                    <a-col :span="12">
-                        <a-form-item label="员工工号" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
-                            {{formItem.code}}
-                        </a-form-item>
-                    </a-col>
-                    <a-col :span="12">
-                        <a-form-item label="姓名" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
-                            {{formItem.empName}}
-                        </a-form-item>
-                    </a-col>
-                    <a-col :span="12">
+                    <a-col :span="22">
                         <a-form-item label="异常类型" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
                             <a-select :getPopupContainer='triggerNode => triggerNode.parentNode' mode="default" v-decorator="['exceptionType',validates.exceptionType]" style="width: 100%" allowClear>
                                 <a-select-option v-for="k in replacecardList" :key="k.codeKey" :value="k.codeKey">
@@ -22,18 +12,16 @@
                             </a-select>
                         </a-form-item>
                     </a-col> 
-
-                     <a-col :span="12">
-                        <a-form-item label="日期" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
-                            {{formItem.attendanceDate}}
+                     <a-col :span="22">
+                        <a-form-item label="考勤时间段" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
+                            <a-select :getPopupContainer='triggerNode => triggerNode.parentNode' mode="default" v-decorator="['period',validates.period]" style="width: 100%" allowClear>
+                                <a-select-option v-for="k in periodList" :key="k.codeKey" :value="k.codeKey">
+                                {{ k.codeValue }}
+                                </a-select-option>
+                            </a-select>
                         </a-form-item>
-                    </a-col>
-                    <a-col :span="12">
-                        <a-form-item label="部门负责人" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
-                           {{deptPrincipal}}
-                        </a-form-item>
-                    </a-col>
-                    <a-col :span="12">
+                    </a-col> 
+                    <a-col :span="22">
                         <a-form-item label="事由" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
                             <a-textarea :row="3" v-decorator="[ 'applyCause', validates.applyCause]" placeholder="请填写事由" />
                         </a-form-item>
@@ -62,12 +50,15 @@ export default {
             showModal: false,
              validates:{
                 exceptionType:{rules: [{ required: true, message: '请选择异常类型' }]},
-                applyCause:{rules: [{ required: true, message: '请填写事由' }]}
+                period:{rules: [{ required: true, message: '请选择考勤时间段' }]},
+                applyCause:{rules: [{ required: false, message: '请填写事由' }]}
             },
             replacecardList:[],
+            periodList:[],
             formField : this.$form.createForm(this, { name: 'replacecard' }),
             confirmLoading:false,
-            formItem:{}
+     
+            selectedRows:[]
         }
     },
     methods: {
@@ -75,27 +66,37 @@ export default {
             getCodeList('replacecard').then(res=>{
                 this.replacecardList=res
             })
+            getCodeList('replace').then(res=>{
+                this.periodList=res
+            })
         },
         handleCancel(){
             this.showModal=false
         },
-        handleOk(e){   
+        handleOk(e){
+            
+          
             
             e && e.preventDefault()
             this.formField.validateFields(async (err, values) => {
                 if (!err) {
-                    this.confirmLoading=true   
-                    let saveData = [[
-                        {"code":"empCode","value":[this.formItem.code]},
-                        {"code":"empName","value":[this.formItem.empName]},
-                        {"code":"exceptionType","value":[values.exceptionType]},
-                        {"code":"period","value":[this.formItem.period]},
-                        {"code":"deptPrincipal","value":[this.deptPrincipal]},
-                        {"code":"applyTime","value":[this.formItem.attendanceDate]},
-                        {"code":"applyCause","value":[values.applyCause]}
-                    ]]
-                    let params=saveData
-                    applyReolaceCard(params).then(res=>{
+                      this.confirmLoading=true
+                    let saveData = []
+                    this.selectedRows.forEach(item=>{
+                        let arr=[
+                            {"code":"empCode","value":[item.code]},
+                            {"code":"empName","value":[item.empName]},
+                            {"code":"exceptionType","value":[values.exceptionType]},
+                            {"code":"period","value":[values.period]},
+                            // {"code":"deptPrincipal","value":[item.deptPrincipal]},
+                            {"code":"applyTime","value":[item.attendanceDate]},
+                            {"code":"applyCause","value":[values.applyCause]}
+                        ]
+                        saveData.push(arr)
+                    })
+                   
+                
+                    applyReolaceCard(saveData).then(res=>{
                         this.$message.success('提交成功')
                         this.confirmLoading=false
                         this.showModal=false
@@ -106,12 +107,7 @@ export default {
             
         },
         showModalLoad(item){
-            this.formItem=item
-            this.formItem.period=(item.startStatus=="缺卡"&&item.endStatus=="缺卡")||item.dayStatus=='旷工'?'全天':item.startStatus=="缺卡"&&item.endStatus!="缺卡"?'上班':item.startStatus!="缺卡"&&item.endStatus=="缺卡"?'下班':''
             this.showModal=true
-            userToManager(item.code).then(res=>{
-                this.deptPrincipal=res
-            })
         }
     },
     created() { 
