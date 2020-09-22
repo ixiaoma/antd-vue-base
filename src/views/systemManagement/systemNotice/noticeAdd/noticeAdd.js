@@ -80,11 +80,11 @@ export default {
                 // .format('YYYY-MM-DD HH:mm:ss'):null
                 values['publishDate']=values['publishDate']?values['publishDate'].format('YYYY-MM-DD'):null
                 values['expiryDate']=values['expiryDate']?values['expiryDate'].format('YYYY-MM-DD'):null
-                if (new Date(values['publishDate']).getTime() <= new Date().getTime()) {
+                if (values['type']=='公告'&&(new Date(values['publishDate']).getTime() <= new Date().getTime())) {
                     this.$message.warning("发布时间应大于当前时间")
                     return false
                 }
-                if (new Date(values['publishDate']).getTime() >= new Date(values['expiryDate']).getTime()) {
+                if (values['type']=='公告'&&(new Date(values['publishDate']).getTime() >= new Date(values['expiryDate']).getTime())) {
                     this.$message.warning("失效时间应大于发布时间")
                     return false
                 }
