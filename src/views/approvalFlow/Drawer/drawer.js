@@ -79,7 +79,7 @@ export default {
             }else if(type == 'LEADER'){
               this.levelData = participantList[0].hierarchyType
               if(this.levelData == 'ASSIGN'){
-                const dataList = participantList[0].dataId.split[',']
+                const dataList = participantList[0].dataId.split(',')
                 this.firstSelect = dataList[0]
                 this.levelSelect = dataList[1]
               }else{
@@ -102,7 +102,7 @@ export default {
         this.visible = true;
       },
       selectDisable(level){
-        return level >= this.firstSelect
+        return level <= this.firstSelect
       },
       onClose() {
         this.visible = false;

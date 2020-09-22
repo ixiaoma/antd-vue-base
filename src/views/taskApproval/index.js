@@ -1,4 +1,4 @@
-import { getProcessHeader,commitTask } from '@/api/approval'
+import { getTaskDetail,commitTask } from '@/api/approval'
 export default{
     data(){
         return{
@@ -6,6 +6,9 @@ export default{
         }
     },
     methods:{
+        async getInitDetail(){
+            const res = await getTaskDetail({taskId: this.$route.query.id})
+        },
         async commitApproval(){
             const parameter = {
                 taskId: this.$route.query.id,
@@ -15,5 +18,8 @@ export default{
             }
             await commitTask(parameter)
         }
+    },
+    created(){
+        this.getInitDetail()
     }
 }

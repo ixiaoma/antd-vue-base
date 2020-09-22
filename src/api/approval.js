@@ -48,3 +48,7 @@ export function taskList ({params}) {
 export function commitTask ({taskId,params}) {//提交审批
   return axios.post(`${baseFrame}business/task/${taskId}/complete`,params)
 }
+
+export function getTaskDetail ({taskId}) {//详情审批
+  return axios.post(`${baseFrame}business/task/${taskId}/variables`)
+}
