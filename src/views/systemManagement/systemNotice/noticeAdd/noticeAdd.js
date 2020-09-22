@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import moment from 'moment'
 import { rolesList,getDeptTreeData,getUserLike,noticeAdd,noticeEdit,noticeDetail,getCodeList } from '@/api/user'
-// import { noticeUpload } from '@/api/uploaddown'
+import { noticeUpload,noticeDownLoad } from '@/api/uploaddown'
 import {getCascaderList} from '@/api/commonApi'
 import { TreeSelect } from 'ant-design-vue'
 import debounce from 'lodash/debounce';
@@ -25,9 +25,9 @@ export default {
             validates: {
                 title: { rules: [{ required: true, message: '请填写主题' }] },
                 basicType: { rules: [{ required: true, message: '请选择类型' }] },
-                rules: { rules: [{ required: true, message: '请选择类型' }] },
-                type: { rules: [{ required: true, message: '请选择公告类型' }] },
-                compony:{rules: [{ type: 'array', required: true, message: '请选择所属公司' }]},
+                // rules: { rules: [{ required: true, message: '请选择类型' }] },
+                type: { rules: [{ required: true, message: '请选择类型' }] },
+                company:{rules: [{ type: 'array', required: true, message: '请选择所属公司' }]},
                 bulletinperson: { initialValue: 'all' },
                 roleIds:{rules: [{ type: 'array', required: true, message: '请选择角色' }]},
                 dept: {rules:[{ type: 'array',required: true,message:'请选择部门'}]},
@@ -44,7 +44,8 @@ export default {
             noticeUpload:noticeUpload,
             defaultFileList:[],
             fileList:[],
-            noticeUpload:''
+            noticeUpload:'',
+            fileUrlList:[]
         }
     },
     components:{
@@ -97,9 +98,9 @@ export default {
                     content: Base64.encode(this.bulletinconcent)//公告内容          
                 }
                 if(values['basicType']=='规章制度'){
-                    params.rules=values['rules']
-                    params.compony=values['compony']
-                    params.filedList=[]
+                    // params.rules=values['rules']
+                    params.company=values['company']
+                    params.fileUrl=[]
                 }
                 if (values['bulletinperson'] == "role") {
                     params.customerIds = values['roleIds']                                    
@@ -172,15 +173,15 @@ export default {
           //编辑       
         editbulletin() {         
             noticeDetail(this.editid).then(res => {
-                // if (res.code == 200) {                 
+                    this.fileUrlList=res.fileUrl         
                     let fromdata=res
                     this.nextCodeList(res.basicType)
                     fromdata.publishDate=res.publishDate?moment(new Date(res.publishDate)):null
                     fromdata.expiryDate=res.expiryDate?moment(new Date(res.expiryDate)):null
                     this.$nextTick(()=>{
-                        let { title,basicType,publishDate,expiryDate,type,customerType,customerIds} = { ...fromdata };
+                        let { title,basicType,publishDate,expiryDate,type,customerType,customerIds,company} = { ...fromdata };
                         this.form.setFieldsValue({
-                            title,basicType,publishDate,expiryDate,bulletinperson,bulletinperson:customerType
+                            title,basicType,publishDate,expiryDate,bulletinperson,bulletinperson:customerType,company
                         })
                         setTimeout(()=>{
                             this.form.setFieldsValue({type:type})
@@ -207,7 +208,6 @@ export default {
                     })             
                     this.bulletinconcent= Base64.decode(res.content);
                     this.editor.txt.html(this.bulletinconcent)            
-                // }
             })
         },
         typeListLoad(){
@@ -225,6 +225,15 @@ export default {
             value=='公告'&&getCascaderList({parentCode:value}).then(res=>{
                 this.customerTypeList=res
             })
+            if(value=='公告'){
+                this.validates.publishDate={ rules: [{ type: 'object', required: true, message: '请选择发布时间' }] }
+                this.validates.expiryDate={ rules: [{ type: 'object', required: true, message: '请选择失效时间' }] }
+                this.validates.type={ rules: [{ required: true, message: '请选择公告类型' }] }
+            }else{
+                this.validates.publishDate={ rules: [{ type: 'object', required: false, message: '请选择发布时间' }] }
+                this.validates.expiryDate={ rules: [{ type: 'object', required: false, message: '请选择失效时间' }] }
+                this.validates.type={ rules: [{ required: true, message: '请选择规章制度类型' }] }
+            }
         }
     },
     created() {

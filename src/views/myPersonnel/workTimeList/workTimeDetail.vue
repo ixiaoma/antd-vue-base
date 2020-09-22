@@ -1,29 +1,35 @@
+<template>
+    <s-table
+        ref="table"
+        rowKey="id"
+        :columns="columns"
+        :rowSelection="showSelect?rowSelection:null"
+        :data="loadData"
+        :scroll='{x:true}'>
+            <span slot="action" slot-scope="text, record">
+                <template>
+                    <a @click="replaceCardLoad(record)" style="margin:0 3px">申请补卡</a>
+                </template>
+            </span>
+        </s-table>
+</template>
+<script>
 
 // import { SearchTable } from '@/components'
-import TableFilter from '@/components/TableFilter/index.vue'
 import { STable } from '@/components'
 import { getBasePage, getTableSearch, getTableHeader, deletePageList } from '@/api/commonApi'
 export default {
   name: 'attendanceDetailListList',
   components: {
     // SearchTable
-    STable,
-    TableFilter
+    STable
   },
-  computed: {
-    rowSelection () {
-      return {
-        selectedRowKeys: this.selectedRowKeys,
-        onChange: this.onSelectChange
-      }
-    }
-},
   data() {
     return {
-      filterList: [],
-      showSelect: false,
+      showSelect:false,
       pageLoading: true,
       pageCode: 'details',
+      rowSelection: false,
       showBtnList: [],//按钮权限list
       queryParam: [{ field: "recordingId", fieldType: "TEXT_SINGLE", operator: "eq", value: this.$route.query.id }],//筛选值
       // 加载数据方法 必须为 Promise 对象
@@ -41,18 +47,8 @@ export default {
     }
   },
   methods: {
-    searchRefresh(filterQuery) {
-      this.queryParam = [{ field: "recordingId", fieldType: "TEXT_SINGLE", operator: "eq", value: this.$route.query.id },...filterQuery]
-      // this.queryParam = filterQuery
-      this.$refs.table.refresh()
-    },
-    onSelectChange(selectedRowKeys, selectedRows) {
-      // debugger
-      this.selectedRowKeys = selectedRowKeys
-      this.selectedRows = selectedRows
-    },
     async getInitData() {
-      this.filterList = await getTableSearch({ pageCode: this.pageCode })
+      // this.filterList = await getTableSearch({pageCode:this.pageCode})
       const headerRes = await getTableHeader({ pageCode: this.pageCode })
       this.columns = headerRes.map(ele => {
         return {
@@ -61,10 +57,17 @@ export default {
           dataIndex: ele.code
         }
       })
+      this.columns.push({
+        title: '操作',
+        dataIndex: 'action',
+        width: '100px',
+        fixed: 'right',
+        scopedSlots: { customRender: 'action' }
+      })
       this.pageLoading = false
     },
     replaceCardLoad(record) {
-
+      
     }
   },
   created() {
@@ -72,3 +75,5 @@ export default {
   },
 }
 
+
+</script>

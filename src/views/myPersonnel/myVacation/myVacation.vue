@@ -1,12 +1,17 @@
 
+<template>
+<div class="agreeList">
+    <search-table pageCode='vacation'/>
+  </div>
+</template>
+
+<script>
 import { SearchTable } from '@/components'
-import staffwork from './staffwork.vue'
 
 export default {
-  name: 'workTimeListList',
+  name: 'myVacation',
   components: {
-    SearchTable,
-    staffwork
+    SearchTable
   },
   data () {
     return {
@@ -17,3 +22,4 @@ export default {
     
   }
 }
+</script>

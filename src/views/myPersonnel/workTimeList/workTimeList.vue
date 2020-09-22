@@ -3,22 +3,29 @@
 </style>
 <template>
 <div class="workTimeList">
-    <a-tabs default-active-key="1" @change="callback">
-      <a-tab-pane key="1" tab="员工考勤">
-        <staffwork></staffwork>
-      </a-tab-pane>
-      <a-tab-pane key="2" tab="出勤记录">
-        <staffwork></staffwork>
-      </a-tab-pane>
-      <a-tab-pane key="3" tab="休假记录">
-        <staffwork></staffwork>
-      </a-tab-pane>
-      <a-tab-pane key="4" tab="加班记录">
-        <staffwork></staffwork>
-      </a-tab-pane>
-    </a-tabs>
+  <search-table pageCode='statistics'/>
   </div>
 </template>
 
+<script>
 
-<script src="./workTimeList.js"></script>
+import { SearchTable } from '@/components'
+// import staffwork from './staffwork.vue'
+
+export default {
+  name: 'workTimeListList',
+  components: {
+    SearchTable,
+    // staffwork
+  },
+  data () {
+    return {
+      showBtnList:[]//按钮权限list
+    }
+  },
+  methods: {
+    
+  }
+}
+
+</script>

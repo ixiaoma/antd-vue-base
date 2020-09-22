@@ -16,14 +16,14 @@
         </a-col>
         <a-col :span="12" v-if="form.getFieldValue('basicType') == '规章制度'">
           <a-form-item label="规章制度类型:">
-            <a-select :getPopupContainer="triggerNode => triggerNode.parentNode" mode="default" v-decorator="['rules',validates.rules]" placeholder="请选择">
+            <a-select :getPopupContainer="triggerNode => triggerNode.parentNode" mode="default" v-decorator="['type',validates.type]" placeholder="请选择">
               <a-select-option v-for="k in rulesList" :key="k.codeKey" :value="k.codeKey">{{ k.codeValue }}</a-select-option>
             </a-select>
           </a-form-item>
         </a-col>
         <a-col :span="12" v-if="form.getFieldValue('basicType') == '规章制度'">
           <a-form-item label="所属公司:">
-            <a-select :getPopupContainer="triggerNode => triggerNode.parentNode" mode="multiple" v-decorator="['compony',validates.compony]" placeholder="请选择">
+            <a-select :getPopupContainer="triggerNode => triggerNode.parentNode" mode="multiple" v-decorator="['company',validates.company]" placeholder="请选择">
               <a-select-option v-for="k in companyList" :key="k.codeKey" :value="k.codeKey">{{ k.codeValue }}</a-select-option>
             </a-select>
           </a-form-item>
