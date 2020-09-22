@@ -1,10 +1,16 @@
 import { getTaskDetail,commitTask } from '@/api/approval'
+
+import FooterToolBar from '@/layouts/FooterToolbar'
 export default{
     data(){
         return{
             result:'APPROVE',
-            fieldList:[]
+            fieldList:[],
+            form: this.$form.createForm(this)
         }
+    },
+    components:{
+        FooterToolBar
     },
     methods:{
         async getInitDetail(){
@@ -19,6 +25,9 @@ export default{
                 }
             }
             await commitTask(parameter)
+        },
+        goBack(){
+            this.$router.go(-1)
         }
     },
     created(){

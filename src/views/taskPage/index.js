@@ -27,7 +27,23 @@ export default{
                     return res
                 })
             },
-            columns:[],
+            columns:[
+                {
+                    title:'processDefineKey',
+                    dataIndex:'processDefineKey'
+                },
+                {
+                    title:'开始时间',
+                    dataIndex:'startTime'
+                },
+                {
+                    title: '操作',
+                    dataIndex: 'action',
+                    width: '130px',
+                    fixed: 'right',
+                    scopedSlots: { customRender: 'action' }
+                }
+            ],
             objectList:[],
             pageCode:null,
             defineKey:null
@@ -41,7 +57,8 @@ export default{
             const res = await getFlowList()
             this.objectList = res.records
             this.defineKey = this.objectList[0].defineKey
-            this.getTableHeader()
+            // this.getTableHeader()
+            this.pageLoading = false
         },
         searchRefresh(filterQuery){
             this.queryParam = filterQuery
