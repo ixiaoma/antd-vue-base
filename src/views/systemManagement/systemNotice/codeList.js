@@ -33,6 +33,11 @@ export const columns = [
     sorter: true
   },
   {
+    title: '已读/未读',
+    dataIndex: 'isRead',
+    sorter: true
+  },
+  {
     title: '创建人',
     dataIndex: 'createName'
   },
