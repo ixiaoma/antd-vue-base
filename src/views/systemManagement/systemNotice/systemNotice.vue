@@ -30,6 +30,9 @@
                   :loading="loading"
                   @change="handleTableChange"
                 >
+                <template slot="isRead" slot-scope="text, record">         
+                  <span>{{record.isRead==1?'已读':'未读'}}</span>
+                </template>
                 <template slot="action" slot-scope="text, record">         
                   <a @click="handleSub(record)">查看</a>
                   <a-divider type="vertical" />

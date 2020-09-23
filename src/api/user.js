@@ -59,7 +59,7 @@ const api={
   noticeTop: systemAPI+'sys-notice/stick/',//系统公告置顶
   noticeDetail: systemAPI+'sys-notice/show/',//系统公告详情
   noticeDel: systemAPI+'sys-notice/delete',//系统公告删除
-  noticeRead: systemAPI+'notice/read/',//系统公告已读
+  noticeRead: systemAPI+'sys-notice/read/',//系统公告已读
   noticeHome: systemAPI+'notice/getByItcode',//系统公告首页
   fileUpload:frameAPI+'file/upload',//文件上传
   codeTableList:frameAPI+'code-category/page',//码表管理列表

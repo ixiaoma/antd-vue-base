@@ -44,6 +44,7 @@ export const routerObj = {
     staffAchievements: () => import('@/views/KPI/staffAchievements/staffAchievements.vue'),
     templateManagement: () => import('@/views/KPI/templateManagement/templateManagement.vue'),
     rewardsPunishments: () => import('@/views/KPI/rewardsPunishments/rewardsPunishments.vue'),
+    assessDone:() => import('@/views/KPI/assessDone/assessDone.vue'),
     attendanceList: () => import('@/views/staffAttendance/attendanceList/attendanceList.vue'),
     attendanceDetailList: () => import('@/views/staffAttendance/attendanceDetailList/attendanceDetailList.vue'),
     workTraveling: () => import('@/views/staffAttendance/workTraveling/workTraveling.vue'),

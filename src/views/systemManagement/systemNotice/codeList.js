@@ -35,7 +35,8 @@ export const columns = [
   {
     title: '已读/未读',
     dataIndex: 'isRead',
-    sorter: true
+    sorter: true,
+    scopedSlots: { customRender: 'isRead' }
   },
   {
     title: '创建人',
