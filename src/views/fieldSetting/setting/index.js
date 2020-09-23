@@ -78,7 +78,6 @@ export default{
     },
 
     methods:{
-
         // 添加多级联动层级
         addSelect(){
             this.selectLevel.push(1) ; 
@@ -86,7 +85,6 @@ export default{
         minusSelect(i){
             this.selectLevel.splice(i , 1) ; 
         },
-
         // 修改选择类型
         changeValueType(e){
             let { value } = e.target ; 
@@ -146,7 +144,6 @@ export default{
                 this.setFieldList = res ; 
             })
         },
-        
         addModel(){//添加或编辑分割线
             this.visible = true
         },

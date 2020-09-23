@@ -1,6 +1,7 @@
 import TableFilter from '../TableFilter/index.vue'
 import STable from '../Table'
 
+import { getMonthStartAndEnd } from '@/utils/commonCode'
 import { getBasePage, getTableSearch, getTableHeader } from '@/api/commonApi'
 
 export default{
@@ -37,8 +38,9 @@ export default{
         }
     },
     methods:{
-        showModel(pageCode){
+        async showModel(pageCode){
             this.pageCode = pageCode
+            const date = await getMonthStartAndEnd(-1)
             this.getInitData()
             this.visible = true
         },

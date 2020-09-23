@@ -64,7 +64,8 @@ export const routerObj = {
     budgetSetting: () => import('@/views/costManagement/budgetSetting/budgetSetting.vue'),
     agreeRemind: () => import('@/views/homeToPage/agreeRemind.vue'),
     probationRemind: () => import('@/views/homeToPage/probationRemind.vue'),
-    taskPage: () => import('@/views/taskPage/index.vue')
+    taskPage: () => import('@/views/taskPage/index.vue'),
+    applyPage: () => import('@/views/applyPage/index.vue')
 }
 
 export function getRouterData(list){

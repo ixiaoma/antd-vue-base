@@ -55,7 +55,85 @@
             </a-col>
             <a-col span='12' v-show="showSetting">
                 <h3>控件设置</h3>
-                <a-form>
+                <a-form :form="fieldForm">
+                    <a-form-item label="字段名称" :label-col="{span:6}" :wrapper-col="{span:12}">
+                        <a-input allowClear v-model.trim='currentItem.name'/>
+                    </a-form-item>
+                    <a-form-item v-if="currentItem.valueType == 'RADIO' || currentItem.valueType == 'CHECKBOX'" label="关联码表值" :label-col="{span:6}" :wrapper-col="{span:12}">
+                        <a-select allowClear v-model.trim='currentItem.categoryCodes[0].codeCategory'>
+                            <a-select-option v-for="item in codeList" :key="item.code" :value="item.code">
+                            {{ item.name }}
+                            </a-select-option>
+                        </a-select>
+                    </a-form-item>
+                    <!-- 多级联动 -->
+                    <div v-if="currentItem.valueType == 'SELECT'" >
+                        <a-form-item
+                        :label="'关联码表值' + (index + 1) " 
+                        :label-col="{span:6}" 
+                        :wrapper-col="{span:12}"
+                        v-for="(k, index) in currentItem.categoryCodes"
+                        :key=" 'select' + index ">
+                            <a-row :gutter='10'>
+                                <a-col :span='22'>
+                                    <a-select allowClear v-model.trim='k.codeCategory'>
+                                        <a-select-option v-for="item in categoryList" :key="item.code" :value="item.code">
+                                            {{ item.name }}
+                                        </a-select-option>
+                                    </a-select>
+                                </a-col>
+                                <a-col :span='2'>
+                                    <a-icon v-if="selectLevel.length - 1 ==  index" type="plus-circle" @click="addSelect" style="font-size:20px"/>
+                                    <a-icon type="close-circle" v-else style="font-size:20px"/>
+                                </a-col>
+                            </a-row>
+                        </a-form-item>
+                    </div>
+                    <a-form-item label="引用对象" :label-col="{span:6}" :wrapper-col="{span:12}">
+                        <a-select
+                            allowClear
+                            @change="changeObject"
+                            v-model.trim='currentItem.referObjectCode'
+                            >
+                            <a-select-option v-for="item in objectList" :key="item.code" :value="item.code">
+                            {{ item.name }}
+                            </a-select-option>
+                        </a-select>
+                    </a-form-item>
+                    <a-form-item label="引用字段" :label-col="{span:6}" :wrapper-col="{span:12}">
+                        <a-select allowClear v-model.trim='currentItem.referObjectField'>
+                            <a-select-option v-for="item in fieldList" :key="item.code" :value="item.code">
+                            {{ item.name }}
+                            </a-select-option>
+                        </a-select>
+                    </a-form-item>
+                    <a-form-item label="引用对象赋值字段" :label-col="{span:6}" :wrapper-col="{span:12}">
+                        <a-select allowClear v-model.trim='currentItem.referObjectSetField'>
+                            <a-select-option v-for="item in setFieldList" :key="item.code" :value="item.code">
+                            {{ item.name }}
+                            </a-select-option>
+                        </a-select>
+                    </a-form-item>
+                    <a-form-item label="字段描述" :label-col="{span:6}" :wrapper-col="{span:12}">
+                        <a-input allowClear v-model.trim='currentItem.description'/>
+                    </a-form-item>
+                    <a-form-item label="API" :label-col="{span:6}" :wrapper-col="{span:12}">
+                        <a-input allowClear v-model.trim='currentItem.serverApi'/>
+                    </a-form-item>
+                    <a-form-item label="是否作为条件字段" :label-col="{span:6}" :wrapper-col="{span:12}">
+                        <a-switch v-model.trim='currentItem.conditionField'/>
+                    </a-form-item>
+                    <a-form-item label="是否列表查询" :label-col="{span:6}" :wrapper-col="{span:12}">
+                        <a-switch v-model.trim='currentItem.search'/>
+                    </a-form-item>
+                    <a-form-item label="是否表头展示" :label-col="{span:6}" :wrapper-col="{span:12}">
+                        <a-switch v-model.trim='currentItem.tableHead'/>
+                    </a-form-item>
+                    <a-form-item label="是否数据展示" :label-col="{span:6}" :wrapper-col="{span:12}">
+                        <a-switch v-model.trim='currentItem.display'/>
+                    </a-form-item>
+                </a-form>
+                <!-- <a-form>
                     <a-form-item label="控件名称" :label-col="{span:6}" :wrapper-col="{span:12}" required :validateStatus='validateStatus'>
                         <a-input v-model.trim='currentItem.name'/>
                     </a-form-item>
@@ -80,7 +158,7 @@
                     <a-form-item label="权限字段" :label-col="{span:6}" :wrapper-col="{span:12}">
                         <a-checkbox v-model='currentItem.conditionField'>启用</a-checkbox>
                     </a-form-item>
-                </a-form>
+                </a-form> -->
             </a-col>
         </a-row>
         <a-row type='flex' justify='center' style="margin-top:10px">

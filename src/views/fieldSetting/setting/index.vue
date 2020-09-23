@@ -99,38 +99,42 @@
         </a-form-item>
 
         <!-- 多级联动 -->
-        <a-form-item 
-          v-if="valueType == 'SELECT'" 
-          :label="'关联码表值' + (index + 1) " 
-          :label-col="{span:6}" 
-          :wrapper-col="{span:12}"
-          v-for="(k, index) in selectLevel"
-          :key=" 'select' + index " 
-        >
-          <a-select
-            v-decorator="[`categoryCodes[${index}]`, { initialValue: fieldData ? fieldData.categoryCodes[index] : undefined , rules: [{ required: true, whitespace:true,message: '请选择码表值' }] }]"
+        <div v-if="valueType == 'SELECT'" >
+          <a-form-item 
+            :label="'关联码表值' + (index + 1) " 
+            :label-col="{span:6}" 
+            :wrapper-col="{span:12}"
+            v-for="(k, index) in selectLevel"
+            :key=" 'select' + index " 
           >
-            <a-select-option v-for="item in codeList" :key="item.code" :value="item.code">
-              {{ item.name }}
-            </a-select-option>
-          </a-select>
-        
-          <a-button 
-            v-if="selectLevel.length - 1 ==  index"
-            type="dashed" 
-            style="width: 100%;" 
-            @click="addSelect">
-              <a-icon type="plus" />
-          </a-button>
-          <a-button 
-            v-else
-            type="dashed" 
-            style="width: 100%;" 
-            @click="minusSelect(index)">
-              <a-icon type="minus" /> 
-          </a-button>
-        </a-form-item>
-
+            <a-row :gutter='10'>
+              <a-col :span='22'>
+                <a-select v-decorator="[`categoryCodes[${index}]`, { initialValue: fieldData ? fieldData.categoryCodes[index] : undefined , rules: [{ required: true, whitespace:true,message: '请选择码表值' }] }]">
+                  <a-select-option v-for="item in codeList" :key="item.code" :value="item.code">
+                    {{ item.name }}
+                  </a-select-option>
+                </a-select>
+              </a-col>
+              <a-col :span='2'>
+                <a-icon v-if="selectLevel.length - 1 ==  index" type="plus-circle" @click="addSelect" style="font-size:20px"/>
+                <a-icon type="close-circle" v-else style="font-size:20px"/>
+              </a-col>
+            </a-row>
+            <!-- <a-button 
+              type="dashed" 
+              style="width: 100%;" 
+              @click="addSelect">
+                <a-icon type="plus" />
+            </a-button> -->
+            <!-- <a-button 
+              v-else
+              type="dashed" 
+              style="width: 100%;" 
+              @click="minusSelect(index)">
+                <a-icon type="minus" /> 
+            </a-button> -->
+          </a-form-item>
+        </div>
         <a-form-item label="引用对象" :label-col="{span:6}" :wrapper-col="{span:12}">
           <a-select
             allowClear
