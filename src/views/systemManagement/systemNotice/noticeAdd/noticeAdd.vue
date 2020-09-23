@@ -75,7 +75,7 @@
               <a-select
                 mode="multiple"
                 v-decorator="['users',validates.users]"
-                placeholder="Select users"
+                placeholder="请输入发布人模糊搜索"
                 style="width: 100%"
                 :filter-option="false"
                 :not-found-content="fetching ? undefined : null"
