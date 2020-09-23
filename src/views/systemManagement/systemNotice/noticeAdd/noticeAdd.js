@@ -78,8 +78,8 @@ export default {
             this.form.validateFields((err, values) => {
                 if (err) return;  
                 // .format('YYYY-MM-DD HH:mm:ss'):null
-                values['publishDate']=values['publishDate']?values['publishDate'].format('YYYY-MM-DD'):null
-                values['expiryDate']=values['expiryDate']?values['expiryDate'].format('YYYY-MM-DD'):null
+                values['publishDate']=values['publishDate']?values['publishDate'].format('YYYY-MM-DD HH:mm:ss'):null
+                values['expiryDate']=values['expiryDate']?values['expiryDate'].format('YYYY-MM-DD HH:mm:ss'):null
                 if (values['type']=='公告'&&(new Date(values['publishDate']).getTime() <= new Date().getTime())) {
                     this.$message.warning("发布时间应大于当前时间")
                     return false
