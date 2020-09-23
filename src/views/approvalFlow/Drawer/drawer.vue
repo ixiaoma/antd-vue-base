@@ -118,7 +118,13 @@
                 </a-select-option>
               </a-select>
             </a-col>
-            <a-col :span='4'>=</a-col>
+            <a-col :span='4'>
+              <a-select style="width: 100%" placeholder="请选择" v-model="item.operator">
+                <a-select-option :value="item" v-for='(item,index) in oprationList' :key='index'>
+                    {{item}}
+                  </a-select-option>
+                </a-select>
+            </a-col>
             <a-col :span='8'>
               <a-input v-model="item.value" style="width:100%"/>
             </a-col>

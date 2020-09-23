@@ -1,4 +1,5 @@
 import { getTaskDetail,commitTask } from '@/api/approval'
+import fieldHandle from '@/mixins/fieldHandle'
 
 import FooterToolBar from '@/layouts/FooterToolbar'
 export default{
@@ -9,13 +10,13 @@ export default{
             form: this.$form.createForm(this)
         }
     },
+    mixins:[fieldHandle],
     components:{
         FooterToolBar
     },
     methods:{
         async getInitDetail(){
             this.fieldList = await getTaskDetail({taskId: this.$route.query.id})
-            // this.fieldList = res
         },
         async commitApproval(){
             const parameter = {

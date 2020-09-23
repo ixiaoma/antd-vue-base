@@ -33,7 +33,9 @@ export default{
                 'icon-gonggao',
                 'icon-yusuanguanli',
                 'icon-buqian',
-                'icon-qingxiujiashenqing'
+                'icon-qingxiujiashenqing',
+                'icon-kaohebaobiao',
+                'icon-kaoqin'
             ]
         }
     },

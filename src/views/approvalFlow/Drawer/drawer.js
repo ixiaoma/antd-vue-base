@@ -16,6 +16,7 @@ const valueTypeList = [//participantList审批人抄送人；formAuthorityList�
     value:'VONDER'
   }
 ]
+const oprationList = ['=','!=','>','>=','<','<=']
 import roleModel from './roleModel.vue'
 import { getFormDetail } from '@/api/approval'
 import { levelList } from '@/utils/commonCode'
@@ -44,7 +45,8 @@ export default {
         firstSelect:'3',
         levelList,
         expressionList:[],
-        backType:null
+        backType:null,
+        oprationList
       };
     },
     components:{roleModel},
@@ -97,7 +99,7 @@ export default {
           }
         }else{
           this.fieldList = await this.getFormDetailList()
-          this.expressionList = nodeConfig.expressionList || []
+          this.expressionList = nodeConfig.expressionList.map(ele=>{return {...ele}}) || []
         }
         this.visible = true;
       },
@@ -156,7 +158,7 @@ export default {
       addCondition(){//添加条件
         this.expressionList.push({
           code:null,
-          operator:'eq',
+          operator:'=',
           value:''
         })
       },
