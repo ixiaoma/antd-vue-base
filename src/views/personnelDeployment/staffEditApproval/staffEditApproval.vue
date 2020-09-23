@@ -1,39 +1,33 @@
-<style lang="less" scoped>
-  @import "./staffEditApproval.less";
-</style>
-<template>
-<div class="staffEditApproval">
-    <!--这是staffEditApproval列表页面-->
-    <a-card :bordered="false">
-      <table-filter :filterList='filterList'/>
-      <s-table
-        ref="table"
-        rowKey="key"
-        :columns="columns"
-        :filterList="filterList"
-        :data="loadData"
-        :alert="true"
-        :rowSelection="rowSelection"
-        showPagination="auto">
-        <span slot="serial" slot-scope="text, record, index">
-          {{ index + 1 }}
-        </span>
-        <span slot="status" slot-scope="text">
-          <a-badge :status="text | statusTypeFilter" :text="text | statusFilter" />
-        </span>
-        <span slot="description" slot-scope="text">
-          <ellipsis :length="4" tooltip>{{ text }}</ellipsis>
-        </span>
 
-        <span slot="action" slot-scope="text, record">
-          <template>
-            <a @click="handleEdit(record)">查看</a>
-          </template>
-        </span>
-      </s-table>
-    </a-card>
+<template>
+<div class="staffQuitApproval">
+    <!--这是员工离职审批列表页面-->
+   <approvalCommon :defineKey="defineKey"></approvalCommon>
   </div>
 </template>
 
+<script>
+import {approvalCommon} from '@/components'
 
-<script src="./staffEditApproval.js"></script>
+export default {
+  name: 'staffQuitApprovalList',
+  title: 'staffQuitApproval',
+  components: {
+    approvalCommon
+  },
+  data () {
+   return {
+     defineKey:'transfer'
+   }
+  },
+  filters: {
+    
+  },
+  computed: {
+    
+  },
+  methods: {
+   
+  }
+}
+</script>
