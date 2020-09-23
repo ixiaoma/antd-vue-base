@@ -15,7 +15,7 @@
         :data="loadData"
         :scroll='{x:true}'>
         </s-table>
-        <replaceCard ref="replaceCard" @refelsh="refresh"></replaceCard>
+        <replaceCard ref="replaceCard" @refelsh="refelsh"></replaceCard>
   </a-card>
 </template>
 

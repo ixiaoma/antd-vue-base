@@ -1,5 +1,5 @@
 import moment from 'moment'
-import { getBaseLayout, getDetailLayout, saveLayout, getEditLayout, saveEditLayout,getWorkOrderData } from '@/api/commonApi'
+import { getBaseLayout, getDetailLayout, getEditLayout_kpitodo,getDetailLayout_kpitodo,saveLayout, getEditLayout, saveEditLayout,getWorkOrderData } from '@/api/commonApi'
 import fieldHandle from '@/mixins/fieldHandle'
 
 import FooterToolBar from '@/layouts/FooterToolbar'
@@ -115,13 +115,13 @@ export default {
             let res = null
             let { flag, pageCode, id } = this.currentForm || this.$route.query
             if(flag == 2){
-                res = await getDetailLayout({pageCode,id})  
+                res = pageCode=='performance_assessment_detail/todo'?await getDetailLayout_kpitodo({pageCode,id}):await getDetailLayout({pageCode,id})  
             }else if(flag == 3){
-                res = await getEditLayout({pageCode,id})
+                res = pageCode=='performance_assessment_detail/todo'?await getEditLayout_kpitodo({pageCode,id}):await getEditLayout({pageCode,id})
             }else{
                 res = await getBaseLayout({pageCode})
             }
-            if(pageCode == 'performance_assessment_detail'){
+            if(pageCode == 'performance_assessment_detail'||pageCode =='performance_assessment_detail/todo'){
                 res = res.fieldValueLayoutDTOList
             }
             this.layoutList = res

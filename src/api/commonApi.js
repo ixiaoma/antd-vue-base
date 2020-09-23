@@ -34,8 +34,16 @@ export function getDetailLayout ({pageCode,id}) {//获取详情布局接口
   return axios.post(`${baseBusiness}${pageCode}/layout/detail/${id}`)
 }
 
+export function getDetailLayout_kpitodo ({pageCode,id}) {//获取考核待办详情布局接口
+  return axios.post(`${baseBusiness}${pageCode}/detail/${id}`)
+}
+
 export function getEditLayout ({pageCode,id}) {//获取编辑布局接口
   return axios.post(`${baseBusiness}${pageCode}/layout/edit/${id}`)
+}
+
+export function getEditLayout_kpitodo  ({pageCode,id}) {//获取考核待办编辑布局接口
+  return axios.post(`${baseBusiness}${pageCode}/${id}`)
 }
 
 export function saveLayout ({pageCode,params}) {//保存新增布局接口

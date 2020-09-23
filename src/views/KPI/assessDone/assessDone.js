@@ -61,12 +61,11 @@ export default {
       })
     },
    
-    handleSub(record) {
-      let flag=2
+    handleSub(data,flag) {
       let pageCode='performance_assessment_detail/todo'
       this.$router.push({
           name:'baseForm',
-          query:{ title, flag, pageCode:pageCode, id: data ? data.id : null}
+          query:{ title, flag, pageCode:pageCode, id: data ? data.todoId : null,operationType:data?data.operationType:null}
       })
     },
     onSelectChange(selectedRowKeys, selectedRows) {

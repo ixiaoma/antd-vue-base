@@ -15,7 +15,7 @@
                   @change="handleTableChange"
                 >
                 <template slot="action" slot-scope="text, record">         
-                  <a @click="handleSub(record)">查看</a>
+                  <a @click="handleSub(record,3)">查看</a>
                 </template>
       </a-table>
     </a-card>

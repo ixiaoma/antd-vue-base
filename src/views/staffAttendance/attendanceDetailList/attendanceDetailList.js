@@ -68,12 +68,13 @@ export default {
     replaceCardLoad() {
       if(this.selectedRowKeys.length){
         this.$refs.replaceCard.selectedRows=this.selectedRows
+        this.$refs.replaceCard.selectedRowKeys=this.selectedRowKeys
         this.$refs.replaceCard.showModalLoad()
       }else{
         this.$message.warning('请至少选择一条数据')
       }
     },
-    refresh(){
+    refelsh(){
       this.$refs.table.refresh()
     }
   },

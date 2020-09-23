@@ -20,18 +20,19 @@ export const columns = [
     },
     {
         title: '操作类型',
-        dataIndex: 'createDate',
+        dataIndex: 'operationType',
         sorter: true
     },
     {
         title: '是否处理',
-        dataIndex: 'createDate',
+        dataIndex: 'isHandled',
         sorter: true
     },
     {
         title: '操作',
         dataIndex: 'action',
         width: '150px',
+        fixed: 'right',
         scopedSlots: { customRender: 'action' }
     }
 ]
