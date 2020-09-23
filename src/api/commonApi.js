@@ -46,3 +46,16 @@ export function saveEditLayout ({pageCode,id,params}) {//保存编辑布局接�
   return axios.post(`${baseBusiness}${pageCode}/save/${id}`,params)
 }
 
+export function getToken(){
+  return axios.post('https://api-dev-tfd.lenovo.com/user/oauth/token?grant_type=client_credentials',{},{headers:{Authorization:'Basic aHJvYWRtaW46YWRtaW4='}})
+}
+
+export async function getWorkOrderData(){
+  const res = await getToken()
+  const params = {
+    "end_date": "2020-10-01T07:31:11.397Z",
+    "id": "2c9380826f115b40016f11f14e6e0099",
+    "start_date": "2019-09-01T07:31:11.397Z"
+  }
+  return axios.post('https://dev-tfd.lenovo.com/api/callCenter/historyOnsite/search',params,{headers:{Authorization:res.access_token}})
+}

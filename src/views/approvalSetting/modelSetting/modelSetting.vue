@@ -74,6 +74,9 @@
                     <a-form-item label="其他" :label-col="{span:6}" :wrapper-col="{span:12}">
                         <a-checkbox v-model='currentItem.required'>必填</a-checkbox>
                     </a-form-item>
+                    <a-form-item label="其他" :label-col="{span:6}" :wrapper-col="{span:12}">
+                        <a-checkbox v-model='currentItem.required'>是否列表展示</a-checkbox>
+                    </a-form-item>
                     <a-form-item label="权限字段" :label-col="{span:6}" :wrapper-col="{span:12}">
                         <a-checkbox v-model='currentItem.conditionField'>启用</a-checkbox>
                     </a-form-item>

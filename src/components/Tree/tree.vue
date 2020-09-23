@@ -3,6 +3,7 @@
       v-model="treeList"
       :tree-data="treeData"
       :multiple='multipleTree'
+      :disabled='disabled'
       :tree-checkable='multipleTree'
       treeCheckStrictly
       tree-default-expand-all
@@ -27,6 +28,10 @@ export default {
     },
     selectList:{
       type:[Array,String,Number]
+    },
+    disabled:{
+      type:Boolean,
+      default:false
     }
   },
   methods: {

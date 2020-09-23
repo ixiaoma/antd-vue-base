@@ -2,7 +2,7 @@
     <a-card :bordered="false" class="table-page-search-wrapper">
         <a-form :form="form" @submit="handleSubmit" layout="inline" :class="readonly ? 'detail-style' : ''">
             <a-collapse v-model="activeKey" :bordered="false" class="spacial-collape" expand-icon-position='right'>
-                <a-collapse-panel v-for="(item,index) in layoutList" :key="String(index)" :header="item.groupName">
+                <a-collapse-panel v-for="(item,index) in layoutList" v-if='!item.hidden' :key="String(index)" :header="item.groupName">
                     <a-row :gutter="56">
                         <span v-for="(i,d) in item.fieldDefineValueList" :key="d">
                             <a-col v-if='i.display' :sm='24' :md ='18' :lg="i.valueType == 'TEXT_MULTI' || i.valueType == 'PICTURE' || i.valueType == 'ATTACHMENT' ? 20 : 12" >
@@ -15,7 +15,7 @@
                                             <a-textarea allowClear v-if="i.valueType == 'TEXT_MULTI'" rows="3" v-decorator="decoratorFn(i)" :placeholder="'请填写'+i.name"/>
                                             <a-input-number allowClear v-else-if="i.valueType == 'INTEGER'" :formatter="limitNumber" :parser="limitNumber"  :precision='0' v-decorator="decoratorFn(i)" :placeholder="'请输入'+i.name" style="width:100%"/>
                                             <a-input-number allowClear v-else-if="i.valueType == 'DECIMAL'" :precision='0' v-decorator="decoratorFn(i)" :placeholder="'请输入'+i.name" style="width:100%"/>
-                                            <a-select v-else-if="i.valueType == 'RADIO' || i.valueType == 'CHECKBOX'" :mode="i.valueType == 'CHECKBOX' ? 'multiple' : 'default'" v-decorator="decoratorFn(i)" :placeholder="'请选择'+i.name" allowClear showSearch>
+                                            <a-select v-else-if="i.valueType == 'RADIO' || i.valueType == 'CHECKBOX'" :mode="i.valueType == 'CHECKBOX' ? 'multiple' : 'default'" v-decorator="decoratorFn(i)" :placeholder="'请选择'+i.name" allowClear showSearch @change='(data)=>{selectChange(data,i)}'>
                                                 <a-select-option :value="item.codeKey" v-for="(item,index) in i.codeItems" :key='index'>{{item.codeValue}}</a-select-option>
                                             </a-select>
                                             <a-cascader allowClear v-else-if="i.valueType == 'SELECT'" v-decorator="decoratorFn(i)" :placeholder="'请选择'+i.name"
@@ -45,7 +45,7 @@
                                                     <a-button> <a-icon type="upload" />上传附件</a-button>
                                                 </a-upload>
                                             </div>
-                                            <tree-select v-else-if="i.valueType == 'ORG_TREE_SINGLE' || i.valueType == 'ORG_TREE_MULTI'" :multipleTree="i.valueType == 'ORG_TREE_MULTI'" v-decorator="decoratorFn(i)" :selectList='i.value' @selectTree='(list)=>{selectTree(list,i.code)}'/>
+                                            <tree-select v-else-if="i.valueType == 'ORG_TREE_SINGLE' || i.valueType == 'ORG_TREE_MULTI'" :multipleTree="i.valueType == 'ORG_TREE_MULTI'" v-decorator="decoratorFn(i)" :selectList='i.value' @selectTree='(list)=>{selectTree(list,i.code)}' :disabled='i.referObjectCode ? true : false'/>
                                             <a-input allowClear :disabled='i.referObjectCode ? true : false' v-else :maxLength="i.valueType == 'PHONE' ? 11 : null" v-decorator="decoratorFn(i)" :placeholder="'请填写'+i.name">
                                                 <span slot="addonAfter" v-if='i.serverApi'>
                                                     <a-icon type="close" v-if='form.getFieldValue(i.code)' @click="clearRleative(i)"/>

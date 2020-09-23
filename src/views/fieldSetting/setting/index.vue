@@ -87,103 +87,101 @@
         <a-form-item label="字段名称" :label-col="{span:6}" :wrapper-col="{span:12}">
           <a-input allowClear v-decorator="['name', { initialValue: fieldData ? fieldData.name : '',rules: [{ required: true, whitespace:true,message: '请填写字段名称' }] }]"/>
         </a-form-item>
-        <div v-show='noHidden'>
-          <a-form-item v-if="showCodeField" label="关联码表值" :label-col="{span:6}" :wrapper-col="{span:12}">
-            <a-select
-              allowClear
-              v-decorator="[`categoryCodes[0]`, { initialValue: fieldData ? fieldData.categoryCodes[0] : undefined ,rules: [{ required: true, whitespace:true,message: '请选择码表值' }] }]"
-              >
-              <a-select-option v-for="item in codeList" :key="item.code" :value="item.code">
-                {{ item.name }}
-              </a-select-option>
-            </a-select>
-          </a-form-item>
-
-          <!-- 多级联动 -->
-          <a-form-item 
-            v-if="valueType == 'SELECT'" 
-            :label="'关联码表值' + (index + 1) " 
-            :label-col="{span:6}" 
-            :wrapper-col="{span:12}"
-            v-for="(k, index) in selectLevel"
-            :key=" 'select' + index " 
-          >
-            <a-select
-              v-decorator="[`categoryCodes[${index}]`, { initialValue: fieldData ? fieldData.categoryCodes[index] : undefined , rules: [{ required: true, whitespace:true,message: '请选择码表值' }] }]"
+        <a-form-item v-if="showCodeField" label="关联码表值" :label-col="{span:6}" :wrapper-col="{span:12}">
+          <a-select
+            allowClear
+            v-decorator="[`categoryCodes[0]`, { initialValue: fieldData ? fieldData.categoryCodes[0] : undefined ,rules: [{ required: true, whitespace:true,message: '请选择码表值' }] }]"
             >
-              <a-select-option v-for="item in codeList" :key="item.code" :value="item.code">
-                {{ item.name }}
-              </a-select-option>
-            </a-select>
-          
-            <a-button 
-              v-if="selectLevel.length - 1 ==  index"
-              type="dashed" 
-              style="width: 100%;" 
-              @click="addSelect">
-                <a-icon type="plus" />
-            </a-button>
-            <a-button 
-              v-else
-              type="dashed" 
-              style="width: 100%;" 
-              @click="minusSelect(index)">
-                <a-icon type="minus" /> 
-            </a-button>
-          </a-form-item>
+            <a-select-option v-for="item in codeList" :key="item.code" :value="item.code">
+              {{ item.name }}
+            </a-select-option>
+          </a-select>
+        </a-form-item>
 
-          <a-form-item label="引用对象" :label-col="{span:6}" :wrapper-col="{span:12}">
-            <a-select
-              allowClear
-              @change="changeObject"
-              v-decorator="['referObjectCode', { initialValue: fieldData ? fieldData.referObjectCode : undefined  }]"
-              >
-              <a-select-option v-for="item in objectList" :key="item.code" :value="item.code">
-                {{ item.name }}
-              </a-select-option>
-            </a-select>
-          </a-form-item>
+        <!-- 多级联动 -->
+        <a-form-item 
+          v-if="valueType == 'SELECT'" 
+          :label="'关联码表值' + (index + 1) " 
+          :label-col="{span:6}" 
+          :wrapper-col="{span:12}"
+          v-for="(k, index) in selectLevel"
+          :key=" 'select' + index " 
+        >
+          <a-select
+            v-decorator="[`categoryCodes[${index}]`, { initialValue: fieldData ? fieldData.categoryCodes[index] : undefined , rules: [{ required: true, whitespace:true,message: '请选择码表值' }] }]"
+          >
+            <a-select-option v-for="item in codeList" :key="item.code" :value="item.code">
+              {{ item.name }}
+            </a-select-option>
+          </a-select>
+        
+          <a-button 
+            v-if="selectLevel.length - 1 ==  index"
+            type="dashed" 
+            style="width: 100%;" 
+            @click="addSelect">
+              <a-icon type="plus" />
+          </a-button>
+          <a-button 
+            v-else
+            type="dashed" 
+            style="width: 100%;" 
+            @click="minusSelect(index)">
+              <a-icon type="minus" /> 
+          </a-button>
+        </a-form-item>
 
-          <a-form-item label="引用字段" :label-col="{span:6}" :wrapper-col="{span:12}">
-            <a-select
-              allowClear
-              v-decorator="['referObjectField', { initialValue: fieldData ? fieldData.referObjectField : undefined  }]"
-              >
-              <a-select-option v-for="item in fieldList" :key="item.code" :value="item.code">
-                {{ item.name }}
-              </a-select-option>
-            </a-select>
-          </a-form-item>
+        <a-form-item label="引用对象" :label-col="{span:6}" :wrapper-col="{span:12}">
+          <a-select
+            allowClear
+            @change="changeObject"
+            v-decorator="['referObjectCode', { initialValue: fieldData ? fieldData.referObjectCode : undefined  }]"
+            >
+            <a-select-option v-for="item in objectList" :key="item.code" :value="item.code">
+              {{ item.name }}
+            </a-select-option>
+          </a-select>
+        </a-form-item>
 
-          <a-form-item label="引用对象赋值字段" :label-col="{span:6}" :wrapper-col="{span:12}">
-            <a-select
-              allowClear
-              v-decorator="['referObjectSetField', { initialValue: fieldData ? fieldData.referObjectSetField : undefined  }]"
-              >
-              <a-select-option v-for="item in setFieldList" :key="item.code" :value="item.code">
-                {{ item.name }}
-              </a-select-option>
-            </a-select>
-          </a-form-item>
+        <a-form-item label="引用字段" :label-col="{span:6}" :wrapper-col="{span:12}">
+          <a-select
+            allowClear
+            v-decorator="['referObjectField', { initialValue: fieldData ? fieldData.referObjectField : undefined  }]"
+            >
+            <a-select-option v-for="item in fieldList" :key="item.code" :value="item.code">
+              {{ item.name }}
+            </a-select-option>
+          </a-select>
+        </a-form-item>
 
-          <a-form-item label="字段描述" :label-col="{span:6}" :wrapper-col="{span:12}">
-            <a-input allowClear v-decorator="['description', { initialValue: fieldData ? fieldData.description : '',rules: [] }]"/>
-          </a-form-item>
+        <a-form-item label="引用对象赋值字段" :label-col="{span:6}" :wrapper-col="{span:12}">
+          <a-select
+            allowClear
+            v-decorator="['referObjectSetField', { initialValue: fieldData ? fieldData.referObjectSetField : undefined  }]"
+            >
+            <a-select-option v-for="item in setFieldList" :key="item.code" :value="item.code">
+              {{ item.name }}
+            </a-select-option>
+          </a-select>
+        </a-form-item>
 
-          <a-form-item label="API" :label-col="{span:6}" :wrapper-col="{span:12}">
-            <a-input allowClear v-decorator="['serverApi', { initialValue: fieldData ? fieldData.serverApi : '',rules: [] }]"/>
-          </a-form-item>
+        <a-form-item label="字段描述" :label-col="{span:6}" :wrapper-col="{span:12}">
+          <a-input allowClear v-decorator="['description', { initialValue: fieldData ? fieldData.description : '',rules: [] }]"/>
+        </a-form-item>
 
-          <a-form-item label="是否列表查询" :label-col="{span:6}" :wrapper-col="{span:12}">
-            <a-switch v-decorator="['search',{ initialValue: fieldData ? fieldData.search : true, valuePropName: 'checked' }]"/>
-          </a-form-item>
-          <a-form-item label="是否表头展示" :label-col="{span:6}" :wrapper-col="{span:12}">
-            <a-switch v-decorator="['tableHead',{ initialValue: fieldData ? fieldData.tableHead : true, valuePropName: 'checked' }]"/>
-          </a-form-item>
-          <a-form-item label="是否数据展示" :label-col="{span:6}" :wrapper-col="{span:12}">
-            <a-switch v-decorator="['display',{ initialValue: fieldData ? fieldData.display : true, valuePropName: 'checked' }]"/>
-          </a-form-item>
-        </div>
+        <a-form-item label="API" :label-col="{span:6}" :wrapper-col="{span:12}">
+          <a-input allowClear v-decorator="['serverApi', { initialValue: fieldData ? fieldData.serverApi : '',rules: [] }]"/>
+        </a-form-item>
+
+        <a-form-item label="是否列表查询" :label-col="{span:6}" :wrapper-col="{span:12}">
+          <a-switch v-decorator="['search',{ initialValue: fieldData ? fieldData.search : true, valuePropName: 'checked' }]"/>
+        </a-form-item>
+        <a-form-item label="是否表头展示" :label-col="{span:6}" :wrapper-col="{span:12}" v-show='noHidden'>
+          <a-switch v-decorator="['tableHead',{ initialValue: fieldData ? fieldData.tableHead : true, valuePropName: 'checked' }]"/>
+        </a-form-item>
+        <a-form-item label="是否数据展示" :label-col="{span:6}" :wrapper-col="{span:12}">
+          <a-switch v-decorator="['display',{ initialValue: fieldData ? fieldData.display : true, valuePropName: 'checked' }]"/>
+        </a-form-item>
       </a-form>
       <template slot="footer">
         <a-button key="back" @click="handleFieldCancel">

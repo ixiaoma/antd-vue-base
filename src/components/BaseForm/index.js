@@ -1,5 +1,5 @@
 import moment from 'moment'
-import { getBaseLayout, getDetailLayout, saveLayout, getEditLayout, saveEditLayout } from '@/api/commonApi'
+import { getBaseLayout, getDetailLayout, saveLayout, getEditLayout, saveEditLayout,getWorkOrderData } from '@/api/commonApi'
 import fieldHandle from '@/mixins/fieldHandle'
 
 import FooterToolBar from '@/layouts/FooterToolbar'
@@ -56,7 +56,6 @@ export default {
                 const currentValue = i.value && i.value.length ? i.value.join(',') : ''
                 if(i.valueType == 'DATETIME' || i.validateFields == 'DATE'){
                     initialValue = currentValue ? moment(currentValue,i.validateFields == 'DATE' ? 'YYYY-MM-DD' : 'YYYY-MM-DD HH:mm:ss') : null
-                    console.log(initialValue)
                 } else if(i.valueType == 'RADIO'){
                     const defaultValue = i.codeItems.filter(ele=>ele.defaultStatus)
                     initialValue = currentValue || (defaultValue.length > 0 ? defaultValue[0].codeKey : undefined)
@@ -80,7 +79,7 @@ export default {
             }
             const rules = [
                 {
-                    type : i.valueType == 'SELECT' || i.valueType == 'ORG_TREE_MULTI' || i.valueType == 'CHECKBOX' ? 'array' : i.valueType == 'DATETIME' ? 'object' : i.valueType == 'INTEGER' || i.valueType == 'DECIMAL' ? 'number' : 'string',
+                    type : i.valueType == 'SELECT' || i.valueType == 'ORG_TREE_MULTI' || i.valueType == 'CHECKBOX' ? 'array' : i.valueType == 'DATETIME' || i.valueType == 'DATE' ? 'object' : i.valueType == 'INTEGER' || i.valueType == 'DECIMAL' ? 'number' : 'string',
                     required: i.notNull,
                     whitespace:true,
                     message: `${i.name}必填`
@@ -227,6 +226,36 @@ export default {
                 })
             })
         },
+        selectChange(value,i){
+            const {pageCode} = this.$route.query
+            if(pageCode == 'trip'){
+                if(i.code == "tripType"){
+                    this.layoutList.forEach(ele=>{
+                        ele.fieldDefineValueList.forEach(pre=>{
+                            if(pre.code == "workId"){
+                                pre.display = value == '服务类'
+                            }
+                        })
+                    })
+                }
+            }else if(pageCode == 'transfer'){
+                if(i.code == "transferPay"){
+                    this.layoutList.forEach(ele=>{
+                        if(ele.groupName == "工资调整信息"){
+                            ele.hidden = value == '否'
+                        }
+                    })
+                }
+            }else if(pageCode == 'vacation'){
+                if(i.code == "vacationType"){
+                    this.layoutList.forEach(ele=>{
+                        ele.fieldDefineValueList.forEach(pre=>{
+                            
+                        })
+                    })
+                }
+            }
+        },
         goBack(){
             if(this.$route.name == 'staffForm'){
                 this.$router.push({name:'staffList'})
@@ -238,5 +267,6 @@ export default {
     created(){
         this.readonly = (this.currentForm || this.$route.query).flag == 2
         this.getInitData()
+        // getWorkOrderData()
     }
 }
