@@ -5,6 +5,7 @@ import fieldHandle from '@/mixins/fieldHandle'
 
 import FooterToolBar from '@/layouts/FooterToolbar'
 import staffAchievements from '../staffAchievements/staffAchievements.vue'
+import kpiApproval from '../kpiApproval/index.vue'
 import TreeSelect from '../Tree/tree.vue'
 import ModelTable from '../ModelTable/modelTable.vue'
 export default {
@@ -48,6 +49,7 @@ export default {
         FooterToolBar,
         TreeSelect,
         staffAchievements,
+        kpiApproval,
         ModelTable
     },
     computed: {
@@ -173,8 +175,12 @@ export default {
                         params:saveData
                     }
                     if(id) param.id = id
-                    const fn = id ? saveEditLayout : saveLayout
-                    if(this.$route.query.pageCode=="performance_assessment_detail"){
+                    let fn = id ? saveEditLayout : saveLayout
+                    if(this.$route.query.pageCode=="performance_assessment_detail/todo"&&this.$route.query.operationType=='经理审批'){
+                        this.$refs.kpiApproval.approvalSave()
+                        return false
+                    }
+                    if(this.$route.query.pageCode=="performance_assessment_detail"||(this.$route.query.pageCode=="performance_assessment_detail/todo"&&this.$route.query.operationType=='员工创建目标')){
                         let arr=this.$refs.staffAchievements.tableValueArr
                         let isflag=false
                         let num=0

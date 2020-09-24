@@ -12,6 +12,7 @@ export default {
     data() {
         this.lastFetchId = 0;
         this.fetchUser = debounce(this.fetchUser, 800);
+        let access_token=sessionStorage.getItem('access_token')
         return {
             editid:'',
             typeList:[],
@@ -44,7 +45,10 @@ export default {
             noticeUpload:fileUploadApi,
             defaultFileList:[],
             fileList:[],
-            fileUrlList:[]
+            fileUrlList:[],
+            headers: {
+                Authorization: `Bearer ${access_token}`,
+            },  
         }
     },
     components:{
@@ -54,15 +58,16 @@ export default {
         //时间转换方法
         moment,
         handleChange(info) {
-            if (info.file.status !== 'uploading') {
-                console.log(info.file, info.fileList);
-            }
-            if (info.file.status === 'done') {
-                this.fileList.push(info.fileList)
-                this.$message.success(`${info.file.name} 上传成功`);        
-            } else if (info.file.status === 'error') {
-                this.$message.error(`${info.file.name} 上传失败`);
-            }
+            // if (info.file.status !== 'uploading') {
+            //     console.log(info.file, info.fileList);
+            // }
+            // if (info.file.status === 'done') {
+            //     this.fileList.push(info.fileList)
+            //     this.$message.success(`${info.file.name} 上传成功`);        
+            // } else if (info.file.status === 'error') {
+            //     this.$message.error(`${info.file.name} 上传失败`);
+            // }
+            this.fileList=info.fileList
         },
         beforeUpload(){},
         handleRemove(file) {
@@ -97,10 +102,11 @@ export default {
                     expiryDate: values['expiryDate'],//失效时间             
                     content: Base64.encode(this.bulletinconcent)//公告内容          
                 }
+                
                 if(values['basicType']=='规章制度'){
                     // params.rules=values['rules']
                     params.company=values['company']
-                    params.fileUrl=[]
+                    params.fileUrl=this.fileList.map(item=>item.response)
                 }
                 if (values['bulletinperson'] == "role") {
                     params.customerIds = values['roleIds']                                    
@@ -173,7 +179,17 @@ export default {
           //编辑       
         editbulletin() {         
             noticeDetail(this.editid).then(res => {
-                    this.fileUrlList=res.fileUrl         
+                res.fileUrl&&res.fileUrl.forEach((item,index)=>{
+                        let obj= {
+                            uid: index,
+                            name: '规章制度'+index,
+                            status: 'done',
+                            url: fileDownLoad+item,
+                          } 
+                          this.defaultFileList.push(obj) 
+                          this.fileList.push(obj) 
+                    })
+                    
                     let fromdata=res
                     this.nextCodeList(res.basicType)
                     fromdata.publishDate=res.publishDate?moment(new Date(res.publishDate)):null

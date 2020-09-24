@@ -74,6 +74,8 @@
         <model-table ref='modelTable' @selectData='selectData'/>
         <!-- 员工绩效 -->
         <staffAchievements :readonly="readonly||operationType" v-if="$route.query.pageCode=='performance_assessment_detail'||$route.query.pageCode=='performance_assessment_detail/todo'" ref="staffAchievements"></staffAchievements>
+        <!-- 考核待办 经理审批 -->
+        <kpiApproval ref="kpiApproval" v-if="$route.query.pageCode=='performance_assessment_detail/todo'&&$route.query.operationType=='经理审批'"></kpiApproval>
     </a-card>
 </template>
 <script src='./index.js'></script>

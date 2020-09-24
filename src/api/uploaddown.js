@@ -4,9 +4,7 @@ const baseBusiness = 'business/'
 const authAPI='auth/'
 
 // 文件上传
-export function fileUploadApi (params) {//获取列表查询接口
-    return axios.post(`${baseBusiness}file/upload`,params)
-  }
+  export const fileUploadApi = process.env.VUE_APP_API_BASE_URL +baseBusiness+ 'file/upload'
 // 文件下载
 export const fileDownLoad=process.env.VUE_APP_API_BASE_URL+baseBusiness+'file/download/'
 

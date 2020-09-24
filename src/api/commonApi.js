@@ -54,6 +54,10 @@ export function saveEditLayout ({pageCode,id,params}) {//保存编辑布局接�
   return axios.post(`${baseBusiness}${pageCode}/save/${id}`,params)
 }
 
+export function saveEditLayout_kpitodo (id,params) {// //考核待办 经理审批 保存编辑布局接口
+  return axios.post(`${baseBusiness}performance_assessment_detail/save/pass/${id}`,params)
+}
+
 export function getToken(){
   return axios.post('https://api-dev-tfd.lenovo.com/user/oauth/token?grant_type=client_credentials',{},{headers:{Authorization:'Basic aHJvYWRtaW46YWRtaW4='}})
 }

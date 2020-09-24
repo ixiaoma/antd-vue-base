@@ -106,7 +106,8 @@
               :default-file-list="defaultFileList"
               :file-list="fileList" 
               :remove="handleRemove" 
-              :before-upload="beforeUpload"
+              :headers="headers"
+              @change="handleChange"
             >
               <a-button> <a-icon type="upload" /> 上传附件 </a-button>
             </a-upload>
