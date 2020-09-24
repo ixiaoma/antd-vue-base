@@ -51,7 +51,7 @@ export default {
     },
     computed: {
         operationType(){
-            return this.$route.query.operationType=='经理审批'&&this.$route.query.operationType=='经理第一次评分'&&this.$route.query.operationType=='员工自评'&&this.$route.query.operationType=='经理第二次评分'
+            return this.$route.query.operationType=='经理审批'||this.$route.query.operationType=='经理第一次评分'||this.$route.query.operationType=='员工自评'||this.$route.query.operationType=='经理第二次评分'
         }
     },
     methods:{
