@@ -5,6 +5,7 @@
         <table-filter :filterList='filterList' @refresh='searchRefresh'/> 
         <div class="table-operator">
             <a-button type="primary" icon="plus" v-if="buttonList.includes('add')" @click="handleAdd(null,1)">新建</a-button>
+            <a-button type="primary" icon="plus" v-if="buttonList.includes('addApproval')" @click="toApproval(null,1)">新增申请</a-button>
             <div>
                 <slot></slot>
                 <a-button type="default" icon="download" v-if="buttonList.includes('output')" style="margin-left:10px">导出</a-button>

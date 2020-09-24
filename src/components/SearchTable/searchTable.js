@@ -2,6 +2,7 @@ import TableFilter from '../TableFilter/index.vue'
 import STable from '../Table'
 
 import { getBasePage, getTableSearch, getTableHeader, deletePageList } from '@/api/commonApi'
+import { applyList } from '@/api/apply'
 
 export default{
     data(){
@@ -9,13 +10,7 @@ export default{
             pageLoading:true,
             queryParam:[],//筛选值
             // 加载数据方法 必须为 Promise 对象
-            loadData: parameter => {
-                const params = Object.assign( parameter, {filter:{logic: "and",filters:this.queryParam}})
-                return getBasePage({pageCode:this.pageCode,params})
-                .then(res => {
-                    return res
-                })
-            },
+            loadData: parameter => {this.getTableData(parameter)},
             columns:[],
             selectedRowKeys: [],
             selectedRows: [],
@@ -93,6 +88,13 @@ export default{
                     const res = await deletePageList({ pageCode: this.pageCode, id })
                     this.$refs.table.refresh()
                 }
+            })
+        },
+        getTableData(parameter){
+            const params = Object.assign( parameter, {filter:{logic: "and",filters:this.queryParam}})
+            return getBasePage({pageCode:this.pageCode,params})
+            .then(res => {
+                return res
             })
         },
         searchRefresh(filterQuery){

@@ -56,10 +56,10 @@
             <a-col span='12' v-show="showSetting">
                 <h3>控件设置</h3>
                 <a-form :form="fieldForm">
-                    <a-form-item label="字段名称" :label-col="{span:6}" :wrapper-col="{span:12}">
+                    <a-form-item label="字段名称" required :label-col="{span:6}" :wrapper-col="{span:12}">
                         <a-input allowClear v-model.trim='currentItem.name'/>
                     </a-form-item>
-                    <a-form-item v-if="currentItem.valueType == 'RADIO' || currentItem.valueType == 'CHECKBOX'" label="关联码表值" :label-col="{span:6}" :wrapper-col="{span:12}">
+                    <a-form-item required v-if="currentItem.valueType == 'RADIO' || currentItem.valueType == 'CHECKBOX'" label="关联码表值" :label-col="{span:6}" :wrapper-col="{span:12}">
                         <a-select allowClear v-model.trim='currentItem.categoryCodes[0].codeCategory'>
                             <a-select-option v-for="item in codeList" :key="item.code" :value="item.code">
                             {{ item.name }}
@@ -89,7 +89,7 @@
                             </a-row>
                         </a-form-item>
                     </div>
-                    <a-form-item label="引用对象" :label-col="{span:6}" :wrapper-col="{span:12}">
+                    <!-- <a-form-item label="引用对象" :label-col="{span:6}" :wrapper-col="{span:12}">
                         <a-select
                             allowClear
                             @change="changeObject"
@@ -113,7 +113,7 @@
                             {{ item.name }}
                             </a-select-option>
                         </a-select>
-                    </a-form-item>
+                    </a-form-item> -->
                     <a-form-item label="字段描述" :label-col="{span:6}" :wrapper-col="{span:12}">
                         <a-input allowClear v-model.trim='currentItem.description'/>
                     </a-form-item>

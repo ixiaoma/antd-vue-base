@@ -1,5 +1,6 @@
 import moment from 'moment'
-import { getBaseLayout, getDetailLayout, getEditLayout_kpitodo,getDetailLayout_kpitodo,saveLayout, getEditLayout, saveEditLayout,getWorkOrderData } from '@/api/commonApi'
+import { getBaseLayout, getDetailLayout, getEditLayout_kpitodo,getDetailLayout_kpitodo,saveLayout, getEditLayout, saveEditLayout } from '@/api/commonApi'
+import { getProcessDetail } from '@/api/approval'
 import fieldHandle from '@/mixins/fieldHandle'
 
 import FooterToolBar from '@/layouts/FooterToolbar'
@@ -116,17 +117,22 @@ export default {
         handleCancel() {
             this.previewVisible = false;
         },
+        async getApprovalData(definekey){
+            const res = await getProcessDetail({definekey})
+            this.layoutList = [{groupName:'申请信息',fieldDefineValueList:res}]
+            this.activeKey = [0]
+        },
         async getInitData(){
             let res = null
             let { flag, pageCode, id } = this.currentForm || this.$route.query
             if(flag == 2){
-                res = pageCode=='performance_assessment_detail/todo'?await getDetailLayout_kpitodo({pageCode,id}):await getDetailLayout({pageCode,id})  
+                res = pageCode == 'performance_assessment_detail/todo' ? await getDetailLayout_kpitodo({pageCode,id}) : await getDetailLayout({pageCode,id})  
             }else if(flag == 3){
-                res = pageCode=='performance_assessment_detail/todo'?await getEditLayout_kpitodo({pageCode,id}):await getEditLayout({pageCode,id})
+                res = pageCode == 'performance_assessment_detail/todo' ? await getEditLayout_kpitodo({pageCode,id}) : await getEditLayout({pageCode,id})
             }else{
                 res = await getBaseLayout({pageCode})
             }
-            if(pageCode == 'performance_assessment_detail'||pageCode =='performance_assessment_detail/todo'){
+            if(pageCode == 'performance_assessment_detail'|| pageCode =='performance_assessment_detail/todo'){
                 res = res.fieldValueLayoutDTOList
             }
             this.layoutList = res
@@ -271,7 +277,11 @@ export default {
     },
     created(){
         this.readonly = (this.currentForm || this.$route.query).flag == 2
-        this.getInitData()
-        // getWorkOrderData()
+        const { definekey } = this.$route.query
+        if(definekey){
+            this.getApprovalData()
+        }else{
+            this.getInitData()
+        }
     }
 }

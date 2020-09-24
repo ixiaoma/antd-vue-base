@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 export const valueTypeList = [
     {
         label:'TEXT_SINGLE',
@@ -78,29 +80,12 @@ export const levelList = [
         title:'第三层上级'
     }
 ]
-export function getMonthStartAndEnd(AddMonthCount) { //0:当月；-1:上个月
-	//起止日期数组
-	var startStop = new Array(); 
-	//获取当前时间
-	var currentDate = new Date();
-	var month=currentDate.getMonth()+AddMonthCount;
-	if(month<0){
-	  var n = parseInt((-month)/12);
-	  month += n*12;
-	  currentDate.setFullYear(currentDate.getFullYear()-n);
-	}
-	currentDate = new Date(currentDate.setMonth(month));
-	//获得当前月份0-11
-	var currentMonth = currentDate.getMonth(); 
-	//获得当前年份4位年
-	var currentYear = currentDate.getFullYear(); 
-	//获得上一个月的第一天
-	var currentMonthFirstDay = new Date(currentYear, currentMonth,1); 
-	//获得上一月的最后一天
-	var currentMonthLastDay = new Date(currentYear, currentMonth+1, 0); 
-	//添加至数组
-	startStop.push(getDateStr3(currentMonthFirstDay)); 
-	startStop.push(getDateStr3(currentMonthLastDay)); 
-	//返回
-	return startStop; 
+
+export function getLastMonthDays () {// 获取上一个月的开始结束时间
+    let date = []
+    let start = moment().month(moment().month() - 1).startOf('month').format('YYYY-MM-DD')
+    let end = moment().month(moment().month() - 1).endOf('month').format('YYYY-MM-DD')
+    date.push(start)
+    date.push(end)
+    return date
 }
