@@ -179,17 +179,18 @@ export default {
           //编辑       
         editbulletin() {         
             noticeDetail(this.editid).then(res => {
-                res.fileUrl&&res.fileUrl.forEach((item,index)=>{
+                let fileUrl=res.fileUrl
+                fileUrl.forEach((item,index)=>{
                         let obj= {
                             uid: index,
                             name: '规章制度'+index,
                             status: 'done',
                             url: fileDownLoad+item,
+                            response:item
                           } 
                           this.defaultFileList.push(obj) 
                           this.fileList.push(obj) 
                     })
-                    
                     let fromdata=res
                     this.nextCodeList(res.basicType)
                     fromdata.publishDate=res.publishDate?moment(new Date(res.publishDate)):null

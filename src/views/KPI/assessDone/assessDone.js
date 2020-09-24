@@ -37,6 +37,12 @@ export default {
     }
   },
   methods: {
+// 操作类型：
+// 员工创建目标
+// 经理审批
+// 经理第一次评分
+// 员工自评
+// 经理第二次评分
     handleTableChange(pagination) {
       const pager = { ...this.pagination };
       pager.current = pagination.current;
@@ -54,8 +60,8 @@ export default {
       assessTodoLIst(params).then(res => {
         const pagination = { ...this.pagination };
         pagination.total = res.totalCount;
-        pagination.current = params.page
-        this.page = params.page
+        pagination.current = params.currentPage
+        this.page = params.currentPage
         this.loading = false;
         this.todoData = res.records;
         this.pagination = pagination;
@@ -66,7 +72,7 @@ export default {
       let pageCode='performance_assessment_detail/todo'
       this.$router.push({
           name:'baseForm',
-          query:{ title, flag, pageCode:pageCode, id: data ? data.todoId : null,operationType:data?data.operationType:null}
+          query:{ title:data.operationType, flag, pageCode:pageCode, id: data ? data.todoId : null,operationType:data?data.operationType:null}
       })
     },
     onSelectChange(selectedRowKeys, selectedRows) {

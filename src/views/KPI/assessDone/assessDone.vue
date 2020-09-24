@@ -5,7 +5,7 @@
                   ref="table"
                   size="small"
                   :bordered="true"
-                  :rowKey="(record) =>  record.id"
+                  :rowKey="(record) =>  record.todoId"
                   :columns="columns" 
                   :data-source="todoData"      
                   :showPagination="true"
