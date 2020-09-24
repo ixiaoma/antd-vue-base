@@ -73,7 +73,7 @@
         </a-form>
         <model-table ref='modelTable' @selectData='selectData'/>
         <!-- 员工绩效 -->
-        <staffAchievements :readonly="readonly" v-if="$route.query.pageCode=='performance_assessment_detail'" ref="staffAchievements"></staffAchievements>
+        <staffAchievements :readonly="readonly||operationType" v-if="$route.query.pageCode=='performance_assessment_detail'||$route.query.pageCode=='performance_assessment_detail/todo'" ref="staffAchievements"></staffAchievements>
     </a-card>
 </template>
 <script src='./index.js'></script>

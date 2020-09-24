@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import moment from 'moment'
 import { rolesList,getDeptTreeData,getUserLike,noticeAdd,noticeEdit,noticeDetail,getCodeList } from '@/api/user'
-import { noticeUpload,noticeDownLoad } from '@/api/uploaddown'
+import { fileUploadApi,fileDownLoad } from '@/api/uploaddown'
 import {getCascaderList} from '@/api/commonApi'
 import { TreeSelect } from 'ant-design-vue'
 import debounce from 'lodash/debounce';
@@ -41,10 +41,9 @@ export default {
             clear2: '',
             editor:null,
             bulletinconcent:'',
-            noticeUpload:noticeUpload,
+            noticeUpload:fileUploadApi,
             defaultFileList:[],
             fileList:[],
-            noticeUpload:'',
             fileUrlList:[]
         }
     },
@@ -65,6 +64,7 @@ export default {
                 this.$message.error(`${info.file.name} 上传失败`);
             }
         },
+        beforeUpload(){},
         handleRemove(file) {
             const index = this.fileList.indexOf(file);
             const newFileList = this.fileList.slice();

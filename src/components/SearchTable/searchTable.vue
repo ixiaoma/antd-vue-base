@@ -18,10 +18,13 @@
         :data="loadData"
         :scroll='{x:true}'>
             <span slot="action" slot-scope="text, record">
-                <template>
+                <template>        
                     <a v-if="buttonList.includes('detail')" @click="handleAdd(record,2)" style="margin:0 3px">查看</a>
                     <a v-if="buttonList.includes('edit')" @click="handleAdd(record,3)" style="margin:0 3px">修改</a>
                     <a v-if="buttonList.includes('delete')" @click="deleteData(record.id)" style="margin:0 3px">删除</a>
+                    <a v-if="buttonList.includes('rosterDetail')" @click="rosterDetailLoad(record,2)" style="margin:0 3px">查看排班</a>
+                    <a v-if="buttonList.includes('attendanceDetail')" @click="attendanceDetailLoad(record,2)" style="margin:0 3px">查看考勤</a>
+                    <a v-if="buttonList.includes('workTimeDetail')" @click="workTimeDetailLoad(record,2)" style="margin:0 3px">查看考勤</a>
                 </template>
             </span>
         </s-table>

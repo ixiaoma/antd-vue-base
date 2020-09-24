@@ -3,6 +3,13 @@ import { axios } from '@/utils/axios'
 const baseBusiness = 'business/'
 const authAPI='auth/'
 
+// 文件上传
+export function fileUploadApi (params) {//获取列表查询接口
+    return axios.post(`${baseBusiness}file/upload`,params)
+  }
+// 文件下载
+export const fileDownLoad=process.env.VUE_APP_API_BASE_URL+baseBusiness+'file/download/'
+
 //提交排班计划
 export const rosterImport=process.env.VUE_APP_API_BASE_URL+baseBusiness+'roster/import'
 //考勤上传
@@ -17,10 +24,10 @@ export const userVacationImport=process.env.VUE_APP_API_BASE_URL+authAPI+'userVa
 export const userVacationExport=process.env.VUE_APP_API_BASE_URL+authAPI+'userVacation/exportExcel'
 //假期设置-假期余额导入
 export const userVacationDown=process.env.VUE_APP_API_BASE_URL+authAPI+'userVacation/download/template'
-//系统公告-规章制度上传
-export const noticeUpload=process.env.VUE_APP_API_BASE_URL+authAPI+'system/sys-notice/upload'
-//系统公告-规章制度下载
-export const noticeDownLoad=process.env.VUE_APP_API_BASE_URL+authAPI+'system/sys-notice/download/'
+// //系统公告-规章制度上传
+// export const noticeUpload=process.env.VUE_APP_API_BASE_URL+authAPI+'system/sys-notice/upload'
+// //系统公告-规章制度下载
+// export const noticeDownLoad=process.env.VUE_APP_API_BASE_URL+authAPI+'system/sys-notice/download/'
 
 
 export function uploadLoad(url,file,obj) {

@@ -54,8 +54,35 @@ export default{
             const { name, meta } = this.$route
             const title = `${meta.title}${flag == 1 ? '新增' : flag == 2 ? '详情' : '修改'}`
             this.$router.push({
-                name:name == 'staffList'||name == 'staffApprovalList' ? 'staffForm' : name == 'rosterList' ?'rosterDetail':name=='attendanceList'?'attendanceDetailList':name=='workTimeList'?'workTimeDetail':'baseForm',
-                query:{ title, flag, pageCode: this.pageCode, id: data ? data.id : null,rosterMonth:data?data.rosterMonth:'',deptName:data?data.deptName:'',approvalResult:data?data.approvalResult:'',recordingId:data?data.recordingId:'' }
+                name:name == 'staffList'||name == 'staffApprovalList' ? 'staffForm':'baseForm',
+                query:{ title, flag, pageCode: this.pageCode, id: data ? data.id : null,approvalResult:data?data.approvalResult:''}
+            })
+        },
+        //查看排班
+        rosterDetailLoad(data,flag){
+            const { name, meta } = this.$route
+            const title = `${meta.title}${flag == 1 ? '新增' : flag == 2 ? '详情' : '修改'}`
+            this.$router.push({
+                name:'rosterDetail',
+                query:{ title, flag, pageCode: this.pageCode, id: data ? data.id : null,rosterMonth:data?data.rosterMonth:'',deptName:data?data.deptName:''}
+            })
+        },
+        //考勤管理-查看考勤
+        attendanceDetailLoad (data,flag) {
+            const { name, meta } = this.$route
+            const title = `${meta.title}${flag == 1 ? '新增' : flag == 2 ? '详情' : '修改'}`
+            this.$router.push({
+                name:'attendanceDetailList',
+                query:{ title, flag, pageCode: this.pageCode, id: data ? data.id : null}
+            })
+        },
+        //我的考勤-查看考勤
+        workTimeDetailLoad (data,flag) {
+            const { name, meta } = this.$route
+            const title = `${meta.title}${flag == 1 ? '新增' : flag == 2 ? '详情' : '修改'}`
+            this.$router.push({
+                name:'workTimeDetail',
+                query:{ title, flag, pageCode: this.pageCode, id: data ? data.id : null,recordingId:data?data.recordingId:'' }
             })
         },
         async deleteData(id){
@@ -86,7 +113,7 @@ export default{
                 dataIndex: ele.code
               }
             })
-            if(this.buttonList.includes('detail') || this.buttonList.includes('edit') || this.buttonList.includes('delete')){
+            if(this.buttonList.includes('detail') || this.buttonList.includes('edit') || this.buttonList.includes('delete')|| this.buttonList.includes('rosterDetail')|| this.buttonList.includes('attendanceDetail')||this.buttonList.includes('workTimeDetail')){
                 this.columns.push({
                     title: '操作',
                     dataIndex: 'action',
