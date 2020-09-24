@@ -17,9 +17,11 @@ const valueTypeList = [//participantList审批人抄送人；formAuthorityList�
   }
 ]
 const oprationList = ['=','!=','>','>=','<','<=']
+
 import roleModel from './roleModel.vue'
+import TreeSelect from '@/components/Tree/tree.vue'
+
 import { getFormDetail } from '@/api/approval'
-import { levelList } from '@/utils/commonCode'
 export default {
     data() {
       return {
@@ -41,16 +43,18 @@ export default {
         defaultValue:1,
         ownerChecked:false,
         levelData:'ASSIGN',
-        levelSelect:'1',
-        firstSelect:'3',
-        levelList,
+        levelSelect:null,
+        firstSelect:null,
         expressionList:[],
         backType:null,
         oprationList,
         result:null
       };
     },
-    components:{roleModel},
+    components:{
+      roleModel,
+      TreeSelect
+    },
     methods: {
       async showDrawer(nodeConfig) {
         this.nodeConfig = nodeConfig
@@ -100,9 +104,16 @@ export default {
           }
         }else{
           this.fieldList = await this.getFormDetailList()
-          this.expressionList = nodeConfig.expressionList.map(ele=>{return {...ele}}) || []
+          if(nodeConfig.expressionList && nodeConfig.expressionList[0].code == 'result'){
+            this.result = nodeConfig.expressionList[0].value
+          }else{
+            this.expressionList = nodeConfig.expressionList ? nodeConfig.expressionList.map(ele=>{return {...ele}}) : []
+          }
         }
         this.visible = true;
+      },
+      selectTree(list,code){//下拉树回填值
+        this[code] = list
       },
       selectDisable(level){
         return level <= this.firstSelect

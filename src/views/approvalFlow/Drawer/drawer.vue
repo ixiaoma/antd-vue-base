@@ -28,20 +28,26 @@
               </div>
               <div v-show="selectRadio == 'LEADER'">
                 <div class="title-style"><h3>指定层级</h3></div>
-                <a-select v-model='levelData' style="width: 120px">
-                  <a-select-option value="ASSIGN">选择层级</a-select-option>
-                  <a-select-option value="BOTTOM">当前层级</a-select-option>
-                </a-select>
-                <a-select v-if="levelData == 'ASSIGN'" v-model='firstSelect' style="width: 160px;margin-left:10px">
-                  <a-select-option :value="item.label" v-for='(item,index) in levelList' :key='index'>
-                    {{item.title}}
-                  </a-select-option>
-                </a-select>
-                <a-select v-model='levelSelect' style="width: 160px;margin-left:10px">
-                  <a-select-option :value="item.label" v-for='(item,index) in levelList' :key='index' :disabled="selectDisable(item.label)">
-                    {{item.title}}
-                  </a-select-option>
-                </a-select>
+                <a-row type='flex' justify='center'>
+                    <a-radio-group v-model="levelData" type='flex' justify='center'>
+                        <a-radio value='ASSIGN'>选择层级</a-radio>
+                        <a-radio value='BOTTOM'>当前层级</a-radio>
+                    </a-radio-group>
+                </a-row>
+                <a-row :gutter='10' style="margin-top:20px">
+                  <a-col span='4' v-if="levelData == 'ASSIGN'">
+                    开始层级
+                  </a-col>
+                  <a-col span='8' v-if="levelData == 'ASSIGN'">
+                    <tree-select :selectList='firstSelect' @selectTree='(list)=>{selectTree(list,"firstSelect")}'/>
+                  </a-col>
+                  <a-col span='4'>
+                    结束层级
+                  </a-col>
+                  <a-col span='8'>
+                    <tree-select :selectList='levelSelect' @selectTree='(list)=>{selectTree(list,"levelSelect")}'/>
+                  </a-col>
+                </a-row>
                 <!-- <div class="title-style" style="margin-top:20px"><h3>当前层级无上级时</h3></div>
                 <a-radio-group v-model="defaultValue">
                   <a-radio :style="radioStyle" :value="1">
@@ -109,33 +115,37 @@
           <a-checkbox v-model="ownerChecked">抄送给申请人本人</a-checkbox>
       </a-form>
       <a-form :form="form" layout="vertical" v-if="nodeType == 'CONDITION'">
-          <div class="title-style"><h3>同时满足以下条件</h3></div>
-          <a-row :gutter='10' v-for="(item,index) in expressionList" :key='index' style="margin-top:20px">
-            <a-col :span='8'>
-              <a-select style="width: 100%" placeholder="请选择" v-model="item.code">
-                <a-select-option :value="item.code" :disabled='disabledSelect(item.code)' v-for='(item,index) in fieldList' :key='index'>
-                  {{item.name}}
-                </a-select-option>
-              </a-select>
-            </a-col>
-            <a-col :span='4'>
-              <a-select style="width: 100%" placeholder="请选择" v-model="item.operator">
-                <a-select-option :value="item" v-for='(item,index) in oprationList' :key='index'>
-                    {{item}}
+        <a-tabs default-active-key="1">
+          <a-tab-pane key="1" tab="同时满足以下条件">
+            <a-row :gutter='10' v-for="(item,index) in expressionList" :key='index' style="margin-top:20px">
+              <a-col :span='8'>
+                <a-select style="width: 100%" placeholder="请选择" v-model="item.code">
+                  <a-select-option :value="item.code" :disabled='disabledSelect(item.code)' v-for='(item,index) in fieldList' :key='index'>
+                    {{item.name}}
                   </a-select-option>
                 </a-select>
-            </a-col>
-            <a-col :span='8'>
-              <a-input v-model="item.value" style="width:100%"/>
-            </a-col>
-            <a-icon type="close-circle" style="font-size:20px;float:right;margin-top:6px" @click="deleteCondition(index)"/>
-          </a-row>
-          <a-button type="dashed" v-show='fieldList.length != expressionList.length' ghost style="color:#1890ff;border-color:#1890ff;margin-top:20px" icon="plus" @click="addCondition">添加条件</a-button>
-          <div class="title-style" style="margin-top:20px"><h3>通过驳回</h3></div>
-          <a-radio-group v-model="result">
-              <a-radio value='APPROVE'>通过</a-radio>
-              <a-radio value='REJECT'>驳回</a-radio>
-          </a-radio-group>
+              </a-col>
+              <a-col :span='4'>
+                <a-select style="width: 100%" placeholder="请选择" v-model="item.operator">
+                  <a-select-option :value="item" v-for='(item,index) in oprationList' :key='index'>
+                      {{item}}
+                    </a-select-option>
+                  </a-select>
+              </a-col>
+              <a-col :span='8'>
+                <a-input v-model="item.value" style="width:100%"/>
+              </a-col>
+              <a-icon type="close-circle" style="font-size:20px;float:right;margin-top:6px" @click="deleteCondition(index)"/>
+            </a-row>
+            <a-button type="dashed" v-show='fieldList.length != expressionList.length' ghost style="color:#1890ff;border-color:#1890ff;margin-top:20px" icon="plus" @click="addCondition">添加条件</a-button>
+          </a-tab-pane>
+          <a-tab-pane key="2" tab="通过驳回">
+            <a-radio-group v-model="result">
+                <a-radio value='APPROVE'>通过</a-radio>
+                <a-radio value='REJECT'>驳回</a-radio>
+            </a-radio-group>
+          </a-tab-pane>
+        </a-tabs>
       </a-form>
       <role-model ref='selectModel' @setRoleData='setRoleData'/>
       <div :style="{
