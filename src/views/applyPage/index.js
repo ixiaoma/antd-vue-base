@@ -1,21 +1,16 @@
 import STable from '@/components/Table'
 
 import { applyList } from '@/api/apply'
+import { getFlowList } from '@/api/approval'
 
 export default{
     data(){
         return {
             pageLoading:true,
-            queryParam:[
-                {
-                    field: 'defineKey',
-                    operator: 'eq',
-                    value: this.defineKey
-                }
-            ],//筛选值
+            queryParam:[],
             // 加载数据方法 必须为 Promise 对象
             loadData: parameter => {
-                const params = Object.assign( parameter, {filter: {logic: "and",filters:[]}})
+                const params = Object.assign( parameter, {filter:{logic: "and",filters:this.queryParam}})
                 return applyList(params)
                 .then(res => {
                     return res
@@ -48,10 +43,17 @@ export default{
     },
     methods:{
         async getInitList(){
-            // const res = await getFlowList()
+            const res = await getFlowList()
             this.objectList = res.records
             this.defineKey = this.objectList[0].defineKey
             // this.getTableHeader()
+            this.queryParam = [
+                {
+                    field: 'processDefineKey',
+                    operator: 'eq',
+                    value: this.defineKey
+                }
+            ]
             this.pageLoading = false
         },
         searchRefresh(filterQuery){
@@ -66,7 +68,8 @@ export default{
             this.$refs.table.refresh()
         },
         handleReset(){
-
+            this.queryParam = []
+            this.$refs.table.refresh()
         },
         toApproval(records){
             this.$router.push({name:'taskApproval',query:{id:records.id,title:'审批'}})
@@ -89,29 +92,8 @@ export default{
             })
             this.pageLoading = false
         }
-        // async getInitData(){
-        //     this.filterList = await getTableSearch({pageCode:this.pageCode})
-        //     const headerRes = await getTableHeader({pageCode:this.pageCode})
-        //     this.columns = headerRes.map(ele=>{
-        //       return {
-        //         title: ele.name,
-        //         sorter: true,
-        //         dataIndex: ele.code
-        //       }
-        //     })
-        //     if(this.buttonList.includes('detail') || this.buttonList.includes('edit') || this.buttonList.includes('delete')){
-        //         this.columns.push({
-        //             title: '操作',
-        //             dataIndex: 'action',
-        //             width: '130px',
-        //             fixed: 'right',
-        //             scopedSlots: { customRender: 'action' }
-        //         })
-        //     }
-        //     this.pageLoading = false
-        // }
     },
     created(){
-        // this.getInitList()
+        this.getInitList()
     }
 }

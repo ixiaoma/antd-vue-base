@@ -4,7 +4,7 @@
             <a-row :gutter="48">
                 <a-col :md="8" :sm="24" >
                     <a-form-item label="审批类型">
-                        <a-select v-model='defineKey'>
+                        <a-select v-model='defineKey' @change="handleSearch">
                             <a-select-option v-for="(item,index) in objectList" :key='index' :value="item.defineKey">{{item.name}}</a-select-option>
                         </a-select>
                     </a-form-item>

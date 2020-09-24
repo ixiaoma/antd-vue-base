@@ -15,7 +15,8 @@ export default{
             columns:[],
             selectedRowKeys: [],
             selectedRows: [],
-            buttonList:[]
+            buttonList:[],
+            filterList:[]
         }
     },
     props:{
@@ -51,9 +52,15 @@ export default{
         handleAdd (data,flag) {
             const { name, meta } = this.$route
             const title = `${meta.title}${flag == 1 ? '新增' : flag == 2 ? '详情' : '修改'}`
+            const query = { title, flag, id: data ? data.id : null,approvalResult:data?data.approvalResult:''}
+            if(this.definekey){
+                query.definekey = this.definekey
+            }else{
+                query.pageCode = this.pageCode
+            }
             this.$router.push({
-                name:name == 'staffList'||name == 'staffApprovalList' ? 'staffForm':'baseForm',
-                query:{ title, flag, pageCode: this.pageCode, id: data ? data.id : null,approvalResult:data?data.approvalResult:''}
+                name:name == 'staffList' || name == 'staffApprovalList' ? 'staffForm':'baseForm',
+                query
             })
         },
         //查看排班
@@ -137,7 +144,15 @@ export default{
             this.pageLoading = false
         },
         async getApprovalHeader(){
-            const res = getProcessDetail({definekey:this.definekey})
+            const res = await getProcessDetail({definekey:this.definekey})
+            this.columns = res.map(ele=>{
+                return {
+                  title: ele.name,
+                  sorter: true,
+                  dataIndex: ele.code
+                }
+              })
+            this.pageLoading = false
         }
     },
     created(){

@@ -1,6 +1,6 @@
 import moment from 'moment'
 import { getBaseLayout, getDetailLayout, getEditLayout_kpitodo,getDetailLayout_kpitodo,saveLayout, getEditLayout, saveEditLayout } from '@/api/commonApi'
-import { getProcessDetail } from '@/api/approval'
+import { getProcessDetail,approvalStart } from '@/api/approval'
 import fieldHandle from '@/mixins/fieldHandle'
 
 import FooterToolBar from '@/layouts/FooterToolbar'
@@ -145,6 +145,10 @@ export default {
         },
         handleSubmit (e) {
             e && e.preventDefault()
+            const { definekey } = this.$route.query
+            definekey ? this.approvalCommit() : this.fieldCommit()
+        },
+        fieldCommit(){
             this.form.validateFields(async (err, values) => {
                 if (!err) {
                     let saveData = []
@@ -221,6 +225,18 @@ export default {
                 }
             })
         },
+        approvalCommit(){
+            this.form.validateFields(async (err, values) => {
+                if (!err) {
+                    const { definekey } = this.$route.query
+                    const params = {
+                        processDefineKey:definekey,
+                        variables:values
+                    }
+                    await approvalStart({params})
+                }
+            })
+        },
         relativeFn(i){
             this.referObjectCode = i.referObjectCode
             this.$refs.modelTable.showModel(i.referObjectCode)
@@ -285,7 +301,7 @@ export default {
         this.readonly = (this.currentForm || this.$route.query).flag == 2
         const { definekey } = this.$route.query
         if(definekey){
-            this.getApprovalData()
+            this.getApprovalData(definekey)
         }else{
             this.getInitData()
         }

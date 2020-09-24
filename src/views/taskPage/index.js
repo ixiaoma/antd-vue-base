@@ -6,22 +6,10 @@ export default{
     data(){
         return {
             pageLoading:true,
-            queryParam:[
-                {
-                    field: 'defineKey',
-                    operator: 'eq',
-                    value: this.defineKey
-                }
-            ],//筛选值
+            queryParam:[],//筛选值
             // 加载数据方法 必须为 Promise 对象
             loadData: parameter => {
-                const params = Object.assign( parameter, {filter: {logic: "and",filters:[
-                    {
-                        field: 'defineKey',
-                        operator: 'eq',
-                        value: this.defineKey
-                    }
-                ]}})
+                const params = Object.assign( parameter, {filter: {logic: "and",filters:this.queryParam}})
                 return taskList({pageCode:this.pageCode,params})
                 .then(res => {
                     return res
@@ -58,6 +46,13 @@ export default{
             this.objectList = res.records
             this.defineKey = this.objectList[0].defineKey
             // this.getTableHeader()
+            this.queryParam = [
+                {
+                    field: 'processDefineKey',
+                    operator: 'eq',
+                    value: this.defineKey
+                }
+            ]
             this.pageLoading = false
         },
         searchRefresh(filterQuery){
@@ -72,7 +67,8 @@ export default{
             this.$refs.table.refresh()
         },
         handleReset(){
-
+            this.queryParam = filterQuery
+            this.$refs.table.refresh()
         },
         toApproval(records){
             this.$router.push({name:'taskApproval',query:{id:records.id,title:'审批'}})
