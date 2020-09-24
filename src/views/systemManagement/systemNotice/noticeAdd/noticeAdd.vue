@@ -99,7 +99,7 @@
           <a-date-picker style="width:100%" v-decorator="['expiryDate',validates.expiryDate]" show-time format="YYYY-MM-DD HH:mm:ss"/>
         </a-form-item>
       </a-col>
-      <a-col :span="24" v-if="form.getFieldValue('basicType') == '规章制度'">
+      <a-col :span="24" >
           <a-form-item label="上传附件:">
             <a-upload
               :action="noticeUpload"

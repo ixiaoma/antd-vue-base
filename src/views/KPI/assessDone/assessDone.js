@@ -3,6 +3,8 @@ import moment from 'moment'
 import { STable } from '@/components'
 import { assessTodoLIst } from '@/api/other'
 import { columns } from './codeList.js'
+import { fileUploadApi } from '@/api/uploaddown'
+
 
 
 export default {
@@ -13,6 +15,7 @@ export default {
   },
   data() {
     this.columns = columns
+    let access_token=sessionStorage.getItem('ACCESS_TOKEN')
     return {
       advanced: false,
       // 查询参数
@@ -26,7 +29,15 @@ export default {
       todoData: [],
       selectedRowKeys: [],
       selectedRows: [],
-      buttonList:[]
+      buttonList:[],
+      operationTypeList:['员工创建目标','经理审批','经理第一次评分','员工自评','经理第二次评分'],
+      operationType:'',
+      fileUploadApi:fileUploadApi,
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+      fileList:[],
+      visible:false
     }
   },
   computed: {
@@ -79,6 +90,34 @@ export default {
     onSelectChange(selectedRowKeys, selectedRows) {
       this.selectedRowKeys = selectedRowKeys
       this.selectedRows = selectedRows
+    },
+    exportLoad(){
+      if(this.operationType=='经理第一次评分'||this.operationType=='经理第二次评分'){
+        window.location.href=''
+      }else{
+        this.$message.warning('操作类型为‘经理第一次评分’或者‘经理第二次评分’才可进行导出')
+      }
+    },
+    uploadLoad(){
+      this.fileList=[]
+      this.visible=true
+    },
+    handleRemove(file) {
+      const index = this.fileList.indexOf(file);
+      const newFileList = this.fileList.slice();
+      newFileList.splice(index, 1);
+      this.fileList = newFileList;
+    },
+    handleChange(info) {
+      this.fileList=info.fileList.slice(-1)
+    },
+    handleUpload(){
+      if(this.fileList.length){
+        console.log(this.fileList[0].response)
+        this.visible=false
+      }else{
+        this.$message.warning('请选择文件')
+      }
     }
   },
   created() {

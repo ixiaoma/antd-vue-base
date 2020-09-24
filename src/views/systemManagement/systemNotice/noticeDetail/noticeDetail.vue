@@ -15,6 +15,15 @@
         </div>
       </a-col>
     </a-row>
+    <!--  -->
+    <a-row v-if="fromdata.basicType=='规章制度'"> 
+      <a-col span="24" style="margin-top:12px">
+        <span style="font-weight:700">附件：</span>
+        <p style="display:inline-block;margin-right:20px;" v-for="(item,index) in fileUrl" :key="index">
+          <a :href="fileDownLoad+item+access_token">附件{{index+1}}</a>
+        </p>
+      </a-col>
+    </a-row>
     <a-row>
       <a-col span="24" style="margin-top:12px">
         <p ref="bulletinContent"></p>
@@ -27,10 +36,12 @@
 </template>
 <script>
 import { noticeDetail,noticeRead } from '@/api/user'
+import { fileUploadApi,fileDownLoad } from '@/api/uploaddown'
 let Base64 = require('js-base64').Base64
 export default {
   name: 'noticeDetail',
   data() {
+    let access_token=sessionStorage.getItem('ACCESS_TOKEN')
     return {
       editid: '',
       fromdata: {
@@ -38,7 +49,10 @@ export default {
           createdDate:'',
           createdBy:''
       },
-      bulletinconcent: ''
+      bulletinconcent: '',
+      fileDownLoad:fileDownLoad,
+      fileUrl:[],
+      access_token:'?access_token='+access_token
     }
   },
   components: {},
@@ -51,6 +65,7 @@ export default {
       noticeDetail(this.editid).then(res => {
         // if (res.code == 200) {
           this.fromdata = res
+          this.fileUrl=res.fileUrl?res.fileUrl:[]
           this.$refs.bulletinContent.innerHTML = Base64.decode(res.content)
           this.noticeReadLoad(this.editid)
         // }

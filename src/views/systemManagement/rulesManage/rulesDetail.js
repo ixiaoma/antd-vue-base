@@ -6,7 +6,7 @@ export default {
     name: 'rulesDetail',
     title: '规章制度详情',
     data() {
-        let access_token=sessionStorage.getItem('access_token')
+        let access_token=sessionStorage.getItem('ACCESS_TOKEN')
         return {
             columns:detailColumns,
             rulesData: detailData,
@@ -17,7 +17,7 @@ export default {
             title:'',
             uploadUrl:fileUpload,
             headers: {
-                // Authorization: `Bearer ${access_token}`,
+                Authorization: `Bearer ${access_token}`,
             },  
             fileName:'' 
         }

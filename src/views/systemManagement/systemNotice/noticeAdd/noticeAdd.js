@@ -7,12 +7,13 @@ import { TreeSelect } from 'ant-design-vue'
 import debounce from 'lodash/debounce';
 let Base64 = require('js-base64').Base64;
 const SHOW_PARENT = TreeSelect.SHOW_PARENT;
+let access_token=sessionStorage.getItem('ACCESS_TOKEN')
 export default {
     name: 'noticeAdd',
     data() {
         this.lastFetchId = 0;
         this.fetchUser = debounce(this.fetchUser, 800);
-        let access_token=sessionStorage.getItem('access_token')
+        
         return {
             editid:'',
             typeList:[],
@@ -182,10 +183,10 @@ export default {
                 let fileUrl=res.fileUrl
                 fileUrl.forEach((item,index)=>{
                         let obj= {
-                            uid: index,
-                            name: '规章制度'+index,
+                            uid: index+1,
+                            name: '规章制度'+(index+1),
                             status: 'done',
-                            url: fileDownLoad+item,
+                            url: fileDownLoad+item+'?access_token='+access_token,
                             response:item
                           } 
                           this.defaultFileList.push(obj) 

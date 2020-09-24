@@ -76,7 +76,7 @@ export default {
         exportLoad() {
             let deptId = this.batchParentId == 1 ? "" : this.batchParentId
             deptId = deptId ? deptId : ''
-            window.open(userExport + '?access_token=' + sessionStorage.getItem('access_token')
+            window.open(userExport + '?access_token=' + sessionStorage.getItem('ACCESS_TOKEN')
                 + '&username=' + this.username + '&deptId=' + deptId)
         },
         handleAdd() {
