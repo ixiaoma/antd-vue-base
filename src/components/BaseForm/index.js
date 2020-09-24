@@ -2,6 +2,7 @@ import moment from 'moment'
 import { getBaseLayout, getDetailLayout, getEditLayout_kpitodo,getDetailLayout_kpitodo,saveLayout, getEditLayout, saveEditLayout } from '@/api/commonApi'
 import { getProcessDetail,approvalStart } from '@/api/approval'
 import fieldHandle from '@/mixins/fieldHandle'
+import { fileUploadApi } from '@/api/uploaddown'
 
 import FooterToolBar from '@/layouts/FooterToolbar'
 import staffAchievements from '../staffAchievements/staffAchievements.vue'
@@ -19,6 +20,8 @@ export default {
             previewImage:'',
             previewVisible: false,
             readonly:false,
+            fileUploadApi,
+            accessToken:null,
             referObjectCode:null//关联字段标识
         }
     },
@@ -298,6 +301,7 @@ export default {
         }
     },
     created(){
+        this.accessToken = sessionStorage.getItem('ACCESS_TOKEN')
         this.readonly = (this.currentForm || this.$route.query).flag == 2
         const { definekey } = this.$route.query
         if(definekey){

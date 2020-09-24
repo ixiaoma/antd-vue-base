@@ -23,7 +23,8 @@
                                             <a-date-picker allowClear :show-time="i.valueType == 'DATETIME'" v-else-if="i.valueType == 'DATETIME' || i.valueType == 'DATE'" v-decorator="decoratorFn(i)" style="width:100%" :placeholder="'请选择'+i.name"/>
                                             <div class="clearfix" v-else-if="i.valueType == 'PICTURE'">
                                                 <a-upload
-                                                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                                                :action="fileUploadApi"
+                                                :headers="{'Authorization':'Bearer'+ accessToken}"
                                                 list-type="picture-card"
                                                 :file-list="imgList"
                                                 @preview="handlePreview"
@@ -41,7 +42,8 @@
                                                 </a-modal>
                                             </div>
                                             <div class="clearfix" v-else-if="i.valueType == 'ATTACHMENT'">
-                                                <a-upload action="https://www.mocky.io/v2/5cc8019d300000980a055e76">
+                                                <a-upload :action="fileUploadApi"
+                                                :headers="{'Authorization':'Bearer'+ accessToken}">
                                                     <a-button> <a-icon type="upload" />上传附件</a-button>
                                                 </a-upload>
                                             </div>
