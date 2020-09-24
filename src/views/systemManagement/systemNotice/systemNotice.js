@@ -36,6 +36,7 @@ export default {
     this.columns = columns
     this.filterList = filterList
     return {
+      buttonList:[],
       tabActive: 0,
       // create model
       visible: false,
@@ -183,6 +184,7 @@ export default {
   },
   created() {
     this.noticeDataLoad()
+    this.buttonList = this.$route.meta.buttonList?this.$route.meta.buttonList:[]
   },
 }
 

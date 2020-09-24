@@ -14,6 +14,7 @@ export default {
     this.columns = columns
     this.filterList = filterList
     return {
+      buttonList:[],
       visible: false,
       categoryCode: '',
       categoryName: '',
@@ -155,6 +156,7 @@ export default {
   },
   created() {
     this.noticeDataLoad()
+    this.buttonList = this.$route.meta.buttonList?this.$route.meta.buttonList:[]
   },
 }
 

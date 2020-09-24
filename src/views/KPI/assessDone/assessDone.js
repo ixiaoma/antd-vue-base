@@ -26,6 +26,7 @@ export default {
       todoData: [],
       selectedRowKeys: [],
       selectedRows: [],
+      buttonList:[]
     }
   },
   computed: {
@@ -82,6 +83,7 @@ export default {
   },
   created() {
     this.noticeDataLoad()
+    this.buttonList = this.$route.meta.buttonList?this.$route.meta.buttonList:[]
   },
 }
 

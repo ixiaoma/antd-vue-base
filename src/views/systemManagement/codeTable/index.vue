@@ -29,7 +29,7 @@
                 </a-row>
               <a-row type="flex" justify="end" :gutter="24">
                 <a-col>
-                    <a-button type="primary" icon="plus" @click="handleAdd()">新建</a-button>
+                    <a-button v-if="buttonList.includes('add')" type="primary" icon="plus" @click="handleAdd()">新建</a-button>
                     <a-button type="primary" style="margin:0 10px" icon="search" @click="noticeDataLoad()">查询</a-button>
                     <a-button icon="sync" class="middle-btn" @click="resetFn">重置</a-button>
                 </a-col>
@@ -54,11 +54,9 @@
                     <span>{{record.type==3?"单选/多选":"多级联动"}}</span>
                 </template>
                 <template slot="action" slot-scope="text, record">         
-                  <a @click="handleEdit(record)">修改</a>
-                  <a-divider type="vertical" />
-                  <a @click="handleDel(record)">删除</a>
-                  <a-divider type="vertical" />
-                  <a @click="tableValueManage(record)">码表值管理</a>
+                  <a v-if="buttonList.includes('edit')" style="margin:0 3px" @click="handleEdit(record)">修改</a>
+                  <a v-if="buttonList.includes('delete')" style="margin:0 3px" @click="handleDel(record)">删除</a>
+                  <a v-if="buttonList.includes('codeManage')" style="margin:0 3px" @click="tableValueManage(record)">码表值管理</a>
                 </template>
       </a-table>
     </a-card>

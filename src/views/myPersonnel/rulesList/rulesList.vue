@@ -14,7 +14,7 @@
                   @change="handleTableChange"
                 >
                 <template slot="action" slot-scope="text, record">         
-                  <a @click="handleSub(record)">查看</a>
+                  <a v-if="buttonList.includes('detail')" @click="handleSub(record)">查看</a>
                 </template>
       </a-table>
   </div>
@@ -54,7 +54,8 @@ export default {
       loading: false,
       noticeData: [],
       selectedRowKeys: [],
-      selectedRows: []
+      selectedRows: [],
+      buttonList:[]
     }
   },
   computed: {
@@ -97,6 +98,7 @@ export default {
   },
   created() {
     this.noticeDataLoad()
+    this.buttonList = this.$route.meta.buttonList?this.$route.meta.buttonList:[]
   },
 }
 </script>

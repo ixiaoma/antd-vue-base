@@ -15,7 +15,7 @@
       </a-tabs>
       <!-- <table-filter :filterList='filterList'/> -->
       <div class="table-operator">
-        <a-button type="primary" icon="plus" @click="handleAdd(null,1)">新建</a-button>
+        <a-button type="primary" icon="plus" v-if="buttonList.includes('add')" @click="handleAdd(null,1)">新建</a-button>
       </div>
       <a-table 
                   ref="table"
@@ -37,13 +37,10 @@
                   <span>{{record.isRead==1?'已读':'未读'}}</span>
                 </template>
                 <template slot="action" slot-scope="text, record">         
-                  <a @click="handleSub(record)">查看</a>
-                  <a-divider type="vertical" />
-                  <a @click="handleTop(record)">置顶</a>
-                  <a-divider type="vertical" />
-                  <a @click="handleAdd(record,3)">修改</a>
-                  <a-divider type="vertical" />
-                  <a @click="handleDel(record)">删除</a>
+                  <a v-if="buttonList.includes('detail')" style="margin:0 3px" @click="handleSub(record)">查看</a>          
+                  <a v-if="buttonList.includes('top')" style="margin:0 3px" @click="handleTop(record)">置顶</a>          
+                  <a v-if="buttonList.includes('edit')" style="margin:0 3px" @click="handleAdd(record,3)">修改</a>            
+                  <a v-if="buttonList.includes('delete')" style="margin:0 3px" @click="handleDel(record)">删除</a>
                 </template>
       </a-table>
       <!-- <s-table
