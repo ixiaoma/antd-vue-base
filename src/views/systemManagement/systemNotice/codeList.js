@@ -12,7 +12,8 @@ export const columns = [
   },
   {
     title: '所属公司',
-    dataIndex: 'company'
+    dataIndex: 'company',
+    scopedSlots: { customRender: 'company' }
   },
   {
     title: '类型',

@@ -30,6 +30,9 @@
                   :loading="loading"
                   @change="handleTableChange"
                 >
+                <template slot="company" slot-scope="text, record">
+                  <span>{{record.company&&record.company.length?record.company.join(','):''}}</span>
+                </template>
                 <template slot="isRead" slot-scope="text, record">         
                   <span>{{record.isRead==1?'已读':'未读'}}</span>
                 </template>
