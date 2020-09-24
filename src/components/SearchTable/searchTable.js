@@ -3,6 +3,7 @@ import STable from '../Table'
 
 import { getBasePage, getTableSearch, getTableHeader, deletePageList } from '@/api/commonApi'
 import { applyList } from '@/api/apply'
+import { getProcessDetail } from '@/api/approval'
 
 export default{
     data(){
@@ -10,7 +11,7 @@ export default{
             pageLoading:true,
             queryParam:[],//筛选值
             // 加载数据方法 必须为 Promise 对象
-            loadData: parameter => {this.getTableData(parameter)},
+            loadData: parameter => { return this.getTableData(parameter)},
             columns:[],
             selectedRowKeys: [],
             selectedRows: [],
@@ -30,7 +31,9 @@ export default{
             type: Boolean , 
             default: false 
         },
-
+        definekey:{
+            type: String
+        }
     },
     components: {
         STable,
@@ -91,11 +94,18 @@ export default{
             })
         },
         getTableData(parameter){
-            const params = Object.assign( parameter, {filter:{logic: "and",filters:this.queryParam}})
-            return getBasePage({pageCode:this.pageCode,params})
-            .then(res => {
-                return res
-            })
+            if(this.definekey){
+                const filters = [...this.queryParam,{field: "processDefineKey", operator: "eq", value: this.definekey}]
+                const params = Object.assign( parameter, {filter:{logic: "and",filters}})
+                return applyList(params) .then(res => {
+                    return res
+                })
+            }else{
+                const params = Object.assign( parameter, {filter:{logic: "and",filters:this.queryParam}})
+                return getBasePage({pageCode:this.pageCode,params}) .then(res => {
+                    return res
+                })
+            }
         },
         searchRefresh(filterQuery){
             this.queryParam = filterQuery
@@ -125,10 +135,13 @@ export default{
                 })
             }
             this.pageLoading = false
+        },
+        async getApprovalHeader(){
+            const res = getProcessDetail({definekey:this.definekey})
         }
     },
     created(){
-        this.getInitData()
+        this.definekey ? this.getApprovalHeader() : this.getInitData()
         this.buttonList = this.$route.meta.buttonList?this.$route.meta.buttonList:[]
     }
 }

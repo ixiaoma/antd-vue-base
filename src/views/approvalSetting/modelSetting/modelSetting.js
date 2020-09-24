@@ -105,13 +105,14 @@ export default {
                         this.validateStatus = 'error'
                         return;
                     }
-                    // if(pre.valueType == 'RADIO' || pre.valueType == 'CHECKBOX'){
-                    //     if(!pre.categoryCode){
-                    //         this.$message.warning('请选择关联码表值')
-                    //         this.validateCategoryCode = 'error'
-                    //         return 
-                    //     }
-                    // }
+                    if(pre.valueType == 'RADIO' || pre.valueType == 'CHECKBOX'){
+                        const noSelect = pre.categoryCodes.filter(ele=>!ele.codeCategory)
+                        if(noSelect){
+                            this.$message.warning('请选择关联码表值')
+                            this.validateCategoryCode = 'error'
+                            return 
+                        }
+                    }
                 }
                 const { id } = this.$route.query
                 const parameter = {

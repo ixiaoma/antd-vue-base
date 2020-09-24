@@ -46,7 +46,8 @@ export default {
         levelList,
         expressionList:[],
         backType:null,
-        oprationList
+        oprationList,
+        result:null
       };
     },
     components:{roleModel},
@@ -200,7 +201,12 @@ export default {
           this.nodeConfig.participantList = arr
         }
         if(nodeType == 'CONDITION'){
-          const list = this.expressionList.filter(ele=> ele.code && (ele.value || ele.value == 0))
+          let list = []
+          if(this.result){
+            list = [{code: "result", operator: "=", value: this.result ? 'APPROVE' : 'REJECT'}]
+          }else{
+            list = this.expressionList.filter(ele=> ele.code && (ele.value || ele.value == 0))
+          }
           this.$emit('backCondition',list)
         }else{  
           this.$emit("update:nodeConfig", this.nodeConfig);

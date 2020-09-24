@@ -155,6 +155,7 @@ export default {
       }
       if(typeof this.data === 'function'){
         const result = this.data(parameter)
+        console.log(this.data(parameter))
         // 对接自己的通用数据接口需要修改下方代码中的 r.pageNo, r.totalCount, r.records
         // eslint-disable-next-line
         if ((typeof result === 'object' || typeof result === 'function') && typeof result.then === 'function') {

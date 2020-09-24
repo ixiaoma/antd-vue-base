@@ -131,6 +131,11 @@
             <a-icon type="close-circle" style="font-size:20px;float:right;margin-top:6px" @click="deleteCondition(index)"/>
           </a-row>
           <a-button type="dashed" v-show='fieldList.length != expressionList.length' ghost style="color:#1890ff;border-color:#1890ff;margin-top:20px" icon="plus" @click="addCondition">添加条件</a-button>
+          <div class="title-style" style="margin-top:20px"><h3>通过驳回</h3></div>
+          <a-radio-group v-model="result">
+              <a-radio value='APPROVE'>通过</a-radio>
+              <a-radio value='REJECT'>驳回</a-radio>
+          </a-radio-group>
       </a-form>
       <role-model ref='selectModel' @setRoleData='setRoleData'/>
       <div :style="{
