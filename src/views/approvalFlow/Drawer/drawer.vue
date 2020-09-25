@@ -21,9 +21,12 @@
               <a-divider />
               <div v-show="selectRadio == 'ASSIGN' || selectRadio == 'ROLE'">
                 <div class="title-style"><h3>{{selectRadio == 'ROLE' ? '指定标签' : '指定成员'}}</h3><span>{{selectRadio == 'ROLE' ? '将由此标签中所有成员进行审批' : '将由选中的所有成员进行审批'}}</span></div>
-                <a-button type="dashed" ghost style="color:#1890ff;border-color:#1890ff" icon="plus" @click="showModel">添加</a-button>
+                <a-button type="dashed" ghost style="color:#1890ff;border-color:#1890ff" icon="plus" @click="showModel(selectRadio)">添加</a-button>
                 <div style="margin-top:10px">
                   <a-tag color="blue" v-for="(item,index) in roleList" :key='item.dataId' closable @close="deleteRole(index)">{{item.name}}</a-tag>
+                </div>
+                <div style="margin-top:10px">
+                  <a-tag color="blue" v-for="(item,index) in staffList" :key='item.dataId' closable @close="deleteStaff(index)">{{item.name}}</a-tag>
                 </div>
               </div>
               <div v-show="selectRadio == 'LEADER'">
@@ -148,6 +151,7 @@
         </a-tabs>
       </a-form>
       <role-model ref='selectModel' @setRoleData='setRoleData'/>
+      <staff-model ref='staffModel' @setStaffData='setStaffData'/>
       <div :style="{
           position: 'absolute',
           right: 0,

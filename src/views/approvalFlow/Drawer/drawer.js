@@ -19,6 +19,7 @@ const valueTypeList = [//participantList审批人抄送人；formAuthorityList�
 const oprationList = ['=','!=','>','>=','<','<=']
 
 import roleModel from './roleModel.vue'
+import staffModel from './staffModel.vue'
 import TreeSelect from '@/components/Tree/tree.vue'
 
 import { getFormDetail } from '@/api/approval'
@@ -40,6 +41,7 @@ export default {
         nodeConfig:null,
         selectRadio:null,
         roleList:[],
+        staffList:[],
         defaultValue:1,
         ownerChecked:false,
         levelData:'ASSIGN',
@@ -53,7 +55,8 @@ export default {
     },
     components:{
       roleModel,
-      TreeSelect
+      TreeSelect,
+      staffModel
     },
     methods: {
       async showDrawer(nodeConfig) {
@@ -121,8 +124,13 @@ export default {
       onClose() {
         this.visible = false;
       },
-      showModel(){
-        this.$refs.selectModel.showModel(this.roleList)
+      showModel(selectRadio){
+        console.log(selectRadio)
+        if(selectRadio == 'ROLE'){
+          this.$refs.selectModel.showModel(this.roleList)
+        }else{
+          this.$refs.staffModel.showModel(this.staffList)
+        }
       },
       checkSelectAll(){
         let displayAll = true
@@ -161,8 +169,14 @@ export default {
       setRoleData(list){//已选角色
         this.roleList = list
       },
+      setStaffData(list){
+        this.staffList = list
+      },
       deleteRole(index){//删除角色
         this.roleList.splice(index,1)
+      },
+      deleteStaff(index){
+        this.staffList.splice(index,1)
       },
       disabledSelect(code){//已选条件禁用
         return this.expressionList.filter(ele=>ele.code == code).length > 0

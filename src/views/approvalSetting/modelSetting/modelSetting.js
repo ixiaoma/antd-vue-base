@@ -105,9 +105,9 @@ export default {
                         this.validateStatus = 'error'
                         return;
                     }
-                    if(pre.valueType == 'RADIO' || pre.valueType == 'CHECKBOX'){
-                        const noSelect = pre.categoryCodes.filter(ele=>!ele.codeCategory)
-                        if(noSelect){
+                    if((pre.valueType == 'RADIO' || pre.valueType == 'CHECKBOX') && pre.categoryCodes){
+                        const noSelect =  pre.categoryCodes.filter(ele=>!ele.codeCategory)
+                        if(noSelect.length){
                             this.$message.warning('请选择关联码表值')
                             this.validateCategoryCode = 'error'
                             return 

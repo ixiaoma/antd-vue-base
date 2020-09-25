@@ -72,7 +72,13 @@ export default {
       this.pageLoading = false
     },
     replaceCardLoad(record) {
-      this.$refs.replaceCard.showModalLoad(record)
+      this.$router.push({
+          name : 'baseForm',
+          query:{
+            definekey:'replace_card',
+            title:'补卡申请'
+          }
+      })
     },
     refresh(){
       this.$refs.table.refresh()
