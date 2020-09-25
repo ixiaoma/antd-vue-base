@@ -65,6 +65,7 @@ export const routerObj = {
     agreeRemind: () => import('@/views/homeToPage/agreeRemind.vue'),
     probationRemind: () => import('@/views/homeToPage/probationRemind.vue'),
     taskPage: () => import('@/views/taskPage/index.vue'),
+    taskDaily: () => import('@/views/taskDaily/index.vue'),
     applyPage: () => import('@/views/applyPage/index.vue')
 }
 

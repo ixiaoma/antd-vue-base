@@ -894,6 +894,12 @@ export const hideInMenuRouterMap = {
       name: 'taskApproval',
       component: () => import('@/views/taskApproval/index.vue'),
       meta: { title: '审批'}
+    },
+    {
+      path: '/hidemenu/taskDailyDetail',
+      name: 'taskDailyDetail',
+      component: () => import('@/views/taskDaily/taskDailyDetail.vue'),
+      meta: { title: '日常报销待办'}
     }
   ]
 }

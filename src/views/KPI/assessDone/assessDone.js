@@ -30,7 +30,8 @@ export default {
       selectedRowKeys: [],
       selectedRows: [],
       buttonList:[],
-      operationTypeList:['员工创建目标','经理审批','经理第一次评分','员工自评','经理第二次评分'],
+      // operationTypeList:['员工创建目标','经理审批','经理第一次评分','员工自评','经理第二次评分'],
+      operationTypeList:['经理审批','经理第一次评分','经理第二次评分'],
       operationType:'',
       fileUploadApi:fileUploadApi,
       headers: {

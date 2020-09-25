@@ -90,6 +90,15 @@ export default{
                 query:{ title, flag, pageCode: this.pageCode, id: data ? data.id : null,recordingId:data?data.recordingId:'' }
             })
         },
+        //日常报销待办
+        detailApprovalLoad (data,flag) {
+            const { name, meta } = this.$route
+            const title = `${meta.title}${flag == 1 ? '新增' : flag == 2 ? '详情' : '修改'}`
+            this.$router.push({
+                name:'taskDailyDetail',
+                query:{ title, flag, pageCode: this.pageCode, id: data ? data.id : null,recordingId:data?data.recordingId:'' }
+            })
+        },
         async deleteData(id){
             this.$confirm({
                 title: '请确认是否要删除此数据?',
@@ -132,7 +141,7 @@ export default{
                 dataIndex: ele.code
               }
             })
-            if(this.buttonList.includes('detail') || this.buttonList.includes('edit') || this.buttonList.includes('delete')|| this.buttonList.includes('rosterDetail')|| this.buttonList.includes('attendanceDetail')||this.buttonList.includes('workTimeDetail')){
+            if(this.buttonList.includes('detail') || this.buttonList.includes('edit') || this.buttonList.includes('delete')|| this.buttonList.includes('rosterDetail')|| this.buttonList.includes('attendanceDetail')||this.buttonList.includes('workTimeDetail')||this.buttonList.includes('detailApproval')){
                 this.columns.push({
                     title: '操作',
                     dataIndex: 'action',

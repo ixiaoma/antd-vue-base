@@ -26,6 +26,7 @@
                     <a v-if="buttonList.includes('rosterDetail')" @click="rosterDetailLoad(record,2)" style="margin:0 3px">查看排班</a>
                     <a v-if="buttonList.includes('attendanceDetail')" @click="attendanceDetailLoad(record,2)" style="margin:0 3px">查看考勤</a>
                     <a v-if="buttonList.includes('workTimeDetail')" @click="workTimeDetailLoad(record,2)" style="margin:0 3px">查看考勤</a>
+                    <a v-if="buttonList.includes('detailApproval')" @click="detailApprovalLoad(record,2)" style="margin:0 3px">查看</a>
                 </template>
             </span>
         </s-table>
