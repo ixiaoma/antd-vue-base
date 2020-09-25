@@ -36,6 +36,7 @@ export const routerObj = {
     myBusiness:() => import('@/views/myPersonnel/myBusiness/myBusiness.vue'),
     myVacation:() => import('@/views/myPersonnel/myVacation/myVacation.vue'),
     myWorktimeover:() => import('@/views/myPersonnel/myWorktimeover/myWorktimeover.vue'),
+    myQuit:() => import('@/views/myPersonnel/myQuit/myQuit.vue'),
     licenceInfoList: () => import('@/views/licenceManagement/licenceInfoList/licenceInfoList.vue'),
     agreeManagement: () => import('@/views/agreeManagement/agreeList/agreeList.vue'),
     mlrpApply: () => import('@/views/recruitedManagement/mlrpApply/mlrpApply.vue'),
