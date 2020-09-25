@@ -104,14 +104,14 @@ export default {
           }
         }else{
           this.fieldList = await this.getFormDetailList()
-          if(nodeConfig.expressionList && nodeConfig.expressionList[0].code == 'result'){
+          if(nodeConfig.expressionList && nodeConfig.expressionList[0] && nodeConfig.expressionList[0].code == 'result'){
             this.result = nodeConfig.expressionList[0].value
           }else{
             this.expressionList = nodeConfig.expressionList ? nodeConfig.expressionList.map(ele=>{return {...ele}}) : []
           }
         }
         this.visible = true;
-      },
+      }, 
       selectTree(list,code){//下拉树回填值
         this[code] = list
       },
@@ -214,7 +214,7 @@ export default {
         if(nodeType == 'CONDITION'){
           let list = []
           if(this.result){
-            list = [{code: "result", operator: "=", value: this.result ? 'APPROVE' : 'REJECT'}]
+            list = [{code: "result", operator: "=", value: this.result}]
           }else{
             list = this.expressionList.filter(ele=> ele.code && (ele.value || ele.value == 0))
           }
