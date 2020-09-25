@@ -16,7 +16,8 @@ const userApi = {
   // get my info
   UserInfo: '/user/info',
   UserMenu: '/user/nav',
-  Service: '/service'
+  Service: '/service',
+  GetStaffList:systemAPI+'user/list'
 }
 const api={
   resetPass:systemAPI+'user/update_pw',//重置密码
@@ -75,7 +76,7 @@ const api={
   addCodeValue: frameAPI+'code-item/save',//码表值保存
   editCodeValue: frameAPI+'code-item/edit',//码表值编辑保存
   tableCateDefault:frameAPI+'code-item/default/',//是否默认
-  getCodeList:frameAPI+'/code-item/listAll/',//获取码表下拉框
+  getCodeList:frameAPI+'code-item/listAll/',//获取码表下拉框
   codeCategoryItems:frameAPI+'code-category/items/',//二级三级新建码表值调用的接口
   vacationTypePage:authAPI+'vacationType/page',//假期设置-请假类型
   vacationTypeSave:authAPI+'vacationType/save',//假期设置-请假类型新增编辑
@@ -135,6 +136,10 @@ export function getInfo () {
 
 export function logout () {
   return axios.post(userApi.Logout)
+}
+
+export function getStaffList () {
+  return axios.get(userApi.GetStaffList)
 }
 
 // /**

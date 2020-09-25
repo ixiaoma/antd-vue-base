@@ -7,7 +7,7 @@
       @cancel="handleCancel"
     >
       <a-transfer
-        :data-source="roleList"
+        :data-source="staffList"
         show-search
         :list-style="{
             width: '260px',
@@ -23,7 +23,7 @@
   
 </template>
 <script>
-import { rolesPage } from '@/api/user'
+import { getStaffList } from '@/api/user'
 import { mapGetters } from 'vuex'
 export default {
   data() {
@@ -33,26 +33,23 @@ export default {
     };
   },
   computed:{
-    ...mapGetters(['roleList'])
+    ...mapGetters(['staffList'])
   },
   methods: {
     showModel(list){
-      if(!this.roleList.length){
+      if(!this.staffList.length){
         this.getRoleList()
       }
       this.targetKeys = list.map(ele=>ele.dataId)
       this.visible = true
     },
-    async getRoleList() {//获取角色列表
-        let params = {
-            pageSize: 500
-        }
-        const res =  await rolesPage(params)
-        const list = res.records ? res.records : []
-        this.$store.state.approval.roleList = list.map(ele=>{
+    async getRoleList() {//获取用户列表
+        const res =  await getStaffList()
+        const list = res || []
+        this.$store.state.approval.staffList = list.map(ele=>{
             return {
                 key : ele.id,
-                title:ele.name
+                title:ele.realName
             }
         })
     },
@@ -67,12 +64,12 @@ export default {
     },
     handleOk(){
       const selectList = []
-      this.roleList.forEach(item => {
+      this.staffList.forEach(item => {
         if(this.targetKeys.indexOf(item.key) != -1){
           selectList.push({
             dataId : item.key,
             name: item.title,
-            type:'ROLE'
+            type:'ASSIGN'
           })
         }
       })

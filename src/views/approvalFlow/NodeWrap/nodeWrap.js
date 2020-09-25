@@ -87,36 +87,6 @@ export default {
                 str += ele.code + '=' + ele.value
             })
             return str || '请设置条件'
-            // if(!expressionList ){
-            //     return '请设置条件'
-            // }else if (expressionList.length == 0) {
-            //     return (index == this.nodeConfig.expressionList.length - 1) && this.nodeConfig.expressionList[0].expressionList.length != 0 ? '其他条件进入此流程' : '请设置条件'
-            // } else {
-            //     let str = ""
-            //     for (var i = 0; i < expressionList.length; i++) {
-            //         var { columnId, columnType, showType, showName, optType, zdy1, opt1, zdy2, opt2, fixedDownBoxValue } = expressionList[i];
-            //         if (columnId == 0) {
-            //             if (participantList.length != 0) {
-            //                 str += '发起人属于：'
-            //                 str += participantList.map(item => { return item.name }).join("或") + " 并且 "
-            //             }
-            //         }
-            //         if (columnType == "String" && showType == "3") {
-            //             if (zdy1) {
-            //                 str += showName + '属于：' + this.dealStr(zdy1, JSON.parse(fixedDownBoxValue)) + " 并且 "
-            //             }
-            //         }
-            //         if (columnType == "Double") {
-            //             if (optType != 6 && zdy1) {
-            //                 var optTypeStr = ["", "<", ">", "≤", "=", "≥"][optType]
-            //                 str += `${showName} ${optTypeStr} ${zdy1} 并且 `
-            //             } else if (optType == 6 && zdy1 && zdy2) {
-            //                 str += `${zdy1} ${opt1} ${showName} ${opt2} ${zdy2} 并且 `
-            //             }
-            //         }
-            //     }
-            //     return str ? str.substring(0, str.length - 4) : '请设置条件'
-            // }
         },
         delNode() {//删除节点
             this.$emit("update:nodeConfig", this.nodeConfig.childNode);
@@ -609,14 +579,5 @@ export default {
         }
     },
     mounted() {
-        // if (this.nodeConfig.nodeType == 'APPROVE') {
-        //     this.nodeConfig.error = !this.setApproverStr(this.nodeConfig)
-        // } else if (this.nodeConfig.nodeType == 2) {
-        //     this.nodeConfig.error = !this.copyerStr(this.nodeConfig)
-        // } else if (this.nodeConfig.nodeType == 4) {
-        //     for (var i = 0; i < this.nodeConfig.conditionList.length; i++) {
-        //         this.nodeConfig.conditionList[i].error = this.conditionStr(this.nodeConfig.conditionList[i], i) == "请设置条件" && i != this.nodeConfig.conditionList.length - 1
-        //     }
-        // }
     }
 }

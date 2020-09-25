@@ -81,10 +81,10 @@ export const levelList = [
     }
 ]
 
-export function getLastMonthDays () {// 获取上一个月的开始结束时间
+export function getLastMonthDays() {// 获取上一个月的开始结束时间
     let date = []
-    let start = moment().month(moment().month() - 1).startOf('month').format('YYYY-MM-DD')
-    let end = moment().month(moment().month() - 1).endOf('month').format('YYYY-MM-DD')
+    let start = moment().month(moment().month() - 1).startOf('month').format('YYYY-MM-DD HH:mm:ss')
+    let end = moment().month(moment().month() - 1).endOf('month').format('YYYY-MM-DD HH:mm:ss')
     date.push(start)
     date.push(end)
     return date

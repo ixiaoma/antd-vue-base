@@ -125,7 +125,6 @@ export default {
         this.visible = false;
       },
       showModel(selectRadio){
-        console.log(selectRadio)
         if(selectRadio == 'ROLE'){
           this.$refs.selectModel.showModel(this.roleList)
         }else{
@@ -204,7 +203,9 @@ export default {
             }
           })
           this.nodeConfig.backType = this.backType
-          if(this.selectRadio == 'ROLE'){
+          if(this.selectRadio == 'ASSIGN'){
+            this.nodeConfig.participantList = this.staffList
+          }else if(this.selectRadio == 'ROLE'){
             this.nodeConfig.participantList = this.roleList
           }else if(this.selectRadio == 'LEADER'){
             this.nodeConfig.participantList = [
