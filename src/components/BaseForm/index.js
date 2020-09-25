@@ -61,7 +61,7 @@ export default {
         }
     },
     methods:{
-        decoratorFn(i){
+        decoratorFn(i){//初始化绑值
             let initialValue = ''
             if(i.valueType != 'SELECT' && i.valueType != 'CHECKBOX' && i.valueType != 'ORG_TREE_MULTI' && i.valueType != 'PICTURE' && i.valueType != 'ATTACHMENT'){
                 const currentValue = i.value && i.value.length ? i.value.join(',') : ''
@@ -119,21 +119,24 @@ export default {
         handleChange({ fileList },code) {
             this.imgList = fileList;
         },
+        handleCancel() {
+            this.previewVisible = false;
+        },
         uploadFile({ file,fileList },code){//文件上传
             if(file.response){
                 const list = fileList.map(ele=>ele.response)
                 this.form.setFieldsValue({[code]:list})
             }
         },
-        handleCancel() {
-            this.previewVisible = false;
+        downLoadFile(url){//文件下载
+
         },
         async getApprovalData(definekey){
             const res = await getProcessDetail({definekey})
             this.layoutList = [{groupName:'申请信息',fieldDefineValueList:res}]
             this.activeKey = [0]
         },
-        async getInitData(){
+        async getInitData(){//获取初始化数据
             let res = null
             let { flag, pageCode, id } = this.currentForm || this.$route.query
             if(flag == 2){
@@ -157,7 +160,7 @@ export default {
             const { definekey } = this.$route.query
             definekey ? this.approvalCommit() : this.fieldCommit()
         },
-        fieldCommit(){
+        fieldCommit(){//新增编辑提交
             this.form.validateFields(async (err, values) => {
                 if (!err) {
                     let saveData = []
@@ -238,7 +241,7 @@ export default {
                 }
             })
         },
-        approvalCommit(){
+        approvalCommit(){//审批提交
             this.form.validateFields(async (err, values) => {
                 if (!err) {
                     let saveData = {}
@@ -266,7 +269,7 @@ export default {
                 }
             })
         },
-        relativeFn(i){
+        relativeFn(i){//选择关联字段
             this.referObjectCode = i.referObjectCode
             this.$refs.modelTable.showModel(i.referObjectCode)
         },
@@ -279,7 +282,7 @@ export default {
                 })
             })
         },
-        selectData(data){
+        selectData(data){//回填关联字段的值
             this.layoutList.forEach(ele=>{
                 ele.fieldDefineValueList.forEach(pre=>{
                     if(pre.referObjectCode == this.referObjectCode){
@@ -288,7 +291,7 @@ export default {
                 })
             })
         },
-        selectChange(value,i){
+        selectChange(value,i){//下拉值修改改变字段的展示隐藏
             const {pageCode} = this.$route.query
             if(pageCode == 'trip'){
                 if(i.code == "tripType"){

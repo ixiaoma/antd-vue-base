@@ -45,10 +45,16 @@
                                             <div class="clearfix" v-else-if="i.valueType == 'ATTACHMENT'" v-decorator="decoratorFn(i)">
                                                 <a-upload 
                                                 :action="fileUploadApi"
+                                                :showUploadList="false"
                                                 @change="file=>{uploadFile(file,i.code)}"
                                                 :headers="{'Authorization':'Bearer'+ accessToken}">
                                                     <a-button> <a-icon type="upload" />上传附件</a-button>
                                                 </a-upload>
+                                                <div v-for="(item,index) in form.getFieldValue(i.code)" :key='index'>
+                                                    <a-icon type="link" />
+                                                    <a :href="item" style="margin:5px 60px 5px 10px" @click="downLoadFile(item)">{{item}}</a>
+                                                    <a-icon type="delete" style="color:#1890FF;cursor: pointer;" @click="deleteFile(i.code,index)"/>
+                                                </div>
                                             </div>
                                             <a-input allowClear :disabled='i.referObjectCode ? true : false' v-else :maxLength="i.valueType == 'PHONE' ? 11 : null" v-decorator="decoratorFn(i)" :placeholder="'请填写'+i.name">
                                                 <span slot="addonAfter" v-if='i.serverApi'>
