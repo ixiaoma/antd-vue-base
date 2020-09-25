@@ -13,3 +13,7 @@ export function assessTodoLIst (params) {//获取列表接口
 export function taskDailyDetail (params) {//获取列表接口
   return axios.get(`${baseBusiness}reimbursement_daily/daily/detail/${params}`)
 }
+// 日常报销待办 审批
+export function taskComplete (params) {//获取列表接口
+  return axios.post(`${baseBusiness}reimbursement_daily/task/complete`,params)
+}

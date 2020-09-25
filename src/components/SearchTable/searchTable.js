@@ -96,7 +96,7 @@ export default{
             const title = `${meta.title}${flag == 1 ? '新增' : flag == 2 ? '详情' : '修改'}`
             this.$router.push({
                 name:'taskDailyDetail',
-                query:{ title, flag, pageCode: this.pageCode, id: data ? data.id : null,recordingId:data?data.recordingId:'' }
+                query:{ title, flag, pageCode: this.pageCode, id: data ? data.id : null,approvalStatus:data?data.approvalStatus:'' }
             })
         },
         async deleteData(id){
