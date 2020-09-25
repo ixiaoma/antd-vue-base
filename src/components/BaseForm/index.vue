@@ -21,7 +21,8 @@
                                             <a-cascader allowClear v-else-if="i.valueType == 'SELECT'" v-decorator="decoratorFn(i)" :placeholder="'请选择'+i.name"
                                             :field-names="{ label: 'codeValue', value: 'codeKey',children:'children'}" :options="i.codeItems" :load-data="(selectedOptions)=>{loadData(selectedOptions,i)}" change-on-select/>
                                             <a-date-picker allowClear :show-time="i.valueType == 'DATETIME'" v-else-if="i.valueType == 'DATETIME' || i.valueType == 'DATE'" v-decorator="decoratorFn(i)" style="width:100%" :placeholder="'请选择'+i.name"/>
-                                            <div class="clearfix" v-else-if="i.valueType == 'PICTURE'">
+                                            <tree-select v-else-if="i.valueType == 'ORG_TREE_SINGLE' || i.valueType == 'ORG_TREE_MULTI'" :multipleTree="i.valueType == 'ORG_TREE_MULTI'" v-decorator="decoratorFn(i)" :selectList='i.value' @selectTree='(list)=>{selectTree(list,i.code)}' :disabled='i.referObjectCode ? true : false'/>
+                                            <div class="clearfix" v-else-if="i.valueType == 'PICTURE'" v-decorator="decoratorFn(i)">
                                                 <a-upload
                                                 :action="fileUploadApi"
                                                 :headers="{'Authorization':'Bearer'+ accessToken}"
@@ -41,13 +42,14 @@
                                                     <img alt="example" style="width: 100%" :src="previewImage" />
                                                 </a-modal>
                                             </div>
-                                            <div class="clearfix" v-else-if="i.valueType == 'ATTACHMENT'">
-                                                <a-upload :action="fileUploadApi"
+                                            <div class="clearfix" v-else-if="i.valueType == 'ATTACHMENT'" v-decorator="decoratorFn(i)">
+                                                <a-upload 
+                                                :action="fileUploadApi"
+                                                @change="file=>{uploadFile(file,i.code)}"
                                                 :headers="{'Authorization':'Bearer'+ accessToken}">
                                                     <a-button> <a-icon type="upload" />上传附件</a-button>
                                                 </a-upload>
                                             </div>
-                                            <tree-select v-else-if="i.valueType == 'ORG_TREE_SINGLE' || i.valueType == 'ORG_TREE_MULTI'" :multipleTree="i.valueType == 'ORG_TREE_MULTI'" v-decorator="decoratorFn(i)" :selectList='i.value' @selectTree='(list)=>{selectTree(list,i.code)}' :disabled='i.referObjectCode ? true : false'/>
                                             <a-input allowClear :disabled='i.referObjectCode ? true : false' v-else :maxLength="i.valueType == 'PHONE' ? 11 : null" v-decorator="decoratorFn(i)" :placeholder="'请填写'+i.name">
                                                 <span slot="addonAfter" v-if='i.serverApi'>
                                                     <a-icon type="close" v-if='form.getFieldValue(i.code)' @click="clearRleative(i)"/>

@@ -81,7 +81,6 @@ export default {
             this.showModal=false
         },
         handleOk(e){   
-            
             e && e.preventDefault()
             this.formField.validateFields(async (err, values) => {
                 if (!err) {

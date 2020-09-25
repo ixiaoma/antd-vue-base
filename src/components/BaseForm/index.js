@@ -63,7 +63,7 @@ export default {
     methods:{
         decoratorFn(i){
             let initialValue = ''
-            if(i.valueType != 'SELECT' && i.valueType != 'CHECKBOX' && i.valueType != 'ORG_TREE_MULTI'){
+            if(i.valueType != 'SELECT' && i.valueType != 'CHECKBOX' && i.valueType != 'ORG_TREE_MULTI' && i.valueType != 'PICTURE' && i.valueType != 'ATTACHMENT'){
                 const currentValue = i.value && i.value.length ? i.value.join(',') : ''
                 if(i.valueType == 'DATETIME' || i.validateFields == 'DATE'){
                     initialValue = currentValue ? moment(currentValue,i.validateFields == 'DATE' ? 'YYYY-MM-DD' : 'YYYY-MM-DD HH:mm:ss') : null
@@ -90,7 +90,7 @@ export default {
             }
             const rules = [
                 {
-                    type : i.valueType == 'SELECT' || i.valueType == 'ORG_TREE_MULTI' || i.valueType == 'CHECKBOX' ? 'array' : i.valueType == 'DATETIME' || i.valueType == 'DATE' ? 'object' : i.valueType == 'INTEGER' || i.valueType == 'DECIMAL' ? 'number' : 'string',
+                    type : i.valueType == 'SELECT' || i.valueType == 'ORG_TREE_MULTI' || i.valueType == 'CHECKBOX' || i.valueType == 'PICTURE' || i.valueType == 'ATTACHMENT' ? 'array' : i.valueType == 'DATETIME' || i.valueType == 'DATE' ? 'object' : i.valueType == 'INTEGER' || i.valueType == 'DECIMAL' ? 'number' : 'string',
                     required: i.notNull,
                     whitespace:true,
                     message: `${i.name}必填`
@@ -116,8 +116,14 @@ export default {
             this.previewImage = file.thumbUrl;
             this.previewVisible = true;
         },
-        handleChange({ fileList }) {
+        handleChange({ fileList },code) {
             this.imgList = fileList;
+        },
+        uploadFile({ file,fileList },code){//文件上传
+            if(file.response){
+                const list = fileList.map(ele=>ele.response)
+                this.form.setFieldsValue({[code]:list})
+            }
         },
         handleCancel() {
             this.previewVisible = false;
@@ -215,7 +221,7 @@ export default {
                         'social_relations', 
                         'work_experience',
                         'educational_experience'
-                        ]
+                    ]
                     if(basicCodeArr.indexOf(pageCode) > -1 ){
                         param.params.push({
                             code : 'basicInfoId',
@@ -223,20 +229,40 @@ export default {
                         })
                     }
                     const res = await fn(param)
-                    !this.currentForm && this.$router.go(-1)
-                    this.$emit('next',res)
+                    this.$message.success('提交成功')
+                    if(this.currentForm){
+                        this.$emit('next',res)
+                    }else{
+                        this.$router.go(-1)
+                    }
                 }
             })
         },
         approvalCommit(){
             this.form.validateFields(async (err, values) => {
                 if (!err) {
+                    let saveData = {}
+                    this.layoutList.forEach(item=>{
+                        item.fieldDefineValueList.forEach(ele=>{
+                            if(values[ele.code]){
+                                let data = values[ele.code]
+                                if(ele.valueType == 'DATETIME' || ele.valueType == 'DATE'){
+                                    data = moment(values[ele.code]).format(ele.valueType == 'DATE' ? 'YYYY-MM-DD' : 'YYYY-MM-DD HH:mm:ss')
+                                }
+                                saveData[ele.code] = data
+                            }else{
+                                saveData[ele.code] = ele.value
+                            }
+                        })
+                    })
                     const { definekey } = this.$route.query
                     const params = {
                         processDefineKey:definekey,
-                        variables:values
+                        variables:saveData
                     }
                     await approvalStart({params})
+                    this.$message.success('提交成功')
+                    this.$router.go(-1)
                 }
             })
         },
