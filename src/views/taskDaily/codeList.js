@@ -1,16 +1,16 @@
 export const columns = [
     {
       title: '类型',
-      dataIndex: 'code'
+      dataIndex: 'type'
     },
     {
       title: '总金额',
-      dataIndex: 'title'
+      dataIndex: 'amount'
     },
     {
       title: '提交时间',
-      dataIndex: 'createDate',
-      sorter: true
+      dataIndex: 'submissionTime',
+ 
     },
     {
       title: '操作',

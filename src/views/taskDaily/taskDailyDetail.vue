@@ -1,21 +1,36 @@
 <template>
 <div class="taskDailyDetail">
     <a-card :bordered="false">
-      <s-table
-        ref="table"
-        rowKey="key"
-        :columns="columns"
-        :data="loadData"
-        :alert="true"
-        :rowSelection="null"
-        showPagination="auto">
-        <span slot="action" slot-scope="text, record">
-        <template>         
+        <a-table 
+          ref="table"
+          size="small"
+          :bordered="true"
+          :rowKey="(record) =>  record.id"
+          :columns="columns" 
+          :data-source="taskDailyData"      
+          :showPagination="false"
+          :loading="loading"
+        >
+        <template slot="action" slot-scope="text, record">         
           <a @click="handleSub(record,2)">查看明细</a>
         </template>
-        </span>
-      </s-table>
+      </a-table>      
     </a-card>
+    <a-modal v-model="visible" title="提交排班计划" :bodyStyle='{padding:10}'  :footer="null">
+        <a-row>
+            <a-table 
+              ref="table"
+              size="small"
+              :bordered="true"
+              :rowKey="(record) =>  record.id"
+              :columns="columns" 
+              :data-source="taskDailyData"      
+              :showPagination="false"
+              :loading="loading"
+            >
+          </a-table>  
+        </a-row>   
+    </a-modal>
   </div>
 </template>
 
@@ -23,37 +38,30 @@
 <script>
 
 import moment from 'moment'
-import { STable } from '@/components'
-import { getServiceList } from '@/api/user'
-import {columns} from './codeList.js'
+import { taskDailyDetail } from '@/api/other'
+import { columns } from './codeList.js'
 
 export default {
-  name: 'taskDailyDetailList',
-  title: 'taskDailyDetail',
+  name: 'taskDailyDetail',
+  title: '日常报销详情',
   components: {
-    STable
+    
   },
-  data () {
+  data() {
     this.columns = columns
+    this.filterList = filterList
     return {
-      // 查询参数
-      queryParam: {},
-      // 加载数据方法 必须为 Promise 对象
-      loadData: parameter => {
-        const requestParameters = Object.assign({}, parameter, this.queryParam)
-        console.log('loadData request parameters:', requestParameters)
-        return getServiceList(requestParameters)
-          .then(res => {
-            // return res.result
-            return result
-          })
-      },
-      selectedRowKeys: [],
-      selectedRows: []
+      buttonList:[],
+      loading: false,
+      taskDailyData: [],
+      visible:false
     }
   },
+  filters: {
+
+  },
   computed: {
-    rowSelection () {
+    rowSelection() {
       return {
         selectedRowKeys: this.selectedRowKeys,
         onChange: this.onSelectChange
@@ -61,25 +69,20 @@ export default {
     }
   },
   methods: {
+    dataLoad(){
+        this.loading = true;
+        taskDailyDetail(this.$route.query.id).then(res=>{
+          this.taskDailyData=res
+          this.loading = false;
+        })
+    },
     handleSub (record,flag) {
-      this.$router.push({
-        name:'rulesDetail',
-        query:{
-          title:`日常报销待办${flag == 1 ? '新增' : flag == 2 ? '详情' : '修改'}`,
-          flag
-        }
-      })
+      this.visible=true
     },   
-    onSelectChange (selectedRowKeys, selectedRows) {
-      this.selectedRowKeys = selectedRowKeys
-      this.selectedRows = selectedRows
-    }
+  },
+  created() {
+    this.dataLoad()
+    this.buttonList = this.$route.meta.buttonList?this.$route.meta.buttonList:[]
   }
 }
-
-
-
-
-
-
 </script>

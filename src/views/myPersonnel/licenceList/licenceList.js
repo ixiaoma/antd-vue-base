@@ -9,6 +9,7 @@ export default {
   data () {
     return {
       pageCode:'license_info',
+      definekey:'license_info',
       showBtnList:[]//按钮权限list
     }
   },

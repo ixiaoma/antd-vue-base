@@ -1,6 +1,6 @@
 <template>
 <div class="taskDaily">
-    <search-table pageCode='management'/>
+    <search-table pageCode='reimbursement_daily'/>
   </div>
 </template>
 
