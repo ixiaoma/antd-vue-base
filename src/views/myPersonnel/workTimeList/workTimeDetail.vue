@@ -13,7 +13,7 @@
                 </template>
             </span>
         </s-table>
-        <replaceCard ref="replaceCard" @refelsh="refresh"></replaceCard>
+        <!-- <replaceCard ref="replaceCard" @refelsh="refresh"></replaceCard> -->
 </a-card>
 </template>
 <script>
@@ -21,13 +21,13 @@
 // import { SearchTable } from '@/components'
 import { STable } from '@/components'
 import { getBasePage, getTableSearch, getTableHeader, deletePageList } from '@/api/commonApi'
-import replaceCard from './replaceCard.vue'
+// import replaceCard from './replaceCard.vue'
 export default {
   name: 'attendanceDetailListList',
   components: {
     // SearchTable
     STable,
-    replaceCard
+    // replaceCard
   },
   data() {
     return {

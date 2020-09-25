@@ -67,7 +67,8 @@ export default {
             replacecardList:[],
             formField : this.$form.createForm(this, { name: 'replacecard' }),
             confirmLoading:false,
-            formItem:{}
+            formItem:{},
+            deptPrincipal:''
         }
     },
     methods: {
