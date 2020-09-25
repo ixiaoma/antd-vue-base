@@ -135,16 +135,7 @@ export default {
           this.showPagination && this.localPagination.current || this.pageNum,
         pageSize: (pagination && pagination.pageSize) ||
           this.showPagination && this.localPagination.pageSize || this.pageSize
-      },
-      // (sorter && sorter.field && {
-      //   sortField: sorter.field
-      // }) || {},
-      // (sorter && sorter.order && {
-      //   sortOrder: sorter.order
-      // }) || {}, {
-      //   ...filters
-      // }
-      )
+      })
       if(sorter&&sorter.column){
         parameter.searchSort = {
           orders:[{

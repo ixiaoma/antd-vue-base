@@ -14,7 +14,6 @@ service.interceptors.request.use(config => {
     ...config.headers
   }
 
-  // const access_token = sessionStorage.getItem('ACCESS_TOKEN')||'2812f6c6-7d2c-44b6-a89f-255dade37e04'
   const access_token = sessionStorage.getItem('ACCESS_TOKEN')
   if (access_token && !config.headers.Authorization) {
     config.headers.Authorization = `Bearer ${access_token}`

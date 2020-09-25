@@ -89,7 +89,7 @@
                             </a-row>
                         </a-form-item>
                     </div>
-                    <!-- <a-form-item label="引用对象" :label-col="{span:6}" :wrapper-col="{span:12}">
+                    <a-form-item label="引用对象" :label-col="{span:6}" :wrapper-col="{span:12}">
                         <a-select
                             allowClear
                             @change="changeObject"
@@ -107,7 +107,7 @@
                             </a-select-option>
                         </a-select>
                     </a-form-item>
-                    <a-form-item label="引用对象赋值字段" :label-col="{span:6}" :wrapper-col="{span:12}">
+                    <!-- <a-form-item label="引用对象赋值字段" :label-col="{span:6}" :wrapper-col="{span:12}">
                         <a-select allowClear v-model.trim='currentItem.referObjectSetField'>
                             <a-select-option v-for="item in setFieldList" :key="item.code" :value="item.code">
                             {{ item.name }}

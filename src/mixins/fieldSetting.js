@@ -62,6 +62,6 @@ export default{
     },
     created(){
         this.getObjectList()
-        this.getSetFieldList()
+        // this.getSetFieldList()
     }
 }
