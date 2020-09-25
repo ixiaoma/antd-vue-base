@@ -4,7 +4,8 @@
 
 <template>
 <div class="licenceList">
-    <search-table :pageCode='pageCode'/>
+    <!-- <search-table :pageCode='pageCode'/> -->
+    <search-table :definekey='definekey'/>
   </div>
 </template>
 

@@ -1,14 +1,14 @@
 <template>
-  <div class="staffQuitList">
-      <search-table :pageCode='pageCode'/>
-      <!-- <search-table :definekey='definekey'/> -->
+  <div class="myQuitList">
+      <!-- <search-table :pageCode='pageCode'/> -->
+      <search-table :definekey='definekey'/>
   </div>
 </template>
 
 <script>
 import { SearchTable } from '@/components'
 export default {
-  name:'staffQuitList',
+  name:'myQuitList',
   data () {
     return {
       pageCode:'leave_office',

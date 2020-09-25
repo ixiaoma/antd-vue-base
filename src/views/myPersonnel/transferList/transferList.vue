@@ -3,7 +3,8 @@
 </style>
 <template>
 <div class="transferList">
-    <search-table pageCode='transfer'/>
+    <!-- <search-table pageCode='transfer'/> -->
+    <search-table definekey='transfer'/>
   </div>
 </template>
 
