@@ -199,10 +199,10 @@ export default {
                     this.$nextTick(()=>{
                         let { title,basicType,publishDate,expiryDate,type,customerType,customerIds,company} = { ...fromdata };
                         this.form.setFieldsValue({
-                            title,basicType,publishDate,expiryDate,bulletinperson,bulletinperson:customerType,company
+                            title,basicType,publishDate,expiryDate,bulletinperson,bulletinperson:customerType
                         })
                         setTimeout(()=>{
-                            this.form.setFieldsValue({type:type})
+                            this.form.setFieldsValue({type:type,company:company})
                             if (this.form.getFieldValue('bulletinperson') == "role") {
                                 this.form.setFieldsValue({
                                     roleIds:customerIds.map(item=>item.toString())
