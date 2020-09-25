@@ -92,10 +92,10 @@ export default {
       this.selectedRows = selectedRows
     },
     exportLoad(){
-      if(this.operationType=='经理第一次评分'||this.operationType=='经理第二次评分'){
+      if(this.operationType=='经理第一次评分'||this.operationType=='经理第二次评分'||this.operationType=='经理审批'){
         window.location.href=''
       }else{
-        this.$message.warning('操作类型为‘经理第一次评分’或者‘经理第二次评分’才可进行导出')
+        this.$message.warning('操作类型为‘经理审批’或‘经理第一次评分’或‘经理第二次评分’才可进行导出')
       }
     },
     uploadLoad(){

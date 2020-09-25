@@ -180,7 +180,7 @@ export default {
           //编辑       
         editbulletin() {         
             noticeDetail(this.editid).then(res => {
-                let fileUrl=res.fileUrl
+                let fileUrl=res.fileUrl?res.fileUrl:[]
                 fileUrl.forEach((item,index)=>{
                         let obj= {
                             uid: index+1,
