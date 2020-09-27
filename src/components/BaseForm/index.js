@@ -293,6 +293,7 @@ export default {
             this.$refs.StaffModel.showModel(list)
         },
         selectData(data){//回填关联字段的值
+            console.log(data)
             this.layoutList.forEach(ele=>{
                 ele.fieldDefineValueList.forEach(pre=>{
                     if(pre.referObjectCode == this.referObjectCode){

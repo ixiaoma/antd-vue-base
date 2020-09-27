@@ -79,7 +79,8 @@ export default {
       const selectData = {
         userList:userList.join(','),
         userIdList:userIdList.join(','),
-        deptIdList:deptIdList.join(',')
+        deptIdList:deptIdList.join(','),
+        deptList:deptList.join(',')
       }
       this.$emit('selectData',selectData)
       this.visible = false
