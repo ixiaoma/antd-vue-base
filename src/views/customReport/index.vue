@@ -1,26 +1,23 @@
-<style lang="less" scoped>
-  @import "./rulesManage.less";
-</style>
 <template>
 <div class="rulesManage">
     <!--这是自定义报表列表页面-->
     <a-card class="table-page-search-wrapper">
+      <div class="table-operator">
+        <a-button type="primary" icon="plus" v-if="buttonList.includes('add')" @click="handleAdd(null,1)">新建</a-button>
+      </div>
       <s-table
         ref="table"
         rowKey="key"
         :columns="columns"
-        :filterList="filterList"
         :data="loadData"
         :alert="true"
         :rowSelection="null"
         showPagination="auto">
-
         <span slot="action" slot-scope="text, record">
-        <template>         
-          <a @click="handleSub(record,2)">查看</a>
-          <a-divider type="vertical" />
-          <a @click="handleAdd(record,3)">修改</a>
-        </template>
+          <template>         
+            <a @click="handleAdd(record,3)" v-if="buttonList.includes('edit')" style="margin:0 3px">修改</a>
+            <a @click="handleDel(record)" v-if="buttonList.includes('delete')" style="margin:0 3px">删除</a>
+          </template>
         </span>
       </s-table>
     </a-card>
@@ -29,50 +26,20 @@
 
 
 <script>
-
-import moment from 'moment'
-import TableFilter from '@/components/TableFilter/index.vue'
-import { STable, Ellipsis } from '@/components'
+import { STable } from '@/components'
 import { getServiceList } from '@/api/user'
-import {columns,filterList,result} from './codeList.js'
-
-const statusMap = {
-  0: {
-    status: 'default',
-    text: '关闭'
-  },
-  1: {
-    status: 'processing',
-    text: '运行中'
-  },
-  2: {
-    status: 'success',
-    text: '已上线'
-  },
-  3: {
-    status: 'error',
-    text: '异常'
-  }
-}
+import {columns} from './codeList.js'
 
 export default {
-  name: 'rulesManageList',
-  title: 'rulesManage',
+  name: 'customReportList',
+  title: 'customReport',
   components: {
-    STable,
-    Ellipsis,
-    TableFilter
+    STable
   },
   data () {
-    this.columns = columns
-    this.filterList = filterList
     return {
-      // create model
-      visible: false,
-      confirmLoading: false,
-      mdl: null,
-      // 高级搜索 展开/关闭
-      advanced: false,
+      buttonList:[],
+      columns:columns,
       // 查询参数
       queryParam: {},
       // 加载数据方法 必须为 Promise 对象
@@ -89,55 +56,22 @@ export default {
       selectedRows: []
     }
   },
-  filters: {
-    statusFilter (type) {
-      return statusMap[type].text
-    },
-    statusTypeFilter (type) {
-      return statusMap[type].status
-    }
-  },
   computed: {
-    rowSelection () {
-      return {
-        selectedRowKeys: this.selectedRowKeys,
-        onChange: this.onSelectChange
-      }
-    }
+    
   },
   methods: {
     handleAdd (data,flag) {
       this.$router.push({
-        name:'baseForm',
+        name:'addCustomReport',
         query:{
-          title:`规章制度${flag == 1 ? '新增' : flag == 2 ? '详情' : '修改'}`,
+          title:`自定义报表${flag == 1 ? '新增' : flag == 2 ? '详情' : '修改'}`,
           flag
         }
       })
-    },
-    handleEdit (record) {
-      this.visible = true
-      this.mdl = { ...record }
-    },
-    handleSub (record,flag) {
-      this.$router.push({
-        name:'rulesDetail',
-        query:{
-          title:`规章制度${flag == 1 ? '新增' : flag == 2 ? '详情' : '修改'}`,
-          flag
-        }
-      })
-    },   
-    onSelectChange (selectedRowKeys, selectedRows) {
-      this.selectedRowKeys = selectedRowKeys
-      this.selectedRows = selectedRows
     }
+  },
+  created(){
+    this.buttonList = this.$route.meta.buttonList?this.$route.meta.buttonList:[]
   }
 }
-
-
-
-
-
-
 </script>

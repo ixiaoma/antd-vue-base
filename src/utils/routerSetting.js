@@ -67,7 +67,8 @@ export const routerObj = {
     probationRemind: () => import('@/views/homeToPage/probationRemind.vue'),
     taskPage: () => import('@/views/taskPage/index.vue'),
     taskDaily: () => import('@/views/taskDaily/index.vue'),
-    applyPage: () => import('@/views/applyPage/index.vue')
+    applyPage: () => import('@/views/applyPage/index.vue'),
+    customReport:() => import('@/views/customReport/index.vue'),
 }
 
 export function getRouterData(list){

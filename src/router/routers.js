@@ -900,6 +900,12 @@ export const hideInMenuRouterMap = {
       name: 'taskDailyDetail',
       component: () => import('@/views/taskDaily/taskDailyDetail.vue'),
       meta: { title: '日常报销待办'}
+    },
+    {
+      path: '/hidemenu/addCustomReport',
+      name: 'addCustomReport',
+      component: () => import('@/views/customReport/addCustomReport.vue'),
+      meta: { title: '自定义报表'}
     }
   ]
 }
