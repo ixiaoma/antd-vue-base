@@ -59,7 +59,10 @@
                                             <a-input allowClear :disabled='i.referObjectCode ? true : false' v-else :maxLength="i.valueType == 'PHONE' ? 11 : null" v-decorator="decoratorFn(i)" :placeholder="'请填写'+i.name">
                                                 <span slot="addonAfter" v-if='i.serverApi'>
                                                     <a-icon type="close" v-if='form.getFieldValue(i.code)' @click="clearRleative(i)"/>
-                                                    <a-icon type="plus" v-else @click="relativeFn(i)"/>
+                                                    <span v-else>
+                                                        <a-icon type="search" v-if="i.serverApi == 'search'" @click="selectStaff(i)"/>
+                                                        <a-icon type="plus" v-else @click="relativeFn(i)"/>
+                                                    </span>
                                                 </span>
                                             </a-input>
                                         </a-col>
@@ -82,6 +85,7 @@
             </footer-tool-bar>
         </a-form>
         <model-table ref='modelTable' @selectData='selectData'/>
+        <staff-model ref='StaffModel' @selectData='selectData'/>
         <!-- 员工绩效 -->
         <staffAchievements :readonly="readonly||operationType" v-if="$route.query.pageCode=='performance_assessment_detail'||$route.query.pageCode=='performance_assessment_detail/todo'" ref="staffAchievements"></staffAchievements>
         <!-- 考核待办 经理审批 -->

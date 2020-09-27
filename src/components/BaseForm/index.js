@@ -9,6 +9,7 @@ import staffAchievements from '../staffAchievements/staffAchievements.vue'
 import kpiApproval from '../kpiApproval/index.vue'
 import TreeSelect from '../Tree/tree.vue'
 import ModelTable from '../ModelTable/modelTable.vue'
+import StaffModel from './staffModel.vue'
 export default {
     name:'BaseFormLayout',
     data () {
@@ -53,7 +54,8 @@ export default {
         TreeSelect,
         staffAchievements,
         kpiApproval,
-        ModelTable
+        ModelTable,
+        StaffModel
     },
     computed: {
         operationType(){
@@ -284,6 +286,11 @@ export default {
                     }
                 })
             })
+        },
+        selectStaff(i){//多选选择关联员工
+            this.referObjectCode = i.referObjectCode
+            const list = i.value ? i.value.split(',') : []
+            this.$refs.StaffModel.showModel(list)
         },
         selectData(data){//回填关联字段的值
             this.layoutList.forEach(ele=>{

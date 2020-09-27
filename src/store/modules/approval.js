@@ -1,7 +1,8 @@
 const approval = {
   state: {
     roleList: [],
-    staffList:[]
+    staffList:[],
+    staffInfoList:[]
   },
 
   mutations: {
