@@ -117,7 +117,11 @@ export default{
                     return res
                 })
             }else{
-                const params = Object.assign( parameter, {filter:{logic: "and",filters:this.queryParam}})
+                let filters=[...this.queryParam]
+                if(this.$route.name=='resumeCommon'){
+                    filters = [...this.queryParam,{field: "resumeStatus", operator: "eq", value: '待定'}]
+                }  
+                const params = Object.assign( parameter, {filter:{logic: "and",filters:filters}})
                 return getBasePage({pageCode:this.pageCode,params}) .then(res => {
                     return res
                 })
