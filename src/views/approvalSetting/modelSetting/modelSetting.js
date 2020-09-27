@@ -81,18 +81,21 @@ export default {
                 codeCategory:undefined,
                 sort:this.currentItem.categoryCodes.length+1
             })
-            this.categoryCodeList = this.currentItem.categoryCodes || [
-                {
-                    codeCategory:undefined,
-                    sort:1
-                }
-            ]
+            this.categoryCodeList = this.currentItem.categoryCodes 
         },
         editField(item,index){
             this.showSetting = true
             this.currentItem = item
             this.currentIndex = index
             if(item.valueType == 'RADIO' || item.valueType == 'CHECKBOX' || item.valueType == 'SELECT'){
+                if(!this.currentItem.categoryCodes){
+                    this.currentItem.categoryCodes = [
+                        {
+                            codeCategory:undefined,
+                            sort:1
+                        }
+                    ]
+                }
                 this.categoryCodeList = this.currentItem.categoryCodes
             }
         },

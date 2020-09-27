@@ -2,7 +2,7 @@ import moment from 'moment'
 import { getBaseLayout, getDetailLayout, getEditLayout_kpitodo,getDetailLayout_kpitodo,saveLayout, getEditLayout, saveEditLayout } from '@/api/commonApi'
 import { getProcessDetail,approvalStart } from '@/api/approval'
 import fieldHandle from '@/mixins/fieldHandle'
-import { fileUploadApi } from '@/api/uploaddown'
+import { fileUploadApi, fileDownLoad } from '@/api/uploaddown'
 
 import FooterToolBar from '@/layouts/FooterToolbar'
 import staffAchievements from '../staffAchievements/staffAchievements.vue'
@@ -111,6 +111,9 @@ export default {
         },
         selectTree(list,code){//下拉树回填值
             this.form.setFieldsValue({[code]:list})
+            // if(){
+
+            // }
         },
         async handlePreview(file) {
             this.previewImage = file.thumbUrl;
@@ -129,7 +132,7 @@ export default {
             }
         },
         downLoadFile(url){//文件下载
-
+            window.location.href=fileDownLoad+url+'?access_token='+this.accessToken
         },
         async getApprovalData(definekey){
             const res = await getProcessDetail({definekey})
