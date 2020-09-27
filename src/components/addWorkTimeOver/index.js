@@ -1,4 +1,6 @@
-import { getCodeList } from '@/api/user'
+import { getCodeList,homeUserCenter } from '@/api/user'
+import { overtimeJudgmentType } from '@/api/other'
+import { saveLayout } from '@/api/commonApi'
 import moment from 'moment'
 import ModelTable from '../ModelTable/modelTable.vue'
 import FooterToolBar from '@/layouts/FooterToolbar'
@@ -8,8 +10,12 @@ export default {
   name: 'StaffForm',
   data() {
     return {
+      pageCode:'overtime',
       activeKey: '1',
+      code:'',
+      empName:'',
       serviceTypeList: [],
+      overtimeTypeList:[],
       form: this.$form.createForm(this, { name: 'staff-approval' }),
       validates: {
         serviceType: { rules: [{ required: true, message: '请选择服务类型' }] },
@@ -37,24 +43,64 @@ export default {
     selectData(data) {//回填关联字段的值
       this.form.setFieldsValue({ workId: data['workOrder'] })
     },
+    //服务类型change
+    serviceTypeChange(value){
+      this.form.setFieldsValue({serviceType:value})
+      if(this.form.getFieldValue('startDate')&&this.form.getFieldValue('endDate')&&value){
+        this.overtimeJudgmentTypeLoad()
+      }
+    },
+    //开始时间change
     startDateChange(value){
+      this.form.setFieldsValue({startDate:value})
       let startDate=value?value.format('YYYY-MM-DD HH:mm:ss') : null
       let endDate=this.form.getFieldValue('endDate')?this.form.getFieldValue('endDate').format('YYYY-MM-DD HH:mm:ss') : null
-      console.log(startDate,endDate)
+      if(startDate&&endDate&&this.form.getFieldValue('serviceType')){
+        this.overtimeJudgmentTypeLoad()
+      }
     },
+    //结束时间change
     endDateChange(value){
+      this.form.setFieldsValue({endDate:value})
       let startDate=this.form.getFieldValue('startDate')?this.form.getFieldValue('startDate').format('YYYY-MM-DD HH:mm:ss') : null
       let endDate=value?value.format('YYYY-MM-DD HH:mm:ss') : null
-      console.log(startDate,endDate)
+      if(startDate&&endDate&&this.form.getFieldValue('serviceType')){
+        this.overtimeJudgmentTypeLoad()
+      }
+    },
+    overtimeJudgmentTypeLoad(){
+      let params={
+        startDate:this.form.getFieldValue('startDate')?this.form.getFieldValue('startDate').format('YYYY-MM-DD HH:mm:ss') : null,
+        endDate:this.form.getFieldValue('endDate')?this.form.getFieldValue('endDate').format('YYYY-MM-DD HH:mm:ss') : null,
+        serviceType:this.form.getFieldValue('serviceType'),
+        code:this.code
+      }
+      overtimeJudgmentType(params).then(res=>{
+
+      })
     },
     handleSubmit(e) {
-      console.log(this.bulletinconcent)
-      console.log(Base64.encode(this.bulletinconcent))
       e.preventDefault()
       this.form.validateFields((err, values) => {
         if (err) return;
         values['startDate'] = values['startDate'] ? values['startDate'].format('YYYY-MM-DD HH:mm:ss') : null
         values['endDate'] = values['endDate'] ? values['endDate'].format('YYYY-MM-DD HH:mm:ss') : null
+        let params=[[
+          {"code":"code","value":[this.pageCode]},
+          {"code":"empName","value":[this.empName]},
+          {"code":"workId","value":[values['workId']]},
+          {"code":"totalTime","value":[values['totalTime']]},
+          {"code":"overtimeType","value":[values['overtimeType']]},//加班类型
+          {"code":"startDate","value":[values['startDate']]},
+          {"code":"endDate","value":[values['endDate']]},
+          {"code":"theReason","value":[values['theReason']]},
+          {"code":"serviceType","value":[values['serviceType']]},	
+         ]
+      ]  
+        saveLayout({pageCode:this.pageCode,params}).then(res=>{
+          this.$message.success("保存成功")
+          this.$router.go(-1)
+        })
       })
     },
     goBack(){
@@ -64,9 +110,20 @@ export default {
       getCodeList('service_type').then(res=>{
         this.serviceTypeList=res
       })
+      getCodeList('overTime').then(res=>{
+        this.overtimeTypeList=res
+      })
+      // overtimeTypeList
+    },
+    userLoad () {
+      homeUserCenter().then(res=>{
+          this.code=res.code
+          this.empName=res.realName
+      })
     }
   },
   created() {
+    this.userLoad()
     this.codeLoad()
   }
 }

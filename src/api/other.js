@@ -17,3 +17,7 @@ export function taskDailyDetail (params) {//获取列表接口
 export function taskComplete (params) {//获取列表接口
   return axios.post(`${baseBusiness}reimbursement_daily/task/complete`,params)
 }
+// 加班 判断加班类型方法
+export function overtimeJudgmentType (params) {//获取列表接口
+  return axios.post(`${baseBusiness}overtime/judgmentType`,params)
+}

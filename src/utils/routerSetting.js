@@ -37,6 +37,7 @@ export const routerObj = {
     myVacation:() => import('@/views/myPersonnel/myVacation/myVacation.vue'),
     myWorktimeover:() => import('@/views/myPersonnel/myWorktimeover/myWorktimeover.vue'),
     myQuit:() => import('@/views/myPersonnel/myQuit/myQuit.vue'),
+    myreimbursement: () => import('@/views/myPersonnel/reimbursement/reimbursement.vue'),
     licenceInfoList: () => import('@/views/licenceManagement/licenceInfoList/licenceInfoList.vue'),
     agreeManagement: () => import('@/views/agreeManagement/agreeList/agreeList.vue'),
     mlrpApply: () => import('@/views/recruitedManagement/mlrpApply/mlrpApply.vue'),
@@ -86,6 +87,7 @@ export function getRouterData(list){
         }else{
             let buttonList = []
             if(ele.buttonList && ele.buttonList.length){
+                // ele.buttonList=ele.buttonList.filter(ele=>ele.enabled)
                 buttonList = ele.buttonList.map(ele=>ele.code)
             }
             return{

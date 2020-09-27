@@ -5,17 +5,19 @@
         <a-collapse-panel key="1" header="加班申请">
         <a-col :sm='24' :md ='18' :lg="12">
             <a-form-item label="员工工号" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
-                <a-input v-decorator="['code',validates.code]"/>
+                <!-- <a-input v-decorator="['code',validates.code]"/> -->
+                 {{code}}
             </a-form-item>
         </a-col>
         <a-col :sm='24' :md ='18' :lg="12">
             <a-form-item label="员工姓名" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
-                <a-input v-decorator="['empName',validates.empName]"/>
+                <!-- <a-input v-decorator="['empName',validates.empName]"/> -->
+                {{empName}}
             </a-form-item>
         </a-col>
         <a-col :sm='24' :md ='18' :lg="12">
             <a-form-item label="服务类型" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
-                <a-select mode="default" v-decorator="['serviceType',validates.serviceType]" style="width: 100%" allowClear>
+                <a-select mode="default" v-decorator="['serviceType',validates.serviceType]" style="width: 100%" allowClear @change="serviceTypeChange">
                     <a-select-option v-for="k in serviceTypeList" :key="k.codeKey" :value="k.codeKey">
                     {{ k.codeValue }}
                     </a-select-option>
@@ -45,6 +47,15 @@
         <a-col :sm='24' :md ='18' :lg="12">
             <a-form-item label="总计时间" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
                 <a-input v-decorator="['totalTime',validates.totalTime]"/>
+            </a-form-item>
+        </a-col>
+        <a-col :sm='24' :md ='18' :lg="12">
+            <a-form-item label="加班类型" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
+                <a-select mode="default" v-decorator="['overtimeType',validates.overtimeType]" style="width: 100%" allowClear>
+                    <a-select-option v-for="k in overtimeTypeList" :key="k.codeKey" :value="k.codeKey">
+                    {{ k.codeValue }}
+                    </a-select-option>
+                </a-select>
             </a-form-item>
         </a-col>
         <a-col :sm='24' :md ='18' :lg="12">
