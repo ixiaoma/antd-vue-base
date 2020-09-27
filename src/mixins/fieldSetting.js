@@ -12,9 +12,9 @@ export default{
     },
     methods:{
         // 添加多级联动层级
-        addSelect(){
-            this.selectLevel.push(1) ; 
-        },
+        // addSelect(){
+        //     this.selectLevel.push(1) ; 
+        // },
         minusSelect(i){
             this.selectLevel.splice(i , 1) ; 
         },

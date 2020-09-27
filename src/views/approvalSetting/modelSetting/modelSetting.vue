@@ -8,7 +8,7 @@
                         <div v-for="(item,index) in layoutList" :key='index'>
                             <div class="mutile-com pre-block" :class="index == currentIndex ? 'current-border' : ''" @click="editField(item,index)" v-if="item.valueType=='TEXT_MULTI' || item.valueType=='ATTACHMENT' || item.valueType=='PICTURE'">
                                 <div class="text-style">
-                                    <a-icon type="close" class="close" @click="deleteField(index)"/>
+                                    <a-icon type="close" class="close" @click="e=>{deleteField(e,index)}"/>
                                     {{item.name}}
                                     <span class="must-down" v-if='item.mustDown'>*</span>
                                 </div>
@@ -22,7 +22,7 @@
                             </div>
                             <div class="row-com pre-block" :class="index == currentIndex ? 'current-border' : ''" @click="editField(item,index)" v-else>
                                 <span class="text-style">
-                                    <a-icon type="close" class="close" @click="deleteField(index)"/>
+                                    <a-icon type="close" class="close" @click="e=>{deleteField(e,index)}"/>
                                     {{item.name}}
                                     <span class="must-down" v-if='item.mustDown'>*</span>
                                 </span>
@@ -60,7 +60,7 @@
                         <a-input allowClear v-model.trim='currentItem.name'/>
                     </a-form-item>
                     <a-form-item required v-if="currentItem.valueType == 'RADIO' || currentItem.valueType == 'CHECKBOX'" label="关联码表值" :label-col="{span:6}" :wrapper-col="{span:12}">
-                        <a-select allowClear v-model.trim='currentItem.categoryCodes[0].codeCategory'>
+                        <a-select allowClear v-model='categoryCodeList[0].codeCategory'>
                             <a-select-option v-for="item in codeList" :key="item.code" :value="item.code">
                             {{ item.name }}
                             </a-select-option>
@@ -72,8 +72,8 @@
                         :label="'关联码表值' + (index + 1) " 
                         :label-col="{span:6}" 
                         :wrapper-col="{span:12}"
-                        v-for="(k, index) in currentItem.categoryCodes"
-                        :key=" 'select' + index ">
+                        v-for="(k, index) in categoryCodeList"
+                        :key="index">
                             <a-row :gutter='10'>
                                 <a-col :span='22'>
                                     <a-select allowClear v-model.trim='k.codeCategory'>
@@ -83,13 +83,14 @@
                                     </a-select>
                                 </a-col>
                                 <a-col :span='2'>
-                                    <a-icon v-if="selectLevel.length - 1 ==  index" type="plus-circle" @click="addSelect" style="font-size:20px"/>
+                                    <a-icon v-if="index == categoryCodeList.length-1" type="plus-circle" @click="addSelect" style="font-size:20px"/>
                                     <a-icon type="close-circle" v-else style="font-size:20px"/>
                                 </a-col>
                             </a-row>
                         </a-form-item>
                     </div>
                     <a-form-item label="引用对象" :label-col="{span:6}" :wrapper-col="{span:12}">
+                        <!-- <a-input allowClear v-model.trim='currentItem.referObjectCode'/> -->
                         <a-select
                             allowClear
                             @change="changeObject"
@@ -101,6 +102,7 @@
                         </a-select>
                     </a-form-item>
                     <a-form-item label="引用字段" :label-col="{span:6}" :wrapper-col="{span:12}">
+                        <!-- <a-input allowClear v-model.trim='currentItem.referObjectField'/> -->
                         <a-select allowClear v-model.trim='currentItem.referObjectField'>
                             <a-select-option v-for="item in fieldList" :key="item.code" :value="item.code">
                             {{ item.name }}
@@ -119,6 +121,9 @@
                     </a-form-item>
                     <a-form-item label="API" :label-col="{span:6}" :wrapper-col="{span:12}">
                         <a-input allowClear v-model.trim='currentItem.serverApi'/>
+                    </a-form-item>
+                    <a-form-item label="是否必填" :label-col="{span:6}" :wrapper-col="{span:12}">
+                        <a-switch v-model.trim='currentItem.required'/>
                     </a-form-item>
                     <a-form-item label="是否作为条件字段" :label-col="{span:6}" :wrapper-col="{span:12}">
                         <a-switch v-model.trim='currentItem.conditionField'/>

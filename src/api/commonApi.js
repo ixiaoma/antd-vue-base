@@ -71,5 +71,5 @@ export async function getWorkOrderData(id){
     "start_date": date[0],
     "end_date": date[1]
   }
-  return axios.post('https://dev-tfd.lenovo.com/api/callCenter/historyOnsite/search',params,{headers:{Authorization:res.access_token}})
+  return axios.post('https://dev-tfd.lenovo.com/api/callCenter/historyOnsite/search',params,{headers:{Authorization:'bearer '+res.access_token}})
 }

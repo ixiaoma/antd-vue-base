@@ -15,12 +15,7 @@ export default {
             layoutList:[] , 
             codeList: [] , // 单选 / 多选 关联码表下拉
             categoryList:[],//多级联动下拉
-            categoryCodeList:[
-                {
-                    codeCategory:'',
-                    sort:1
-                }
-            ]
+            categoryCodeList:[]
         }
     },
     mixins:[fieldSettingMixin],
@@ -70,23 +65,43 @@ export default {
             if(item.label == 'RADIO' || item.label == 'CHECKBOX' || item.label == 'SELECT'){
                 this.currentItem.categoryCodes = [
                     {
-                        codeCategory:null,
+                        codeCategory:undefined,
                         sort:1
                     }
                 ]
+                this.categoryCodeList = this.currentItem.categoryCodes
             }
             this.layoutList.push(this.currentItem)
             this.currentIndex = this.layoutList.length-1
             this.showSetting = true
             this.visible = false
         },
+        addSelect(){
+            this.currentItem.categoryCodes.push({
+                codeCategory:undefined,
+                sort:this.currentItem.categoryCodes.length+1
+            })
+            this.categoryCodeList = this.currentItem.categoryCodes || [
+                {
+                    codeCategory:undefined,
+                    sort:1
+                }
+            ]
+        },
         editField(item,index){
             this.showSetting = true
             this.currentItem = item
             this.currentIndex = index
+            if(item.valueType == 'RADIO' || item.valueType == 'CHECKBOX' || item.valueType == 'SELECT'){
+                this.categoryCodeList = this.currentItem.categoryCodes
+            }
         },
-        deleteField(index){
+        deleteField(e,index){
+            e.stopPropagation()
             this.layoutList.splice(index,1)
+            if(this.currentIndex == index){
+                this.showSetting = false
+            }
         },
         async getFormDetailList(){
             const { id } = this.$route.query

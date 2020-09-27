@@ -91,7 +91,7 @@ export default {
             const rules = [
                 {
                     type : i.valueType == 'SELECT' || i.valueType == 'ORG_TREE_MULTI' || i.valueType == 'CHECKBOX' || i.valueType == 'PICTURE' || i.valueType == 'ATTACHMENT' ? 'array' : i.valueType == 'DATETIME' || i.valueType == 'DATE' ? 'object' : i.valueType == 'INTEGER' || i.valueType == 'DECIMAL' ? 'number' : 'string',
-                    required: i.notNull,
+                    required: i.notNull || i.required,
                     whitespace:true,
                     message: `${i.name}必填`
                 }

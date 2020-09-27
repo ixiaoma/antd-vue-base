@@ -164,7 +164,6 @@ export default {
           // sessionStorage.setItem('ACCESS_TOKEN', '4291d7da9005377ec9aec4a71ea837f')
           // sessionStorage.setItem('ACCESS_TOKEN', 'be337d7c-7540-462d-a378-c0bb1d83c7dc')
           // this.$router.push({ path: '/' })
-          console.log( loginParams , 'loginParams' )
           loginToken({
             ...loginParams ,
             grant_type: 'password',

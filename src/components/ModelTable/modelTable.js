@@ -1,8 +1,8 @@
 import TableFilter from '../TableFilter/index.vue'
 import STable from '../Table'
 
-import { getLastMonthDays } from '@/utils/commonCode'
-import { getBasePage, getTableSearch, getTableHeader } from '@/api/commonApi'
+import { getBasePage, getTableSearch, getTableHeader,getWorkOrderData } from '@/api/commonApi'
+import { getUserList } from '@/api/user'
 
 export default{
     data(){
@@ -12,13 +12,7 @@ export default{
             pageCode:null,
             queryParam:[],//筛选值
             // 加载数据方法 必须为 Promise 对象
-            loadData: parameter => {
-                const params = Object.assign( parameter, {filter:{logic: "and",filters:this.queryParam}})
-                return getBasePage({pageCode:this.pageCode,params})
-                .then(res => {
-                    return res
-                })
-            },
+            loadData: parameter => {return this.getListData(parameter)},
             columns:[],
             selectedRowKeys: [],
             selectedRows: []
@@ -41,8 +35,72 @@ export default{
         async showModel(pageCode){
             this.pageCode = pageCode
             // const date = await getLastMonthDays(-1)
-            this.getInitData()
+            if(pageCode == 'workOrder' || pageCode == 'systemUser'){
+                if(pageCode == 'systemUser'){
+                    this.columns = [
+                        {
+                            title: '姓名',
+                            dataIndex: 'realName',
+                        },
+                        {
+                            title: '工号',
+                            dataIndex: 'code'
+                        },
+                        {
+                            title: '公司',
+                            dataIndex: 'companyName'
+                        },
+                        {
+                            title: '部门',
+                            dataIndex: 'deptName'
+                        },
+                        {
+                            title: '手机号',
+                            dataIndex: 'cellphone'
+                        }
+                    ]
+                }else{
+                    this.columns = [
+                        {
+                            title: '工单编号',
+                            sorter: true,
+                            dataIndex: 'onsiteId'
+                        },{
+                            title: '员工姓名',
+                            sorter: true,
+                            dataIndex: 'operationUserName'
+                        },{
+                            title: '开始时间',
+                            sorter: true,
+                            dataIndex: 'arrivalTime'
+                        },{
+                            title: '结束时间',
+                            sorter: true,
+                            dataIndex: 'finishTime'
+                        }
+                    ]
+                }
+                this.filterList = []
+                this.pageLoading = false
+            }else{
+                this.getInitData()
+            }
             this.visible = true
+        },
+        getListData(parameter){
+            if(this.pageCode == 'workOrder'){
+                return getWorkOrderData('2c9380826f115b40016f11f14e6e0099')
+            }else if(this.pageCode == 'systemUser'){
+                return getUserList(parameter).then(res=>{
+                    return res
+                })
+            }else{
+                const params = Object.assign( parameter, {filter:{logic: "and",filters:this.queryParam}})
+                return getBasePage({pageCode:this.pageCode,params})
+                .then(res => {
+                    return res
+                })
+            }
         },
         customRowFn(record){
             return {

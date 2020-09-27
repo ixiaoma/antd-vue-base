@@ -9,6 +9,7 @@
       tree-default-expand-all
       @change="onChange"
       allowClear
+      placeholder="请选择部门"
       :replaceFields="{title:'name',children:'subDept',value:'id',key:'id'}"/>
 </template>
 
