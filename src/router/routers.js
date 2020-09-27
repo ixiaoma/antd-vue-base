@@ -906,6 +906,12 @@ export const hideInMenuRouterMap = {
       name: 'addCustomReport',
       component: () => import('@/views/customReport/addCustomReport.vue'),
       meta: { title: '自定义报表'}
+    },
+    {
+      path: '/hidemenu/addWorkTimeOver',
+      name: 'addWorkTimeOver',
+      component: () => import('@/components/addWorkTimeOver/index.vue'),
+      meta: { title: '加班申请'}
     }
   ]
 }

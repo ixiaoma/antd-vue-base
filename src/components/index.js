@@ -24,6 +24,7 @@ import StandardFormRow from '@/components/StandardFormRow'
 import ArticleListContent from '@/components/ArticleListContent'
 import SearchTable from '@/components/SearchTable/searchTable.vue'
 import approvalCommon from '@/components/approvalCommon/index.vue'
+import addWorkTimeOver from '@/components/addWorkTimeOver/index.vue'
 
 import Dialog from '@/components/Dialog'
 
@@ -51,5 +52,6 @@ export {
   ArticleListContent,
   Dialog,
   SearchTable,
-  approvalCommon
+  approvalCommon,
+  addWorkTimeOver
 }

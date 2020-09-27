@@ -99,6 +99,15 @@ export default{
                 query:{ title, flag, pageCode: this.pageCode, id: data ? data.id : null,approvalStatus:data?data.approvalStatus:'' }
             })
         },
+        //加班申请
+        workOverAdd(data,flag) {
+            const { name, meta } = this.$route
+            const title = `${meta.title}${flag == 1 ? '新增' : flag == 2 ? '详情' : '修改'}`
+            this.$router.push({
+                name:'addWorkTimeOver',
+                query:{ title, flag, pageCode: this.pageCode, id: data ? data.id : null}
+            })
+        },
         async deleteData(id){
             this.$confirm({
                 title: '请确认是否要删除此数据?',
@@ -145,7 +154,7 @@ export default{
                 dataIndex: ele.code
               }
             })
-            if(this.buttonList.includes('detail') || this.buttonList.includes('edit') || this.buttonList.includes('delete')|| this.buttonList.includes('rosterDetail')|| this.buttonList.includes('attendanceDetail')||this.buttonList.includes('workTimeDetail')||this.buttonList.includes('detailApproval')){
+            if(this.buttonList.includes('detail') || this.buttonList.includes('edit') || this.buttonList.includes('delete')|| this.buttonList.includes('rosterDetail')|| this.buttonList.includes('attendanceDetail')||this.buttonList.includes('workTimeDetail')||this.buttonList.includes('detailApproval')||this.buttonList.includes('editWorkOver')||this.buttonList.includes('detailWorkOver')){
                 this.columns.push({
                     title: '操作',
                     dataIndex: 'action',

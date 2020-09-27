@@ -1,6 +1,6 @@
 <template>
   <div class="exampleList">
-      <search-table :definekey='definekey'/>
+      <search-table :pageCode='pageCode'/>
   </div>
 </template>
 
@@ -9,7 +9,7 @@ import { SearchTable } from '@/components'
 export default {
   data () {
     return {
-      definekey:'overtime'
+      pageCode:'overtime'
     }
   },
   components: {

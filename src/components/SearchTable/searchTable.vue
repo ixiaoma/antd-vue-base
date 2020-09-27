@@ -5,6 +5,7 @@
         <table-filter :filterList='filterList' @refresh='searchRefresh'/> 
         <div class="table-operator">
             <a-button type="primary" icon="plus" v-if="buttonList.includes('add')" @click="handleAdd(null,1)">新建</a-button>
+            <a-button type="primary" icon="plus" v-if="buttonList.includes('addWorkOver')" @click="workOverAdd(null,1)">新建</a-button><!--加班-->
             <a-button type="primary" icon="plus" v-if="buttonList.includes('addApproval')" @click="toApproval(null,1)">新增申请</a-button>
             <div>
                 <slot></slot>
@@ -19,7 +20,7 @@
         :data="loadData"
         :scroll='{x:true}'>
             <span slot="action" slot-scope="text, record">
-                <template>        
+                <template>       
                     <a v-if="buttonList.includes('detail')" @click="handleAdd(record,2)" style="margin:0 3px">查看</a>
                     <a v-if="buttonList.includes('edit')" @click="handleAdd(record,3)" style="margin:0 3px">修改</a>
                     <a v-if="buttonList.includes('delete')" @click="deleteData(record.id)" style="margin:0 3px">删除</a>
@@ -27,6 +28,8 @@
                     <a v-if="buttonList.includes('attendanceDetail')" @click="attendanceDetailLoad(record,2)" style="margin:0 3px">查看考勤</a>
                     <a v-if="buttonList.includes('workTimeDetail')" @click="workTimeDetailLoad(record,2)" style="margin:0 3px">查看考勤</a>
                     <a v-if="buttonList.includes('detailApproval')" @click="detailApprovalLoad(record,2)" style="margin:0 3px">查看</a>
+                    <a v-if="buttonList.includes('editWorkOver')" @click="workOverAdd(record,3)" style="margin:0 3px">编辑</a><!--加班-->
+                    <a v-if="buttonList.includes('detailWorkOver')" @click="workOverAdd(record,2)" style="margin:0 3px">查看</a><!--加班-->
                 </template>
             </span>
         </s-table>
