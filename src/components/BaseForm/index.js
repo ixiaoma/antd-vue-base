@@ -76,7 +76,7 @@ export default {
                     initialValue = currentValue
                 }
             }else{
-                if(i.valueType != 'CHECKBOX'){
+                if(i.valueType != 'CHECKBOX' && i.codeItems){
                     const defaultValue = i.codeItems.filter(ele=>ele.defaultStatus)
                     initialValue = i.value || defaultValue.length ? defaultValue.map(ele=>ele.codeKey) : undefined
                 }else{
