@@ -297,7 +297,11 @@ export default {
             this.layoutList.forEach(ele=>{
                 ele.fieldDefineValueList.forEach(pre=>{
                     if(pre.referObjectCode == this.referObjectCode){
-                        this.form.setFieldsValue({[pre.code]:data[pre.referObjectField]})
+                        if(pre.display){
+                            this.form.setFieldsValue({[pre.code]:data[pre.referObjectField]})
+                        }else{
+                            pre.value = data[pre.referObjectField]
+                        }
                     }
                 })
             })
