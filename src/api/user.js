@@ -92,6 +92,10 @@ const api={
   budgetEditAmount:baseBusiness+'budget/edit/config/amount', //费用管理-预算设置-修改预算金额
   budgetEditLatitude:baseBusiness+'budget/edit/config/latitude', //费用管理-预算设置-修改预算范围
   budgetGetLatitude:baseBusiness+'budget/get/config/latitude', //费用管理-预算设置-查看预算范围
+  customReportPage:frameAPI+'customReport/config/page',//自定义报表列表
+  customReportSave:frameAPI+'customReport/config/save',//自定义报表保存
+  customReportDetail:frameAPI+'customReport/detail/',//自定义报表详情
+  customReportDelete:frameAPI+'customReport/config/delete/'//自定义报表删除
 }
 
 
@@ -376,6 +380,20 @@ export function budgetEditLatitude(params) {
 export function budgetGetLatitude(params) {
   return axios.post(api.budgetGetLatitude,params)
 }
+export function customReportPage(params) {
+  return axios.post(api.customReportPage,params)
+}
+export function customReportSave(params) {
+  return axios.post(api.customReportSave,params)
+}
+export function customReportDetail(params) {
+  return axios.post(api.customReportDetail+params)
+}
+export function customReportDelete(params) {
+  return axios.post(api.customReportDelete+params)
+}
+
+
 
 
 

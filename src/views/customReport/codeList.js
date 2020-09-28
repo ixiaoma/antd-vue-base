@@ -5,7 +5,7 @@ export const columns = [
     },
     {
       title: '报表模板',
-      dataIndex: 'templete'
+      dataIndex: 'objectName'
     },
     {
       title: '排序',

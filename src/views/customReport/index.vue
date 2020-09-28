@@ -7,7 +7,7 @@
       </div>
       <s-table
         ref="table"
-        rowKey="key"
+        :rowKey="(record) =>  record.id"
         :columns="columns"
         :data="loadData"
         :alert="true"
@@ -27,7 +27,7 @@
 
 <script>
 import { STable } from '@/components'
-import { getServiceList } from '@/api/user'
+import { customReportPage,customReportDelete } from '@/api/user'
 import {columns} from './codeList.js'
 
 export default {
@@ -44,12 +44,10 @@ export default {
       queryParam: {},
       // 加载数据方法 必须为 Promise 对象
       loadData: parameter => {
-        const requestParameters = Object.assign({}, parameter, this.queryParam)
-        console.log('loadData request parameters:', requestParameters)
-        return getServiceList(requestParameters)
+        return customReportPage(parameter)
           .then(res => {
             // return res.result
-            return result
+            return res
           })
       },
       selectedRowKeys: [],
@@ -65,10 +63,32 @@ export default {
         name:'addCustomReport',
         query:{
           title:`自定义报表${flag == 1 ? '新增' : flag == 2 ? '详情' : '修改'}`,
-          flag
+          flag,
+          id:data?data.id:'',
+          name:data?data.name:'',
+          sort:data?data.sort:'',
+          template:data?data.objectType:''
         }
       })
+    },
+    handleDel(record){
+      debugger
+      let _this=this
+        this.$confirm({
+            title: '温馨提示',
+            content: '确认删除？',
+            okText: '确认',
+            cancelText: '取消',
+            onOk() {
+                customReportDelete(record.id).then(res => {
+                    _this.$message.success('删除成功');
+                    _this.$refs.table.refresh()    
+                })
+            },
+            onCancel() { },
+        });
     }
+    // customReportDelete
   },
   created(){
     this.buttonList = this.$route.meta.buttonList?this.$route.meta.buttonList:[]
