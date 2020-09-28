@@ -26,7 +26,7 @@
                                             </a-select>
                                             <a-cascader allowClear v-else-if="i.valueType == 'SELECT'" v-decorator="decoratorFn(i)" :placeholder="'请选择'+i.name"
                                             :field-names="{ label: 'codeValue', value: 'codeKey',children:'children'}" :options="i.codeItems" :load-data="(selectedOptions)=>{loadData(selectedOptions,i)}" change-on-select/>
-                                            <a-date-picker allowClear :show-time="i.valueType == 'DATETIME'" v-else-if="i.valueType == 'DATETIME' || i.valueType == 'DATE'" v-decorator="decoratorFn(i)" style="width:100%" :placeholder="'请选择'+i.name" @change="time => {dateChange(time,i)}"/>
+                                            <a-date-picker allowClear :show-time="i.valueType == 'DATETIME'" v-else-if="i.valueType == 'DATETIME' || i.valueType == 'DATE'" v-decorator="decoratorFn(i)" style="width:100%" :placeholder="'请选择'+i.name" @change="(date,dateString) => {dateChange(date,dateString,i)}"/>
                                             <tree-select v-else-if="i.valueType == 'ORG_TREE_SINGLE' || i.valueType == 'ORG_TREE_MULTI'" :multipleTree="i.valueType == 'ORG_TREE_MULTI'" v-decorator="decoratorFn(i)" :selectList='i.value' @selectTree='(list)=>{selectTree(list,i)}' :disabled='i.referObjectCode ? true : false'/>
                                             <div class="clearfix" v-else-if="i.valueType == 'PICTURE'" v-decorator="decoratorFn(i)">
                                                 <!-- <div v-if='form.getFieldValue(i.code)'>

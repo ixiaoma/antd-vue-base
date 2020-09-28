@@ -45,7 +45,7 @@
                     <a-select v-model="firstSelect">
                       <a-select-option value="3">最高级</a-select-option>
                       <a-select-option value="2">第二层级</a-select-option>
-                      <a-select-option value="1">第三层级</a-select-option>
+                      <a-select-option value="1">第一层级</a-select-option>
                     </a-select>
                     <!-- <tree-select :selectList='firstSelect' @selectTree='(list)=>{selectTree(list,"firstSelect")}'/> -->
                   </a-col>
@@ -56,7 +56,7 @@
                     <a-select v-model="levelSelect">
                       <a-select-option value="3">最高级</a-select-option>
                       <a-select-option value="2" :disabled="firstSelect>2">第二层级</a-select-option>
-                      <a-select-option value="1" :disabled="firstSelect>1">第三层级</a-select-option>
+                      <a-select-option value="1" :disabled="firstSelect>1">第一层级</a-select-option>
                     </a-select>
                     <!-- <tree-select :selectList='levelSelect' @selectTree='(list)=>{selectTree(list,"levelSelect")}'/> -->
                   </a-col>

@@ -2,7 +2,7 @@ import TableFilter from '../TableFilter/index.vue'
 import STable from '../Table'
 
 import { getBasePage, getTableSearch, getTableHeader, deletePageList } from '@/api/commonApi'
-import { applyList } from '@/api/apply'
+import { getApprovalList } from '@/api/apply'
 import { getProcessDetail } from '@/api/approval'
 
 export default{
@@ -122,7 +122,7 @@ export default{
             if(this.definekey){
                 const filters = [...this.queryParam,{field: "processDefineKey", operator: "eq", value: this.definekey}]
                 const params = Object.assign( parameter, {filter:{logic: "and",filters}})
-                return applyList(params) .then(res => {
+                return getApprovalList(params) .then(res => {
                     return res
                 })
             }else{

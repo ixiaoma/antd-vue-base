@@ -3,6 +3,7 @@ import { getBaseLayout, getDetailLayout, getEditLayout_kpitodo,getDetailLayout_k
 import { getProcessDetail,approvalStart } from '@/api/approval'
 import { fileUploadApi, fileDownLoad } from '@/api/uploaddown'
 import { getDeptLeader } from '@/api/user'
+import { calculateTime } from '@/api/apply'
 
 import fieldHandle from '@/mixins/fieldHandle'
 
@@ -25,6 +26,8 @@ export default {
             readonly:false,
             fileUploadApi,
             accessToken:null,
+            startDate:'',
+            endDate:'',
             referObjectCode:null//关联字段标识
         }
     },
@@ -309,7 +312,6 @@ export default {
                 ele.fieldDefineValueList.forEach(pre=>{
                     if(pre.referObjectCode == this.referObjectCode){
                         if(pre.display){
-                            console.log()
                             this.form.setFieldsValue({[pre.code]:data[pre.referObjectField]})
                         }else{
                             pre.value = data[pre.referObjectField]
@@ -350,8 +352,28 @@ export default {
                 }
             }
         },
-        dateChange(data,i){//时间修改
-            console.log(data,i)
+        dateChange(data,dateString,i){//时间修改
+            const { definekey } = this.$route.query
+            if(definekey == 'overtime'){
+                if(dateString){
+                    this[i.code] = dateString
+                    if(this.startDate && this.endDate){
+                        this.referObjectCode = 'calculateTime'
+                        //调用接口
+                        const params = {
+                            startDate:this.startDate,
+                            endDate:this.endDate,
+                            timeType:this.timeType
+                        }
+                        console.log(params)
+                        // calculateTime()
+                        // this.selectData()
+                    }
+                }else{
+                    this[i.code] = ''
+                    this.clearRleative(i)
+                }
+            }
         },
         goBack(){
             if(this.$route.name == 'staffForm'){

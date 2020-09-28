@@ -11,7 +11,7 @@ const settingApi = {
   saveFlow: baseFrame + 'process-define/save',//保存审批流
   processDetail: baseFrame + 'process-define/form/detail/definekey/',//获取审批详情
   taskList: baseFrame + 'business/task/page',//审批列表
-  approvalStart: baseFrame + 'business/execution/start'//发起审批
+  approvalStart: baseFrame + 'business/execution/start',//发起审批
 }
 
 export function getApprovalDate ({id}) {
@@ -57,3 +57,4 @@ export function getTaskDetail ({taskId}) {//详情审批
 export function approvalStart ({params}) {
   return axios.post(settingApi.approvalStart,params)
 }
+
