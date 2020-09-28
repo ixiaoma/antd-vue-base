@@ -4,7 +4,7 @@
         <a-form :form="form" layout="inline" class="form-con">
             <a-row :gutter="56">
                 <span v-for="(i,d) in fieldList" :key="d" >
-                    <a-col v-if='i.display' :sm='24' :md ='18' :lg="i.valueType == 'TEXT_MULTI' || i.valueType == 'PICTURE' || i.valueType == 'ATTACHMENT' ? 20 : 12" >
+                    <a-col v-if='!i.display' :sm='24' :md ='18' :lg="i.valueType == 'TEXT_MULTI' || i.valueType == 'PICTURE' || i.valueType == 'ATTACHMENT' ? 20 : 12" >
                         <a-form-item :label="i.name" v-if='i.onlyread' class="readonly-row" :class="i.valueType == 'TEXT_MULTI' || i.valueType == 'PICTURE' || i.valueType == 'ATTACHMENT' ? '' : 'pre-row'">
                             <span class="ant-form-text" :title="i.value"> {{i.value}} </span>
                         </a-form-item>

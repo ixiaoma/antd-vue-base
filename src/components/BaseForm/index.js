@@ -350,6 +350,9 @@ export default {
                 }
             }
         },
+        dateChange(data,i){//时间修改
+            console.log(data,i)
+        },
         goBack(){
             if(this.$route.name == 'staffForm'){
                 this.$router.push({name:'staffList'})
