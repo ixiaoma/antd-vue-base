@@ -14,6 +14,12 @@ const valueTypeList = [//participantList审批人抄送人；formAuthorityList�
   },{
     label:'VONDER',
     value:'VONDER'
+  },{
+    label:'部门leader',
+    value:'DEPT_LEADER'
+  },{
+    label:'指定leader',
+    value:'ASSIGN_DEPT_LEADER'
   }
 ]
 const oprationList = ['=','!=','>','>=','<','<=']
@@ -212,8 +218,9 @@ export default {
               {hierarchyType : this.levelData,type:this.selectRadio,name:'指定上级',dataId:this.levelData == 'ASSIGN' ? `${this.firstSelect},${this.levelSelect}` : this.levelSelect}
             ]
           }else{
+            const name = this.valueTypeList.filter(ele=>ele.value == this.selectRadio)
             this.nodeConfig.participantList = [
-              {type:this.selectRadio,name:this.selectRadio == 'APPLICANT' ? '申请人本人' : 'VONDER'}
+              {type:this.selectRadio,name:name[0].label}
             ]
           }
         }else if(nodeType == 'CC'){

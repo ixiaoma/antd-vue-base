@@ -175,7 +175,14 @@ export default{
                   sorter: true,
                   dataIndex: ele.code
                 }
-              })
+            })
+            this.columns.push({
+                title: '操作',
+                dataIndex: 'action',
+                width: '130px',
+                fixed: 'right',
+                scopedSlots: { customRender: 'action' }
+            })
             this.pageLoading = false
         }
     },

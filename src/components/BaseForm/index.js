@@ -1,8 +1,10 @@
 import moment from 'moment'
 import { getBaseLayout, getDetailLayout, getEditLayout_kpitodo,getDetailLayout_kpitodo,saveLayout, getEditLayout, saveEditLayout } from '@/api/commonApi'
 import { getProcessDetail,approvalStart } from '@/api/approval'
-import fieldHandle from '@/mixins/fieldHandle'
 import { fileUploadApi, fileDownLoad } from '@/api/uploaddown'
+import { getDeptLeader } from '@/api/user'
+
+import fieldHandle from '@/mixins/fieldHandle'
 
 import FooterToolBar from '@/layouts/FooterToolbar'
 import staffAchievements from '../staffAchievements/staffAchievements.vue'
@@ -64,9 +66,10 @@ export default {
     },
     methods:{
         decoratorFn(i){//初始化绑值
+            const { definekey } = this.$route.query
             let initialValue = ''
             if(i.valueType != 'SELECT' && i.valueType != 'CHECKBOX' && i.valueType != 'ORG_TREE_MULTI' && i.valueType != 'PICTURE' && i.valueType != 'ATTACHMENT'){
-                const currentValue = i.value && i.value.length ? i.value.join(',') : ''
+                const currentValue = i.value && i.value.length ? definekey ? i.value : i.value.join(',') : ''
                 if(i.valueType == 'DATETIME' || i.validateFields == 'DATE'){
                     initialValue = currentValue ? moment(currentValue,i.validateFields == 'DATE' ? 'YYYY-MM-DD' : 'YYYY-MM-DD HH:mm:ss') : null
                 } else if(i.valueType == 'RADIO' && i.codeItems){
@@ -82,7 +85,11 @@ export default {
                     const defaultValue = i.codeItems.filter(ele=>ele.defaultStatus)
                     initialValue = i.value || defaultValue.length ? defaultValue.map(ele=>ele.codeKey) : undefined
                 }else{
-                    initialValue = i.value || []
+                    if(definekey){
+                        initialValue = i.value ? i.value.split(',') : []
+                    }else{
+                        initialValue = i.value || []
+                    }
                 }
             }
             if(i.valueType == 'SELECT'){//多级联动，强制处理数据
@@ -111,9 +118,11 @@ export default {
             }
             return [i.code,config]
         },
-        async selectTree(list,code){//下拉树回填值
-            this.form.setFieldsValue({[code]:list})
+        async selectTree(list,i){//下拉树回填值
+            this.form.setFieldsValue({[i.code]:list})
+            const { definekey } = this.$route.query
             if(definekey == 'induction'){
+                this.referObjectCode = 'orgTree'
                 const res = await getDeptLeader(list)
                 this.selectData(res)
             }
@@ -257,6 +266,8 @@ export default {
                                 let data = values[ele.code]
                                 if(ele.valueType == 'DATETIME' || ele.valueType == 'DATE'){
                                     data = moment(values[ele.code]).format(ele.valueType == 'DATE' ? 'YYYY-MM-DD' : 'YYYY-MM-DD HH:mm:ss')
+                                }else if(typeof(values[ele.code]) == 'object'){
+                                    data.join(',')
                                 }
                                 saveData[ele.code] = data
                             }else{
@@ -298,6 +309,7 @@ export default {
                 ele.fieldDefineValueList.forEach(pre=>{
                     if(pre.referObjectCode == this.referObjectCode){
                         if(pre.display){
+                            console.log()
                             this.form.setFieldsValue({[pre.code]:data[pre.referObjectField]})
                         }else{
                             pre.value = data[pre.referObjectField]

@@ -137,6 +137,7 @@ export default{
         },
         changeObject(objectCode){
             this.getFieldList(objectCode)
+            this.fieldData.referObjectField = undefined
         },
         // 引用对象赋值字段
         getSetFieldList(){
@@ -190,6 +191,7 @@ export default{
             this.fieldVisible = true
             this.fieldForm.resetFields()
             this.valueType = fieldData ? fieldData.valueType : '' ; 
+            data.referObjectField && this.getFieldList(data.referObjectCode)
             this.noHidden = this.valueType != "ORG_TREE_SINGLE" && this.valueType != "ORG_TREE_MULT"
             // 关联码表值数组单独处理
             if(this.isSelectCode && fieldData.categoryCodes){

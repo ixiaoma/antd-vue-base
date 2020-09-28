@@ -138,6 +138,7 @@
         <a-form-item label="引用对象" :label-col="{span:6}" :wrapper-col="{span:12}">
           <a-select
             allowClear
+            showSearch
             @change="changeObject"
             v-decorator="['referObjectCode', { initialValue: fieldData ? fieldData.referObjectCode : undefined  }]"
             >
@@ -150,6 +151,7 @@
         <a-form-item label="引用字段" :label-col="{span:6}" :wrapper-col="{span:12}">
           <a-select
             allowClear
+            showSearch
             v-decorator="['referObjectField', { initialValue: fieldData ? fieldData.referObjectField : undefined  }]"
             >
             <a-select-option v-for="item in fieldList" :key="item.code" :value="item.code">
