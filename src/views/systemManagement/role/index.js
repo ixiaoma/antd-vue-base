@@ -115,13 +115,9 @@ export default {
         },
         setRole(id) {//角色配置
             rolesMenu(id + '/tree').then(res => {
-                // if (res && res.code == 200) {
-                    // this.checkedKeys = res.data ? res.data : [];
-                    // this.defaultExpandedKeys = this.checkedKeys;
                     if (res && res.length) {              
                         let powerData = JSON.stringify(res);
                         powerData = powerData.replace(/name/g, 'title');
-                        // powerData = powerData.replace(/parentId/g, 'parentmoduleid');
                         powerData = powerData.replace(/childrenModules/g, 'children');
                         powerData = powerData.replace(/moduleId/g, 'key');
                         powerData = JSON.parse(powerData);
@@ -129,25 +125,20 @@ export default {
                     } else {
                         this.treeData = []
                     }
-                // }
             }).then(()=>{
                 roleResource(id).then(res => {
-                   this.checkedKeys = res ? res : [];
-                   this.defaultExpandedKeys = this.checkedKeys;
-                })
+                    this.checkedKeys = res ? res : [];
+                    })
             }).then(() => {
                 let params = {
                     roleId: id
                 }
                 rolesSwitchUser(params).then(res => {
-                    // debugger
-                    // if (res && res.code == 200) {
-                        let arr = []
-                        res.records.forEach(ele => {
-                            arr.push(ele.id);
-                        })
-                        this.userTargetKeys = arr
-                    // }
+                    let arr = []
+                    res.records.forEach(ele => {
+                        arr.push(ele.id);
+                    })
+                    this.userTargetKeys = arr
                 }).then(res => {
                     this.currentRoleId = id;
                 })
@@ -188,8 +179,8 @@ export default {
         },
         checkTree(checkedKeys, { checkedNodes }) {
             this.checkedNodes = checkedNodes.map(ele => ele.data.props.parentId)
-            // this.checkedKeys = checkedKeys.checked;
-            this.checkedKeys = checkedKeys;
+            this.checkedKeys = checkedKeys.checked;
+            // this.checkedKeys = checkedKeys;
         },
         onSelect(selectedKeys, info) {
             console.log('selected', selectedKeys, info);

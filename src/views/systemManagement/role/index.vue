@@ -23,15 +23,11 @@
                     <span v-if="!currentRoleId">请点击左侧要配置的角色</span>
                     <a-tabs :activeKey="activeKey" v-else defaultActiveKey="menu" size="small" @change="changeTabs">
                         <a-tab-pane tab="菜单配置" key="menu">
-                            <!-- checkStrictly -->
-                            <!-- @check="checkTree" -->
-                            <!-- :checkedKeys="checkedKeys" -->
                             <a-tree
                             checkable
-                            :defaultExpandedKeys="defaultExpandedKeys"
                             @check="checkTree"
-                            @select="onSelect"
-                            :selected-keys="checkedKeys"
+                            :checkedKeys="checkedKeys"
+                            checkStrictly
                             :treeData="treeData"/>
                             <div class="bottomBtn">
                                 <a-button @click="saveSettingInfo" type="primary">保存</a-button>
