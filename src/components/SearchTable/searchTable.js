@@ -154,7 +154,7 @@ export default{
                 dataIndex: ele.code
               }
             })
-            if(this.buttonList.includes('detail') || this.buttonList.includes('edit') || this.buttonList.includes('delete')|| this.buttonList.includes('rosterDetail')|| this.buttonList.includes('attendanceDetail')||this.buttonList.includes('workTimeDetail')||this.buttonList.includes('detailApproval')||this.buttonList.includes('editWorkOver')||this.buttonList.includes('detailWorkOver')){
+            if(this.buttonList.includes('detail') || this.buttonList.includes('edit') || this.buttonList.includes('delete')|| this.buttonList.includes('rosterDetail')|| this.buttonList.includes('attendanceDetail')||this.buttonList.includes('workTimeDetail')||this.buttonList.includes('detailApproval')){
                 this.columns.push({
                     title: '操作',
                     dataIndex: 'action',
