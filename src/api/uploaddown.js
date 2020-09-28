@@ -22,10 +22,14 @@ export const userVacationImport=process.env.VUE_APP_API_BASE_URL+authAPI+'userVa
 export const userVacationExport=process.env.VUE_APP_API_BASE_URL+authAPI+'userVacation/exportExcel'
 //假期设置-假期余额导入
 export const userVacationDown=process.env.VUE_APP_API_BASE_URL+authAPI+'userVacation/download/template'
-// //系统公告-规章制度上传
-// export const noticeUpload=process.env.VUE_APP_API_BASE_URL+authAPI+'system/sys-notice/upload'
-// //系统公告-规章制度下载
-// export const noticeDownLoad=process.env.VUE_APP_API_BASE_URL+authAPI+'system/sys-notice/download/'
+//考核待办-导出
+export function kpiAssessentExport (params) {//获取列表接口
+    return axios.post(`${baseBusiness}performance_assessment_detail/export`,params)
+}
+//考核待办-导入
+export function kpiAssessentUpload (params) {//获取列表接口
+    return axios.post(`${baseBusiness}performance_assessment_detail/upload`,params)
+}
 
 
 export function uploadLoad(url,file,obj) {

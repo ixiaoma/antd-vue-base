@@ -3,7 +3,7 @@ import moment from 'moment'
 import { STable } from '@/components'
 import { assessTodoLIst } from '@/api/other'
 import { columns } from './codeList.js'
-import { fileUploadApi } from '@/api/uploaddown'
+import { fileUploadApi,kpiAssessentExport,kpiAssessentUpload } from '@/api/uploaddown'
 
 
 

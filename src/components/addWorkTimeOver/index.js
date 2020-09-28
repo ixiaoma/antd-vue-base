@@ -54,21 +54,18 @@ export default {
     //开始时间change
     startDateChange(value){
       this.form.setFieldsValue({startDate:value})
-      let startDate=value?value.format('YYYY-MM-DD HH:mm:ss') : null
-      let endDate=this.form.getFieldValue('endDate')?this.form.getFieldValue('endDate').format('YYYY-MM-DD HH:mm:ss') : null
-      if(startDate&&endDate&&this.form.getFieldValue('serviceType')){
+      if(value&&this.form.getFieldValue('endDate')&&this.form.getFieldValue('serviceType')){
         this.overtimeJudgmentTypeLoad()
       }
     },
     //结束时间change
     endDateChange(value){
       this.form.setFieldsValue({endDate:value})
-      let startDate=this.form.getFieldValue('startDate')?this.form.getFieldValue('startDate').format('YYYY-MM-DD HH:mm:ss') : null
-      let endDate=value?value.format('YYYY-MM-DD HH:mm:ss') : null
-      if(startDate&&endDate&&this.form.getFieldValue('serviceType')){
+      if(this.form.getFieldValue('startDate')&&value&&this.form.getFieldValue('serviceType')){
         this.overtimeJudgmentTypeLoad()
       }
     },
+    //判断加班类型,时长，餐补 方法
     overtimeJudgmentTypeLoad(){
       let params={
         startDate:this.form.getFieldValue('startDate')?this.form.getFieldValue('startDate').format('YYYY-MM-DD HH:mm:ss') : null,
@@ -76,6 +73,13 @@ export default {
         serviceType:this.form.getFieldValue('serviceType'),
         code:this.code
       }
+     this.workTimeListLoad()
+      // overtimeJudgmentType(params).then(res=>{
+      //   this.workTimeListLoad()//加班类型 页面展示
+      // })
+    },
+    //加班类型 页面展示
+    workTimeListLoad(){
       this.workTimeList=[
         {startDate:'2020-09-07 18:00:00',endDate:'2020-09-08 18:00:00',totalTime:'8',overtimeType:'工作日加班',mealSupplement:25},
         {startDate:'2020-10-07 18:00:00',endDate:'2020-10-08 18:00:00',totalTime:'8',overtimeType:'工作日加班',mealSupplement:25}
@@ -95,33 +99,38 @@ export default {
         this.form.setFieldsValue({totalTime:totalTime})
         this.form.setFieldsValue({mealSupplement:mealSupplement})
       }
-      // overtimeJudgmentType(params).then(res=>{
-
-      // })
     },
+    //提交
     handleSubmit(e) {
       e.preventDefault()
       this.form.validateFields((err, values) => {
         if (err) return;
         values['startDate'] = values['startDate'] ? values['startDate'].format('YYYY-MM-DD HH:mm:ss') : null
         values['endDate'] = values['endDate'] ? values['endDate'].format('YYYY-MM-DD HH:mm:ss') : null
-        let params=[[
-          {"code":"code","value":[this.pageCode]},
-          {"code":"empName","value":[this.empName]},
-          {"code":"workId","value":[values['workId']]},
-          {"code":"totalTime","value":[values['totalTime']]},
-          {"code":"overtimeType","value":[values['overtimeType']]},//加班类型
-          {"code":"startDate","value":[values['startDate']]},
-          {"code":"endDate","value":[values['endDate']]},
-          {"code":"theReason","value":[values['theReason']]},
-          {"code":"serviceType","value":[values['serviceType']]},	
-         ]
-      ]  
+        let params=[]  
+        this.workTimeList.length&&this.workTimeList.forEach(item=>{
+          let arr=[
+            {"code":"code","value":[this.pageCode]},
+            {"code":"empName","value":[this.empName]},
+            {"code":"workId","value":[values['workId']]},
+            {"code":"totalTime","value":[item['totalTime']]},
+            {"code":"overtimeType","value":[item['overtimeType']]},//加班类型
+            {"code":"startDate","value":[item['startDate']]},
+            {"code":"endDate","value":[item['endDate']]},
+            {"code":"theReason","value":[values['theReason']]},
+            {"code":"serviceType","value":[values['serviceType']]},	
+            {"code":"mealSupplement","value":[item['mealSupplement']]},	
+          ]
+          params.push(arr)
+        }) 
         saveLayout({pageCode:this.pageCode,params}).then(res=>{
           this.$message.success("保存成功")
           this.$router.go(-1)
         })
       })
+    },
+    initDataLoad(){
+       
     },
     goBack(){
       this.$router.go(-1)
@@ -133,7 +142,6 @@ export default {
       getCodeList('overTime').then(res=>{
         this.overtimeTypeList=res
       })
-      // overtimeTypeList
     },
     userLoad () {
       homeUserCenter().then(res=>{
