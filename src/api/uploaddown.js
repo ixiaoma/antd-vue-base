@@ -24,7 +24,7 @@ export const userVacationExport=process.env.VUE_APP_API_BASE_URL+authAPI+'userVa
 export const userVacationDown=process.env.VUE_APP_API_BASE_URL+authAPI+'userVacation/download/template'
 //考核待办-导出
 export function kpiAssessentExport (params) {//获取列表接口
-    return axios.post(`${baseBusiness}performance_assessment_detail/export`,params)
+    return axios.post(`${baseBusiness}performance_assessment_detail/export`,params,{responseType: 'arraybuffer'})
 }
 //考核待办-导入
 export function kpiAssessentUpload (params) {//获取列表接口

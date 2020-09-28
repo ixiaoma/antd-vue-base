@@ -87,6 +87,19 @@ export default {
             this.deptId=e.value
             this.deptName=e.label
         },
+        labelChange(value){
+            if(value=='联想员工'){
+                this.formField.setFieldsValue({
+                    customerName:'联想',
+                    isWonder:0,
+                    isWonderAdmin:0
+                })
+            }else if(value=='外包员工'){
+                this.formField.setFieldsValue({
+                    customerName:''
+                })
+            }
+        },
         //打开模态框
         openModal(type,id) {
             this.pageType = type;

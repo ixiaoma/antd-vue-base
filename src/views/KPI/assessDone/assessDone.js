@@ -94,7 +94,14 @@ export default {
     },
     exportLoad(){
       if(this.operationType=='经理第一次评分'||this.operationType=='经理第二次评分'||this.operationType=='经理审批'){
-        window.location.href=''
+        let params={
+          operationType:this.operationType
+        }
+        kpiAssessentExport(params).then(res=>{
+          var fileDownload = require('js-file-download')
+          let fileName = this.operationType+".xlsx";
+          fileDownload(res.data,fileName);
+        })
       }else{
         this.$message.warning('操作类型为‘经理审批’或‘经理第一次评分’或‘经理第二次评分’才可进行导出')
       }
@@ -115,6 +122,13 @@ export default {
     handleUpload(){
       if(this.fileList.length){
         console.log(this.fileList[0].response)
+        let params={
+          path:this.fileList[0].response
+        }
+        kpiAssessentUpload(params).then(res=>{
+          this.$message.success('上传成功')
+          this.$refs.table.refresh()
+        })
         this.visible=false
       }else{
         this.$message.warning('请选择文件')

@@ -65,7 +65,7 @@
                     <a-col :span="12">
                         <a-form-item label="标签" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
                              <!-- <a-input v-decorator="['label',validates.label]" :placeholder="modaldisabled?'':'请填写标签'" :disabled="modaldisabled"/> -->
-                            <a-select :getPopupContainer='triggerNode => triggerNode.parentNode' mode="default" v-decorator="['label',validates.label]" :placeholder="modaldisabled?'':'请选择标签'" style="width: 100%" :disabled="modaldisabled" allowClear>
+                            <a-select :getPopupContainer='triggerNode => triggerNode.parentNode' mode="default" v-decorator="['label',validates.label]" :placeholder="modaldisabled?'':'请选择标签'" @change="labelChange" style="width: 100%" :disabled="modaldisabled" allowClear>
                                 <a-select-option v-for="k in labelList" :key="k.codeKey" :value="k.codeKey">
                                 {{ k.codeValue }}
                                 </a-select-option>
