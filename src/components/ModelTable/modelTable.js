@@ -89,7 +89,9 @@ export default{
         },
         getListData(parameter){
             if(this.pageCode == 'workOrder'){
-                return getWorkOrderData('2c9380826f115b40016f11f14e6e0099')
+                return getWorkOrderData().then(res=>{
+                    return res
+                })
             }else if(this.pageCode == 'systemUser'){
                 return getUserList(parameter).then(res=>{
                     return res

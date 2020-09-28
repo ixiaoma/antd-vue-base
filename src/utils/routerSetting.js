@@ -87,8 +87,8 @@ export function getRouterData(list){
         }else{
             let buttonList = []
             if(ele.buttonList && ele.buttonList.length){
-                // ele.buttonList=ele.buttonList.filter(ele=>ele.enabled)
-                buttonList = ele.buttonList.map(ele=>ele.code)
+                const list = ele.buttonList.filter(ele=>ele.enabled == 1)
+                buttonList = list.map(ele=>ele.code)
             }
             return{
                 path:'/'+ele.url,

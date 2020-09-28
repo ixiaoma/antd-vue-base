@@ -17,6 +17,7 @@
                 :columns="columns"
                 :data="loadData"
                 :rowSelection="rowSelection"
+                :pageCode="pageCode"
                 :scroll='{x:true}'/>
         </a-card>
     </a-modal>

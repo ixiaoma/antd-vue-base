@@ -1,5 +1,6 @@
 import { axios } from '@/utils/axios'
 import { getLastMonthDays } from '@/utils/commonCode'
+import { homeUserCenter } from './user'
 
 const baseBusiness = 'business/'
 const baseFrame = 'frame/'
@@ -63,11 +64,12 @@ export function getToken(){
   return axios.post('https://api-dev-tfd.lenovo.com/user/oauth/token?grant_type=client_credentials',{},{headers:{Authorization:'Basic aHJvYWRtaW46YWRtaW4='}})
 }
 
-export async function getWorkOrderData(id){
+export async function getWorkOrderData(){
   const date = getLastMonthDays()
   const res = await getToken()
+  const userInfo = await homeUserCenter()
   const params = {
-    id,
+    id:userInfo.id,
     "start_date": date[0],
     "end_date": date[1]
   }
