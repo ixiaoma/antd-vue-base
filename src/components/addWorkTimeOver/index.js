@@ -24,6 +24,7 @@ export default {
         totalTime:{ rules: [{ required: true, message: '请填写加班原因' }] },
         theReason: { rules: [{ required: true, message: '请填写加班原因' }] },
       },
+      workTimeList:[]
     }
   },
   components: {
@@ -75,9 +76,28 @@ export default {
         serviceType:this.form.getFieldValue('serviceType'),
         code:this.code
       }
-      overtimeJudgmentType(params).then(res=>{
+      this.workTimeList=[
+        {startDate:'2020-09-07 18:00:00',endDate:'2020-09-08 18:00:00',totalTime:'8',overtimeType:'工作日加班',mealSupplement:25},
+        {startDate:'2020-10-07 18:00:00',endDate:'2020-10-08 18:00:00',totalTime:'8',overtimeType:'工作日加班',mealSupplement:25}
+      ]
+      if(this.workTimeList.length==1){
+        this.form.setFieldsValue({totalTime:this.workTimeList[0].totalTime})
+        this.form.setFieldsValue({overtimeType:this.workTimeList[0].overtimeType})
+        this.form.setFieldsValue({mealSupplement:this.workTimeList[0].mealSupplement})
+      }
+      if(this.workTimeList.length>1){
+        let totalTime=0
+        let mealSupplement=0
+        this.workTimeList.forEach(item=>{
+          totalTime+=Number(item.totalTime)
+          mealSupplement+=Number(item.mealSupplement)
+        })
+        this.form.setFieldsValue({totalTime:totalTime})
+        this.form.setFieldsValue({mealSupplement:mealSupplement})
+      }
+      // overtimeJudgmentType(params).then(res=>{
 
-      })
+      // })
     },
     handleSubmit(e) {
       e.preventDefault()

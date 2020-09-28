@@ -3,6 +3,7 @@
     <a-form :form="form" style="padding:0 20px">
     <a-collapse v-model="activeKey" :bordered="false" class="spacial-collape" expand-icon-position='right'>
         <a-collapse-panel key="1" header="加班申请">
+        <a-row>
         <a-col :sm='24' :md ='18' :lg="12">
             <a-form-item label="员工工号" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
                 <!-- <a-input v-decorator="['code',validates.code]"/> -->
@@ -59,10 +60,48 @@
             </a-form-item>
         </a-col>
         <a-col :sm='24' :md ='18' :lg="12">
+            <a-form-item label="餐补金额" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
+                <a-input v-decorator="['mealSupplement',validates.mealSupplement]"/>
+            </a-form-item>
+        </a-col>
+        <a-col :sm='24' :md ='18' :lg="12">
             <a-form-item label="加班原因" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
                 <a-textarea  v-decorator="['theReason',validates.theReason]" :auto-size="{ minRows: 2, maxRows: 6 }"/>
             </a-form-item>
         </a-col>
+        </a-row>
+
+
+        <div  v-if="workTimeList.length>1">
+            <a-row style="background:#fafafa;padding-top:20px;margin-bottom:10px" v-for="(ele,index) in workTimeList" :key="index">
+                <a-col :sm='24' :md ='18' :lg="12">
+                    <a-form-item label="开始时间" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
+                        {{ele.startDate}}
+                    </a-form-item>
+                </a-col>
+                <a-col :sm='24' :md ='18' :lg="12">
+                    <a-form-item label="结束时间" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
+                        {{ele.endDate}}
+                    </a-form-item>
+                </a-col>
+                <a-col :sm='24' :md ='18' :lg="12">
+                    <a-form-item label="总计时间" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
+                        {{ele.totalTime}}
+                    </a-form-item>
+                </a-col>
+                <a-col :sm='24' :md ='18' :lg="12">
+                    <a-form-item label="加班类型" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
+                        {{ele.overtimeType}}
+                    </a-form-item>
+                </a-col>
+                <a-col :sm='24' :md ='18' :lg="12">
+                    <a-form-item label="加班餐补" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
+                        {{ele.mealSupplement}}
+                    </a-form-item>
+                </a-col>
+            </a-row>
+        </div>
+        
         </a-collapse-panel>
         </a-collapse>
          <footer-tool-bar>

@@ -188,7 +188,11 @@ export default {
         },
         checkTree(checkedKeys, { checkedNodes }) {
             this.checkedNodes = checkedNodes.map(ele => ele.data.props.parentId)
-            this.checkedKeys = checkedKeys.checked;
+            // this.checkedKeys = checkedKeys.checked;
+            this.checkedKeys = checkedKeys;
+        },
+        onSelect(selectedKeys, info) {
+            console.log('selected', selectedKeys, info);
         },
         saveSettingInfo() {
             let params = {}
