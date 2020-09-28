@@ -117,12 +117,9 @@ export default {
 
             // }
         },
-        async handlePreview(file) {
-            this.previewImage = file.thumbUrl;
+        handlePreview(url) {
+            this.previewImage = url.thumbUrl || url;
             this.previewVisible = true;
-        },
-        handleChange({ fileList },code) {
-            this.imgList = fileList;
         },
         handleCancel() {
             this.previewVisible = false;
@@ -133,8 +130,11 @@ export default {
                 this.form.setFieldsValue({[code]:list})
             }
         },
+        getImgSrc(url){
+            return fileDownLoad+url+'?access_token='+this.accessToken
+        },
         downLoadFile(url){//文件下载
-            window.location.href=fileDownLoad+url+'?access_token='+this.accessToken
+            window.location.href = this.getImgSrc(url)
         },
         async getApprovalData(definekey){
             const res = await getProcessDetail({definekey})
@@ -293,7 +293,6 @@ export default {
             this.$refs.StaffModel.showModel(list)
         },
         selectData(data){//回填关联字段的值
-            console.log(data)
             this.layoutList.forEach(ele=>{
                 ele.fieldDefineValueList.forEach(pre=>{
                     if(pre.referObjectCode == this.referObjectCode){
@@ -307,7 +306,7 @@ export default {
             })
         },
         selectChange(value,i){//下拉值修改改变字段的展示隐藏
-            const {pageCode} = this.$route.query
+            const { pageCode, definekey } = this.$route.query
             if(pageCode == 'trip'){
                 if(i.code == "tripType"){
                     this.layoutList.forEach(ele=>{
@@ -326,11 +325,13 @@ export default {
                         }
                     })
                 }
-            }else if(pageCode == 'vacation'){
-                if(i.code == "vacationType"){
+            }else if(definekey == 'vacation'){
+                if(i.code == "timeType"){
                     this.layoutList.forEach(ele=>{
                         ele.fieldDefineValueList.forEach(pre=>{
-                            
+                            if(pre.code == 'startDate' || pre.code == 'endDate'){
+                                pre.valueType = value == "天" ? 'DATE' : 'DATETIME'
+                            }
                         })
                     })
                 }

@@ -35,7 +35,7 @@ export default {
           this.filterList.forEach(ele => {
             let value = values[ele.code]
             if (value || value == 0) {
-              let operator = ele.valueType === 'CHECKBOX' || ele.valueType == 'ORG_TREE_MULTI' || ele.valueType == 'SELECT' ? 'contain' : 'eq'
+              let operator = ele.valueType === 'CHECKBOX' || ele.valueType == 'ORG_TREE_MULTI' || ele.valueType == 'SELECT' ? 'in' : ele.valueType === 'RADIO' || ele.valueType == 'ORG_TREE_SINGLE' ? 'eq' : 'contain'
               // if(ele.valueType == 'ORG_TREE_MULTI' || ele.valueType == 'CHECKBOX'){
               //   searchArr.push({
               //     filters:values.map(pre=>{

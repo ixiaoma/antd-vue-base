@@ -9,7 +9,7 @@ import { SearchTable } from '@/components'
 export default {
   data () {
     return {
-      definekey:'test'
+      definekey:'trip'
     }
   },
   components: {

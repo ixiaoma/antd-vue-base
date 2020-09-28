@@ -7,7 +7,13 @@
                         <span v-for="(i,d) in item.fieldDefineValueList" :key="d">
                             <a-col v-if='i.display' :sm='24' :md ='18' :lg="i.valueType == 'TEXT_MULTI' || i.valueType == 'PICTURE' || i.valueType == 'ATTACHMENT' ? 20 : 12" >
                                 <a-form-item :label="i.name" v-if='readonly || i.readOnly' class="readonly-row" :class="i.valueType == 'TEXT_MULTI' || i.valueType == 'PICTURE' || i.valueType == 'ATTACHMENT' || readonly ? '' : 'pre-row'">
-                                    <span class="ant-form-text" :title="i.value ? i.value.join(',') : ''">  {{i.value ? i.value.join(',') : ''}} </span>
+                                    <div v-if="i.valueType == 'ATTACHMENT'" >
+                                        <a v-for="(item,index) in i.value" :key='index' :href="item" style="margin:5px 60px 5px 10px" @click="downLoadFile(item)">{{item}}</a>
+                                    </div>
+                                    <div v-else-if="i.valueType == 'PICTURE'">
+                                        <img @click="handlePreview(item)" v-for="(item,index) in i.value" :src="getImgSrc(item)" :key='index' class="img-style">
+                                    </div>
+                                    <span v-else class="ant-form-text" :title="i.value ? i.value.join(',') : ''">  {{i.value ? i.value.join(',') : ''}} </span>
                                 </a-form-item>
                                 <a-form-item :label="i.name" v-else :class="i.valueType == 'TEXT_MULTI' || i.valueType == 'PICTURE' || i.valueType == 'ATTACHMENT' ? '' : 'pre-row'">
                                     <a-row :gutter="8">
@@ -23,15 +29,17 @@
                                             <a-date-picker allowClear :show-time="i.valueType == 'DATETIME'" v-else-if="i.valueType == 'DATETIME' || i.valueType == 'DATE'" v-decorator="decoratorFn(i)" style="width:100%" :placeholder="'请选择'+i.name"/>
                                             <tree-select v-else-if="i.valueType == 'ORG_TREE_SINGLE' || i.valueType == 'ORG_TREE_MULTI'" :multipleTree="i.valueType == 'ORG_TREE_MULTI'" v-decorator="decoratorFn(i)" :selectList='i.value' @selectTree='(list)=>{selectTree(list,i.code)}' :disabled='i.referObjectCode ? true : false'/>
                                             <div class="clearfix" v-else-if="i.valueType == 'PICTURE'" v-decorator="decoratorFn(i)">
+                                                <!-- <div v-if='form.getFieldValue(i.code)'>
+                                                    <img v-for="(item,index) in i.value" :src="getImgSrc(item)" :key='index'>
+                                                </div> -->
                                                 <a-upload
                                                 :action="fileUploadApi"
                                                 :headers="{'Authorization':'Bearer'+ accessToken}"
                                                 list-type="picture-card"
-                                                :file-list="imgList"
                                                 @preview="handlePreview"
-                                                @change="handleChange"
+                                                @change="file=>{uploadFile(file,i.code)}"
                                                 >
-                                                <div v-if="imgList.length < 1">
+                                                <div>
                                                     <a-icon type="plus" />
                                                     <div class="ant-upload-text">
                                                     Upload
@@ -122,5 +130,10 @@
     } 
     .pre-row{
         height: 61px;
+    }
+    .img-style{
+        width: 100px;
+        height: 100px;
+        margin-right: 4px;
     }
 </style>
