@@ -167,6 +167,7 @@ export default{
         },
         async getApprovalHeader(){
             const res = await getProcessDetail({definekey:this.definekey})
+            this.filterList = res.filter(ele=>ele.search)
             const column = res.filter(ele=>ele.tableHead)
             this.columns = column.map(ele=>{
                 return {

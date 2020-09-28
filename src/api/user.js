@@ -115,6 +115,9 @@ export function loginToken (params , headers){
   return axios.get(userApi.LoginToken , {params , headers} )
 }
 
+export function getDeptLeader(deptId){
+  return axios.get(`${systemAPI}system/dept/${deptId}/manager`)
+}
 // export function getSmsCaptcha (parameter) {
 //   return request({
 //     url: userApi.SendSms,

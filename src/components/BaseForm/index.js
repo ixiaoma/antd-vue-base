@@ -111,11 +111,12 @@ export default {
             }
             return [i.code,config]
         },
-        selectTree(list,code){//下拉树回填值
+        async selectTree(list,code){//下拉树回填值
             this.form.setFieldsValue({[code]:list})
-            // if(){
-
-            // }
+            if(definekey == 'induction'){
+                const res = await getDeptLeader(list)
+                this.selectData(res)
+            }
         },
         handlePreview(url) {
             this.previewImage = url.thumbUrl || url;
