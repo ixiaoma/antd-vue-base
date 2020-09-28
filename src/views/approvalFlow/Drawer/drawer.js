@@ -121,9 +121,9 @@ export default {
         }
         this.visible = true;
       }, 
-      selectTree(list,code){//下拉树回填值
-        this[code] = list
-      },
+      // selectTree(list,code){//下拉树回填值
+      //   this[code] = list
+      // },
       selectDisable(level){
         return level <= this.firstSelect
       },
