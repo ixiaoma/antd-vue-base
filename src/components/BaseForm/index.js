@@ -271,7 +271,7 @@ export default {
                                 if(ele.valueType == 'DATETIME' || ele.valueType == 'DATE'){
                                     data = moment(values[ele.code]).format(ele.valueType == 'DATE' ? 'YYYY-MM-DD' : 'YYYY-MM-DD HH:mm:ss')
                                 }else if(typeof(values[ele.code]) == 'object'){
-                                    data.join(',')
+                                    data = data.join(',')
                                 }
                                 saveData[ele.code] = data
                             }else{

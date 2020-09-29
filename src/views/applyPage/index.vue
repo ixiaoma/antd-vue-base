@@ -27,7 +27,7 @@
             :scroll='{x:true}'>
             <span slot="action" slot-scope="text, record">
                 <template>
-                    <a @click="toApproval(record)" style="margin:0 3px">审批</a>
+                    <a @click="toApproval(record)" style="margin:0 3px">查看</a>
                 </template>
             </span>
         </s-table>
