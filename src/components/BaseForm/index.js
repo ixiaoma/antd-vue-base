@@ -28,6 +28,7 @@ export default {
             accessToken:null,
             startDate:'',
             endDate:'',
+            timeType:'',
             referObjectCode:null//关联字段标识
         }
     },
@@ -346,33 +347,41 @@ export default {
                         ele.fieldDefineValueList.forEach(pre=>{
                             if(pre.code == 'startDate' || pre.code == 'endDate'){
                                 pre.valueType = value == "天" ? 'DATE' : 'DATETIME'
+                                this.timeType = value
+                                this[pre.code] = moment(this[pre.code]).format(value == "天" ? 'YYYY-MM-DD' : 'YYYY-MM-DD HH:mm:ss')
                             }
                         })
                     })
+                    this.getAllDate()
                 }
             }
         },
         dateChange(data,dateString,i){//时间修改
             const { definekey } = this.$route.query
-            if(definekey == 'overtime'){
+            if(definekey == 'vacation'){
                 if(dateString){
                     this[i.code] = dateString
-                    if(this.startDate && this.endDate){
-                        this.referObjectCode = 'calculateTime'
-                        //调用接口
-                        const params = {
-                            startDate:this.startDate,
-                            endDate:this.endDate,
-                            timeType:this.timeType
-                        }
-                        console.log(params)
-                        // calculateTime()
-                        // this.selectData()
-                    }
+                    this.getAllDate()
                 }else{
                     this[i.code] = ''
-                    this.clearRleative(i)
+                    // this.clearRleative(i)
                 }
+            }
+        },
+        async getAllDate(){
+            if(this.startDate && this.endDate && this.timeType){
+                this.referObjectCode = 'calculateTime'
+                //调用接口
+                const params = {
+                    startDate:this.startDate,
+                    endDate:this.endDate,
+                    timeType:this.timeType
+                }
+                const res = await calculateTime(params)
+                const data = {
+                    allDate : res
+                }
+                this.selectData(data)
             }
         },
         goBack(){

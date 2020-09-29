@@ -56,6 +56,13 @@
             <a-col span='12' v-show="showSetting">
                 <h3>控件设置</h3>
                 <a-form :form="fieldForm">
+                    <a-form-item label="字段类型" required :label-col="{span:6}" :wrapper-col="{span:12}">
+                        <a-radio-group v-model='currentItem.valueType'>
+                            <a-radio v-for="item in valueTypeList" :value="item.label" :key='item.label'>
+                            {{item.value}}
+                            </a-radio>
+                        </a-radio-group>
+                    </a-form-item>
                     <a-form-item label="字段名称" required :label-col="{span:6}" :wrapper-col="{span:12}">
                         <a-input allowClear v-model.trim='currentItem.name'/>
                     </a-form-item>
@@ -91,8 +98,8 @@
                         </a-form-item>
                     </div>
                     <a-form-item label="引用对象" :label-col="{span:6}" :wrapper-col="{span:12}">
-                        <!-- <a-input allowClear v-model.trim='currentItem.referObjectCode'/> -->
-                        <a-select
+                        <a-input allowClear v-model.trim='currentItem.referObjectCode'/>
+                        <!-- <a-select
                             allowClear
                             @change="changeObject"
                             showSearch
@@ -101,15 +108,15 @@
                             <a-select-option v-for="item in objectList" :key="item.code" :value="item.code">
                             {{ item.name }}
                             </a-select-option>
-                        </a-select>
+                        </a-select> -->
                     </a-form-item>
                     <a-form-item label="引用字段" :label-col="{span:6}" :wrapper-col="{span:12}">
-                        <!-- <a-input allowClear v-model.trim='currentItem.referObjectField'/> -->
-                        <a-select allowClear v-model.trim='currentItem.referObjectField' showSearch>
+                        <a-input allowClear v-model.trim='currentItem.referObjectField'/>
+                        <!-- <a-select allowClear v-model.trim='currentItem.referObjectField' showSearch>
                             <a-select-option v-for="item in fieldList" :key="item.code" :value="item.code">
                             {{ item.name }}
                             </a-select-option>
-                        </a-select>
+                        </a-select> -->
                     </a-form-item>
                     <!-- <a-form-item label="引用对象赋值字段" :label-col="{span:6}" :wrapper-col="{span:12}">
                         <a-select allowClear v-model.trim='currentItem.referObjectSetField'>

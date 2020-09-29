@@ -72,7 +72,7 @@ export default{
             this.$refs.table.refresh()
         },
         toApproval(records){
-            this.$router.push({name:'taskApproval',query:{id:records.id,title:'审批'}})
+            this.$router.push({name:'taskApproval',query:{id:records.id,title:records.processDefineKey+'审批'}})
         },
         async getTableHeader(){
             const res = await getProcessDetail({definekey:this.defineKey})

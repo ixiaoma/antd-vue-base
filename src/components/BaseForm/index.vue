@@ -19,8 +19,8 @@
                                     <a-row :gutter="8">
                                         <a-col :span="22">
                                             <a-textarea allowClear v-if="i.valueType == 'TEXT_MULTI'" rows="3" v-decorator="decoratorFn(i)" :placeholder="'请填写'+i.name"/>
-                                            <a-input-number allowClear v-else-if="i.valueType == 'INTEGER'" :formatter="limitNumber" :parser="limitNumber"  :precision='0' v-decorator="decoratorFn(i)" :placeholder="'请输入'+i.name" style="width:100%"/>
-                                            <a-input-number allowClear v-else-if="i.valueType == 'DECIMAL'" :precision='0' v-decorator="decoratorFn(i)" :placeholder="'请输入'+i.name" style="width:100%"/>
+                                            <a-input-number :min='1' allowClear v-else-if="i.valueType == 'INTEGER'" :formatter="limitNumber" :parser="limitNumber"  :precision='0' v-decorator="decoratorFn(i)" :placeholder="'请输入'+i.name" style="width:100%"/>
+                                            <a-input-number :min='1' allowClear v-else-if="i.valueType == 'DECIMAL'" :precision='0' v-decorator="decoratorFn(i)" :placeholder="'请输入'+i.name" style="width:100%"/>
                                             <a-select v-else-if="i.valueType == 'RADIO' || i.valueType == 'CHECKBOX'" :mode="i.valueType == 'CHECKBOX' ? 'multiple' : 'default'" v-decorator="decoratorFn(i)" :placeholder="'请选择'+i.name" allowClear showSearch @change='(data)=>{selectChange(data,i)}'>
                                                 <a-select-option :value="item.codeKey" v-for="(item,index) in i.codeItems" :key='index'>{{item.codeValue}}</a-select-option>
                                             </a-select>

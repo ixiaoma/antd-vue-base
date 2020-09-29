@@ -18,7 +18,7 @@
             <a-date-picker :show-time="item.valueType == 'DATETIME'" v-else-if="item.valueType == 'DATETIME' || item.valueType == 'DATE'" v-decorator="[item.code]" style="width:100%" :placeholder="'请选择'+item.name"/>
             <a-input-number v-else-if="item.valueType == 'INTEGER'" :formatter="limitNumber" :parser="limitNumber"  :precision='0' v-decorator="[item.code]" :placeholder="'请输入'+item.name" style="width:100%"/>
             <a-input-number v-else-if="item.valueType == 'DECIMAL'" :precision='0' v-decorator="[item.code]" :placeholder="'请输入'+item.name" style="width:100%"/>
-            <a-input v-else v-decorator="[item.code]" :placeholder="'请填写'+item.name" />
+            <a-input v-else v-decorator="[item.code]" :placeholder="'请填写'+item.name" @pressEnter='handleSearch'/>
           </a-form-item>
         </a-col>
         <a-col :span="8" :style="{ textAlign: 'right' }" class="search-reset-btn" v-if='filterList.length'>

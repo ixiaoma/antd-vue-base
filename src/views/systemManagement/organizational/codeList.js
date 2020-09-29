@@ -9,7 +9,7 @@ export const columns=[
     },
     {
         title: '公司',
-        dataIndex: 'companyName'
+        dataIndex: 'customerName'
     },
     {
         title: '部门',
