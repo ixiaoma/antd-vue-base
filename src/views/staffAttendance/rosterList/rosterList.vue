@@ -29,7 +29,7 @@
                   <a-button @click="downLoad"> <a-icon type="download"/> 下载模板 </a-button>
               </a-form-item>
               <a-form-item label="上传文件" :label-col="{span:6}" :wrapper-col="{span:12}" required>
-                  <a-upload :file-list="fileList" :remove="handleRemove">
+                  <a-upload :file-list="fileList" :remove="handleRemove" :before-upload="beforeUpload">
                     <a-button> <a-icon type="upload" /> 选择文件 </a-button>
                   </a-upload>
               </a-form-item>

@@ -29,7 +29,8 @@ export default {
             startDate:'',
             endDate:'',
             timeType:'',
-            referObjectCode:null//关联字段标识
+            referObjectCode:null,//关联字段标识
+            assessmentContentDetails:[]
         }
     },
     mixins:[fieldHandle],
@@ -167,12 +168,13 @@ export default {
                 res = await getBaseLayout({pageCode})
             }
             if(pageCode == 'performance_assessment_detail'|| pageCode =='performance_assessment_detail/todo'){
-                res = res.fieldValueLayoutDTOList
+                this.assessmentContentDetails=res.assessmentContentDetails
+                res = res.fieldValueLayoutDTOList      
             }
             this.layoutList = res
             this.activeKey = res.map((ele,index)=>index)
-            if(this.$route.query.pageCode=="performance_assessment_detail"&&res.assessmentContentDetails&&res.assessmentContentDetails.length){
-                this.$refs.staffAchievements.tableValueArr=res.assessmentContentDetails
+            if((this.$route.query.pageCode=="performance_assessment_detail"||this.$route.query.pageCode=="performance_assessment_detail/todo")&&this.assessmentContentDetails&&this.assessmentContentDetails.length){
+                this.$refs.staffAchievements.tableValueArr=this.assessmentContentDetails
             }
         },
         handleSubmit (e) {
@@ -224,7 +226,7 @@ export default {
                             if(!item.targetText||!item.weight){
                                 isflag=true
                             }
-                            num=num+item.weight
+                            num=num+Number(item.weight)
                         })
                         if(isflag){
                             this.$message.warning('请把目标权重填写完整');
