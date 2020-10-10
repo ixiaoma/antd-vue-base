@@ -125,9 +125,10 @@ export default {
     },
     handleUpload(){
       if(this.fileList.length){
-        console.log(this.fileList[0].response)
+        // console.log(this.fileList[0].response)
         let params={
-          path:this.fileList[0].response
+          path:this.fileList[0].response,
+          operationType:this.operationType
         }
         kpiAssessentUpload(params).then(res=>{
           this.$message.success('上传成功')

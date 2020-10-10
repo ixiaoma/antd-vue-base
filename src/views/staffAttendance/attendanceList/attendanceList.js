@@ -15,7 +15,7 @@ export default {
       uploading: false,
       treeData:[],
       validates: {
-        rosterDate: { rules: [{ type: 'object', required: true, message: '请选择月份' }] }
+        attendanceMonth: { rules: [{ type: 'object', required: true, message: '请选择月份' }] }
       },
       form: this.$form.createForm(this),
       buttonList:[]
@@ -27,7 +27,8 @@ export default {
     },
     monthLoad(e){},
     downLoad(){
-      window.location.href=attendanceDown
+      let access_token=sessionStorage.getItem('ACCESS_TOKEN')
+      window.location.href=attendanceDown+'?access_token='+access_token
     },
     handleRemove(file) {
       const index = this.fileList.indexOf(file);
@@ -46,10 +47,10 @@ export default {
           this.$message.warning('请选择上传文件');
           return false
         }
-        values['rosterDate']=values['rosterDate']?values['rosterDate'].format('YYYY-MM'):null
-        // this.rosterDate=this.rosterDate ? moment(this.rosterDate, 'YYYY-MM').format('YYYY-MM'):null
-        // let paramData = {'rosterDate':this.rosterDate,'deptName':this.deptName}
-        let paramData = {'rosterDate':values['rosterDate']}     
+        values['attendanceMonth']=values['attendanceMonth']?values['attendanceMonth'].format('YYYY-MM'):null
+        // this.attendanceMonth=this.attendanceMonth ? moment(this.attendanceMonth, 'YYYY-MM').format('YYYY-MM'):null
+        // let paramData = {'attendanceMonth':this.attendanceMonth,'deptName':this.deptName}
+        let paramData = {'attendanceMonth':values['attendanceMonth']}     
         this.uploading = true;
         uploadLoad(attendanceImport,this.fileList[0],paramData).then((res) => {
                 this.fileList = [];

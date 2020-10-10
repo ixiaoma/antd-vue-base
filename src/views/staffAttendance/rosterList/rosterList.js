@@ -34,7 +34,8 @@ export default {
     },
     monthLoad(e){},
     downLoad(){
-      window.location.href=rosterDown
+      let access_token=sessionStorage.getItem('ACCESS_TOKEN')
+      window.location.href=rosterDown+'?access_token='+access_token
     },
     handleRemove(file) {
       const index = this.fileList.indexOf(file);
