@@ -1,6 +1,6 @@
 import STable from '@/components/Table'
 
-import { getFlowList, taskList, getProcessDetail } from '@/api/approval'
+import { getFlowList, taskList, processHeader } from '@/api/approval'
 
 export default{
     data(){
@@ -74,7 +74,7 @@ export default{
             this.$router.push({name:'taskApproval',query:{id:records.id,title:'审批'}})
         },
         async getTableHeader(){
-            const res = await getProcessDetail({definekey:this.defineKey})
+            const res = await processHeader({definekey:this.defineKey})
             this.columns = res.map(ele=>{
                 return {
                   title: ele.name,

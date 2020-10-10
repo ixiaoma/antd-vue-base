@@ -3,7 +3,7 @@ import STable from '../Table'
 
 import { getBasePage, getTableSearch, getTableHeader, deletePageList } from '@/api/commonApi'
 import { getApprovalList } from '@/api/apply'
-import { getProcessDetail } from '@/api/approval'
+import { processHeader } from '@/api/approval'
 
 export default{
     data(){
@@ -166,7 +166,7 @@ export default{
             this.pageLoading = false
         },
         async getApprovalHeader(){
-            const res = await getProcessDetail({definekey:this.definekey})
+            const res = await processHeader({definekey:this.definekey})
             this.filterList = res.filter(ele=>ele.search)
             const column = res.filter(ele=>ele.tableHead)
             this.columns = column.map(ele=>{

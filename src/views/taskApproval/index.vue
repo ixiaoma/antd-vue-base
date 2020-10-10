@@ -70,7 +70,7 @@
             <h3 class="row-title">审批意见</h3>
             <div class="form-con">
                 <a-row type='flex' justify='center'>
-                    <a-radio-group v-model="result" v-if='data'>
+                    <a-radio-group v-model="result">
                         <a-radio value='APPROVE'>通过</a-radio>
                         <a-radio value='REJECT'>驳回</a-radio>
                     </a-radio-group>

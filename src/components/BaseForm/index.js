@@ -1,6 +1,6 @@
 import moment from 'moment'
 import { getBaseLayout, getDetailLayout, getEditLayout_kpitodo,getDetailLayout_kpitodo,saveLayout, getEditLayout, saveEditLayout } from '@/api/commonApi'
-import { getProcessDetail,approvalStart } from '@/api/approval'
+import { processHeader,getProcessDetail,approvalStart } from '@/api/approval'
 import { fileUploadApi, fileDownLoad } from '@/api/uploaddown'
 import { getDeptLeader } from '@/api/user'
 import { calculateTime } from '@/api/apply'
@@ -151,7 +151,8 @@ export default {
             window.location.href = this.getImgSrc(url)
         },
         async getApprovalData(definekey){
-            const res = await getProcessDetail({definekey})
+            const { id } = this.$route.query
+            const res =id? await getProcessDetail({id}):await processHeader({definekey})    
             this.layoutList = [{groupName:'申请信息',fieldDefineValueList:res}]
             this.activeKey = [0]
         },

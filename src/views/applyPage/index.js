@@ -75,7 +75,7 @@ export default{
             this.$router.push({name:'baseForm',query:{id:records.id,title:records.processDefineKey+'审请',definekey:records.processDefineKey,flag:2}})
         },
         async getTableHeader(){
-            const res = await getProcessDetail({definekey:this.defineKey})
+            const res = await processHeader({definekey:this.defineKey})
             this.columns = res.map(ele=>{
                 return {
                   title: ele.name,

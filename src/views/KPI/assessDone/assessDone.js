@@ -85,7 +85,7 @@ export default {
       let pageCode='performance_assessment_detail/todo'
       this.$router.push({
           name:'baseForm',
-          query:{ title:data.operationType, flag, pageCode:pageCode, id: data ? data.todoId : null,operationType:data?data.operationType:null}
+          query:{ title:data.operationType, flag, pageCode:pageCode, id: data ? data.id : null,operationType:data?data.operationType:null}
       })
     },
     onSelectChange(selectedRowKeys, selectedRows) {
@@ -107,8 +107,12 @@ export default {
       }
     },
     uploadLoad(){
-      this.fileList=[]
-      this.visible=true
+      if(this.operationType=='经理第一次评分'||this.operationType=='经理第二次评分'||this.operationType=='经理审批'){
+        this.fileList=[]
+        this.visible=true
+      }else{
+        this.$message.warning('操作类型为‘经理审批’或‘经理第一次评分’或‘经理第二次评分’才可进行导入')
+      }
     },
     handleRemove(file) {
       const index = this.fileList.indexOf(file);

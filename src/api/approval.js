@@ -9,7 +9,9 @@ const settingApi = {
   getFormDetail: baseFrame + 'process-define/form/detail/',//审批模板详情
   getFlowList: baseFrame + 'process-define/page',//获取审批列表
   saveFlow: baseFrame + 'process-define/save',//保存审批流
-  processDetail: baseFrame + 'process-define/form/detail/definekey/',//获取审批详情
+  processHeader: baseFrame + 'process-define/form/detail/definekey/',//获取审批表头
+  processDetail: baseFrame + 'business/execution/',//获取审批详情
+  
   taskList: baseFrame + 'business/task/page',//审批列表
   approvalStart: baseFrame + 'business/execution/start',//发起审批
 }
@@ -37,9 +39,11 @@ export function saveFlow ({params}) {
 export function getFlowList () {
   return axios.post(settingApi.getFlowList)
 }
-
-export function getProcessDetail({definekey}) {
-  return axios.get(settingApi.processDetail+definekey)
+export function processHeader({definekey}) {
+  return axios.get(settingApi.processHeader+definekey)
+}
+export function getProcessDetail({id}) {
+  return axios.post(settingApi.processDetail+id+'/variables')
 }
 
 export function taskList ({params}) {
