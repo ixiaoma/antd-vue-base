@@ -9,7 +9,8 @@ const settingApi = {
   applyListAdmin: baseFrame + 'business/execution/page/admin',//申请列表
   applyReolaceCard:baseBusiness+'replace-card/insertBatch',//申请补卡
   allReolaceCard:baseBusiness+'details/batch/update',//管理员批量补卡
-  calculateTime:baseBusiness+'vacation/total/time'
+  calculateTime:baseBusiness+'vacation/total/time',
+  overtimeTime:baseBusiness+'overtime/judgmentType'//加班调用总时长
 }
 
 
@@ -31,4 +32,7 @@ export function getApprovalList (params) {
 }
 export function calculateTime (params) {
   return axios.post(settingApi.calculateTime,params)
+}
+export function overtimeTime (params) {
+  return axios.post(settingApi.overtimeTime,params)
 }

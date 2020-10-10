@@ -3,7 +3,7 @@ import { getBaseLayout, getDetailLayout, getEditLayout_kpitodo,getDetailLayout_k
 import { processHeader,getProcessDetail,approvalStart } from '@/api/approval'
 import { fileUploadApi, fileDownLoad } from '@/api/uploaddown'
 import { getDeptLeader } from '@/api/user'
-import { calculateTime } from '@/api/apply'
+import { calculateTime,overtimeTime } from '@/api/apply'
 
 import fieldHandle from '@/mixins/fieldHandle'
 
@@ -29,6 +29,9 @@ export default {
             startDate:'',
             endDate:'',
             timeType:'',
+            serviceType:'',
+            overtimeDate:'',
+            jobNumber:'',
             referObjectCode:null,//关联字段标识
             assessmentContentDetails:[]
         }
@@ -357,6 +360,23 @@ export default {
                     })
                     this.getAllDate()
                 }
+            }else if(definekey == 'overtime'){
+                if(i.code == "serviceType"){
+                    this.layoutList.forEach(ele=>{
+                        ele.fieldDefineValueList.forEach(pre=>{
+                            if(pre.code == 'serviceType'){
+                                this[pre.code] = value
+                            }
+                            if(pre.code == "workId"){
+                                pre.display = value == '服务类'
+                            }
+                            if(pre.code == "jobNumber"){
+                                this[pre.code] = pre.value
+                            }
+                        })
+                    })
+                    this.getOvertime()
+                }
             }
         },
         dateChange(data,dateString,i){//时间修改
@@ -368,6 +388,13 @@ export default {
                 }else{
                     this[i.code] = ''
                     // this.clearRleative(i)
+                }
+            }else if(definekey =='overtime'){
+                if(dateString){
+                    this[i.code] = dateString
+                    this.getOvertime()
+                }else{
+                    this[i.code] = ''
                 }
             }
         },
@@ -381,6 +408,23 @@ export default {
                     timeType:this.timeType
                 }
                 const res = await calculateTime(params)
+                const data = {
+                    allDate : res
+                }
+                this.selectData(data)
+            }
+        },
+        //加班根据开始时间结束时间计算
+        async getOvertime(){
+            if(this.startDate && this.endDate && this.serviceType && this.overtimeDate){
+                const params = {
+                    startDate:this.startDate,
+                    endDate:this.endDate,
+                    serviceType:this.serviceType,
+                    overtimeDate:this.overtimeDate,
+                    jobNumber:this.jobNumber
+                }
+                const res = await overtimeTime(params)
                 const data = {
                     allDate : res
                 }
@@ -402,7 +446,7 @@ export default {
         if(definekey){
             this.getApprovalData(definekey)
         }else{
-            this.getInitData()
+            this.getInitData()   
         }
     }
 }
