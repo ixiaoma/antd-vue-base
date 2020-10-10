@@ -13,11 +13,11 @@ export const columns = [
         title: '员工itcode',
         dataIndex: 'itCode'
     },
-    {
-        title: '考核内容提交状态',
-        dataIndex: 'status',
-        sorter: true
-    },
+    // {
+    //     title: '考核内容提交状态',
+    //     dataIndex: 'status',
+    //     sorter: true
+    // },
     {
         title: '操作类型',
         dataIndex: 'operationType',

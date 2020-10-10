@@ -74,8 +74,8 @@ export default {
             let initialValue = ''
             if(i.valueType != 'SELECT' && i.valueType != 'CHECKBOX' && i.valueType != 'ORG_TREE_MULTI' && i.valueType != 'PICTURE' && i.valueType != 'ATTACHMENT'){
                 const currentValue = i.value && i.value.length ? definekey ? i.value : i.value.join(',') : ''
-                if(i.valueType == 'DATETIME' || i.validateFields == 'DATE'){
-                    initialValue = currentValue ? moment(currentValue,i.validateFields == 'DATE' ? 'YYYY-MM-DD' : 'YYYY-MM-DD HH:mm:ss') : null
+                if(i.valueType == 'DATETIME' || i.valueType == 'DATE'){
+                    initialValue = currentValue ? moment(currentValue,i.valueType == 'DATE' ? 'YYYY-MM-DD' : 'YYYY-MM-DD HH:mm:ss') : null
                 } else if(i.valueType == 'RADIO' && i.codeItems){
                     const defaultValue = i.codeItems.filter(ele=>ele.defaultStatus)
                     initialValue = currentValue || (defaultValue.length > 0 ? defaultValue[0].codeKey : undefined)
@@ -216,7 +216,7 @@ export default {
                         this.$refs.kpiApproval.approvalSave()
                         return false
                     }
-                    if(this.$route.query.pageCode=="performance_assessment_detail"||(this.$route.query.pageCode=="performance_assessment_detail/todo"&&this.$route.query.operationType=='员工创建目标')){
+                    if(this.$route.query.pageCode=="performance_assessment_detail"||(this.$route.query.pageCode=="performance_assessment_detail/todo"&&this.$route.query.operationType!='经理审批')){
                         let arr=this.$refs.staffAchievements.tableValueArr
                         let isflag=false
                         let num=0
@@ -238,7 +238,7 @@ export default {
                             fieldValueDTOList:saveData,
                             assessmentContentDetails:this.$refs.staffAchievements.tableValueArr
                         }
-                    }
+                    }                  
                     // 员工档案加参数
                     let basicCodeArr = [ 
                         'social_relations', 
