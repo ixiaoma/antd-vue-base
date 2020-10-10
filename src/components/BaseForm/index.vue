@@ -13,7 +13,7 @@
                                     <div v-else-if="i.valueType == 'PICTURE'">
                                         <img @click="handlePreview(item)" v-for="(item,index) in i.value" :src="getImgSrc(item)" :key='index' class="img-style">
                                     </div>
-                                    <span v-else class="ant-form-text" :title="i.value ? i.value.join(',') : ''">  {{i.value ? i.value.join(',') : ''}} </span>
+                                    <span v-else class="ant-form-text" :title="Array.isArray(i.value)&&i.value ? i.value.join(',') : !Array.isArray(i.value)&&i.value?i.value:''">  {{Array.isArray(i.value)&&i.value ? i.value.join(',') : !Array.isArray(i.value)&&i.value?i.value:''}} </span>
                                 </a-form-item>
                                 <a-form-item :label="i.name" v-else :class="i.valueType == 'TEXT_MULTI' || i.valueType == 'PICTURE' || i.valueType == 'ATTACHMENT' ? '' : 'pre-row'">
                                     <a-row :gutter="8">

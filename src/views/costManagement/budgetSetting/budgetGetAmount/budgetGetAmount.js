@@ -45,6 +45,14 @@ export default {
         handleCancel(){
             this.setAmount=false
         },
+        setAmountLoad(){
+            let params={"pageNo":1,"pageSize":10,"filter":{"logic":"and","filters":[]}}
+            budgetGetAmount(params).then(res => {
+                this.budgetAmount=res.budgetAmount
+                this.setAmount=true
+            })
+            
+        },
         handleOk(){
             let params={
                 budgetAmount:this.budgetAmount
@@ -54,7 +62,7 @@ export default {
                 this.setAmount=false
             })
             
-        },
+        },  
         budgetSeeLoad(){
             this.budgetTitle='预算维度查看'
             budgetGetLatitude().then(res=>{

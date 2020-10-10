@@ -15,7 +15,8 @@ export default {
       uploading: false,
       treeData:[],
       validates: {
-        attendanceMonth: { rules: [{ type: 'object', required: true, message: '请选择月份' }] }
+        attendanceMonth: { rules: [{ type: 'object', required: true, message: '请选择月份' }] },
+        remark: { rules: [{ required: false, message: '请填写备注' }] },
       },
       form: this.$form.createForm(this),
       buttonList:[]
@@ -50,7 +51,7 @@ export default {
         values['attendanceMonth']=values['attendanceMonth']?values['attendanceMonth'].format('YYYY-MM'):null
         // this.attendanceMonth=this.attendanceMonth ? moment(this.attendanceMonth, 'YYYY-MM').format('YYYY-MM'):null
         // let paramData = {'attendanceMonth':this.attendanceMonth,'deptName':this.deptName}
-        let paramData = {'attendanceMonth':values['attendanceMonth']}     
+        let paramData = {'attendanceMonth':values['attendanceMonth'],'remark':values['remark']}     
         this.uploading = true;
         uploadLoad(attendanceImport,this.fileList[0],paramData).then((res) => {
                 this.fileList = [];

@@ -63,6 +63,16 @@ export default{
                 query
             })
         },
+        //公共池简历
+        resumeCommonAdd (data,flag) {
+            const { name, meta } = this.$route
+            const title = `${meta.title}${flag == 1 ? '新增' : flag == 2 ? '详情' : '修改'}`
+            const query = { title, flag, id: data ? data.id : null,approvalResult:data?data.approvalResult:'',pageCode:this.pageCode,isResumeCommon:1}
+            this.$router.push({
+                name:'baseForm',
+                query
+            })
+        },
         //查看排班
         rosterDetailLoad(data,flag){
             const { name, meta } = this.$route
@@ -154,7 +164,7 @@ export default{
                 dataIndex: ele.code
               }
             })
-            if(this.buttonList.includes('detail') || this.buttonList.includes('edit') || this.buttonList.includes('delete')|| this.buttonList.includes('rosterDetail')|| this.buttonList.includes('attendanceDetail')||this.buttonList.includes('workTimeDetail')||this.buttonList.includes('detailApproval')){
+            if(this.buttonList.includes('detail') || this.buttonList.includes('edit') || this.buttonList.includes('delete')|| this.buttonList.includes('rosterDetail')|| this.buttonList.includes('attendanceDetail')||this.buttonList.includes('workTimeDetail')||this.buttonList.includes('detailApproval')||this.buttonList.includes('editResumeCommon')||this.buttonList.includes('detailResumeCommon')){
                 this.columns.push({
                     title: '操作',
                     dataIndex: 'action',

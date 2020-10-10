@@ -15,7 +15,7 @@ export default {
         },
         setBudgetAmount(){
             this.$refs.budgetGetAmount.budgetAmount=0
-            this.$refs.budgetGetAmount.setAmount=true
+            this.$refs.budgetGetAmount.setAmountLoad()
         },
         budgetSee(){
             this.$refs.budgetGetAmount.budgetLatitude=''

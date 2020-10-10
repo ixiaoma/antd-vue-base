@@ -6,7 +6,7 @@
     <search-table pageCode='recording'>
       <a-button v-if="buttonList.includes('AtteUpload')" type="primary" icon="upload" @click="showModal">考勤导入</a-button>
     </search-table>
-    <a-modal v-model="visible" title="考勤导入" :bodyStyle='{padding:0}' @ok="handleUpload" ok-text="提交" cancel-text="取消">
+    <a-modal v-model="visible" title="考勤导入" :bodyStyle='{padding:10}' @ok="handleUpload" ok-text="提交" cancel-text="取消">
           <a-form :form="form">
               <a-form-item label="月份" :label-col="{span:6}" :wrapper-col="{span:12}" required>
                   <a-month-picker v-decorator="['attendanceMonth',validates.attendanceMonth]" format="YYYY-MM" style="width:100%"/>
@@ -18,6 +18,9 @@
                   <a-upload :file-list="fileList" :remove="handleRemove" :before-upload="beforeUpload">
                     <a-button> <a-icon type="upload" /> 选择文件 </a-button>
                   </a-upload>
+              </a-form-item>
+              <a-form-item label="备注" :label-col="{span:6}" :wrapper-col="{span:12}">
+                  <a-textarea  v-decorator="['remark',validates.remark]" :auto-size="{ minRows: 2, maxRows: 6 }"/>
               </a-form-item>
           </a-form>
       </a-modal>

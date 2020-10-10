@@ -158,11 +158,11 @@ export default {
         },
         async getInitData(){//获取初始化数据
             let res = null
-            let { flag, pageCode, id } = this.currentForm || this.$route.query
+            let { flag, pageCode, id,isResumeCommon } = this.currentForm || this.$route.query
             if(flag == 2){
-                res = pageCode == 'performance_assessment_detail/todo' ? await getDetailLayout_kpitodo({pageCode,id}) : await getDetailLayout({pageCode,id})  
+                res = pageCode == 'performance_assessment_detail/todo' ? await getDetailLayout_kpitodo({pageCode,id}) : isResumeCommon==1?await getDetailLayout({pageCode:'public_resume',id}):await getDetailLayout({pageCode,id}) 
             }else if(flag == 3){
-                res = pageCode == 'performance_assessment_detail/todo' ? await getEditLayout_kpitodo({pageCode,id}) : await getEditLayout({pageCode,id})
+                res = pageCode == 'performance_assessment_detail/todo' ? await getEditLayout_kpitodo({pageCode,id}) : isResumeCommon==1?await getEditLayout({pageCode:'public_resume',id}):await getEditLayout({pageCode,id})
             }else{
                 res = await getBaseLayout({pageCode})
             }
