@@ -428,7 +428,7 @@ export default {
                 const data = {
                     allDate : res
                 }
-                this.selectData(data)
+                // this.selectData(data)
             }
         },
         goBack(){
