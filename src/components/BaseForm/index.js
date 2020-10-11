@@ -172,7 +172,7 @@ export default {
             }
             if(pageCode == 'performance_assessment_detail'|| pageCode =='performance_assessment_detail/todo'){
                 this.assessmentContentDetails=res.assessmentContentDetails
-                res = res.fieldValueLayoutDTOList      
+                res = res.fieldValueLayoutDTOList||[]
             }
             this.layoutList = res
             this.activeKey = res.map((ele,index)=>index)
