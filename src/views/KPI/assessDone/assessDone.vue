@@ -27,7 +27,7 @@
                   @change="handleTableChange"
                 >
                 <template slot="action" slot-scope="text, record">         
-                  <a v-if="buttonList.includes('detail')" @click="handleSub(record,3)">查看</a>
+                  <a v-if="buttonList.includes('detail')" @click="handleSub(record,3)">处理</a>
                 </template>
       </a-table>
       <a-modal v-model="visible" title="上传" :bodyStyle='{padding:10}' @ok="handleUpload" ok-text="提交" cancel-text="取消">

@@ -77,7 +77,7 @@ export default {
             const { definekey } = this.$route.query
             let initialValue = ''
             if(i.valueType != 'SELECT' && i.valueType != 'CHECKBOX' && i.valueType != 'ORG_TREE_MULTI' && i.valueType != 'PICTURE' && i.valueType != 'ATTACHMENT'){
-                const currentValue = i.value && i.value.length ? definekey ? i.value : i.value.join(',') : ''
+                const currentValue = (i.value && i.value.length)||(i.valueType=="DECIMAL"&&i.value) ? definekey ? i.value : i.value.join(',') : ''
                 if(i.valueType == 'DATETIME' || i.valueType == 'DATE'){
                     initialValue = currentValue ? moment(currentValue,i.valueType == 'DATE' ? 'YYYY-MM-DD' : 'YYYY-MM-DD HH:mm:ss') : null
                 } else if(i.valueType == 'RADIO' && i.codeItems){
@@ -417,6 +417,7 @@ export default {
         //加班根据开始时间结束时间计算
         async getOvertime(){
             if(this.startDate && this.endDate && this.serviceType && this.overtimeDate){
+                this.referObjectCode = 'overTimeCallback'
                 const params = {
                     startDate:this.startDate,
                     endDate:this.endDate,
@@ -425,10 +426,9 @@ export default {
                     jobNumber:this.jobNumber
                 }
                 const res = await overtimeTime(params)
-                const data = {
-                    allDate : res
-                }
-                // this.selectData(data)
+                const data = res[0]
+                data.totalTime=Number(data.totalTime)
+                this.selectData(data)
             }
         },
         goBack(){
