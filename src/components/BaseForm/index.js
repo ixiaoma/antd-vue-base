@@ -77,7 +77,7 @@ export default {
             const { definekey } = this.$route.query
             let initialValue = ''
             if(i.valueType != 'SELECT' && i.valueType != 'CHECKBOX' && i.valueType != 'ORG_TREE_MULTI' && i.valueType != 'PICTURE' && i.valueType != 'ATTACHMENT'){
-                const currentValue = (i.value && i.value.length)||(i.valueType=="DECIMAL"&&i.value) ? definekey ? i.value : i.value.join(',') : ''
+                const currentValue = (i.value && i.value.length)||((i.valueType=="DECIMAL"||i.valueType == 'INTEGER')&&i.value) ? definekey ? i.value : i.value.join(',') : ''
                 if(i.valueType == 'DATETIME' || i.valueType == 'DATE'){
                     initialValue = currentValue ? moment(currentValue,i.valueType == 'DATE' ? 'YYYY-MM-DD' : 'YYYY-MM-DD HH:mm:ss') : null
                 } else if(i.valueType == 'RADIO' && i.codeItems){
