@@ -8,7 +8,7 @@
                             <a-col v-if='i.display' :sm='24' :md ='18' :lg="i.valueType == 'TEXT_MULTI' || i.valueType == 'PICTURE' || i.valueType == 'ATTACHMENT' ? 20 : 12" >
                                 <a-form-item :label="i.name" v-if='readonly || i.readOnly' class="readonly-row" :class="i.valueType == 'TEXT_MULTI' || i.valueType == 'PICTURE' || i.valueType == 'ATTACHMENT' || readonly ? '' : 'pre-row'">
                                     <div v-if="i.valueType == 'ATTACHMENT'" >
-                                        <a v-for="(item,index) in i.value" :key='index' :href="item" style="margin:5px 60px 5px 10px" @click="downLoadFile(item)">{{item}}</a>
+                                        <a v-for="(item,index) in i.value" :key='index' href="javascript:void(0);" style="margin:5px 60px 5px 10px" @click="downLoadFile(item)">{{item}}</a>
                                     </div>
                                     <div v-else-if="i.valueType == 'PICTURE'">
                                         <img @click="handlePreview(item)" v-for="(item,index) in i.value" :src="getImgSrc(item)" :key='index' class="img-style">
@@ -60,7 +60,7 @@
                                                 </a-upload>
                                                 <div v-for="(item,index) in form.getFieldValue(i.code)" :key='index'>
                                                     <a-icon type="link" />
-                                                    <a :href="item" style="margin:5px 60px 5px 10px" @click="downLoadFile(item)">{{item}}</a>
+                                                    <a href="javascript:void(0);" style="margin:5px 60px 5px 10px" @click="downLoadFile(item)">{{item}}</a>
                                                     <a-icon type="delete" style="color:#1890FF;cursor: pointer;" @click="deleteFile(i.code,index)"/>
                                                 </div>
                                             </div>
