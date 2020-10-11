@@ -360,7 +360,7 @@ export default {
                             if(pre.code == 'startDate' || pre.code == 'endDate'){
                                 pre.valueType = value == "天" ? 'DATE' : 'DATETIME'
                                 this.timeType = value
-                                this[pre.code] = moment(this[pre.code]).format(value == "天" ? 'YYYY-MM-DD' : 'YYYY-MM-DD HH:mm:ss')
+                                this[pre.code] = this[pre.code]&&moment(this[pre.code]).format(value == "天" ? 'YYYY-MM-DD' : 'YYYY-MM-DD HH:mm:ss')
                             }
                         })
                     })
@@ -412,7 +412,9 @@ export default {
             }
         },
         async getAllDate(){
+            console.log(this.startDate,this.endDate,this.timeType)
             if(this.startDate && this.endDate && this.timeType){
+                console.log(1111)
                 this.referObjectCode = 'calculateTime'
                 //调用接口
                 const params = {
