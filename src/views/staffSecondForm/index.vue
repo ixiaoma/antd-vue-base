@@ -17,7 +17,8 @@
             :showBottom='false'
             :currentForm="basicForm"
           />
-          <a-form :form="formField" style="padding:0 20px" v-if="readonly&&$route.query.title=='员工档案审批详情'&&$route.query.approvalResult=='待审批'">
+          <!-- &&$route.query.approvalResult=='待审批' -->
+          <a-form :form="formField" style="padding:0 20px" v-if="readonly&&$route.query.title=='员工档案审批详情'">
             <a-collapse v-model="activeKey" :bordered="false" class="spacial-collape" expand-icon-position='right'>
                 <a-collapse-panel key="1" header="审批">
                 <a-col :sm='24' :md ='18' :lg="12">
@@ -41,7 +42,8 @@
               <a-button @click="goBack">返回</a-button>
               <!-- <a-button  style="margin-left: 8px" @click="clickStorage">暂存</a-button> -->
               <a-button v-if="!readonly" type="primary" style="margin-left: 8px"  @click="save">保存</a-button>
-              <a-button v-if="readonly&&$route.query.title=='员工档案审批详情'&&$route.query.approvalResult=='待审批'" type="primary" style="margin-left: 8px"  @click="approvalSave">审批</a-button>
+              <!-- &&$route.query.approvalResult=='待审批' -->
+              <a-button v-if="readonly&&$route.query.title=='员工档案审批详情'" type="primary" style="margin-left: 8px"  @click="approvalSave">审批</a-button>
           </footer-tool-bar>
       </a-tab-pane>
       <a-tab-pane 

@@ -97,6 +97,19 @@ export default{
                     return res
                 })
             }else{
+                if(this.pageCode == 'apply'){
+                    let isApplyStatus=false
+                    this.queryParam.forEach(item=>{
+                        if(item.field=='applyStatus'){
+                            isApplyStatus=true
+                        }
+                    })
+                    if(isApplyStatus){
+                        this.queryParam=[...this.queryParam,{field: "showEnabled", operator: "eq",fieldType:'RADIO', value: '是'}]
+                    }else{
+                        this.queryParam=[...this.queryParam,{field: "showEnabled", operator: "eq",fieldType:'RADIO', value: '是'},{field: "applyStatus", operator: "eq",fieldType:'RADIO', value: '招聘中'}]
+                    }
+                }
                 const params = Object.assign( parameter, {filter:{logic: "and",filters:this.queryParam}})
                 return getBasePage({pageCode:this.pageCode,params})
                 .then(res => {

@@ -139,6 +139,9 @@ export default{
                 let filters=[...this.queryParam]
                 if(this.$route.name=='resumeCommon'){
                     filters = [...this.queryParam,{field: "resumeStatus",fieldType:'RADIO', operator: "eq", value: '待定'}]
+                } 
+                if(this.$route.name=='staffApprovalList'){
+                    filters = [...this.queryParam,{field: "approvalResult",fieldType:'RADIO', operator: "eq", value: '待审批'}]
                 }  
                 const params = Object.assign( parameter, {filter:{logic: "and",filters:filters}})
                 return getBasePage({pageCode:this.pageCode,params}) .then(res => {
