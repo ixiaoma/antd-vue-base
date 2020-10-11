@@ -159,6 +159,7 @@ export default {
             const res =id? await getProcessDetail({id}):await processHeader({definekey})    
             this.layoutList = [{groupName:'申请信息',fieldDefineValueList:res}]
             this.activeKey = [0]
+            this.editInitData(definekey)//编辑 计算总时长等字段赋值
         },
         async getInitData(){//获取初始化数据
             let res = null
@@ -416,6 +417,7 @@ export default {
         },
         //加班根据开始时间结束时间计算
         async getOvertime(){
+            console.log(this.startDate)
             if(this.startDate && this.endDate && this.serviceType && this.overtimeDate){
                 this.referObjectCode = 'overTimeCallback'
                 const params = {
@@ -429,6 +431,29 @@ export default {
                 const data = res[0]
                 data.totalTime=Number(data.totalTime)
                 this.selectData(data)
+            }
+        },
+        //编辑 计算总时长等字段赋值
+        editInitData(definekey){
+            if(definekey == 'vacation'||definekey == 'overtime'){
+                this.layoutList.forEach(item=>{
+                    item.fieldDefineValueList.forEach(ele=>{
+                        if(definekey == 'vacation'){//休假
+                            if(ele.code=='startDate'||ele.code=='endDate'||ele.code=='timeType'){
+                                this[ele.code]=ele.value
+                            }
+                        }
+                        if(definekey == 'overtime'){//加班
+                            if(ele.code=='startDate'||ele.code=='endDate'||ele.code=='serviceType'||ele.code=='overtimeDate'||ele.code=='jobNumber'){
+                                this[ele.code]=ele.value
+                            }
+                            if(ele.code == "workId"){
+                                ele.display = this.serviceType == '服务类'
+                            }
+                        }
+                        
+                    })
+                })
             }
         },
         goBack(){
