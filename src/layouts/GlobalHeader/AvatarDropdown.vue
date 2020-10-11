@@ -54,7 +54,7 @@ export default {
         title: '退出登录',
         content: '是否确认退出登录',
         onOk: () => {
-          sessionStorage.clear('ACCESS_TOKEN')
+          sessionStorage.clear()
           // return this.$store.dispatch('Logout').then(() => {
             this.$router.push({ name: 'login' })
           // })

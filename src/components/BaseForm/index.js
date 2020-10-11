@@ -446,13 +446,12 @@ export default {
         },
         //出差根据开始时间结束时间计算
         async getTripEchoTime(){
-            console.log(this.startDate,this.endDate,this.workTime)
-            if(this.startDate && this.endDate&&this.workTime){
+            if(this.startDate && this.endDate){
                 this.referObjectCode = 'tripTimeCallback'
                 const params = {
                     startDate:this.startDate,
                     endDate:this.endDate,
-                    workTime:this.workTime
+                    workTime:this.workTime||null
                 }
                 const res = await tripEchoTime(params)
                 const data = res
