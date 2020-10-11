@@ -64,7 +64,7 @@ export default {
   mounted () {
     setTimeout(() => {
       this.currentUser = {
-        name: 'Serati Ma'
+        name: sessionStorage.getItem('username')
       }
     }, 1500)
   }

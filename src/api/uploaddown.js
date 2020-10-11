@@ -8,6 +8,8 @@ export const fileUploadApi = process.env.VUE_APP_API_BASE_URL + baseBusiness+ 'f
 // 文件下载
 export const fileDownLoad=process.env.VUE_APP_API_BASE_URL+baseBusiness+'file/download/'
 
+//提交排班计划前判断
+export const rosterImportBefore=process.env.VUE_APP_API_BASE_URL+baseBusiness+'roster/judge_roster'
 //提交排班计划
 export const rosterImport=process.env.VUE_APP_API_BASE_URL+baseBusiness+'roster/import'
 //考勤上传

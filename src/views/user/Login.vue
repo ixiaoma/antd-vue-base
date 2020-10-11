@@ -172,6 +172,7 @@ export default {
                 'Authorization': 'Basic Y2xvdWR4OmNsb3VkeA=='
             }).then(res => {
             sessionStorage.setItem('ACCESS_TOKEN', res.access_token)
+            sessionStorage.setItem('username', values.username)
             this.$router.push({ path: '/' })
           }).catch(err => {
             state.loginBtn = false

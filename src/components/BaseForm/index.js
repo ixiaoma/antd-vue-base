@@ -409,7 +409,7 @@ export default {
                 }
                 const res = await calculateTime(params)
                 const data = {
-                    allDate : res
+                    allDate : Number(res)
                 }
                 this.selectData(data)
             }

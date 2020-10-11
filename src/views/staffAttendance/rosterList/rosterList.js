@@ -1,6 +1,6 @@
 
 import { SearchTable } from '@/components'
-import { rosterImport,uploadLoad,rosterDown} from '@/api/uploaddown'
+import { rosterImportBefore,rosterImport,uploadLoad,rosterDown} from '@/api/uploaddown'
 import { getDeptTreeData } from '@/api/user'
 // import { axios } from '@/utils/axios'
 import moment from 'moment';
@@ -61,12 +61,37 @@ export default {
         // let paramData = {'rosterDate':this.rosterDate,'deptName':this.deptName}
         let paramData = {'rosterDate':values['rosterDate'],'deptName':values['deptName']}     
         this.uploading = true;
-        uploadLoad(rosterImport,this.fileList[0],paramData).then((res) => {
-                this.fileList = [];
-                this.uploading = false;
-                this.$message.success('上传成功');
-                this.visible=false
+        
+        uploadLoad(rosterImportBefore,this.fileList[0],paramData).then((res) => {
+          if(res==true){
+            this.fileList = [];
+            this.uploading = false;
+            this.$message.success('上传成功');
+            this.visible=false
+          }else{
+            let _this = this;
+            this.$confirm({
+                title: '温馨提示',
+                content: '排班计划已存在，是否覆盖？',
+                okText: '确认',
+                cancelText: '取消',
+                onOk() {
+                  uploadLoad(rosterImport,_this.fileList[0],paramData).then((res) => {
+                      _this.fileList = [];
+                      _this.uploading = false;
+                      _this.$message.success('上传成功');
+                      _this.visible=false
+                  })
+                },
+                onCancel() {
+                  _this.fileList = [];
+                  _this.uploading = false;
+                  _this.visible=false
+                },
+            });
+          }  
         })
+        
         
       })
     },

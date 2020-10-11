@@ -7,7 +7,15 @@
       <a-button v-if="buttonList.includes('rosterUpload')" type="primary" icon="upload" @click="showModal">提交排班计划</a-button>
       <a-button v-if="buttonList.includes('rosterEditUpload')" type="primary" icon="upload" @click="showModal" style="margin-left:10px">更改排班计划</a-button>
     </search-table>
-    <a-modal v-model="visible" title="提交排班计划" :bodyStyle='{padding:0}' @ok="handleUpload" ok-text="提交" cancel-text="取消">
+    <a-modal v-model="visible" title="提交排班计划" :bodyStyle='{padding:0}' @on-ok="handleUpload">
+      <template slot="footer">
+        <a-button key="back" @click="visible=false">
+          取消
+        </a-button>
+        <a-button key="submit" type="primary" :loading="uploading" @click="handleUpload">
+          提交
+        </a-button>
+      </template>
           <a-form :form="form">
               <a-form-item label="月份" :label-col="{span:6}" :wrapper-col="{span:12}" required>
                   <a-month-picker v-decorator="['rosterDate',validates.rosterDate]" format="YYYY-MM" style="width:100%"/>
