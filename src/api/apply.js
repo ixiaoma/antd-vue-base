@@ -10,7 +10,8 @@ const settingApi = {
   applyReolaceCard:baseBusiness+'replace-card/insertBatch',//申请补卡
   allReolaceCard:baseBusiness+'details/batch/update',//管理员批量补卡
   calculateTime:baseBusiness+'vacation/total/time',
-  overtimeTime:baseBusiness+'overtime/judgmentType'//加班调用总时长
+  overtimeTime:baseBusiness+'overtime/judgmentType',//加班调用总时长
+  tripEchoTime:baseBusiness+'trip/echo'//出差调用总时长
 }
 
 
@@ -36,3 +37,7 @@ export function calculateTime (params) {
 export function overtimeTime (params) {
   return axios.post(settingApi.overtimeTime,params)
 }
+export function tripEchoTime (params) {
+  return axios.post(settingApi.tripEchoTime,params)
+}
+

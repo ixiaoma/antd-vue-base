@@ -153,7 +153,7 @@ export default {
         // eslint-disable-next-line
         if ((typeof result === 'object' || typeof result === 'function') && typeof result.then === 'function') {
           result.then(r => {
-            if(this.pageCode == 'workOrder'){
+            if(this.pageCode == 'workOrder'||this.pageCode == 'workId'){
               this.localDataSource = r.data // 返回结果中的数组数据
               this.localLoading = false
             }else{

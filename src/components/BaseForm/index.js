@@ -3,7 +3,7 @@ import { getBaseLayout, getDetailLayout, getEditLayout_kpitodo,getDetailLayout_k
 import { processHeader,getProcessDetail,approvalStart } from '@/api/approval'
 import { fileUploadApi, fileDownLoad } from '@/api/uploaddown'
 import { getDeptLeader } from '@/api/user'
-import { calculateTime,overtimeTime } from '@/api/apply'
+import { calculateTime,overtimeTime,tripEchoTime } from '@/api/apply'
 
 import fieldHandle from '@/mixins/fieldHandle'
 
@@ -32,6 +32,7 @@ export default {
             serviceType:'',
             overtimeDate:'',
             jobNumber:'',
+            workTime:'',
             referObjectCode:null,//关联字段标识
             assessmentContentDetails:[]
         }
@@ -316,11 +317,15 @@ export default {
             this.$refs.StaffModel.showModel(list)
         },
         selectData(data){//回填关联字段的值
+            const { definekey } = this.$route.query
+            if(definekey=='trip'&&this.referObjectCode=="workId"){
+                this.workTime=data.arrival_time
+            }
             this.layoutList.forEach(ele=>{
                 ele.fieldDefineValueList.forEach(pre=>{
                     if(pre.referObjectCode == this.referObjectCode){
                         if(pre.display){
-                            this.form.setFieldsValue({[pre.code]:data[pre.referObjectField]})
+                            this.form.setFieldsValue({[pre.code]:data[pre.referObjectField]})     
                         }else{
                             pre.value = data[pre.referObjectField]
                         }
@@ -330,7 +335,7 @@ export default {
         },
         selectChange(value,i){//下拉值修改改变字段的展示隐藏
             const { pageCode, definekey } = this.$route.query
-            if(pageCode == 'trip'){
+            if(pageCode == 'trip'||definekey == 'trip'){
                 if(i.code == "tripType"){
                     this.layoutList.forEach(ele=>{
                         ele.fieldDefineValueList.forEach(pre=>{
@@ -397,6 +402,13 @@ export default {
                 }else{
                     this[i.code] = ''
                 }
+            }else if(definekey =='trip'){
+                if(dateString){
+                    this[i.code] = dateString
+                    this.getTripEchoTime()
+                }else{
+                    this[i.code] = ''
+                }
             }
         },
         async getAllDate(){
@@ -417,7 +429,6 @@ export default {
         },
         //加班根据开始时间结束时间计算
         async getOvertime(){
-            console.log(this.startDate)
             if(this.startDate && this.endDate && this.serviceType && this.overtimeDate){
                 this.referObjectCode = 'overTimeCallback'
                 const params = {
@@ -433,12 +444,32 @@ export default {
                 this.selectData(data)
             }
         },
+        //出差根据开始时间结束时间计算
+        async getTripEchoTime(){
+            console.log(this.startDate,this.endDate,this.workTime)
+            if(this.startDate && this.endDate&&this.workTime){
+                this.referObjectCode = 'tripTimeCallback'
+                const params = {
+                    startDate:this.startDate,
+                    endDate:this.endDate,
+                    workTime:this.workTime
+                }
+                const res = await tripEchoTime(params)
+                const data = res
+                this.selectData(data)
+            }
+        },
         //编辑 计算总时长等字段赋值
         editInitData(definekey){
             if(definekey == 'vacation'||definekey == 'overtime'){
                 this.layoutList.forEach(item=>{
                     item.fieldDefineValueList.forEach(ele=>{
                         if(definekey == 'vacation'){//休假
+                            if(ele.code=='startDate'||ele.code=='endDate'||ele.code=='timeType'){
+                                this[ele.code]=ele.value
+                            }
+                        }
+                        if(definekey == 'trip'){//出差
                             if(ele.code=='startDate'||ele.code=='endDate'||ele.code=='timeType'){
                                 this[ele.code]=ele.value
                             }

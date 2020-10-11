@@ -35,7 +35,7 @@ export default{
         async showModel(pageCode){
             this.pageCode = pageCode
             // const date = await getLastMonthDays(-1)
-            if(pageCode == 'workOrder' || pageCode == 'systemUser'){
+            if(pageCode == 'workOrder' || pageCode == 'systemUser'||this.pageCode == 'workId'){
                 if(pageCode == 'systemUser'){
                     this.columns = [
                         {
@@ -64,19 +64,19 @@ export default{
                         {
                             title: '工单编号',
                             sorter: true,
-                            dataIndex: 'onsiteId'
+                            dataIndex: 'onsite_id'
                         },{
                             title: '员工姓名',
                             sorter: true,
-                            dataIndex: 'operationUserName'
+                            dataIndex: 'operation_user_name'
                         },{
                             title: '开始时间',
                             sorter: true,
-                            dataIndex: 'arrivalTime'
+                            dataIndex: 'arrival_time'
                         },{
                             title: '结束时间',
                             sorter: true,
-                            dataIndex: 'finishTime'
+                            dataIndex: 'finish_time'
                         }
                     ]
                 }
@@ -88,7 +88,7 @@ export default{
             this.visible = true
         },
         getListData(parameter){
-            if(this.pageCode == 'workOrder'){
+            if(this.pageCode == 'workOrder'||this.pageCode == 'workId'){
                 return getWorkOrderData().then(res=>{
                     return res
                 })
@@ -141,6 +141,9 @@ export default{
         onSelectChange (selectedRowKeys, selectedRows) {
             this.selectedRowKeys = selectedRowKeys
             this.selectedRows = selectedRows[0]
+            if((this.$route.query.definekey=='trip'||this.$route.query.definekey=='overtime')&&(this.pageCode == 'workOrder'||this.pageCode == 'workId')){
+                this.selectedRows['workId']=this.selectedRows.onsite_id
+            }
         },
         async getInitData(){
             this.filterList = await getTableSearch({pageCode:this.pageCode})

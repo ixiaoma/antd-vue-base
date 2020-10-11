@@ -1,5 +1,5 @@
 <template>
-  <a-modal title="修改密码" :visible="showModal" :width="700" @cancel="handleCancel">
+  <a-modal title="分配角色" :visible="showModal" :width="700" @cancel="handleCancel">
     <a-transfer
     :list-style="{
         width: '300px',
