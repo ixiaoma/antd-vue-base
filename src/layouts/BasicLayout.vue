@@ -2,7 +2,7 @@
 <!-- :menus="menus" -->
   <pro-layout
     :title="title"
-    :menus="menuList"
+    :menus="menus"
     :collapsed="collapsed"
     :mediaQuery="query"
     :isMobile="isMobile"
@@ -16,7 +16,9 @@
     <template v-slot:rightContentRender>
       <right-content :top-menu="settings.layout === 'topmenu'" :is-mobile="isMobile" :theme="settings.theme" />
     </template>
-    <router-view />
+    <a-card :bordered="false">
+      <router-view />
+    </a-card>
   </pro-layout>
 </template>
 
@@ -71,13 +73,12 @@ export default {
       isMobile: false
     }
   },
-  computed: {
-    ...mapState({
-      // 动态主路由
-      menuList:state=>state.user.menuList  
-      // menuList:state=>asyncRouterMap.children=state.user.menuList   
-    })
-  },
+  // computed: {
+  //   ...mapState({
+  //     // 动态主路由
+  //     menuList:state=>state.user.menuList  
+  //   })
+  // },
   methods: {
     i18nRender,
     handleMediaQuery (val) {

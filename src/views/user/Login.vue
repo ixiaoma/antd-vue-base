@@ -157,26 +157,24 @@ export default {
 
       validateFields(validateFieldsKey, { force: true }, (err, values) => {
         if (!err) {
-          const loginParams = { ...values }
-          delete loginParams.username
-          loginParams[!state.loginType ? 'email' : 'username'] = values.username
-          // loginParams.password = md5(values.password)
-          // sessionStorage.setItem('ACCESS_TOKEN', '4291d7da9005377ec9aec4a71ea837f')
-          // sessionStorage.setItem('ACCESS_TOKEN', 'be337d7c-7540-462d-a378-c0bb1d83c7dc')
-          // this.$router.push({ path: '/' })
-          loginToken({
-            ...loginParams ,
-            grant_type: 'password',
-            scope: 'server',
-          } ,{
-                'Authorization': 'Basic Y2xvdWR4OmNsb3VkeA=='
-            }).then(res => {
-            sessionStorage.setItem('ACCESS_TOKEN', res.access_token)
-            sessionStorage.setItem('username', values.username)
-            this.$router.push({ path: '/' })
-          }).catch(err => {
-            state.loginBtn = false
-          })
+          sessionStorage.setItem('ACCESS_TOKEN', '4291d7da9005377ec9aec4a71ea837f')
+          this.$router.push({ path: '/' })
+          // const loginParams = { ...values }
+          // delete loginParams.username
+          // loginParams[!state.loginType ? 'email' : 'username'] = values.username
+          // loginToken({
+          //   ...loginParams ,
+          //   grant_type: 'password',
+          //   scope: 'server',
+          // } ,{
+          //       'Authorization': 'Basic Y2xvdWR4OmNsb3VkeA=='
+          //   }).then(res => {
+          //   sessionStorage.setItem('ACCESS_TOKEN', res.access_token)
+          //   sessionStorage.setItem('username', values.username)
+          //   this.$router.push({ path: '/' })
+          // }).catch(err => {
+          //   state.loginBtn = false
+          // })
         } else {
           setTimeout(() => {
             state.loginBtn = false

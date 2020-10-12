@@ -13,7 +13,7 @@
       <a-icon type="bell" class="icon-style"/>
       <span class="feedback-style"><a-icon type="form" class="icon-style"/>反馈</span>
       <avatar-dropdown :menu="showMenu" :current-user="currentUser" :class="prefixCls" />
-      <select-lang :class="prefixCls" />
+      <!-- <select-lang :class="prefixCls" /> -->
     </div>
 
   </div>
@@ -21,13 +21,13 @@
 
 <script>
 import AvatarDropdown from './AvatarDropdown'
-import SelectLang from '@/components/SelectLang'
+// import SelectLang from '@/components/SelectLang'
 
 export default {
   name: 'RightContent',
   components: {
     AvatarDropdown,
-    SelectLang
+    // SelectLang
   },
   props: {
     prefixCls: {

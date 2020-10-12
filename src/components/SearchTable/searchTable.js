@@ -2,8 +2,8 @@ import TableFilter from '../TableFilter/index.vue'
 import STable from '../Table'
 
 import { getBasePage, getTableSearch, getTableHeader, deletePageList } from '@/api/commonApi'
-import { getApprovalList } from '@/api/apply'
-import { processHeader } from '@/api/approval'
+// import { getApprovalList } from '@/api/apply'
+// import { processHeader } from '@/api/approval'
 
 export default{
     data(){

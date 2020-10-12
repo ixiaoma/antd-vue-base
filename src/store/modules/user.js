@@ -1,5 +1,5 @@
 import { login, getInfo, logout,navMenu } from '@/api/user'
-import { getRouterData } from '@/utils/routerSetting'
+// import { getRouterData } from '@/utils/routerSetting'
 import { welcome } from '@/utils/util'
 
 const user = {
