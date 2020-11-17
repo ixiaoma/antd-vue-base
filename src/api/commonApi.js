@@ -1,6 +1,5 @@
 import { axios } from '@/utils/axios'
 import { getLastMonthDays } from '@/utils/commonCode'
-import { homeUserCenter } from './user'
 
 const baseBusiness = 'business/'
 const baseFrame = 'frame/'
@@ -62,16 +61,4 @@ export function saveEditLayout_kpitodo (id,params) {// //考核待办 经理审�
 
 export function getToken(){
   return axios.post('https://api-dev-tfd.lenovo.com/user/oauth/token?grant_type=client_credentials',{},{headers:{Authorization:'Basic aHJvYWRtaW46YWRtaW4='}})
-}
-
-export async function getWorkOrderData(){
-  const date = getLastMonthDays()
-  const res = await getToken()
-  const userInfo = await homeUserCenter()
-  const params = {
-    id:'2c9380826f115b40016f11f14e6e0099'||userInfo.id,
-    "start_date": '2020-01-01 00:00:00'||date[0],
-    "end_date": '2020-10-01 00:00:00'||date[1]
-  }
-  return axios.post('https://dev-tfd.lenovo.com/api/callCenter/historyOnsite/search',params,{headers:{Authorization:'bearer '+res.access_token}})
 }

@@ -34,6 +34,10 @@ export function getStaffList () {
   return axios.get(userApi.GetStaffList)
 }
 
+export function navMenu (){
+  
+}
+
 // /**
 //  * get user 2step code open?
 //  * @param parameter {*}

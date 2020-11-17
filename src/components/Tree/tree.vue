@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { getDeptTreeData } from '@/api/user'
+// import { getDeptTreeData } from '@/api/user'
 export default {
   data() {
     return {
@@ -66,7 +66,7 @@ export default {
     }
   },
   created(){
-    this.getInitData()
+    // this.getInitData()
   }
 };
 </script>

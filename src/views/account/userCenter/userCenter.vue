@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import { homeUserCenter } from '@/api/user.js'
+// import { homeUserCenter } from '@/api/user.js'
 export default {
     name:'个人中心',
     tiele:'个人中心',
@@ -69,7 +69,7 @@ export default {
     }
   },
   created(){
-      this.userLoad()
+      // this.userLoad()
   }
 }
 </script>
