@@ -18,7 +18,13 @@ export const asyncRouterMap = {
         path: '/dashboard/analysis',
         name: 'Analysis',
         component: () => import('@/views/dashboard/Analysis'),
-        meta: { title: '首页', icon: 'table'}
+        meta: { title: 'sub-dashboard', icon: 'table'}
+      },
+      {
+        path: '/dashboard/qqmap',
+        name: 'qqmap',
+        component: () => import('@/views/dashboard/Workplace'),
+        meta: { title: 'dashboard', icon: 'table'}
       },
       {
           path: '/list',

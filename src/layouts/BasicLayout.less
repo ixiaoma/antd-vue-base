@@ -2,6 +2,8 @@
 .ant-pro-global-header{
   display: flex;
   vertical-align: center;
+  background-color: #001339;
+  color: #fff;
   .ant-pro-global-header-trigger{
     padding: 0 22px;
   }
@@ -41,28 +43,42 @@
     }
   }
 }
-// .ant-pro-global-header-index-right {
-//   margin-right: 8px;
-//   flex: 1;
-
-//   &.ant-pro-global-header-index-dark {
-//     .ant-pro-global-header-index-action {
-//       color: hsla(0, 0%, 100%, .85);
-
-//       &:hover {
-//         background: #1890ff;
-//       }
-//     }
-//   }
-//   .ant-pro-account-avatar {
-//     .antd-pro-global-header-index-avatar {
-//       margin: ~'calc((@{layout-header-height} - 24px) / 2)' 0;
-//       margin-right: 8px;
-//       color: @primary-color;
-//       vertical-align: top;
-//       background: rgba(255, 255, 255, 0.85);
-//     }
-//   }
+  .ant-layout-sider-children{
+    background-color: #031332 !important;
+    padding: 0 10px;
+  }
+  /deep/.ant-menu.ant-menu-dark .ant-menu-item-selected, .ant-menu-submenu-popup.ant-menu-dark .ant-menu-item-selected{
+    background-color: initial !important;
+  }
+  .ant-menu.ant-menu-dark .ant-menu-item-selected, .ant-menu-submenu-popup.ant-menu-dark .ant-menu-item-selected{
+    border-radius: 30px;
+    background-color: #fff;
+    box-shadow: 0 1px 15px 1px rgb(39 39 39 / 10%);
+  }
+  .ant-menu-dark .ant-menu-item-selected .anticon,.ant-menu-dark .ant-menu-item-selected .anticon + span,.ant-menu-dark .ant-menu-item-selected > a, .ant-menu-dark .ant-menu-item-selected > a:hover{
+    color: #18ce0f;
+  }
+  .ant-menu-submenu-selected:hover{
+    .ant-menu-submenu-title{
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 30px;
+    }
+  }
+  .ant-menu-dark .ant-menu-item:hover{
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 30px;
+  }
+  .ant-menu-dark .ant-menu-item-selected:hover{
+    background-color: #fff;
+  }
+  // .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected{
+    
+  // }
+  .ant-menu-dark .ant-menu-item-selected > a {
+    color: #18ce0f;
+    border-radius: 30px;
+    box-shadow: 0 1px 15px 1px rgb(39 39 39 / 10%);
+  }
   .ant-pro-basicLayout-children-content-wrap,.ant-pro-grid-content{
     height: 100%;
     

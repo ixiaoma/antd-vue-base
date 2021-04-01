@@ -4,7 +4,7 @@
       <div class="top">
         <div class="header">
           <a href="/">
-            <span class="title">HRO</span>
+            <span class="title"></span>
           </a>
         </div>
         <div class="desc">
@@ -48,8 +48,9 @@ export default {
     .container {
       width: 100%;
       min-height: 100%;
-      background: #f0f2f5 url(~@/assets/background.svg) no-repeat 50%;
-      background-size: 100%;
+      background-image: url(~@/assets/login-bg.jpg);
+      background-size: cover;
+      background-position: center center;
       padding: 110px 0 144px;
       position: relative;
 

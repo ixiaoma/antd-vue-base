@@ -16,9 +16,7 @@
     <template v-slot:rightContentRender>
       <right-content :top-menu="settings.layout === 'topmenu'" :is-mobile="isMobile" :theme="settings.theme" />
     </template>
-    <a-card :bordered="false">
-      <router-view />
-    </a-card>
+    <router-view />
   </pro-layout>
 </template>
 

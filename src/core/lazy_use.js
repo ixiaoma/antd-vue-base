@@ -1,6 +1,5 @@
 import Vue from 'vue'
 
-// base library
 import {
   ConfigProvider,
   Layout,
@@ -50,12 +49,7 @@ import {
   Transfer,
   notification
 } from 'ant-design-vue'
-import Viser from 'viser-vue'
-
-// ext library
-import VueCropper from 'vue-cropper'
 import Dialog from '@/components/Dialog'
-// import MultiTab from '@/components/MultiTab'
 import PageLoading from '@/components/PageLoading'
 import PermissionHelper from '@/utils/helper/permission'
 import './directives/action'
@@ -105,6 +99,9 @@ Vue.use(Collapse)
 Vue.use(Cascader)
 Vue.use(TreeSelect)
 Vue.use(Transfer)
+Vue.use(Dialog)
+Vue.use(PageLoading)
+Vue.use(PermissionHelper)
 
 Vue.prototype.$confirm = Modal.confirm
 Vue.prototype.$message = message
@@ -114,11 +111,12 @@ Vue.prototype.$success = Modal.success
 Vue.prototype.$error = Modal.error
 Vue.prototype.$warning = Modal.warning
 
-Vue.use(Viser)
-Vue.use(Dialog) // this.$dialog func
-// Vue.use(MultiTab)
-Vue.use(PageLoading)
-Vue.use(PermissionHelper)
-Vue.use(VueCropper)
+
+//dataV
+import { fullScreenContainer, borderBox12, borderBox13 } from '@jiaminghi/data-view'
+Vue.use(fullScreenContainer)
+Vue.use(borderBox12)
+Vue.use(borderBox13)
+
 
 process.env.NODE_ENV !== 'production' && console.warn('[antd-pro] NOTICE: Antd use lazy-load.')

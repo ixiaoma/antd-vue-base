@@ -7,70 +7,36 @@
       :form="form"
       @submit="handleSubmit"
     >
-      <a-tabs
-        :activeKey="customActiveKey"
-        :tabBarStyle="{ textAlign: 'center', borderBottom: 'unset' }"
-        @change="handleTabClick"
-      >
-        <a-tab-pane key="tab1" tab="账号密码登录">
-          <a-alert v-if="isLoginError" type="error" showIcon style="margin-bottom: 24px;" message="账户或密码错误（admin )" />
-          <a-form-item>
-            <a-input
-              size="large"
-              type="text"
-              placeholder="请输入用户名"
-              v-decorator="[
-                'username',
-                {initialValue:'admin',rules: [{ required: true, message: '请输入用户名' }, { validator: handleUsernameOrEmail }], validateTrigger: 'change'}
-              ]"
-            >
-              <a-icon slot="prefix" type="user" :style="{ color: 'rgba(0,0,0,.25)' }"/>
-            </a-input>
-          </a-form-item>
-
-          <a-form-item>
-            <a-input-password
-              size="large"
-              placeholder="请输入密码"
-              v-decorator="[
-                'password',
-                {initialValue:'123456',rules: [{ required: true, message: '请输入密码' }], validateTrigger: 'blur'}
-              ]"
-            >
-              <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }"/>
-            </a-input-password>
-          </a-form-item>
-        </a-tab-pane>
-        <!-- <a-tab-pane key="tab2" tab="手机号登录">
-          <a-form-item>
-            <a-input size="large" type="text" placeholder="手机号" v-decorator="['mobile', {rules: [{ required: true, pattern: /^1[34578]\d{9}$/, message: '请输入正确的手机号' }], validateTrigger: 'change'}]">
-              <a-icon slot="prefix" type="mobile" :style="{ color: 'rgba(0,0,0,.25)' }"/>
-            </a-input>
-          </a-form-item>
-
-          <a-row :gutter="16">
-            <a-col class="gutter-row" :span="16">
-              <a-form-item>
-                <a-input size="large" type="text" placeholder="验证码" v-decorator="['captcha', {rules: [{ required: true, message: '请输入验证码' }], validateTrigger: 'blur'}]">
-                  <a-icon slot="prefix" type="mail" :style="{ color: 'rgba(0,0,0,.25)' }"/>
-                </a-input>
-              </a-form-item>
-            </a-col>
-            <a-col class="gutter-row" :span="8">
-              <a-button
-                class="getCaptcha"
-                tabindex="-1"
-                :disabled="state.smsSendBtn"
-                @click.stop.prevent="getCaptcha"
-                v-text="!state.smsSendBtn && '获取验证码' || (state.time+' s')"
-              ></a-button>
-            </a-col>
-          </a-row>
-        </a-tab-pane> -->
-      </a-tabs>
+      <a-alert v-if="isLoginError" type="error" showIcon style="margin-bottom: 24px;" message="账户或密码错误（admin )" />
+      <a-form-item>
+        <a-input
+          class='login-input'
+          size="large"
+          type="text"
+          placeholder="请输入用户名"
+          v-decorator="[
+            'username',
+            {initialValue:'admin',rules: [{ required: true, message: '请输入用户名' }, { validator: handleUsernameOrEmail }], validateTrigger: 'change'}
+          ]"
+        >
+          <a-icon slot="prefix" type="user" :style="{ color: 'rgba(0,0,0,.25)' }"/>
+        </a-input>
+      </a-form-item>
+      <a-form-item>
+        <a-input-password
+          class='login-input'
+          size="large"
+          placeholder="请输入密码"
+          v-decorator="[
+            'password',
+            {initialValue:'123456',rules: [{ required: true, message: '请输入密码' }], validateTrigger: 'blur'}
+          ]"
+        >
+          <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }"/>
+        </a-input-password>
+      </a-form-item>
 
       <a-form-item>
-        <!-- <router-link class="register" :to="{ name: 'register' }">注册账户</router-link> -->
         <router-link
           :to="{ name: 'resetPass'}"
           class="forge-password"
@@ -247,6 +213,29 @@ export default {
 
 <style lang="less" scoped>
 .user-layout-login {
+  .login-input{
+    /deep/.ant-input-password-icon{
+        color: #fff;
+    }
+    .ant-input-prefix, .ant-input-suffix{
+      i{
+        color: #fff!important;
+      }
+    } 
+    /deep/.ant-input{
+      background-color: initial;
+      color: #fff;
+      border-radius: 30px;
+    }
+    .ant-input:focus{
+      background-color:rgba(255, 255, 255, 0.2)
+    }
+  }
+  .login-button{
+    background-color: #f96332;
+    border: none;
+    border-radius: 30px;
+  }
   label {
     font-size: 14px;
   }
@@ -259,6 +248,7 @@ export default {
 
   .forge-password {
     font-size: 14px;
+    color: #f96332;
   }
 
   button.login-button {
