@@ -1,6 +1,6 @@
 <template>
     <dv-border-box-12>
-        <a-button class="chart-select chart-btn">选择品牌</a-button>
+        <!-- <a-button class="chart-select chart-btn">选择品牌</a-button> -->
         <div id="brandLaunchChart" class="pre-charts"></div>
     </dv-border-box-12>
 </template>
@@ -8,15 +8,20 @@
 const echarts = require('echarts')
 export default {
     name:'brandLaunchChart',
+    props:{
+        color:{
+            type:String,
+            default:'#fff'
+        }
+    },
     methods:{
-        
         initEcharts(){
             const myCharts = echarts.init(document.getElementById('brandLaunchChart'))
             const option = {
                 title: {
-                    text: '区域品牌上架趋势',
+                    text: '上架趋势',
                     textStyle: {
-                        color: '#fff'
+                        color: this.color
                     }
                 },
 
@@ -28,7 +33,7 @@ export default {
                     top: '8%',
                     data: ['南京', '利群', '双喜', '芙蓉王', '中南海'],
                     textStyle: {
-                        color: '#fff'
+                        color: this.color
                     }
                 },
 
@@ -38,7 +43,7 @@ export default {
                     bottom: '3%',
                     containLabel: true,
                     textStyle: {
-                        color: '#fff'
+                        color: this.color
                     }
                 },
 
@@ -48,7 +53,7 @@ export default {
                     data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
                     axisLabel: {
                         textStyle: {
-                            color: '#fff'
+                            color: this.color
                         }
                     }
                 },
@@ -57,7 +62,7 @@ export default {
                     type: 'value',
                     axisLabel: {
                         textStyle: {
-                            color: '#fff'
+                            color: this.color
                         }
                     }
                 },

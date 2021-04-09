@@ -21,6 +21,12 @@
 const echarts = require('echarts')
 export default {
     name:'funnelChart',
+    props:{
+        color:{
+            type:String,
+            default:'#fff'
+        }
+    },
     methods:{
         handleChange(){
 
@@ -31,7 +37,7 @@ export default {
                 title: {
                     text: '区域品牌占有态势',
                     textStyle: {
-                        color: '#fff'
+                        color: this.color
                     }
                 },
                 
@@ -39,7 +45,7 @@ export default {
                     top: '10%',
                     data: ['上架率超过10%', '上架率超过5%', '主题门店', '双喜上柜', '核心位置占有率超过50%'],
                     textStyle: {
-                        color: '#fff'
+                        color: this.color
                     }
                 },
 

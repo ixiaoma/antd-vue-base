@@ -31,10 +31,10 @@
             </a-form-item>
           </a-col>
           <a-col :md="8" :sm="24">
-            <a-form-item label="品牌">
-              <a-select default-value="南京" @change="handleChange">
-                  <a-select-option value="南京">
-                      南京
+            <a-form-item label="门店">
+              <a-select default-value="罗森" @change="handleChange">
+                  <a-select-option value="罗森">
+                      罗森
                   </a-select-option>
               </a-select>
             </a-form-item>
@@ -50,7 +50,7 @@
       </a-form>
     </div>
     
-    <a-table size='small' bordered :columns="columns" :data-source="data"></a-table>
+    <a-table size='small' bordered :columns="columns" :data-source="data" @change="handleTableChange"></a-table>
   </div>
 </template>
 
@@ -62,62 +62,89 @@ export default {
       form:this.$form.createForm(this),
       columns:[
         {
-          title: '品牌',
-          dataIndex: 'brand',
-          key: 'brand'
+          title: '门店名称',
+          dataIndex: 'storeName',
+          sorter: true,
+          key: 'storeName'
         },
         {
-          title: '采集门店数',
-          dataIndex: 'storeNum',
-          key: 'storeNum'
+          title: '陈列容量',
+          dataIndex: 'displayNum',
+          sorter: true,
+          key: 'displayNum'
         },
         {
-          title: '上架门店数',
+          title: '上架数',
           dataIndex: 'shelveNum',
+          sorter: true,
           key: 'shelveNum'
         },
         {
-          title: '区域覆盖率',
-          dataIndex: 'coverage',
-          key: 'coverage'
+          title: '商家品牌数',
+          dataIndex: 'brandNum',
+          sorter: true,
+          key: 'brandNum'
         },
         {
-          title: '最大连通数量',
-          dataIndex: 'maxNum',
-          key: 'maxNum'
+          title: '上架规格数',
+          dataIndex: 'spceNum',
+          sorter: true,
+          key: 'spceNum'
+        },
+        {
+          title: '上架厂商数',
+          dataIndex: 'firmNum',
+          sorter: true,
+          key: 'firmNum'
+        },
+        {
+          title: '空缺率',
+          dataIndex: 'vacancyRate',
+          sorter: true,
+          key: 'vacancyRate'
         }
       ],
       data:[
         {
-          brand:'南京',
-          storeNum:'3000',
+          storeName:'罗森',
+          displayNum:'3000',
           shelveNum:'1500',
-          coverage:'50%',
-          maxNum:'1000'
+          brandNum:'5000',
+          spceNum:'1000',
+          firmNum:'300',
+          vacancyRate:'50%'
         },{
-          brand:'双喜',
-          storeNum:'5000',
+          storeName:'沃尔玛',
+          displayNum:'5000',
           shelveNum:'2000',
-          coverage:'40%',
-          maxNum:'900'
+          brandNum:'4000',
+          spceNum:'500',
+          firmNum:'300',
+          vacancyRate:'40%'
         },{
-          brand:'利群',
-          storeNum:'3000',
+          storeName:'永辉',
+          displayNum:'3000',
           shelveNum:'1500',
-          coverage:'50%',
-          maxNum:'1000'
+          brandNum:'5000',
+          spceNum:'1000',
+          firmNum:'900',
+          vacancyRate:'45%'
         },{
-          brand:'中华',
-          storeNum:'5000',
+          storeName:'全时',
+          displayNum:'5000',
           shelveNum:'2000',
-          coverage:'40%',
-          maxNum:'900'
+          brandNum:'4000',
+          spceNum:'900',
+          firmNum:'200',
+          vacancyRate:'60%'
         },{
-          brand:'中南海',
-          storeNum:'3000',
+          storeName:'711',
+          displayNum:'3000',
           shelveNum:'1500',
-          coverage:'50%',
-          maxNum:'1000'
+          brandNum:'5000',
+          spceNum:'1000',
+          firmNum:'150',
+          vacancyRate:'50%'
         }
       ]
     }
@@ -126,6 +153,9 @@ export default {
     SearchTable
   },
   methods:{
+    handleTableChange(pagination, filters, sorter) {
+      console.log(pagination, filters, sorter)
+    },
     handleChange(){
 
     },

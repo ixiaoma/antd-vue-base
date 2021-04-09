@@ -62,13 +62,16 @@ export default {
             ],
             pageNo:1,
             totalCount:0,
-            loadData: parameter => {
-                return getUserList(parameter).then(res => {
-                    this.pageNo=res.data.pageNo
-                    this.totalCount=res.data.totalCount
-                    return res
-                })
-            },
+            loadData: [
+                {realName:'张三',loginName:'zhangsan',cellphone:'15650998800',userType:'',companyName:'中国烟草',enabled:false},
+                {realName:'李四',loginName:'lisi',cellphone:'18300990800',userType:'',companyName:'中国烟草',enabled:false}
+            ],
+                // getUserList(parameter).then(res => {
+                //     this.pageNo=res.data.pageNo
+                //     this.totalCount=res.data.totalCount
+                //     return res
+                // })
+            // },
             selectedRowKeys: [],
             selectedRows: [],
         }
@@ -160,12 +163,14 @@ export default {
             return listData
         },
         async initData(){
-            const userList = await this.usertypeLoad()
-            const companyList = await this.getCompanyList()
-            this.filterList.forEach(ele=>{
-                if(ele.dataIndex == 'userType') ele.selectList = userList
-                if(ele.dataIndex == 'companyId') ele.selectList = companyList
-            })
+            const userList = [
+                {realName:'张三',loginName:'zhangsan',cellphone:'15650998800',userType:'',companyName:'中国烟草',enabled:false}
+            ]
+            
+            // this.filterList.forEach(ele=>{
+            //     if(ele.dataIndex == 'userType') ele.selectList = userList
+            //     if(ele.dataIndex == 'companyId') ele.selectList = companyList
+            // })
         } 
     },
     created(){

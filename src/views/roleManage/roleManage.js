@@ -7,14 +7,41 @@ export default {
   },
   data() {
     return {
-      roleList: [],
+      roleList: [
+        {
+          id:1,
+          name:'管理员'
+        },{
+          id:2,
+          name:'销售'
+        }
+      ],
       activeKey: 'menu',
       currentRoleId: '',
       userTargetKeys: [],
-      userData: [],
+      userData: [
+        {
+          key:1,
+          title:'张三(zhangsan)'
+        },{
+          key:2,
+          title:'李四(lisi)'
+        }
+      ],
       defaultExpandedKeys: [],
       checkedKeys: [],
-      treeData: [],
+      treeData: [
+        {
+          parentId:0,
+          title:'系统菜单',
+          children:[
+            {
+              id:1,
+              title:'角色管理'
+            }
+          ]
+        }
+      ],
       checkedNodes:[],
       InitializingRoles:['1206475457298436098','1206468796794015746','1211542440578650113','1214068682011971585','1214068742984568834'],//初始化角色（不可禁用、编辑、删除）
     }
@@ -101,20 +128,23 @@ export default {
       })
     },
     setRole(id) {//角色配置
-      getRoleResource(id).then(res => {
-        if (res && res.code == 200) {
-          this.checkedKeys = res.data ? res.data : [];
-          this.defaultExpandedKeys = this.checkedKeys;
-        }
-      }).then(() => {
-        getRoleUser(id).then(res => {
-          if (res && res.code == 200) {
-            this.userTargetKeys = res.data ? res.data : [];
-          }
-        }).then(res => {
-          this.currentRoleId = id;
-        })
-      })
+      console.log(111)
+      this.currentRoleId = id;
+      console.log(id)
+      // getRoleResource(id).then(res => {
+      //   if (res && res.code == 200) {
+      //     this.checkedKeys = res.data ? res.data : [];
+      //     this.defaultExpandedKeys = this.checkedKeys;
+      //   }
+      // }).then(() => {
+      //   getRoleUser(id).then(res => {
+      //     if (res && res.code == 200) {
+      //       this.userTargetKeys = res.data ? res.data : [];
+      //     }
+      //   }).then(res => {
+      //     this.currentRoleId = id;
+      //   })
+      // })
     },
     changeTabs(key) {
       this.activeKey = key;
@@ -157,8 +187,8 @@ export default {
     },
   },
   mounted() {
-    this.getRoleList();
-    this.getMenusList();
-    this.getAllUserList();
+    // this.getRoleList();
+    // this.getMenusList();
+    // this.getAllUserList();
   }
 }

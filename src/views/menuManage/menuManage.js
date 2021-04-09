@@ -8,7 +8,32 @@ export default {
     data() {
         return {
             defaultExpandedKeys: [],
-            treeData: [],
+            treeData: [
+                {
+                    parentId:0,
+                    key:0,
+                    title:'系统菜单',
+                    name:'系统菜单',
+                    url:'system',
+                    type:1,
+                    enabled:0,
+                    listDisplay:1,
+                    detailsDisplay:1,
+                    children:[
+                      {
+                        id:1,
+                        key:1,
+                        type:1,
+                        enabled:0,
+                        listDisplay:1,
+                        detailsDisplay:1,
+                        title:'角色管理',
+                        name:'角色管理',
+                        url:'roleManage'
+                      }
+                    ]
+                  }
+            ],
             nodeTypeSelect:[{ id: "1", name: '菜单节点' }, { id: "3", name: '按钮节点' }],
             currentNode:null
         }
@@ -16,6 +41,7 @@ export default {
     methods: {
         //左侧树
         selectNode(keys, node) {//点击树节点操作
+            console.log(node)
             if(node.selectedNodes.length) {
                 node.selectedNodes[0].data.props.type = node.selectedNodes[0].data.props.type.toString();
                 node.selectedNodes[0].data.props.enabled = node.selectedNodes[0].data.props.enabled == '1' ? true : false;
@@ -81,6 +107,6 @@ export default {
         }
     },
     created() {
-        this.getMenusList();
+        // this.getMenusList();
     }
 }

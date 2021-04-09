@@ -5,10 +5,10 @@
                 <a-card size="small" title="角色列表">
                     <a-button class="addBtn" @click="addRole" slot="extra" size="small" type="primary">新建</a-button>
                     <ul class="roleWrap" v-if="roleList.length">
-                        <li :class="item.id == currentRoleId ? 'currentRole roleItem' : 'roleItem'" v-for="(item,index) in roleList" :keys="index" @click="setRole(item.id)">
+                        <li :class="item.id == currentRoleId ? 'currentRole roleItem' : 'roleItem'" v-for="(item,index) in roleList" :key="index" @click="setRole(item.id)">
                             <div class="roleName">{{item.name}}</div>
                             <div>
-                                <a-switch v-if="InitializingRoles.indexOf(item.id) == -1" checkedChildren="启用" size="small" class="operatorBtn" @change="changeSwitch(item)" unCheckedChildren="禁用" :checked="item.enabled"/>
+                                <a-switch v-if="InitializingRoles.indexOf(item.id) == -1" checkedChildren="启用" size="small" class="operatorBtn" unCheckedChildren="禁用" />
                                 <a-icon v-if="InitializingRoles.indexOf(item.id) == -1" type="edit" title="编辑" class="but_type operatorBtn" @click.stop="editRole(item)" />
                                 <a-icon v-if="InitializingRoles.indexOf(item.id) == -1" type="delete" title="删除" class="but_type operatorBtn" @click.stop="delRole(item)" />
                                 <a-icon type="copy" title="复制" class="but_type operatorBtn" @click.stop="copyRole(item)" />

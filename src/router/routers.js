@@ -12,65 +12,75 @@ export const asyncRouterMap = {
     name: 'index',
     component: BasicLayout,
     meta: { title: 'menu.home' },
-    redirect: '/dashboard/analysis',
+    redirect: '/dashboard/qqmap',
     children: [
-      {
-        path: '/dashboard/analysis',
-        name: 'Analysis',
-        component: () => import('@/views/dashboard/Analysis'),
-        meta: { title: 'sub-dashboard', icon: 'table'}
-      },
       {
         path: '/dashboard/qqmap',
         name: 'qqmap',
         component: () => import('@/views/dashboard/Workplace'),
+        meta: { title: '大屏', icon: 'table'}
+      },
+      {
+        path: '/dashboard/analysis',
+        name: 'Analysis',
+        component: () => import('@/views/dashboard/Analysis'),
+        meta: { title: '区域', icon: 'table'}
+      },
+      {
+        path: '/dashboard/regionDashboard',
+        name: 'regionDashboard',
+        component: () => import('@/views/dashboard/RegionDashboard'),
+        meta: { title: '门店', icon: 'table'}
+      },
+      {
+        path: '/dashboard/RegionInfo',
+        name: 'regionInfo',
+        component: () => import('@/views/dashboard/RegionInfo'),
         meta: { title: 'dashboard', icon: 'table'}
       },
       {
-          path: '/list',
-          name: 'list',
-          component: RouteView,
-          redirect: '/list/table-list',
-          meta: { title: '列表页', icon: 'table'},
-          children: [
-            {
-              path: '/list/table-list',
-              name: 'TableListWrapper',
-              component: () => import('@/views/list/TableList'),
-              meta: { title: '查询表格'}
-            }
-          ]
-        },
-        {
-          path: '/system',
-          name: 'system',
-          component: RouteView,
-          redirect: '/system/sysAccountManage',
-          meta: { title: '系统管理', icon: 'table'},
-          children: [
-            {
-              path: '/system/sysAccountManage',
-              name: 'sysAccountManage',
-              component: () => import('@/views/sysAccountManage/sysAccountManage.vue'),
-              meta: { title: '用户管理'}
-            },{
-              path: '/system/roleManage',
-              name: 'roleManage',
-              component: () => import('@/views/roleManage/roleManage.vue'),
-              meta: { title: '角色管理'}
-            },{
-              path: '/system/menuManage',
-              name: 'menuManage',
-              component: () => import('@/views/menuManage/menuManage.vue'),
-              meta: { title: '菜单管理'}
-            },{
-              path: '/system/tableCategory',
-              name: 'tableCategory',
-              component: () => import('@/views/tableCategory/tableCategory.vue'),
-              meta: { title: '码表管理'}
-            }
-          ]
-        }
+        path: '/list/table-list',
+        name: 'TableListWrapper',
+        component: () => import('@/views/list/TableList'),
+        meta: { title: '品牌上架率', icon: 'table'}
+      },
+      {
+        path: '/dashboard/StoreInfo',
+        name: 'storeInfo',
+        component: () => import('@/views/list/StoreList'),
+        meta: { title: '门店指标', icon: 'table'}
+      },
+      {
+        path: '/system',
+        name: 'system',
+        component: RouteView,
+        redirect: '/system/sysAccountManage',
+        meta: { title: '系统管理', icon: 'table'},
+        children: [
+          {
+            path: '/system/sysAccountManage',
+            name: 'sysAccountManage',
+            component: () => import('@/views/sysAccountManage/sysAccountManage.vue'),
+            meta: { title: '用户管理'}
+          },{
+            path: '/system/roleManage',
+            name: 'roleManage',
+            component: () => import('@/views/roleManage/roleManage.vue'),
+            meta: { title: '角色管理'}
+          },{
+            path: '/system/menuManage',
+            name: 'menuManage',
+            component: () => import('@/views/menuManage/menuManage.vue'),
+            meta: { title: '菜单管理'}
+          }
+          // ,{
+          //   path: '/system/tableCategory',
+          //   name: 'tableCategory',
+          //   component: () => import('@/views/tableCategory/tableCategory.vue'),
+          //   meta: { title: '码表管理'}
+          // }
+        ]
+      }
     ]
 }
 

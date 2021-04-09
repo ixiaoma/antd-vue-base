@@ -54,7 +54,7 @@ export default {
                         label: {
                             show: true,
                             // position: 'right',
-                            formatter:'{b}%'
+                            formatter:'{c}%'
                         },
                         emphasis: {
                             focus: 'series'

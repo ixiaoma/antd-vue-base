@@ -13,7 +13,7 @@
                 :showPagination="true"
             >
                 <template slot="enabledSlots" slot-scope="text,record">
-                    <a-switch @change="changeSwitch(record)" checkedChildren="启用" unCheckedChildren="禁用" :checked="record.enabled==1?true:false"/><!-- :checked="record.enable == 1" -->
+                    <a-switch checkedChildren="启用" unCheckedChildren="禁用"/><!-- :checked="record.enable == 1" -->
                 </template>
                 <template slot="operationSlots" slot-scope="text,record">
                     <a-icon class="operationIcon" @click="toDetail(record)" title="查看" type="eye" />

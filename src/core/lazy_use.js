@@ -22,6 +22,7 @@ import {
   Popover,
   Dropdown,
   List,
+  Tree,
   Avatar,
   Breadcrumb,
   Steps,
@@ -67,6 +68,7 @@ Vue.use(Card)
 Vue.use(Form)
 Vue.use(Row)
 Vue.use(Col)
+Vue.use(Tree)
 Vue.use(Modal)
 Vue.use(Table)
 Vue.use(Tabs)
@@ -113,10 +115,11 @@ Vue.prototype.$warning = Modal.warning
 
 
 //dataV
-import { fullScreenContainer, borderBox12, borderBox13 } from '@jiaminghi/data-view'
+import { fullScreenContainer, borderBox12, borderBox13, scrollBoard } from '@jiaminghi/data-view'
 Vue.use(fullScreenContainer)
 Vue.use(borderBox12)
 Vue.use(borderBox13)
+Vue.use(scrollBoard)
 
 
 process.env.NODE_ENV !== 'production' && console.warn('[antd-pro] NOTICE: Antd use lazy-load.')

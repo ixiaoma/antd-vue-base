@@ -126,7 +126,7 @@ export default {
       if (this.timer) return;
       this.timer = setTimeout(() => {
         // 如果是按 "Esc" 键退出全屏，窗口状态已经是非全屏，但是之前记录的状态还是全屏的状态
-        if (!this.checkFull() && this.fullScreen) {
+        if (this.fullScreen) {
           //退出全屏状态。。。
           this.fullScreen = false;
           this.pageExitFullScreen();

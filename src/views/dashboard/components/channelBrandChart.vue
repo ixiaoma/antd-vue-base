@@ -1,12 +1,12 @@
 <template>
     <dv-border-box-12>
-        <div id="brandOtcChart" class="pre-charts"></div>
+        <div id="channelBrandChart" class="pre-charts"></div>
     </dv-border-box-12>
 </template>
 <script>
 const echarts = require('echarts')
 export default {
-    name:'brandOtcChart',
+    name:'channelBrandChart',
     props:{
         color:{
             type:String,
@@ -14,11 +14,31 @@ export default {
         }
     },
     methods:{
+        handleChange(){
+
+        },   
         initEcharts(){
-            const myCharts = echarts.init(document.getElementById('brandOtcChart'))
+            const myCharts = echarts.init(document.getElementById('channelBrandChart'))
             const option = {
                 title: {
-                    text: '品牌上柜率',
+                    text: '渠道品牌上架率排名',
+                    textStyle: {
+                        color: this.color
+                    }
+                },
+                
+                dataset: {
+                    source: [
+                        ['product',  '南京', '利群', '双喜'],
+                        ['超市', 43.3, 85.8, 93.7],
+                        ['便利店', 83.1, 73.4, 55.1],
+                        ['烟草专卖店', 86.4, 65.2, 82.5]
+                    ]
+                },
+
+                legend: {
+                    top: '10%',
+                    data: ['利群', '南京', '双喜'],
                     textStyle: {
                         color: this.color
                     }
@@ -27,7 +47,7 @@ export default {
                 grid: {containLabel: true},
 
                 xAxis: {
-                    type: 'value',
+                    type: 'category',
                     axisLabel: {
                         textStyle: {
                             color: this.color
@@ -36,8 +56,6 @@ export default {
                 },
 
                 yAxis: {
-                    type: 'category',
-                    data: ['好猫', '黄山', '黄鹤楼', '娇子', '中南海', '泰山', '南京'],
                     axisLabel: {
                         textStyle: {
                             color: this.color
@@ -45,14 +63,11 @@ export default {
                     }
                 },
 
-                series: [{
-                    data: [0.05, 0.1, 0.05, 0.05, 0.1, 0.1, 0.05],
-                    type: 'bar',
-                    showBackground: true,
-                    backgroundStyle: {
-                        color: 'rgba(180, 180, 180, 0.2)'
-                    }
-                }]
+                series: [
+                    {type: 'bar'},
+                    {type: 'bar'},
+                    {type: 'bar'}
+                ]
             }
             myCharts.setOption(option)
         }
